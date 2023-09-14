@@ -1,12 +1,12 @@
 # Documentation for release 1
-Gjør følgende i terminalen på VSCode for å åpne programmet:
-1. Naviger til mappen gr2338/modules-template/
-2. Kjør kommandoen:
+Follow these steps in order to run the application:
+1. Open a terminal (for instance in VSCode)
+2. Navigate to the folder gr2338/modules-template/
+3. Run the command:
 ```
  mvn clean install -Dmaven.test.skip
 ```
-3. Naviger til mappen gr2338/modules-template/ui/
-4. Kjør kommandoen:
+5. Run the command:
 ```
-mvn javafx:run
+mvn javafx:run -f ui/pom.xml
 ```
