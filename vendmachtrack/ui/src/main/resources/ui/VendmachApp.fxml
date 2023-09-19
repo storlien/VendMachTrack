@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.vendAppController">
+   <children>
+      <TextArea layoutX="130.0" layoutY="11.0" prefHeight="54.0" prefWidth="349.0" text="Vending Machines Overview  ">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </TextArea>
+      <Button layoutX="52.0" layoutY="101.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="104.0" text="Machine 1" />
+      <Button layoutX="248.0" layoutY="101.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="104.0" text="Machine 2" />
+      <Button layoutX="443.0" layoutY="101.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="104.0" text="Machine 3" />
+      <ListView layoutX="14.0" layoutY="165.0" prefHeight="222.0" prefWidth="179.0" />
+      <ListView layoutX="211.0" layoutY="165.0" prefHeight="222.0" prefWidth="179.0" />
+      <ListView layoutX="406.0" layoutY="165.0" prefHeight="222.0" prefWidth="179.0" />
+   </children>
+</Pane>
