@@ -1,5 +1,4 @@
-
-package main.java.core; //sjekk ut dette
+package core; 
 
 public interface IItem {
 
