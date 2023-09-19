@@ -4,7 +4,7 @@ Follow these steps in order to run the application:
 2. Navigate to the folder gr2338/vendmachtrack/
 3. Run the command:
 ```
- mvn clean install -Dmaven.test.skip
+ mvn clean install
 ```
 5. Run the command:
 ```
