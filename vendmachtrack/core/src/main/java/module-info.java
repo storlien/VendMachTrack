@@ -1,3 +1,3 @@
-module calc.core {
+module vendmachtrack.core {
     exports core;
 }
