@@ -1,3 +1,4 @@
+
 package main.java.core; //sjekk ut dette
 
 public interface IItem {
