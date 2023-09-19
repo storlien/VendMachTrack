@@ -4,7 +4,7 @@
     <artifactId>modules-ui</artifactId>
 
     <parent>
-        <groupId>it1901</groupId>
+        <groupId>gr2338</groupId>
         <artifactId>vendmachtrack</artifactId>
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>..</relativePath>
@@ -13,8 +13,8 @@
     <dependencies>
 
         <dependency>
-            <groupId>it1901</groupId>
-            <artifactId>modules-core</artifactId>
+            <groupId>gr2338</groupId>
+            <artifactId>core</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 

@@ -1,5 +1,5 @@
 module calc.ui {
-    requires calc.core;
+    requires vendmachtrack.core;
     requires javafx.controls;
     requires javafx.fxml;
 
