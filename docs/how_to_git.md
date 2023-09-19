@@ -2,11 +2,13 @@
 
 ## Dos
 
-* Start the day with:
+### Start the day with:
 ```
 git pull
 ```
 
+<br/>
+<br/>
 * Make new branch on GitLab, then switch to branch with:
 ```
 git checkout branch-name
