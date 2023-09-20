@@ -16,8 +16,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 
 import javafx.scene.control.TextArea;
+import jsonio.FromJson;
+import jsonio.IFromJson;
+import jsonio.IToJson;
+import jsonio.ToJson;
 
-public class vendAppController implements Initializable{
+public class vendAppController implements Initializable {
+
+    private IMachineTracker machtrack;
 
     @FXML
     private Label myLabel;
@@ -25,38 +31,39 @@ public class vendAppController implements Initializable{
     @FXML
     private TextArea textarea;
 
-    @FXML 
+    @FXML
     private Button button;
 
     @FXML
     private ChoiceBox<IVendingMachine> menuBar;
 
 
-
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        // IFromJson fromJson = new FromJson();
-        //IMachineTracker machtrack = fromJson.readFromFile();
+        IFromJson fromJson = new FromJson();
+        IMachineTracker machtrack = fromJson.readFromFile();
         //List<IVendingMachine> machine = menuBar.getItems().addAll(machtrack.getMachines());
         //List<IVendingMachine> list = new ArrayList<>();
         //for (IVendingMachine vendingMachine : machine) {
-            //list.add(vendingMachine.getId()); 
-            
+        //list.add(vendingMachine.getId());
+
         //}
         //menuBar.getItems().addAll(list);
-        
 
-    };
 
-    public void onClose(){
-        // IToJson toJson = new ToJson(machtrack);
-        // toJson.writeToFile();
+    }
+
+    ;
+
+    public void onClose() {
+        IToJson toJson = new ToJson(machtrack);
+        toJson.writeToFile();
     }
 
     @FXML
-    private void handleButtonClick(ActionEvent event){
+    private void handleButtonClick(ActionEvent event) {
         IVendingMachine selectedItem = menuBar.getValue();
-        if(selectedItem != null){
+        if (selectedItem != null) {
             String info = "Inventory:" + selectedItem.getStatus();
             textarea.setText(info);
         }
