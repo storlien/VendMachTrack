@@ -1,4 +1,4 @@
-module calc.ui {
+module vendmachtrack.ui {
     requires vendmachtrack.core;
     requires javafx.controls;
     requires javafx.fxml;

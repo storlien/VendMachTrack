@@ -61,5 +61,6 @@
     <modules>
         <module>core</module>
         <module>ui</module>
+        <module>jsonio</module>
     </modules>
 </project>
