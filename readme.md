@@ -5,11 +5,11 @@
 velkommen til Vendmachtrack repository! Denne appen er designet for å hjelpe eiere av flere brusautomater holde oversikt og analysere deres brusautomat bedrift.
 
 ## Innhold
-- [Prosjektstruktur](#Prosjektstruktur) 
-- [Hvordan starte](#Hvordan-starte) 
+- [Prosjektstruktur](#prosjektstruktur) 
+- [Hvordan starte](#hvordan-starte) 
 - [hvordan kjøre tester](#hvordan-kjøre-tester)
 - [Brukerhistorier](Brukerhistorier.md)
-- [FAQ](#FAQ)
+- [FAQ](#faq)
 
 ## Prosjektstruktur 
 
@@ -52,6 +52,12 @@ Repositoriet er organisert i flere mapper. selve kodeprosjektet ligger i mappen 
 4. Naviger til mappen gr2338/vendmachtrack
 5. [Følg Instruksjoner på how_to_run for å kjøre appen ](docs/how_to_run.md)
 
+# Hvordan kjøre tester
 
+- kommer snart
+
+## FAQ
+
+-kommer snart
 
 
