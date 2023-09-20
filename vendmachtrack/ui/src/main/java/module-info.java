@@ -1,5 +1,6 @@
 module vendmachtrack.ui {
     requires vendmachtrack.core;
+    requires vendmachtrack.jsonio;
     requires javafx.controls;
     requires javafx.fxml;
 
