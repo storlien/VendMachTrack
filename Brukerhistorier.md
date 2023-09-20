@@ -1,7 +1,9 @@
-Brukerhistorie
-Brukerhistorie
+## Brukerhistorier
+- [Brukerhistorie US-1](#Brukerhistorie-US-1)
+- [Brukerhistorie US-2](#Brukerhistorie-US-2)
 
-Brukerhistorie US-1
+
+# Brukerhistorie US-1
 
 Som eier av flere brusautomater ønsker jeg å ha en oversikt over alle mine automater for å følge med på inntjening og varebeholdning på den enkelte automat. I tillegg vil jeg ha mulighet til å legge til/fjerne brusautomater etter kjøp/salg.
 
@@ -21,7 +23,8 @@ Viktige ting å kunne gjøre
 	 -	Se inntjening
  -	Legge til en ny brusautomat
 
-**Brukerhistorie US-2**
+
+# Brukerhistorie US-2
 
 Som eier av et brusautomat-selskap eier jeg et lager hvor jeg har mine varer midlertidig. Jeg ønsker å ha oversikt over hvor mye av hver vare lageret har til enhver tid, flytte varer fra lager til en ønsket brusautomat samt bestille varer til lageret.
 
