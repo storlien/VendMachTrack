@@ -1,11 +1,13 @@
 package jsonio;
 
-import core.IMachineTracker;
+import core.MachineTracker;
 
 import java.io.InputStream;
 
 public interface IFromJson {
 
-    IMachineTracker fromInputStream(InputStream is);
+    MachineTracker fromInputStream(InputStream is);
+
+    MachineTracker readFromFile();
 
 }

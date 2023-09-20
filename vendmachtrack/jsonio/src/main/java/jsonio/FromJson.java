@@ -1,9 +1,11 @@
 package jsonio;
 
 import com.google.gson.Gson;
-import core.IMachineTracker;
+import core.MachineTracker;
 
+import java.io.BufferedReader;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 
 public class FromJson implements IFromJson {
 
@@ -20,8 +22,27 @@ public class FromJson implements IFromJson {
      * @return MachineTracker object from InputStream
      */
     @Override
-    public IMachineTracker fromInputStream(InputStream is) {
+    public MachineTracker fromInputStream(InputStream is) {
         Gson gson = new Gson();
+
+        try {
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            MachineTracker machtrack = gson.fromJson(br, MachineTracker.class);
+
+            return machtrack;
+
+        } catch (Exception e) {
+
+            System.out.println("Error deserializing from InputStream\n" + e);
+            return null;
+
+        }
+
+    }
+
+    @Override
+    public MachineTracker readFromFile() {
         return null;
     }
 }

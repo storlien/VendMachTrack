@@ -3,4 +3,6 @@ module vendmachtrack.jsonio {
 
     requires vendmachtrack.core;
     requires com.google.gson;
+
+    opens jsonio to com.google.gson;
 }
