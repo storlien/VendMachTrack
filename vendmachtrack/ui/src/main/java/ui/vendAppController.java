@@ -28,7 +28,7 @@ public class vendAppController implements Initializable {
     private Label myLabel;
 
     @FXML
-    private TextArea textarea;
+    private TextArea textArea;
 
     @FXML
     private Button button;
@@ -41,21 +41,11 @@ public class vendAppController implements Initializable {
     public void initialize(URL arg0, ResourceBundle arg1) {
         IFromJson fromJson = new FromJson();
         IMachineTracker machtrack = fromJson.readFromFile();
-        System.out.println("Objektet: " + fromJson.readFromFile());
 
-        // List<VendingMachine> machines = machtrack.getMachines();
-        // menuBar.getItems().addAll(machines);
-        
-        // List<Integer> machineID = new ArrayList<>();
-        // for (VendingMachine vendingMachine : machines) {
-        //    machineID.add(vendingMachine.getId());
-        // }
-        
-
-
-    }
-
+        List<VendingMachine> machines = machtrack.getMachines();
+        menuBar.getItems().addAll(machines);
     
+    }
 
     public void onClose() {
         IToJson toJson = new ToJson(machtrack);
@@ -64,22 +54,10 @@ public class vendAppController implements Initializable {
 
     @FXML
     private void handleButtonClick(ActionEvent event) {
-        // Integer selectedItem = menuBar.getValue();
-        // List<VendingMachine> machines = machtrack.getMachines();
-        // String info = "";
+        VendingMachine selectedItem = menuBar.getValue();
+        String info = "Inventory: " + selectedItem.getStatus();
+        textArea.setText(info);
 
-        // for (VendingMachine vend : machines) {
-        //     if(vend.getId() == selectedItem && selectedItem != 0){
-        //         info = "Inventory: " + vend.getStatus();
-        //         textarea.setText(info);
-        //     }
-            
-        // }
-        // if (!info.isEmpty()) {
-        //     textarea.setText(info);
-        // } else {
-        //     textarea.setText("No vending machine selected");
-        // }
     }
 
 
