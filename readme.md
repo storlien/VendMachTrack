@@ -1,100 +1,85 @@
-# Group gr2338 repository
-
-## Vending machine tracker (Vendmachtrack)
+# Vending machine tracker (Vendmachtrack)
 
 Velkommen til Vendmachtrack repository! Denne appen er designet for å hjelpe eiere av flere brusautomater holde oversikt og analysere deres brusautomat bedrift.
 
 ## Innhold
 
-- [Prosjektstruktur](#prosjektstruktur)
+- [Lenker til andre dokumenter](#lenker-til-andre-dokumenter) 
+- [Dokumentajson fra ulike releases](#dokumentasjon-fra-ulike-releases)
 - [Hvordan starte](#hvordan-starte)  
-- [hvordan kjøre tester](#hvordan-kjøre-tester)
-- [Brukerhistorier](Brukerhistorier.md)
+- [Hvordan kjøre tester](#hvordan-kjøre-tester)
 - [FAQ](#faq)
 
-## Dokumentasjon fra ulike øvinger
+## Lenker til andre dokumenter
 
-- [readme.md for øving 1](/docs/release1/readme_oving1.md)
-- [Brukerhistorier for øving 1](/docs/release1/Brukerhistorier_oving1.md)
+- [Alle brukerhistorier](/docs/Brukerhistorier.md)
 
-## Prosjektstruktur  
+## Dokumentasjon fra ulike releases
 
-Repositoriet er organisert i flere mapper. selve kodeprosjektet ligger i mappen vendmachtrack. I denne mappen ligger det flere mapper som inneholder kode for forskjellige deler av prosjektet:
-
-- docs - inneholder relevant informasjon tilknyttet prosjektet
-  - [how_to_git](docs/how_to_git.md) - enkel bruksanvisning for viktige git kommandoer
-    - [how_to_run](docs/how_to_run.md) - Info om hvordan man kjører appen.
-    - /release1
-      - [requirements](docs/release1/requirements.md) - inneholder kravene for prosjektet
-      - [brukerhistorier_oving1.md](docs/release1/Brukerhistorier_oving1.md) - inneholder brukerhistoriene for øving 1
-      - [readme_oving1.md](docs/release1/readme_oving1.md) - inneholder readme.md for øving 1
+- release 1:
+  - [readme.md](/docs/release1/readme.md)
+  - [Brukerhistorier](/docs/release1/Brukerhistorier.md)
+  - [Funksjonalitet](/docs/release1/Funksjonalitet.md)
+  - [Prosjektstruktur](/docs/release1/Prosjektstruktur.md)
+  - [Klassediagram](/docs/release1/Klassediagram%20venmachtrack%20øving%201%20(1)-1.png)
+  - [Skjermbilde av appen](/docs/release1/skjermbildeApp.png) 
 
 <br>
 
+## Funksjonalitet
 
-- ## [vendmachtrack](vendmachtrack) - Hovedmappe som inneholder all kildekoden for prosjektet
+Vendmachtrack er en app som er ment for å hjelpe eiere av flere brusautomater holde oversikt og analysere deres brusautomat bedrift.
 
-- /core - Inneholder backend logikken til appen
-  - [/pom.xml](vendmachtrack/core/pom.xml) - Dette er Maven prosjekt filen som hører til core modulen
-    - /src/main/java - inneholder core mappen og [module-info.java](vendmachtrack/core/src/main/java/module-info.java)
-      - /core - Inneholder kildekoden til backend-koden:  
-        - [IItem.java](vendmachtrack/core/src/main/java/core/IItem.java)
-        - [Item.java](vendmachtrack/core/src/main/java/core/Item.java) 
-        - [IMachineTracker.java](vendmachtrack/core/src/main/java/core/IMachineTracker.java)
-        - [MachineTracker.java](vendmachtrack/core/src/main/java/core/MachineTracker.java)
-        - [IVendingMachine.java](vendmachtrack/core/src/main/java/core/IVendingMachine.java)
-        - [VendingMachine.java](vendmachtrack/core/src/main/java/core/VendingMachine.java)
-  - /target - inneholder XXXXXX
-  - /test - inneholder tester (ikke implementert)
+- [Skjermbilde av appen](/docs/release1/skjermbildeApp.png)  
+ - [Klassediagram](/docs/release1/Klassediagram%20venmachtrack%20øving%201%20(1)-1.png)
 
 <br>
 
-- /jsonio - inneholder logikken for å lese-/skrive til fil
-  - /src/main/java - inneholder kildekoden til fil logikken og [module-info.java](vendmachtrack/jsonio/src/main/java/module-info.java)
-    - /jsonio - inneholder kildekoden til fil logikken: 
-        - [FromJson.java](/vendmachtrack/jsonio/src/main/java/jsonio/FromJson.java)
-        - [ToJson.java](/vendmachtrack/jsonio/src/main/java/jsonio/ToJson.java)
-        - [IToJson.java](/vendmachtrack/jsonio/src/main/java/jsonio/IToJson.java)
-        - [IFromJson.java](/vendmachtrack/jsonio/src/main/java/jsonio/IFromJson.java)
-  - [/pom.xml](vendmachtrack/jsonio/pom.xml) - Dette er Maven prosjekt filen som hører til jsonio modulen
-  - /target - inneholder XXXXXX   
+På GUI (når appen er ferdig) skal brukeren kunne:
+
+- Se en oversikt over sine brusautomater
+- Se total inntjening
+- Trykke seg inn på en enkelt brusautomat og se detaljert informasjon om denne, dette kan være:
+  - Hvor mye av hver vare som er igjen i brusautomaten
+  - Inntjening
+- Legge til en ny brusautomat
+- Slette en brusautomat
+- Endre informasjon om en brusautomat (fylle opp varer, endre navn)
+- Se overiskt over sitt lager av varer
+- Se kostnader av varer
+- Oppdatere varebeholdning på lager
 
 <br>
 
-- /ui - inneholder fronten d logikken til appen
-  - /src - inneholder main mappen og test mappen
-    - /main inneholder java mappen og resources mappen
-      - /java - inneholder ui mappen og [module-info.java](vendmachtrack/ui/src/main/java/module-info.java)
-        - /ui - inneholder kildekoden til frontend-koden:   
-            - [vendmachApp.java](vendmachtrack/ui/src/main/java/ui/vendmachAPP.java) 
-            - [VendAppController.java](vendmachtrack/ui/src/main/java/ui/vendAppController)
-      - /resources - inneholder fxml filen: [VendmachApp.fxml](vendmachtrack/ui/src/main/resources/ui/VendmachApp.fxml)  
-    - /test - inneholder tester (ikke implementert) og en readme.md fil som beskriver testene
-    - /target - inneholder XXXXXX
-    - [/pom.xml](vendmachtrack/ui/pom.xml) - Dette er Maven prosjekt filen som hører til ui modulen
+Annen funksjonalitet:
 
-  - [/pom.xml](vendmachtrack/pom.xml) - dette er rot pom.xml filen som hører til hele prosjektet
-- [Brukerhistorier](Brukerhistorier.md) - inneholder brukerhistoriene til prosjektet
+- Lagring/henting av data fra fil/skyen
 
 <br>
+
 
 ## Hvordan starte
 
 1. Sørg for å ha installert riktig versjon av Java og Maven, du må ha:
-    - java versjon 17.0.5 eller nyere
+    - Java versjon 17.0.5 eller nyere
     - Apache Maven 3.8.7 eller nyere
+    - andre repoer som prosjektet er avhengig av vil man få automatisk ved hjelp av Maven 
 2. Klon dette repositoret til din lokale maskin
 3. Åpne en ønsket terminal (for eksempel i VSCode)
-4. Naviger til mappen gr2338/vendmachtrack
-5. [Følg Instruksjoner på how_to_run for å kjøre appen](docs/how_to_run.md)
+4. [Følg Instruksjoner på how_to_run for å kjøre appen](docs/how_to_run.md)
 
 <br>
 
-# Hvordan kjøre tester
+## Hvordan kjøre tester
 
 - Tester skal kjøres ved hjelp av Maven.
-- sørg for at du befinner deg i rotmappen for prosjektet (gr2338/vendmachtrack)
-- skriv følgende kommando i terminalen:  
+- Sørg for at du befinner deg i rotmappen for prosjektet (gr2338/vendmachtrack)
+- Skriv følgende kommando i terminalen:  
+
+```
+mvn clean install 
+```
+
 ```
 mvn test 
 ```
@@ -103,4 +88,4 @@ mvn test
 
 ## FAQ
 
-- kommer snart
+- Kommer snart
