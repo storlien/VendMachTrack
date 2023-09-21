@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import core.IMachineTracker;
-import core.IVendingMachine;
 import core.VendingMachine;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -29,31 +28,24 @@ public class vendAppController implements Initializable {
     private Label myLabel;
 
     @FXML
-    private TextArea textarea;
+    private TextArea textArea;
 
     @FXML
     private Button button;
 
     @FXML
-    private ChoiceBox<IVendingMachine> menuBar;
+    private ChoiceBox<VendingMachine> menuBar;
 
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         IFromJson fromJson = new FromJson();
         IMachineTracker machtrack = fromJson.readFromFile();
-        //List<IVendingMachine> machine = menuBar.getItems().addAll(machtrack.getMachines());
-        //List<IVendingMachine> list = new ArrayList<>();
-        //for (IVendingMachine vendingMachine : machine) {
-        //list.add(vendingMachine.getId());
 
-        //}
-        //menuBar.getItems().addAll(list);
-
-
+        List<VendingMachine> machines = machtrack.getMachines();
+        menuBar.getItems().addAll(machines);
+    
     }
-
-    ;
 
     public void onClose() {
         IToJson toJson = new ToJson(machtrack);
@@ -62,12 +54,9 @@ public class vendAppController implements Initializable {
 
     @FXML
     private void handleButtonClick(ActionEvent event) {
-        IVendingMachine selectedItem = menuBar.getValue();
-        if (selectedItem != null) {
-            String info = "Inventory:" + selectedItem.getStatus();
-            textarea.setText(info);
-        }
-        textarea.setText("No vending machine selected");
+        VendingMachine selectedItem = menuBar.getValue();
+        String info = "Inventory: " + selectedItem.getStatus();
+        textArea.setText(info);
 
     }
 

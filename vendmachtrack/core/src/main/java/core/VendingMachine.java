@@ -124,6 +124,11 @@ public class VendingMachine implements IVendingMachine {
         this.location = location;
     }
 
+    @Override
+    public String toString() {
+        return location + ", " + "ID: " + id;
+    }
+
 
 }
 
