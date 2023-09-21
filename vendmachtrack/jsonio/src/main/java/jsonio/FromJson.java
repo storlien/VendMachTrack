@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import core.MachineTracker;
 
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
@@ -23,9 +24,10 @@ public class FromJson implements IFromJson {
      */
     @Override
     public MachineTracker fromInputStream(InputStream is) {
-        Gson gson = new Gson();
 
         try {
+
+            Gson gson = new Gson();
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
             MachineTracker machtrack = gson.fromJson(br, MachineTracker.class);
             return machtrack;
