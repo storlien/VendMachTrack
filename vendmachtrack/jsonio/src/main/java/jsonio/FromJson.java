@@ -12,7 +12,7 @@ public class FromJson implements IFromJson {
     private final String filePath;
 
     public FromJson() {
-        this.filePath = "jsonio/src/main/resources/machine1";
+        this.filePath = "/machine1"; // Note the leading slash for resource access
     }
 
     /**
@@ -26,23 +26,23 @@ public class FromJson implements IFromJson {
         Gson gson = new Gson();
 
         try {
-
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
             MachineTracker machtrack = gson.fromJson(br, MachineTracker.class);
-
             return machtrack;
-
         } catch (Exception e) {
-
             System.out.println("Error deserializing from InputStream\n" + e);
             return null;
-
         }
-
     }
 
     @Override
     public MachineTracker readFromFile() {
-        return null;
+        InputStream is = this.getClass().getResourceAsStream(filePath);
+        if (is == null) {
+            System.err.println("Error: Resource file 'machine1' not found.");
+            return null;
+        }
+        return fromInputStream(is);
     }
+
 }
