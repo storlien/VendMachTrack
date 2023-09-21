@@ -22,9 +22,15 @@ class MachineTrackerTest {
 
     @Test
     void testAddMachine() {
-        IVendingMachine machine = new VendingMachine();
+        VendingMachine machine = new core.VendingMachine(1, new HashMap<>(), "location");
         tracker.addVendingMachine(machine);
         assertEquals(1, tracker.getMachines().size());
     }
 
+    @Test
+    void testAddMachineTwice() {
+        VendingMachine machine = new core.VendingMachine(1, new HashMap<>(), "location");
+        tracker.addVendingMachine(machine);
+        assertThrows(IllegalArgumentException.class, () -> tracker.addVendingMachine(machine));
+    }
 }
