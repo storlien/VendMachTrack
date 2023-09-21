@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import core.IMachineTracker;
-import core.IVendingMachine;
 import core.VendingMachine;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -35,25 +34,28 @@ public class vendAppController implements Initializable {
     private Button button;
 
     @FXML
-    private ChoiceBox<IVendingMachine> menuBar;
+    private ChoiceBox<VendingMachine> menuBar;
 
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         IFromJson fromJson = new FromJson();
         IMachineTracker machtrack = fromJson.readFromFile();
-        //List<IVendingMachine> machine = menuBar.getItems().addAll(machtrack.getMachines());
-        //List<IVendingMachine> list = new ArrayList<>();
-        //for (IVendingMachine vendingMachine : machine) {
-        //list.add(vendingMachine.getId());
+        System.out.println("Objektet: " + fromJson.readFromFile());
 
-        //}
-        //menuBar.getItems().addAll(list);
+        // List<VendingMachine> machines = machtrack.getMachines();
+        // menuBar.getItems().addAll(machines);
+        
+        // List<Integer> machineID = new ArrayList<>();
+        // for (VendingMachine vendingMachine : machines) {
+        //    machineID.add(vendingMachine.getId());
+        // }
+        
 
 
     }
 
-    ;
+    
 
     public void onClose() {
         IToJson toJson = new ToJson(machtrack);
@@ -62,13 +64,22 @@ public class vendAppController implements Initializable {
 
     @FXML
     private void handleButtonClick(ActionEvent event) {
-        IVendingMachine selectedItem = menuBar.getValue();
-        if (selectedItem != null) {
-            String info = "Inventory:" + selectedItem.getStatus();
-            textarea.setText(info);
-        }
-        textarea.setText("No vending machine selected");
+        // Integer selectedItem = menuBar.getValue();
+        // List<VendingMachine> machines = machtrack.getMachines();
+        // String info = "";
 
+        // for (VendingMachine vend : machines) {
+        //     if(vend.getId() == selectedItem && selectedItem != 0){
+        //         info = "Inventory: " + vend.getStatus();
+        //         textarea.setText(info);
+        //     }
+            
+        // }
+        // if (!info.isEmpty()) {
+        //     textarea.setText(info);
+        // } else {
+        //     textarea.setText("No vending machine selected");
+        // }
     }
 
 
