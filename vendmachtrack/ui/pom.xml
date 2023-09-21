@@ -29,6 +29,12 @@
             <artifactId>javafx-fxml</artifactId>
             <version>17.0.8</version>
         </dependency>
+        <dependency>
+            <groupId>gr2338</groupId>
+            <artifactId>jsonio</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>

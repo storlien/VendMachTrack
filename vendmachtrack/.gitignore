@@ -8,3 +8,5 @@ org.eclipse.*.prefs
 
 # IntelliJ
 .idea/
+/jsonio/src/main/java/jsonio/TestFromJson.java
+/jsonio/src/main/java/jsonio/TestToJson.java
