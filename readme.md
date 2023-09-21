@@ -54,7 +54,10 @@ Repositoriet er organisert i flere mapper. selve kodeprosjektet ligger i mappen 
     - /jsonio - inneholder kildekoden til fil logikken: 
         - [FromJson.java](/vendmachtrack/jsonio/src/main/java/jsonio/FromJson.java)
         - [ToJson.java](/vendmachtrack/jsonio/src/main/java/jsonio/ToJson.java)
-  - [/pom.xml](vendmachtrack/jsonio/pom.xml) - Dette er Maven prosjekt filen som hører til jsonio modulen   
+        - [IToJson.java](/vendmachtrack/jsonio/src/main/java/jsonio/IToJson.java)
+        - [IFromJson.java](/vendmachtrack/jsonio/src/main/java/jsonio/IFromJson.java)
+  - [/pom.xml](vendmachtrack/jsonio/pom.xml) - Dette er Maven prosjekt filen som hører til jsonio modulen
+  - /target - inneholder XXXXXX   
 
 <br>
 
@@ -89,7 +92,12 @@ Repositoriet er organisert i flere mapper. selve kodeprosjektet ligger i mappen 
 
 # Hvordan kjøre tester
 
-- kommer snart
+- Tester skal kjøres ved hjelp av Maven.
+- sørg for at du befinner deg i rotmappen for prosjektet (gr2338/vendmachtrack)
+- skriv følgende kommando i terminalen:  
+```
+mvn test 
+```
 
 <br>
 
