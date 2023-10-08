@@ -126,7 +126,7 @@ public class VendingMachine implements IVendingMachine {
 
     @Override
     public String toString() {
-        return location + ", " + "ID: " + id;
+        return "Machine: " + id + " (" + location + ")";
     }
 
 
