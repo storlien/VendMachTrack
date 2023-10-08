@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import core.IMachineTracker;
+import core.MachineTracker;
 import core.VendingMachine;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,9 +21,7 @@ import jsonio.IFromJson;
 import jsonio.IToJson;
 import jsonio.ToJson;
 
-public class vendAppController implements Initializable {
-
-    private IMachineTracker machtrack;
+public class VendAppController implements Initializable {
 
     @FXML
     private Label myLabel;
@@ -48,6 +47,7 @@ public class vendAppController implements Initializable {
     }
 
     public void onClose() {
+        IMachineTracker machtrack = new MachineTracker();
         IToJson toJson = new ToJson(machtrack);
         toJson.writeToFile();
     }
