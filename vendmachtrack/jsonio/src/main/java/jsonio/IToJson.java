@@ -6,8 +6,8 @@ import java.io.OutputStream;
 
 public interface IToJson {
 
-    OutputStream toOutputStream();
+    OutputStream toOutputStream(IMachineTracker machtrack);
 
-    boolean writeToFile();
+    void writeToFile(IMachineTracker machtrack);
 
 }
