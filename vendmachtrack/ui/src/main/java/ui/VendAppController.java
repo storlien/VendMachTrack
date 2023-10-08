@@ -2,6 +2,7 @@ package ui;
 
 import java.net.URL;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import core.IMachineTracker;
@@ -55,8 +56,16 @@ public class VendAppController implements Initializable {
     @FXML
     private void handleButtonClick(ActionEvent event) {
         VendingMachine selectedItem = menuBar.getValue();
-        String info = "Inventory: " + selectedItem.getStatus();
-        textArea.setText(info);
+        if (selectedItem != null) {
+        Map<String, Integer> statusMap = selectedItem.getStatus();
+        StringBuilder formattedStatus = new StringBuilder("Inventory:\n");
+        for (Map.Entry<String, Integer> entry : statusMap.entrySet()) {
+            formattedStatus.append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
+        }
+        textArea.setText(formattedStatus.toString());
+    } else {
+        textArea.setText("No vending machine selected");
+    }
 
     }
 
