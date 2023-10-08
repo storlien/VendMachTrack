@@ -20,7 +20,7 @@ import jsonio.IFromJson;
 import jsonio.IToJson;
 import jsonio.ToJson;
 
-public class vendAppController implements Initializable {
+public class VendAppController implements Initializable {
 
     private IMachineTracker machtrack;
 
