@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
 public class FromJson implements IFromJson {
 
@@ -28,9 +29,8 @@ public class FromJson implements IFromJson {
         try {
 
             Gson gson = new Gson();
-            BufferedReader br = new BufferedReader(new InputStreamReader(is));
-            MachineTracker machtrack = gson.fromJson(br, MachineTracker.class);
-            return machtrack;
+            BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+            return gson.fromJson(br, MachineTracker.class);
         } catch (Exception e) {
             System.out.println("Error deserializing from InputStream\n" + e);
             return null;
@@ -39,12 +39,12 @@ public class FromJson implements IFromJson {
 
     @Override
     public MachineTracker readFromFile() {
-        InputStream is = this.getClass().getResourceAsStream(filePath);
-        if (is == null) {
-            System.err.println("Error: Resource file 'machine1' not found.");
+        try (InputStream is = this.getClass().getResourceAsStream(filePath)) {
+            return fromInputStream(is);
+        } catch (Exception e) {
+            System.err.println("Error" + e);
             return null;
         }
-        return fromInputStream(is);
     }
 
 }

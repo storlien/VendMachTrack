@@ -36,11 +36,13 @@ public class VendAppController implements Initializable {
     @FXML
     private ChoiceBox<VendingMachine> menuBar;
 
+    private IMachineTracker machtrack;
+
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         IFromJson fromJson = new FromJson();
-        IMachineTracker machtrack = fromJson.readFromFile();
+        this.machtrack = fromJson.readFromFile();
 
         List<VendingMachine> machines = machtrack.getMachines();
         menuBar.getItems().addAll(machines);
@@ -48,9 +50,8 @@ public class VendAppController implements Initializable {
     }
 
     public void onClose() {
-        IMachineTracker machtrack = new MachineTracker();
-        IToJson toJson = new ToJson(machtrack);
-        toJson.writeToFile();
+        IToJson toJson = new ToJson("machine1");
+        toJson.writeToFile(machtrack);
     }
 
     @FXML
@@ -70,5 +71,4 @@ public class VendAppController implements Initializable {
     }
 
 
-    
 }
