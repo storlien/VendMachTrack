@@ -5,15 +5,19 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.vendAppController">
-   <children>
-      <ChoiceBox fx:id="menuBar" layoutX="35.0" layoutY="86.0" prefHeight="45.0" prefWidth="475.0" />
-      <Label fx:id="myLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="7.0" layoutY="15.0" prefHeight="45.0" prefWidth="583.0" text="Choose a vending machine " textAlignment="CENTER" textFill="#9d2020">
-         <font>
-            <Font size="25.0" />
-         </font>
-      </Label>
-      <Button fx:id="button" layoutX="520.0" layoutY="89.0" mnemonicParsing="false" onAction="#handleButtonClick" prefHeight="36.0" prefWidth="76.0" text="OK" />
-      <TextArea fx:id="textArea" layoutX="24.0" layoutY="155.0" prefHeight="200.0" prefWidth="553.0" />
-   </children>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+      prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="ui.VendAppController">
+    <children>
+        <ChoiceBox fx:id="menuBar" layoutX="35.0" layoutY="86.0" prefHeight="45.0" prefWidth="475.0"/>
+        <Label fx:id="myLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="7.0" layoutY="15.0" prefHeight="45.0"
+               prefWidth="583.0" text="Choose a vending machine " textAlignment="CENTER" textFill="#9d2020">
+            <font>
+                <Font size="25.0"/>
+            </font>
+        </Label>
+        <Button fx:id="button" layoutX="520.0" layoutY="89.0" mnemonicParsing="false" onAction="#handleButtonClick"
+                prefHeight="36.0" prefWidth="76.0" text="OK"/>
+        <TextArea fx:id="textArea" layoutX="24.0" layoutY="155.0" prefHeight="200.0" prefWidth="553.0"/>
+    </children>
 </Pane>
