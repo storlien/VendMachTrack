@@ -21,7 +21,7 @@ import jsonio.IToJson;
 import jsonio.ToJson;
 
 
-public class AppController implements Initializable {
+public class VendAppController implements Initializable {
 
     @FXML
     private Label myLabel;
