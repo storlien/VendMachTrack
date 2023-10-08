@@ -100,7 +100,7 @@ public class VendingMachine implements IVendingMachine {
      */
     @Override
     public void setStatus(HashMap<String, Integer> status) {
-        this.status = status;
+        this.status = new HashMap<>(status);
     }
 
 
