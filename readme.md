@@ -68,7 +68,7 @@ Annen funksjonalitet:
     - andre repoer som prosjektet er avhengig av vil man få automatisk ved hjelp av Maven
 2. Klon dette repositoret til din lokale maskin
 3. Åpne en ønsket terminal (for eksempel i VSCode)
-4 kjør følgende kommando i terminalen:
+4. kjør følgende kommando i terminalen:
 
 ```bash
  mvn clean install 
@@ -100,15 +100,17 @@ mvn test
 
 ## Hvordan se testdekningsgrad
 
-1. Kjør følgende kommando i terminalen for å generere JaCoCo-rapporten:
+1. Last ned en live server extension til din IDE (for eksempel Live Server extension til VSCode)
+2. Kjør følgende kommando i terminalen for å generere JaCoCo-rapporten:
 
 ```bash
 mvn test jacoco:report
 ```
 
-2.Etter at kommandoen er fullført, vil en ny mappe kalt 'target' bli generert i hver modul (core, jsonio, ui).
-3.Inne i 'target' mappen, naviger til 'site/jacoco' mappen. Her vil du finne en 'index.html' fil.
-4.Åpne 'index.html' filen i en nettleser for å se testdekningen rapportert av JaCoCo.
+3. Etter at kommandoen er fullført, vil en ny mappe kalt 'target' bli generert i hver modul (core, jsonio, ui).
+4. Inne i 'target' mappen, naviger til 'site/jacoco' mappen. Her vil du finne en 'index.html' fil.
+5. Åpne denne filen i en nettleser ved hjelp av live server extensionen.
+
 
 <br>
 
