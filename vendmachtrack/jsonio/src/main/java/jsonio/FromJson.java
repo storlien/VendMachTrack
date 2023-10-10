@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import core.MachineTracker;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
@@ -13,8 +12,8 @@ public class FromJson implements IFromJson {
 
     private final String filePath;
 
-    public FromJson() {
-        this.filePath = "/machine1"; // Note the leading slash for resource access
+    public FromJson(String file) {
+        this.filePath = "/" + file;
     }
 
     /**
@@ -25,14 +24,11 @@ public class FromJson implements IFromJson {
      */
     @Override
     public MachineTracker fromInputStream(InputStream is) {
-
-        try {
-
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
             Gson gson = new Gson();
-            BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
             return gson.fromJson(br, MachineTracker.class);
         } catch (Exception e) {
-            System.out.println("Error deserializing from InputStream\n" + e);
+            System.err.println("Error deserializing from InputStream\n" + e);
             return null;
         }
     }
@@ -42,7 +38,7 @@ public class FromJson implements IFromJson {
         try (InputStream is = this.getClass().getResourceAsStream(filePath)) {
             return fromInputStream(is);
         } catch (Exception e) {
-            System.err.println("Error" + e);
+            System.err.println("Error reading from file: " + filePath + "\n" + e);
             return null;
         }
     }
