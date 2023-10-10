@@ -49,7 +49,7 @@ public class VendAppController implements Initializable {
     }
 
     public void onClose() {
-        IToJson toJson = new ToJson("machine1");
+        IToJson toJson = new ToJson("machine");
         toJson.writeToFile(machtrack);
     }
 

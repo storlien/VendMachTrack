@@ -12,12 +12,17 @@ public class FromJson implements IFromJson {
 
     private final String filePath;
 
+    /**
+     * Constructor. Requires a file name for which the MachineTracker object will be read from.
+     *
+     * @param file Name of file.
+     */
     public FromJson(String file) {
         this.filePath = "/" + file;
     }
 
     /**
-     * Deserializes MachineTracker object from InputStream
+     * Deserializes MachineTracker object from InputStream.
      *
      * @param is InputStream with JSON data
      * @return MachineTracker object from InputStream
@@ -33,6 +38,11 @@ public class FromJson implements IFromJson {
         }
     }
 
+    /**
+     * Reads and returns MachineTracker object from file.
+     *
+     * @return MachineTracker object
+     */
     @Override
     public MachineTracker readFromFile() {
         try (InputStream is = this.getClass().getResourceAsStream(filePath)) {
