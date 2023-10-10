@@ -46,7 +46,7 @@ public class VendAppController implements Initializable {
 
         List<VendingMachine> machines = machtrack.getMachines();
         menuBar.getItems().addAll(machines);
-    
+
     }
 
     public void onClose() {
@@ -58,15 +58,15 @@ public class VendAppController implements Initializable {
     private void handleButtonClick(ActionEvent event) {
         VendingMachine selectedItem = menuBar.getValue();
         if (selectedItem != null) {
-        Map<String, Integer> statusMap = selectedItem.getStatus();
-        StringBuilder formattedStatus = new StringBuilder("Inventory:\n");
-        for (Map.Entry<String, Integer> entry : statusMap.entrySet()) {
-            formattedStatus.append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
+            Map<String, Integer> statusMap = selectedItem.getStatus();
+            StringBuilder formattedStatus = new StringBuilder("Inventory:\n");
+            for (Map.Entry<String, Integer> entry : statusMap.entrySet()) {
+                formattedStatus.append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
+            }
+            textArea.setText(formattedStatus.toString());
+        } else {
+            textArea.setText("No vending machine selected");
         }
-        textArea.setText(formattedStatus.toString());
-    } else {
-        textArea.setText("No vending machine selected");
-    }
 
     }
 
