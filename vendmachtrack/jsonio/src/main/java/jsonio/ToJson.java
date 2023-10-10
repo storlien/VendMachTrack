@@ -11,19 +11,18 @@ public class ToJson implements IToJson {
     private final String filePath;
 
     /**
-     * Constructor.
+     * Constructor. Requires a file name for the MachineTracker object to be saved to.
+     *
+     * @param file File name.
      */
     public ToJson(String file) {
         filePath = "jsonio/src/main/resources/" + file;
-
-//        The following line for setting the filePath allows for several MachineTrackers. To be implemented in a later release.
-//        filePath = "jsonio/src/main/resources/" + mach.toString();
     }
 
     /**
      * Parses MachineTracker object to JSON data and returns as OutputStream.
      *
-     * @return OutputStream of MachineTracker object
+     * @return OutputStream of parsed MachineTracker object
      */
     @Override
     public OutputStream toOutputStream(IMachineTracker machtrack) {
@@ -34,12 +33,15 @@ public class ToJson implements IToJson {
             baos.write(jsonString.getBytes(StandardCharsets.UTF_8));
             return baos;
         } catch (Exception e) {
-            throw new IllegalArgumentException("Error writing to ByteArrayOutputStream");
+            System.err.println("Error writing to ByteArrayOutputStream\n" + e);
+            return null;
         }
     }
 
     /**
      * Parses MachineTracker object to JSON data and writes to file.
+     *
+     * @param machtrack MachineTracker object to be parsed and written to file.
      */
     @Override
     public void writeToFile(IMachineTracker machtrack) {
@@ -48,6 +50,7 @@ public class ToJson implements IToJson {
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath, StandardCharsets.UTF_8))) {
             bw.write(jsonString);
+            System.err.println("Writing ok");
         } catch (Exception e) {
             System.err.println("Error writing to file\n" + e);
         }
