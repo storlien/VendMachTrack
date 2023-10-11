@@ -1,6 +1,8 @@
 module vendmachtrack.jsonio {
-    exports jsonio to vendmachtrack.ui;
+    exports jsonio;
 
     requires vendmachtrack.core;
     requires com.google.gson;
+
+    opens jsonio to com.google.gson;
 }
