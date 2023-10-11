@@ -1,8 +1,8 @@
 package ui;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import core.IMachineTracker;
@@ -20,9 +20,8 @@ import jsonio.IFromJson;
 import jsonio.IToJson;
 import jsonio.ToJson;
 
-public class vendAppController implements Initializable {
 
-    private IMachineTracker machtrack;
+public class VendAppController implements Initializable {
 
     @FXML
     private Label myLabel;
@@ -36,27 +35,37 @@ public class vendAppController implements Initializable {
     @FXML
     private ChoiceBox<VendingMachine> menuBar;
 
+    private IMachineTracker machtrack;
+
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        IFromJson fromJson = new FromJson();
-        IMachineTracker machtrack = fromJson.readFromFile();
+        IFromJson fromJson = new FromJson("tracker.json");
+        this.machtrack = fromJson.readFromFile();
 
         List<VendingMachine> machines = machtrack.getMachines();
         menuBar.getItems().addAll(machines);
-    
+
     }
 
     public void onClose() {
-        IToJson toJson = new ToJson(machtrack);
-        toJson.writeToFile();
+        IToJson toJson = new ToJson("tracker.json");
+        toJson.writeToFile(machtrack);
     }
 
     @FXML
     private void handleButtonClick(ActionEvent event) {
         VendingMachine selectedItem = menuBar.getValue();
-        String info = "Inventory: " + selectedItem.getStatus();
-        textArea.setText(info);
+        if (selectedItem != null) {
+            Map<String, Integer> statusMap = selectedItem.getStatus();
+            StringBuilder formattedStatus = new StringBuilder("Inventory:\n");
+            for (Map.Entry<String, Integer> entry : statusMap.entrySet()) {
+                formattedStatus.append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
+            }
+            textArea.setText(formattedStatus.toString());
+        } else {
+            textArea.setText("No vending machine selected");
+        }
 
     }
 

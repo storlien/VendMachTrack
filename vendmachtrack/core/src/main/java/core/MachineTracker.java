@@ -48,7 +48,7 @@ public class MachineTracker implements IMachineTracker {
         return new ArrayList<>(machines);
     }
 
-    
+
     /**
      * sets the machine
      *
@@ -56,7 +56,7 @@ public class MachineTracker implements IMachineTracker {
      */
     @Override
     public void setMachines(List<VendingMachine> machines) {
-        this.machines = machines;
+        this.machines = new ArrayList<>(machines);
     }
 
 }
