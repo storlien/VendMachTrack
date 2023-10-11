@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import core.MachineTracker;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
@@ -18,7 +19,7 @@ public class FromJson implements IFromJson {
      * @param file Name of file.
      */
     public FromJson(String file) {
-        this.filePath = "/" + file;
+        this.filePath = System.getProperty("user.home") + "/" + file;
     }
 
     /**
@@ -45,7 +46,7 @@ public class FromJson implements IFromJson {
      */
     @Override
     public MachineTracker readFromFile() {
-        try (InputStream is = this.getClass().getResourceAsStream(filePath)) {
+        try (InputStream is = new FileInputStream(filePath)) {
             return fromInputStream(is);
         } catch (Exception e) {
             System.err.println("Error reading from file: " + filePath + "\n" + e);

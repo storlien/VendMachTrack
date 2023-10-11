@@ -40,7 +40,7 @@ public class VendAppController implements Initializable {
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        IFromJson fromJson = new FromJson("machine1");
+        IFromJson fromJson = new FromJson("tracker.json");
         this.machtrack = fromJson.readFromFile();
 
         List<VendingMachine> machines = machtrack.getMachines();
@@ -49,7 +49,7 @@ public class VendAppController implements Initializable {
     }
 
     public void onClose() {
-        IToJson toJson = new ToJson("machine");
+        IToJson toJson = new ToJson("tracker.json");
         toJson.writeToFile(machtrack);
     }
 
