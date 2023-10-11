@@ -2,30 +2,33 @@ package core;
 
 import org.junit.jupiter.api.Test;
 
+import core.MachineTracker;
+import core.IVendingMachine;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.HashMap;
 
-public class MachineTrackerTest {
+class MachineTrackerTest {
 
     private MachineTracker tracker;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         tracker = new MachineTracker();
     }
 
     @Test
-    public void testAddMachine() {
+    void testAddMachine() {
         VendingMachine machine = new core.VendingMachine(1, new HashMap<>(), "location");
         tracker.addVendingMachine(machine);
         assertEquals(1, tracker.getMachines().size());
     }
 
     @Test
-    public void testAddMachineTwice() {
+    void testAddMachineTwice() {
         VendingMachine machine = new core.VendingMachine(1, new HashMap<>(), "location");
         tracker.addVendingMachine(machine);
         assertThrows(IllegalArgumentException.class, () -> tracker.addVendingMachine(machine));
