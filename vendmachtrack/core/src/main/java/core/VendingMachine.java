@@ -67,30 +67,32 @@ public class VendingMachine implements IVendingMachine {
     }
 
 
+
     /**
-     * Remove the `number` of the `item` from the vendingmachine
-     * <p>
-     * if the number of the item to remove is equal to the number of the item already in the vendingmachine, the name of the item is removed from the machine
+     * Removes a specified number of items from the vending machine
      *
-     * @param item   The name of the item to remove
-     * @param number The number of the item to remove
-     * @throws IllegalArgumentException if the status of the vendingmachine doesn't contain the item
+     * @param item   the name of the item to remove
+     * @param number the number of the item to remove
      */
     @Override
-    public void removeItem(String item, int number) { //fjerne hvis sen kjøper kjøper et produkt
-        if (!status.containsKey(item)) {
+    public void removeItem(String item, int number) {
+        Integer itemCount = status.get(item); // Retrieve the count of the items
+
+        if (itemCount == null) {
             throw new IllegalArgumentException("there is no item to remove");
         }
 
-        if (status.get(item) == number) {
+        if (itemCount == number) {
             status.remove(item);
+        } else if (itemCount > number) {
+            status.put(item, itemCount - number); // Use itemCount instead of status.get(item)
+        } else {
+            // This is the case where itemCount < number
+            //migth want to resolve this another way
+            throw new IllegalArgumentException("not enough items to remove");
         }
-
-        if (status.get(item) > number) {
-            status.put(item, status.get(item) - number);
-        }
-
     }
+    
 
 
     /**
