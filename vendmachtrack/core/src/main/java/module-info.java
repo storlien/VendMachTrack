@@ -1,5 +1,3 @@
 module vendmachtrack.core {
-    exports core;
-    opens core;
-    
+    exports core to vendmachtrack.jsonio, vendmachtrack.ui;
 }
