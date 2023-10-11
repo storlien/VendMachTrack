@@ -18,21 +18,21 @@ public class FromJsonTest {
     private String filePath;
     private String jsonString = "{\"machines\":[{\"status\":{\"Cola\":5,\"Pepsi\":3},\"id\":1,\"location\":\"Trondhjem\"},{\"status\":{\"Tuborg\":1},\"id\":2,\"location\":\"Oslo\"},{\"status\":{\"Hansa\":100,\"Regnvann\":10},\"id\":3,\"location\":\"Bergen\"}]}";
 
-    /**
-     * Sets up the test fixture. This method is called before each test case method is executed.
-     * It initializes the 'fromJson' object with the 'tracker.json' file and creates a temporary file
-     * with the '.json' extension to be used for testing purposes. The file path of the temporary file
-     * is stored in the 'filePath' variable.
-     *
-     * @throws IOException if an I/O error occurs while creating the temporary file
-     */
-    @BeforeEach
-    public void setUp() throws IOException{
-        fromJson = new FromJson("tracker.json");
-        File tempFile = File.createTempFile("test", ".json");
-        filePath = tempFile.getAbsolutePath();
-        tempFile.deleteOnExit();
-    }
+/**
+ * Sets up the test fixture. This method is called before each test case method is executed.
+ * It initializes the 'fromJson' object with the 'tracker.json' file and creates a temporary file
+ * with the '.json' extension to be used for testing purposes. The file path of the temporary file
+ * is stored in the 'filePath' variable.
+ *
+ * @throws IOException if an I/O error occurs while creating the temporary file
+ */
+@BeforeEach
+public void setUp() throws IOException{
+    fromJson = new FromJson("tracker.json");
+    File tempFile = File.createTempFile("test", ".json");
+    filePath = tempFile.getAbsolutePath();
+    tempFile.deleteOnExit();
+}
 
 /**
  * Tests the {@link fromJson#fromInputStream(InputStream)} method with valid JSON data.
@@ -180,7 +180,7 @@ public void testReadFromFileNullFilePath() {
 
     // Assert that the MachineTracker object is null
     assertNull(machineTracker);
-}
+    }
     
 }
     
