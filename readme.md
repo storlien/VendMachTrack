@@ -17,6 +17,7 @@ Velkommen til Vendmachtrack repository! Denne applikasjonen er designet for å h
 ## Lenker til andre dokumenter
 
 - [Alle brukerhistorier](/docs/Brukerhistorier.md)
+- [Arbeidsflyt](/docs/Arbeidsflyt.md)
 
 ## Dokumentasjon fra ulike releases
 
@@ -32,40 +33,6 @@ Velkommen til Vendmachtrack repository! Denne applikasjonen er designet for å h
   - Krav
 
 
-<br>
-
-## Funksjonalitet
-
-Vendmachtrack er en app som er ment for å hjelpe eiere av flere brusautomater holde oversikt og analysere deres brusautomat bedrift.
-
-- [Skjermbilde av appen](/docs/release1/skjermbildeApp.png)  
- - [Klassediagram](/docs/release1/Klassediagram%20venmachtrack%20øving%201%20(1)-1.png)
-
-<br>
-
-På GUI (når appen er ferdig) skal brukeren kunne:
-
-- Se en oversikt over sine brusautomater
-- Se total inntjening
-- Trykke seg inn på en enkelt brusautomat og se detaljert informasjon om denne, dette kan være:
-  - Hvor mye av hver vare som er igjen i brusautomaten
-  - Inntjening
-- Legge til en ny brusautomat
-- Slette en brusautomat
-- Endre informasjon om en brusautomat (fylle opp varer, endre navn)
-- Se overiskt over sitt lager av varer
-- Se kostnader av varer
-- Oppdatere varebeholdning på lager
-
-<br>
-
-Annen funksjonalitet:
-
-- Lagring/henting av data fra fil/skyen
-
-<br>
-
-
 ## Hvordan kjøre applikasjonen
 
 1. Sørg for å ha installert riktig versjon av Java og Maven, du må ha:
@@ -73,11 +40,11 @@ Annen funksjonalitet:
     - Apache Maven 3.8.7 eller nyere
     - Andre repoer som prosjektet er avhengig av vil man få automatisk lastet ned og installert ved hjelp av Maven
 2. Klon dette repositoret til din lokale maskin
-3. Kopier filen "tracker.json" til ditt "home directory":
+3. Kopier filen "tracker.json" til ditt "home directory". Filen ligger i rotnivå av repoet.
 
-- På Linux er dette under /home/ditt-brukernavn
-- På Windows er dette under C:\Users\ditt-brukernavn
-- På Mac er dette under /Users/ditt-brukernavn
+    - På Linux er dette under /home/ditt-brukernavn
+    - På Windows er dette under C:\Users\ditt-brukernavn
+    - På Mac er dette under /Users/ditt-brukernavn
 
 
 4. Åpne en ønsket terminal (for eksempel i VSCode)
