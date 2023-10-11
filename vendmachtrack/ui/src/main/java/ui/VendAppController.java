@@ -43,14 +43,21 @@ public class VendAppController implements Initializable {
         IFromJson fromJson = new FromJson("tracker.json");
         this.machtrack = fromJson.readFromFile();
 
-        List<VendingMachine> machines = machtrack.getMachines();
-        menuBar.getItems().addAll(machines);
+        if (this.machtrack != null) {
+            List<VendingMachine> machines = machtrack.getMachines();
+            menuBar.getItems().addAll(machines);
+        } else {
+            myLabel.setText("Error! Cannot read file");
+        }
 
     }
 
     public void onClose() {
-        IToJson toJson = new ToJson("tracker.json");
-        toJson.writeToFile(machtrack);
+
+        if (this.machtrack != null) {
+            IToJson toJson = new ToJson("tracker.json");
+            toJson.writeToFile(machtrack);
+        }
     }
 
     @FXML
