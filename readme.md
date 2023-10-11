@@ -1,18 +1,18 @@
-# Vending machine tracker (Vendmachtrack)
+# Vending Machine Tracker (Vendmachtrack)
 
-Velkommen til Vendmachtrack repository! Denne appen er designet for å hjelpe eiere av flere brusautomater holde oversikt og analysere deres brusautomat bedrift.
+Velkommen til Vendmachtrack repository! Denne applikasjonen er designet for å hjelpe eiere av flere brusautomater holde oversikt og analysere deres brusautomat bedrift.
 
-[open in Eclipse Che](https://che.stud.ntnu.no/#https://gitlab.stud.idi.ntnu.no/it1901/groups-2023/gr2338/gr2338?new)
+[Åpne i Eclipse Che](https://che.stud.ntnu.no/#https://gitlab.stud.idi.ntnu.no/it1901/groups-2023/gr2338/gr2338?new)
 
 ## Innhold
 
 - [Lenker til andre dokumenter](#lenker-til-andre-dokumenter) 
 - [Dokumentajson fra ulike releases](#dokumentasjon-fra-ulike-releases)
-- [Hvordan starte](#hvordan-starte)  
+- [Hvordan kjøre applikasjonen](#hvordan-kjøre-applikasjonen)  
 - [Hvordan kjøre tester](#hvordan-kjøre-tester)
 - [Hvordan se testdekningsgrad](#hvordan-se-testdekningsgrad)
 - [FAQ](#faq)
-- [Prosjektsturktur](#prosjektstruktur)
+- [Prosjektstruktur](#prosjektstruktur)
 
 ## Lenker til andre dokumenter
 
@@ -23,10 +23,14 @@ Velkommen til Vendmachtrack repository! Denne appen er designet for å hjelpe ei
 - release 1:
   - [readme.md](/docs/release1/readme.md)
   - [Brukerhistorier](/docs/release1/Brukerhistorier.md)
-  - [Funksjonalitet](/docs/release1/Funksjonalitet.md)
-  - [Prosjektstruktur](/docs/release1/Prosjektstruktur.md)
-  - [Klassediagram](/docs/release1/Klassediagram%20venmachtrack%20øving%201%20(1)-1.png)
-  - [Skjermbilde av appen](/docs/release1/skjermbildeApp.png) 
+  - [Krav](/docs/release1/Krav.md)
+
+
+- release 2:
+  - readme.md
+  - Brukerhistorier
+  - Krav
+
 
 <br>
 
@@ -62,15 +66,22 @@ Annen funksjonalitet:
 <br>
 
 
-## Hvordan starte
+## Hvordan kjøre applikasjonen
 
 1. Sørg for å ha installert riktig versjon av Java og Maven, du må ha:
     - Java versjon 17.0.5 eller nyere
     - Apache Maven 3.8.7 eller nyere
-    - andre repoer som prosjektet er avhengig av vil man få automatisk ved hjelp av Maven
+    - Andre repoer som prosjektet er avhengig av vil man få automatisk lastet ned og installert ved hjelp av Maven
 2. Klon dette repositoret til din lokale maskin
-3. Åpne en ønsket terminal (for eksempel i VSCode)
-4 kjør følgende kommando i terminalen:
+3. Kopier filen "tracker.json" til ditt "home directory":
+
+- På Linux er dette under /home/ditt-brukernavn
+- På Windows er dette under C:\Users\ditt-brukernavn
+- På Mac er dette under /Users/ditt-brukernavn
+
+
+4. Åpne en ønsket terminal (for eksempel i VSCode)
+5. Kjør følgende kommando i terminalen:
 
 ```bash
  mvn clean install 
