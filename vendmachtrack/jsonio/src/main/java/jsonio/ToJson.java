@@ -16,7 +16,7 @@ public class ToJson implements IToJson {
      * @param file File name.
      */
     public ToJson(String file) {
-        filePath = "jsonio/src/main/resources/" + file;
+        this.filePath = System.getProperty("user.home") + "/" + file;
     }
 
     /**
@@ -50,7 +50,6 @@ public class ToJson implements IToJson {
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath, StandardCharsets.UTF_8))) {
             bw.write(jsonString);
-            System.err.println("Writing ok");
         } catch (Exception e) {
             System.err.println("Error writing to file\n" + e);
         }
