@@ -6,6 +6,7 @@ components:
     container:
       image: gr2338/it1901:latest
       memoryLimit: 3Gi
+      image: 'eclipse/openjdk17:latest'
       endpoints:
         - exposure: public
           name: 6080-tcp-desktop-ui
