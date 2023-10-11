@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import core.MachineTracker;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
@@ -13,36 +13,43 @@ public class FromJson implements IFromJson {
 
     private final String filePath;
 
-    public FromJson() {
-        this.filePath = "/machine1"; // Note the leading slash for resource access
+    /**
+     * Constructor. Requires a file name for which the MachineTracker object will be read from.
+     *
+     * @param file Name of file.
+     */
+    public FromJson(String file) {
+        this.filePath = System.getProperty("user.home") + "/" + file;
     }
 
     /**
-     * Deserializes MachineTracker object from InputStream
+     * Deserializes MachineTracker object from InputStream.
      *
      * @param is InputStream with JSON data
      * @return MachineTracker object from InputStream
      */
     @Override
     public MachineTracker fromInputStream(InputStream is) {
-
-        try {
-
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
             Gson gson = new Gson();
-            BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
             return gson.fromJson(br, MachineTracker.class);
         } catch (Exception e) {
-            System.out.println("Error deserializing from InputStream\n" + e);
+            System.err.println("Error deserializing from InputStream\n" + e);
             return null;
         }
     }
 
+    /**
+     * Reads and returns MachineTracker object from file.
+     *
+     * @return MachineTracker object
+     */
     @Override
     public MachineTracker readFromFile() {
-        try (InputStream is = this.getClass().getResourceAsStream(filePath)) {
+        try (InputStream is = new FileInputStream(filePath)) {
             return fromInputStream(is);
         } catch (Exception e) {
-            System.err.println("Error" + e);
+            System.err.println("Error reading from file: " + filePath + "\n" + e);
             return null;
         }
     }

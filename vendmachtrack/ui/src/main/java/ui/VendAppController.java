@@ -2,10 +2,10 @@ package ui;
 
 import java.net.URL;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import core.IMachineTracker;
-import core.MachineTracker;
 import core.VendingMachine;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -40,24 +40,32 @@ public class VendAppController implements Initializable {
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        IFromJson fromJson = new FromJson();
+        IFromJson fromJson = new FromJson("tracker.json");
         this.machtrack = fromJson.readFromFile();
 
         List<VendingMachine> machines = machtrack.getMachines();
         menuBar.getItems().addAll(machines);
-    
+
     }
 
     public void onClose() {
-        IToJson toJson = new ToJson("machine1");
+        IToJson toJson = new ToJson("tracker.json");
         toJson.writeToFile(machtrack);
     }
 
     @FXML
     private void handleButtonClick(ActionEvent event) {
         VendingMachine selectedItem = menuBar.getValue();
-        String info = "Inventory: " + selectedItem.getStatus();
-        textArea.setText(info);
+        if (selectedItem != null) {
+            Map<String, Integer> statusMap = selectedItem.getStatus();
+            StringBuilder formattedStatus = new StringBuilder("Inventory:\n");
+            for (Map.Entry<String, Integer> entry : statusMap.entrySet()) {
+                formattedStatus.append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
+            }
+            textArea.setText(formattedStatus.toString());
+        } else {
+            textArea.setText("No vending machine selected");
+        }
 
     }
 

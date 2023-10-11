@@ -22,7 +22,7 @@ public class MachineTrackerTest {
     @BeforeEach
     public void setUp() {
         tracker = new MachineTracker();
-        machine1 = new VendingMachine(); // Assuming a default constructor exists
+        machine1 = new VendingMachine(); 
         machine2 = new VendingMachine();
     }
 
