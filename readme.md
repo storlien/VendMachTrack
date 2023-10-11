@@ -2,6 +2,8 @@
 
 Velkommen til Vendmachtrack repository! Denne appen er designet for å hjelpe eiere av flere brusautomater holde oversikt og analysere deres brusautomat bedrift.
 
+[open in Eclipse Che](https://che.stud.ntnu.no/#https://gitlab.stud.idi.ntnu.no/it1901/groups-2023/gr2338/gr2338?new)
+
 ## Innhold
 
 - [Lenker til andre dokumenter](#lenker-til-andre-dokumenter) 
