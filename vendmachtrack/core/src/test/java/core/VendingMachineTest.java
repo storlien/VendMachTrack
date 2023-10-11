@@ -155,8 +155,9 @@ public class VendingMachineTest {
      */
     @Test
     public void testToString() {
-        assertEquals("Lobby, ID: 1", machine.toString());
+        assertEquals("Machine: " + machine.getId() + " (" + machine.getLocation() + ")", machine.toString());
     }
 }
+
 
 
