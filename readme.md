@@ -1,6 +1,6 @@
 # Vending Machine Tracker (Vendmachtrack)
 
-Velkommen til Vendmachtrack repository! Denne applikasjonen er designet for å hjelpe eiere av flere brusautomater holde oversikt og analysere deres brusautomat bedrift.
+Velkommen til Vendmachtrack repository!
 
 
 ## Innhold
@@ -16,21 +16,21 @@ Velkommen til Vendmachtrack repository! Denne applikasjonen er designet for å h
 
 ## Lenker til andre dokumenter
 
-- [Alle brukerhistorier](/docs/Brukerhistorier.md)
-- [Arbeidsflyt](/docs/Arbeidsflyt.md)
+- [readme.md for kodingsprosjektet](/vendmachtrack/readme.md)
+- [Brukerhistorier](/docs/Brukerhistorier.md)
 
 ## Dokumentasjon fra ulike releases
 
 - release 1:
   - [readme.md](/docs/release1/readme.md)
-  - [Brukerhistorier](/docs/release1/Brukerhistorier.md)
-  - [Krav](/docs/release1/Krav.md)
+  - [Arbeidsflyt](/docs/release1/Arbeidsflyt_1.md)
+  - [Krav](/docs/release1/Krav_1.md)
 
 
 - release 2:
-  - readme.md
-  - Brukerhistorier
-  - Krav
+  - [readme.md](/docs/release2/readme.md)
+  - [Arbeidsflyt](/docs/release2/Arbeidsflyt_2.md)
+  - [Krav](/docs/release2/Krav_2.md)
 
 ## Hvordan kjøre applikasjonen i Eclipse Che
 
