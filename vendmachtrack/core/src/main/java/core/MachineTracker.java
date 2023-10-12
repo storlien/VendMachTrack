@@ -3,6 +3,11 @@ package core;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a collection of vending machines.
+ * It allows adding, removing, and retrieving vending machines from the machine tracker.
+ * It implements the IMachineTracker interface.
+ */
 
 public class MachineTracker implements IMachineTracker {
 
@@ -10,25 +15,25 @@ public class MachineTracker implements IMachineTracker {
     private List<VendingMachine> machines = new ArrayList<>();
 
     /**
-     * Removes the vendingmachine from the machinetracker
+     * Removes the specifies vending machine from the machinetracker.
      *
-     * @param v the vendingmachine to remove from the tracker
-     * @throws IllegalArgumentException if the machine doesn't contain the vendingmachine v
+     * @param v The vending machine to be removed from the tracker.
+     * @throws IllegalArgumentException If the machine is not found in the tracker.
      */
     @Override
     public void removeVendingMachine(VendingMachine v) {
         if (!machines.contains(v)) {
-            throw new IllegalArgumentException("There is no such vendingmachine in this tracker");
+            throw new IllegalArgumentException("The specified vending machine is not part of this tracker");
         } else {
             machines.remove(v);
         }
     }
 
     /**
-     * Adds the vendingmachine to the machinetracker
+     * Adds the specified vending machine to the machinetracker.
      *
-     * @param v the vendingmachine to add to the tracker
-     * @throws IllegalArgumentException if the machine already contains the vendingmachine v
+     * @param v The vending machine to be added to the tracker.
+     * @throws IllegalArgumentException If the vending machine is already in the tracker. 
      */
     @Override
     public void addVendingMachine(VendingMachine v) {
@@ -41,18 +46,20 @@ public class MachineTracker implements IMachineTracker {
 
 
     /**
-     * @return the list of the vendingmachines in this tracker
+     * Retrieves a list of vending machines in this tracker. 
+     * 
+     * @return A list of vending machines in this tracker.
      */
     @Override
-    public List<VendingMachine> getMachines() { //evt legge til i interface
+    public List<VendingMachine> getMachines() { 
         return new ArrayList<>(machines);
     }
 
 
     /**
-     * sets the machine
+     * Sets the list of vending machines in this tracker. 
      *
-     * @param machines
+     * @param machines The list of vending machines to be set in the tracker.
      */
     @Override
     public void setMachines(List<VendingMachine> machines) {

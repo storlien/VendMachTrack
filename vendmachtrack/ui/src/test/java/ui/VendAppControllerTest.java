@@ -61,7 +61,7 @@ public class VendAppControllerTest extends ApplicationTest {
     @Override
     public void start(Stage stage) throws Exception {
         // This uses the structure from the App class to start the application.
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("App.fxml")); // Make sure to use the correct path to your FXML file.
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("App.fxml")); // Make sure to use the correct path to FXML file.
         Parent parent = fxmlLoader.load();
         this.controller = fxmlLoader.getController();
 
@@ -127,14 +127,14 @@ public class VendAppControllerTest extends ApplicationTest {
     @Test
     public void testVendingMachineSelection() {
         // Assuming the ChoiceBox's items are populated at this point,
-        // we'll select the first item in the ChoiceBox. Adjust as necessary if you have a specific item to test.
+        // we'll select the first item in the ChoiceBox. 
         ChoiceBox choiceBox = lookup("#menuBar").queryAs(ChoiceBox.class);
         interact(() -> choiceBox.getSelectionModel().select(0));
 
         // Click the "OK" button.
         clickOn("#button");
 
-        // Now, we'll verify that the TextArea contains the expected text.
+        // verify that the TextArea contains the expected text.
         // Adjust the expected text based on the VendingMachine's status that you're testing.
         TextArea textArea = lookup("#textArea").queryAs(TextArea.class);
         FxAssert.verifyThat(textArea, TextInputControlMatchers.hasText("Inventory:\nCola: 5\nPepsi: 3\n"));

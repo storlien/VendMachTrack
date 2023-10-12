@@ -5,10 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import javax.crypto.Mac;
-
 import core.IMachineTracker;
-import core.MachineTracker;
 import core.VendingMachine;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -23,6 +20,9 @@ import jsonio.IFromJson;
 import jsonio.IToJson;
 import jsonio.ToJson;
 
+/**
+ * Controller class for the vending machine application's user interface.
+ */
 
 public class VendAppController implements Initializable {
 
@@ -40,7 +40,12 @@ public class VendAppController implements Initializable {
 
     private IMachineTracker machtrack;
 
-
+    /**
+     * Initializes the controller. It reads vending machine data from a JSON file.
+     * 
+     * @param arg0 The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param arg1 The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         IFromJson fromJson = new FromJson("tracker.json");
@@ -55,8 +60,6 @@ public class VendAppController implements Initializable {
 
     }
 
-    
-
     public IMachineTracker getMachtrack() {
        // Use a copy constructor, clone method, or another appropriate way to copy the object
         IFromJson fromJson = new FromJson("tracker.json");
@@ -65,7 +68,9 @@ public class VendAppController implements Initializable {
        
     }
 
-
+    /**
+     * Handles the close event of the application. It writes the vending machine data back to the JSON file before closing. 
+     */
 
     public void onClose() {
 
@@ -74,6 +79,12 @@ public class VendAppController implements Initializable {
             toJson.writeToFile(machtrack);
         }
     }
+
+    /**
+     * Handles the button click event. It displays the inventory of the selected vending machine in the text area.
+     * 
+     * @param event The event representing the button click.
+     */
 
     @FXML
     private void handleButtonClick(ActionEvent event) {
