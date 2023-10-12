@@ -16,6 +16,14 @@ Se [arbeidsflyt](/docs/release2/Arbeidsflyt_2.md) for å lese om hvordan arbeids
 
 - Laget [diagram](/docs/diagrams/ClassDiagram.wsd) i PlantUML
 
+### Merknader
+
+- I module-info.java-filen i core-modulen står følgende:
+    ```bash
+    opens core to com.google.gson;
+    ```
+    Det er ikke ønskelig mtp. god innkapsling å åpne core til Gson-biblioteket, men det har vært nødvendig for at Gson skal kunne aksessere feltene i MachineTracker-objektet. Det skal i utgangspunktet ikke være et problem ettersom vi har de nødvendige setters, getters og synlighet. Det har blitt jobbet mye på for å unngå dette, men eneste løsningen som ser ut til å fungere er å implementere TypeAdapter. Dette vil bli gjort i en senere release.
+
 <br/>
 
 
