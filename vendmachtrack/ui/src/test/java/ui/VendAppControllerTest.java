@@ -1,7 +1,9 @@
 package ui;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
@@ -10,6 +12,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -31,6 +34,7 @@ import javafx.stage.WindowEvent;
 import jsonio.FromJson;
 import jsonio.IFromJson;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -56,7 +60,7 @@ public class VendAppControllerTest extends ApplicationTest {
      */
     @Override
     public void start(Stage stage) throws Exception {
-        // This uses the structure from your App class to start the application.
+        // This uses the structure from the App class to start the application.
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("App.fxml")); // Make sure to use the correct path to your FXML file.
         Parent parent = fxmlLoader.load();
         this.controller = fxmlLoader.getController();
@@ -73,9 +77,14 @@ public class VendAppControllerTest extends ApplicationTest {
 
 
 
+    /**
+     * Sets up the test fixture before each test method runs.
+     * Initializes a VendingMachine object with a HashMap of product names and quantities,
+     * and adds it to the trackerTest object.
+     */
     @BeforeEach
     public void setup(){
-        //same as a one vendingmachine in Tracker.Json (migth read instead)
+        //same as a vendingmachine in Tracker.Json (might read instead)
         HashMap<String, Integer> status = new HashMap<>();
         status.put("Cola",5);
         status.put("Pepsi",3);
@@ -85,6 +94,10 @@ public class VendAppControllerTest extends ApplicationTest {
       
     }
 
+    /**
+     * Tests the VendAppController class.
+     * Ensures that the controller and tracker objects are not null.
+     */
     @Test
     public void testController_VenpAppController(){
         assertNotNull(this.controller);
@@ -92,21 +105,16 @@ public class VendAppControllerTest extends ApplicationTest {
     }
 
 
+    /**
+     * Tests the vending machine controller by comparing the ID, location, and status of the vending machine
+     * in the test tracker with the vending machine in the actual tracker.
+     */
     @Test
     public void testController_vendingMachine(){
         assertEquals(trackerTest.getMachines().get(0).getId(), this.tracker.getMachines().get(0).getId());
         assertEquals(trackerTest.getMachines().get(0).getLocation(), this.tracker.getMachines().get(0).getLocation());
         assertEquals(trackerTest.getMachines().get(0).getStatus(), this.tracker.getMachines().get(0).getStatus());
     }
-
-
-    // @Test
-    // public void testMachineTrackerInitialization(){
-
-
-    // }
-
-
     
     /**
      * Tests the vending machine selection functionality of the VendAppController class.
@@ -148,7 +156,35 @@ public class VendAppControllerTest extends ApplicationTest {
         FxAssert.verifyThat(textArea, TextInputControlMatchers.hasText("Inventory:\nHansa: 100\nRegnvann: 10\n")); 
     }
 
-    
+    /**
+     * Tests the behavior of the "OK" button when no vending machine is selected in the ChoiceBox.
+     */
+    @Test
+    public void testButtonClickWithNoSelection() {
+        // Deselect any currently selected item in the ChoiceBox.
+        ChoiceBox choiceBox = lookup("#menuBar").queryAs(ChoiceBox.class);
+        interact(() -> choiceBox.getSelectionModel().clearSelection());
 
+        // Click the "OK" button.
+        clickOn("#button");
+
+        // Verify the TextArea shows the "No vending machine selected" message.
+        TextArea textArea = lookup("#textArea").queryAs(TextArea.class);
+        FxAssert.verifyThat(textArea, TextInputControlMatchers.hasText("No vending machine selected"));
+    }
+
+    /**
+     * This method tests the existence of UI elements in the VendAppController.
+     * It checks if the Label, TextArea, Button and ChoiceBox elements exist.
+     * If any of the elements do not exist, the test will fail.
+     */
+    @Test
+    public void testUIElementsExistence() {
+        assertNotNull(lookup("#myLabel").queryAs(Label.class));
+        assertNotNull(lookup("#textArea").queryAs(TextArea.class));
+        assertNotNull(lookup("#button").queryAs(Button.class));
+        assertNotNull(lookup("#menuBar").queryAs(ChoiceBox.class));
+    }
+    
 
 }
