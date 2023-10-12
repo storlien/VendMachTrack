@@ -58,8 +58,11 @@ public class VendAppController implements Initializable {
     
 
     public IMachineTracker getMachtrack() {
-        IMachineTracker machdeliver = this.machtrack;
-        return machdeliver;
+       // Use a copy constructor, clone method, or another appropriate way to copy the object
+        IFromJson fromJson = new FromJson("tracker.json");
+        IMachineTracker machtrackdeliver = fromJson.readFromFile();
+        return machtrackdeliver;
+       
     }
 
 
