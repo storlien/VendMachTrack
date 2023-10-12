@@ -1,0 +1,9 @@
+# Refleksjon rundt arbeidsvaner og arbeidsflyt for release 1
+
+I release 1 startet vi med å diskutere hvilket prosjekt vi ønsket å gjennomføre i dette faget. Deretter brukte vi tid på å sette oss inn i arbeidskravene, maven, håndtering av git og hvordan vi ønsket at denne applikasjonen skal se ut og fungere. 
+
+I fasen etter at kodeprosjektet var opprettet og lagt til i kodelageret, opplevde vi tidvis misforståelser. Vi hadde ikke satt en tydelig fordeling av arbeidsoppgaver, eller forventningsavklaring til hvordan resultatet for release 1 skulle se ut. I stedet ble vi for ivrige der alle "kastet" seg litt over prosjektet for å komme i gang. Etter en stund når vi hadde opplevd en del misforståelser, måtte vi stoppe opp og forsøke å reflektere over hvordan vi videre skulle gå sammen for å løse oppgavene knyttet til denne releasen. 
+
+Dette endte opp med å bli en svært verdifull erfaring som tydeliggjorde viktigheten av åpen kommunikasjon om fordeling av oppgaver, nødvendige forbedringer og en felles forståelse av progresjonen til prosjektet. Vi opplevde at alle hadde en felles mental modell for hvordan vi ønsket at sluttresultatet skulle se ut, men ikke nødvendigvis for denne første releasen. Gjennom forbedret kommunikasjon klarte vi derimot å oppnå en felles forståelse av dette, og leverte et resultat alle var fornøyd med. 
+
+For denne releasen arbeidet vi alltid sammen, men løste ulike oppgaver på egenhånd. Etter den tydeligere avklaringen av arbeidsoppgaver fungerte dette fint, men vi ønsker til neste øving å teste ut parprogrammering i større grad. Til neste release ønsker vi å fortsette med den tydelige kommunikasjonen av forventning til resultatet og arbeidsfordeling - både i forkant av arbeidet, og underveis.
