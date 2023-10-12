@@ -46,8 +46,6 @@ public class VendAppController implements Initializable {
      * @param arg0 The location used to resolve relative paths for the root object, or null if the location is not known.
      * @param arg1 The resources used to localize the root object, or null if the root object was not localized.
      */
-
-
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         IFromJson fromJson = new FromJson("tracker.json");
@@ -60,6 +58,14 @@ public class VendAppController implements Initializable {
             myLabel.setText("Error! Cannot read file");
         }
 
+    }
+
+    public IMachineTracker getMachtrack() {
+       // Use a copy constructor, clone method, or another appropriate way to copy the object
+        IFromJson fromJson = new FromJson("tracker.json");
+        IMachineTracker machtrackdeliver = fromJson.readFromFile();
+        return machtrackdeliver;
+       
     }
 
     /**
