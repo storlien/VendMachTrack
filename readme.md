@@ -11,7 +11,6 @@ Velkommen til Vendmachtrack repository!
 - [Hvordan kjøre applikasjonen lokalt](#hvordan-kjøre-applikasjonen-lokalt)  
 - [Hvordan kjøre tester](#hvordan-kjøre-tester)
 - [Hvordan se testdekningsgrad](#hvordan-se-testdekningsgrad)
-- [FAQ](#faq)
 - [Prosjektstruktur](#prosjektstruktur)
 
 ## Lenker til andre dokumenter
@@ -34,12 +33,13 @@ Velkommen til Vendmachtrack repository!
 
 ## Hvordan kjøre applikasjonen i Eclipse Che
 
-1. [Åpne i Eclipse Che.](https://che.stud.ntnu.no/#https://gitlab.stud.idi.ntnu.no/it1901/groups-2023/gr2338/gr2338?new)
-2. Når IDE-en har startet opp, kopierer du "endpoint URL" for "6080-tcp-desktop-ui (6080/http)" under "Endpoints" nederst til venstre i IDE-en. Se skjermbildet:
+1. Sørg først for at Gitlab er koblet opp mot Eclipse Che med Access Token
+2. [Åpne i Eclipse Che.](https://che.stud.ntnu.no/#https://gitlab.stud.idi.ntnu.no/it1901/groups-2023/gr2338/gr2338?new)
+3. Når IDE-en har startet opp, kopierer du "endpoint URL" for "6080-tcp-desktop-ui (6080/http)" under "Endpoints" nederst til venstre i IDE-en. Se skjermbildet:
 ![Alt text](/docs/images/endpoint_eclipse-che.png)
-3. Åpne nettsiden i en ny fane med den kopierte URL-en.
-4. Gå tilbake til IDE-en. Åpne en terminal.
-5. Kjør kommando for å kopiere tracker.json-filen til home directory:
+4. Åpne nettsiden i en ny fane med den kopierte URL-en.
+5. Gå tilbake til IDE-en. Åpne en terminal.
+6. Kjør kommando for å kopiere tracker.json-filen til home directory:
 ```bash
 cp tracker.json /home/dev/
 ```
@@ -119,65 +119,79 @@ mvn test jacoco:report
 
 <br>
 
-## FAQ
-
-- Kommer snart
-
-<br>
 
 ## Prosjektstruktur
 
 Repositoriet er organisert i flere mapper. selve kodeprosjektet ligger i mappen vendmachtrack/. I denne mappen ligger det flere mapper som inneholder kode for forskjellige deler av prosjektet:
 
 - docs - inneholder relevant informasjon tilknyttet prosjektet
-  - [how_to_git](docs/how_to_git.md) - enkel bruksanvisning for viktige git kommandoer
-  - [how_to_run](docs/how_to_run.md) - Info om hvordan man kjører appen.
-  - /release1
-    - [requirements](docs/release1/requirements.md) - inneholder kravene for prosjektet
-    - [Brukerhistorier.md](docs/release1/Brukerhistorier.md) - inneholder brukerhistoriene for release 1
-    - [readme.md](docs/release1/readme.md) - inneholder readme.md for release 1
-    - [Klassediagram venmachtrack øving 1](docs/release1/Klassediagram.png) - inneholder klassediagrammet for release 1
-    - [Funksjonalitet](docs/release1/Funksjonalitet.md) - inneholder funksjonaliteten til release 1
-    - [skjermbildeApp](docs/release1/skjermbildeApp.png) - inneholder skjermbilde av appen til release 1
+  - diagrams - inneholder fil for klassediagram for backend- struktur
+  - images - inneholder bilde av hvor man finner endpoints
+appen.
+  - release1
+    - Arbeidsflyt_1.md - inneholder info om kommunikasjon og arbeidsflyt innad i gruppen til release 1
+    - Klassediagram.png - klassediagram over kildekoden til prosjektet
+    - Krav_1.md - inneholder kravene for release 1
+    - skjermbildeApp.png - bilde av brukergrensesnittet til release 1
+    - readme.md - inneholder readme.md for release 1
 
-- [vendmachtrack/](vendmachtrack/) - Hovedmappe som inneholder all kildekoden for prosjektet
+  - release2
+    - Arbeidsflyt_2.md - inneholder info om kommunikasjon og arbeidsflyt innad i gruppen til release 2
+    - Krav_2.md - inneholder kravene for release 2
+    - readme.md - inneholder informaasjon om hva som ble gjort i release 2
 
-- [pom.xml](vendmachtrack/pom.xml) - dette er rot pom.xml filen som hører til hele prosjektet
+  
+  - Brukerhistorier.md - inneholder brukerhistoriene til prosjektet
 
-- core/ - Inneholder backend logikken til appen
-  - [pom.xml](vendmachtrack/core/pom.xml) - Dette er Maven prosjekt filen som hører til core modulen
-  - src/main/java/ - inneholder core mappen og [module-info.java](vendmachtrack/core/src/main/java/module-info.java)
-    - core/ - Inneholder kildekoden til backend-koden:  
-      - [IItem.java](vendmachtrack/core/src/main/java/core/IItem.java)
-      - [Item.java](vendmachtrack/core/src/main/java/core/Item.java)
-      - [IMachineTracker.java](vendmachtrack/core/src/main/java/core/IMachineTracker.java)
-      - [MachineTracker.java](vendmachtrack/core/src/main/java/core/MachineTracker.java)
-      - [IVendingMachine.java](vendmachtrack/core/src/main/java/core/IVendingMachine.java)
-      - [VendingMachine.java](vendmachtrack/core/src/main/java/core/VendingMachine.java)
-  - src/test/java/core/ - inneholder tester:
-    - [venmachtrackTest.java](vendmachtrack/core/src/test/java/core/venmachtrackTest.java) - inneholder testene til core mappen
+   
 
-- jsonio/ - inneholder logikken for å lese-/skrive til fil
-  - [pom.xml](vendmachtrack/jsonio/pom.xml) - Dette er Maven prosjekt filen som hører til jsonio modulen
-  - src/main/java/ - inneholder kildekoden til fil logikken og [module-info.java](vendmachtrack/jsonio/src/main/java/module-info.java)
-    - jsonio/ - inneholder kildekoden til fil logikken: 
-      - [FromJson.java](vendmachtrack/jsonio/src/main/java/jsonio/FromJson.java)
-      - [ToJson.java](vendmachtrack/jsonio/src/main/java/jsonio/ToJson.java)
-      - [IToJson.java](vendmachtrack/jsonio/src/main/java/jsonio/IToJson.java)
-      - [IFromJson.java](vendmachtrack/jsonio/src/main/java/jsonio/IFromJson.java)
-  - src/test/java/jsonio/ - inneholder tester:
-    - [jsonioTest.java](vendmachtrack/jsonio/src/test/java/jsonio/jsonioTest.java) - inneholder testene til jsonio mappen
+- vendmachtrack/ - Hovedmappe som inneholder all kildekoden for prosjektet
 
-- ui/ - inneholder fronten d logikken til appen
-- [pom.xml](vendmachtrack/ui/pom.xml) - Dette er Maven prosjekt filen som hører til ui modulen
-  - src/ - inneholder main mappen og test mappen
-    - main/ inneholder java mappen og resources mappen
-      - java/ - inneholder ui mappen og [module-info.java](vendmachtrack/ui/src/main/java/module-info.java)
+  - pom.xml - dette er rot pom.xml filen som hører til hele prosjektet
+
+
+
+  - core/ - Inneholder backend- logikken til appen
+    - pom.xml - Dette er Maven prosjekt filen som hører til core modulen
+    - src/main/java/ - inneholder core- mappen og module-info.java(vendmachtrack/core/src/main/java/module-info.java)
+        - core/ - Inneholder kildekoden til backend-koden:  
+            - IItem.java
+            - Item.java
+            - IMachineTracker.java
+            - MachineTracker.java
+            - IVendingMachine.java
+            - VendingMachine.java
+     
+    - src/test/java/core/ - inneholder tester:
+      - ItemTest.java - inneholder tester for Item- klassen
+      - MachineTrackerTest.java - inneholder tester for MachineTracker- klassen
+      - VendingMachineTest.java - inneholder tester for Vendingmachine- klassen
+
+
+
+  - jsonio/ - inneholder logikken for å lese-/skrive til fil
+    - pom.xml - Dette er Maven prosjektfilen som hører til jsonio modulen
+    - src/main/java/ - inneholder kildekoden til fil logikken og module-info.java (vendmachtrack/jsonio/src/main/java/module-info.java)
+      - jsonio/ - inneholder kildekoden til fil- logikken: 
+        - FromJson.java
+        - IFromJson.java
+        - ToJson.java
+        - IToJson.java
+      
+    - src/test/java/jsonio/ - inneholder tester:
+      - jsonioTest.java - inneholder testene til jsonio- mappen
+
+  - ui/ - inneholder frontend- logikken til appen
+    - pom.xml(vendmachtrack/ui/pom.xml) - Dette er Maven prosjektfilen som hører til ui- modulen
+    - src/main - inneholder java og resources/ui - mappen
+      - java/ - inneholder ui- mappen og module-info.java(vendmachtrack/ui/src/main/java/module-info.java)
         - ui/ - inneholder kildekoden til frontend-koden:   
-          - [vendmachApp.java](vendmachtrack/ui/src/main/java/ui/App.java) 
-          - [VendAppController.java](vendmachtrack/ui/src/main/java/ui/vendAppController.java)
-      - resources/ - inneholder fxml filen: [App.fxml](vendmachtrack/ui/src/main/resources/ui/App.fxml)  
-    - test/java/ui/ - inneholder tester:
-      - [vendmachAppTest.java](vendmachtrack/ui/src/test/java/ui/vendmachAppTest.java) - inneholder testene til ui mappen
+            - App.java (vendmachtrack/ui/src/main/java/ui/App.java) 
+            - VendAppController.java(vendmachtrack/ui/src/main/java/ui/vendAppController.java)
 
-- [Brukerhistorier](Brukerhistorier.md) - inneholder brukerhistoriene til prosjektet
+      - resources/ - inneholder fxml- filen: App.fxml (vendmachtrack/ui/src/main/resources/ui/App.fxml)  
+    - src/test/java/ui/ - inneholder tester:
+      - vendmachAppTest.java (vendmachtrack/ui/src/test/java/ui/vendmachAppTest.java) - inneholder testene til ui- mappen
+
+
+
