@@ -5,7 +5,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import javax.crypto.Mac;
+
 import core.IMachineTracker;
+import core.MachineTracker;
 import core.VendingMachine;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -51,6 +54,15 @@ public class VendAppController implements Initializable {
         }
 
     }
+
+    
+
+    public IMachineTracker getMachtrack() {
+        IMachineTracker machdeliver = this.machtrack;
+        return machdeliver;
+    }
+
+
 
     public void onClose() {
 

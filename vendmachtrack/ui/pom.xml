@@ -57,6 +57,7 @@
             <version>3.6.0</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.testfx</groupId>
             <artifactId>testfx-core</artifactId>
@@ -74,17 +75,20 @@
 
     <build>
         <plugins>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
             </plugin>
+          
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M5</version>
                 <configuration>
-                    <argLine>
-                        --add-opens vendmachtrack.ui/ui=ALL-UNNAMED --add-exports
-                        javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
+                    <argLine>@{argLine} --add-opens vendmachtrack.ui/ui=ALL-UNNAMED --add-exports 
+                    javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
                     </argLine>
                 </configuration>
             </plugin>
@@ -100,6 +104,24 @@
                     <mainClass>vendmachtrack.ui/ui.App</mainClass>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.7</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <destFile>${project.build.directory}/coverage-reports/jacoco.exec</destFile>
+                    <dataFile>${project.build.directory}/coverage-reports/jacoco.exec</dataFile>
+                </configuration>
+            </plugin>
+
         </plugins>
     </build>
 </project>

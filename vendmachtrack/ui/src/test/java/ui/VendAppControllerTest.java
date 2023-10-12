@@ -11,6 +11,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -44,6 +45,8 @@ public class VendAppControllerTest extends ApplicationTest {
 
 
  private VendAppController controller;
+ private IMachineTracker tracker;
+ private MachineTracker trackerTest = new MachineTracker();
 
     /**
      * This method starts the application by loading the FXML file and setting up the stage.
@@ -56,16 +59,55 @@ public class VendAppControllerTest extends ApplicationTest {
         // This uses the structure from your App class to start the application.
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("App.fxml")); // Make sure to use the correct path to your FXML file.
         Parent parent = fxmlLoader.load();
+        this.controller = fxmlLoader.getController();
 
-        controller = fxmlLoader.getController();
+        this.tracker = this.controller.getMachtrack();
+
         stage.setOnCloseRequest((WindowEvent event) -> {
-            controller.onClose();
+            this.controller.onClose();
         });
 
         stage.setScene(new Scene(parent));
         stage.show();
     }
 
+
+
+    @BeforeEach
+    public void setup(){
+        //same as a one vendingmachine in Tracker.Json (migth read instead)
+        HashMap<String, Integer> status = new HashMap<>();
+        status.put("Cola",5);
+        status.put("Pepsi",3);
+        VendingMachine machine1 = new VendingMachine(1,status,"Trondhjem");
+    
+        this.trackerTest.addVendingMachine(machine1);
+      
+    }
+
+    @Test
+    public void testController_VenpAppController(){
+        assertNotNull(this.controller);
+        assertNotNull(this.tracker);
+    }
+
+
+    @Test
+    public void testController_vendingMachine(){
+        assertEquals(trackerTest.getMachines().get(0).getId(), this.tracker.getMachines().get(0).getId());
+        assertEquals(trackerTest.getMachines().get(0).getLocation(), this.tracker.getMachines().get(0).getLocation());
+        assertEquals(trackerTest.getMachines().get(0).getStatus(), this.tracker.getMachines().get(0).getStatus());
+    }
+
+
+    // @Test
+    // public void testMachineTrackerInitialization(){
+
+
+    // }
+
+
+    
     /**
      * Tests the vending machine selection functionality of the VendAppController class.
      * Assumes that the ChoiceBox's items are populated at this point. Selects the first item in the ChoiceBox,
@@ -106,36 +148,7 @@ public class VendAppControllerTest extends ApplicationTest {
         FxAssert.verifyThat(textArea, TextInputControlMatchers.hasText("Inventory:\nHansa: 100\nRegnvann: 10\n")); 
     }
 
+    
 
-    // private Label myLabel;
-    // private ChoiceBox<VendingMachine> menuBar;
-
-    // @BeforeEach
-    // public void setUp() {
-    //     myLabel = new Label();
-    //     menuBar = new ChoiceBox<>();
-
-    //     controller = new VendAppController();
-    //     controller.myLabel = myLabel;
-    //     controller.menuBar = menuBar;
-    // }
-
-    // @Test
-    // public void testInitializeWithNonNullMachineTracker() {
-    //     VendingMachine machine1 = new VendingMachine(); 
-    //     VendingMachine machine2 = new VendingMachine(); 
-    //     List<VendingMachine> machines = Arrays.asList(machine1, machine2);
-    //     MachineTracker machineTracker = new MachineTracker();
-    //     machineTracker.setMachines(machines);
-
-    //     IFromJson fromJson = new TestFromJson(machineTracker);
-    //     controller.fromJson = fromJson;
-
-    //     controller.initialize(null, null);
-
-    //     ObservableList<VendingMachine> items = FXCollections.observableArrayList(machines);
-    //     assertEquals(items, menuBar.getItems());
-    //     assertEquals("", myLabel.getText());
-    // }
 
 }
