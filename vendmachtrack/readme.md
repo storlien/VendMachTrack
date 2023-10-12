@@ -1,29 +1,59 @@
-# Funksjonalitet
+# Vending Machine Tracker (Vendmachtrack)
 
-Vendmachtrack er en applikasjon for å hjelpe eiere av flere brusautomater holde oversikt og analysere deres brusautomatbedrift.
+Vending Machine Tracker er en applikasjon for å hjelpe bedrifter holde oversikt over sine brusautomater. Brukere av applikasjonen skal kunne se informasjon som for eksempel varebeholdning på de ulike automatene.
 
-- [Skjermbilde av appen](../docs/release1/skjermbildeApp.png) 
+En brusautomat oppdaterer i utgangspunktet sin varebeholdning ved hjelp av eksterne tjenester som ikke er implementert i denne applikasjonen, for eksempel:
+- Kortterminal som håndterer salg av varer (trekker fra antall i varebeholdningen)
+- Påfylling av varer (legger til antall i varebeholdningen)
 
-![Alt text](../docs/release1/skjermbildeApp.png)
+Likevel er det behov for at en bruker av applikasjonen selv kan oppdatere varebeholdningen uten å måtte bruke eksterne tjenester.
 
+Applikasjonen vil lytte til endringer i filen og oppdatere brukergrensesnittet dersom det kommer endringer utført av eksterne tjenester. Brukergrensesnittet vil også ha muligheten til å endre varebeholdningen og dermed filen. De eksterne tjenestene vil, på lik linje, lytte til filen dersom den skulle bli endret av brukergrensesnittet til applikasjonen.
 
-- [Diagram i PlantUML](../docs/diagrams/ClassDiagram.wsd)
+Se [brukerhistorier](/docs/Brukerhistorier.md) for konkrete scenarier.
 
-- [Brukerhistorier](../docs/Brukerhistorier.md)
-
-<br>
+## Funksjonalitet ved ferdig applikasjon
 
 Brukeren skal kunne:
 
 - Se en oversikt over sine brusautomater
-- Se total inntjening
-- Trykke seg inn på en enkelt brusautomat og se detaljert informasjon om denne, dette kan være:
+- Trykke seg inn på en enkelt brusautomat og se informasjon om denne:
+  - Hvor brusautomaten er plassert
   - Hvor mye av hver vare som er igjen i brusautomaten
-  - Inntjening
-- Legge til en ny brusautomat
-- Slette en brusautomat
-- Endre informasjon om en brusautomat (fylle opp varer, endre navn)
-- Se overiskt over sitt lager av varer
-- Se kostnader av varer
-- Oppdatere varebeholdning på lager
-- Kunne lagre og hente dataen til/fra fil/skytjeneste
+- Oppdatere varebeholdning
+- Hente oversikt fra skytjeneste og fil
+- Lagre oversikt til skytjeneste og fil
+
+
+### Lagring av data
+
+Applikasjonen tar i bruk Google sitt Java-bibliotek, Gson, for oversette ("parse") objektene til JSON-data. Et MachineTracker-objekt blir gjort om til JSON og dermed lagret til fil, enten lokalt eller på server. Eksempel på hvordan JSON-dataen til et MachineTracker-objekt ser ut:
+
+```json
+{"machines":[
+
+  {"status":{"Cola":5,"Pepsi":3},
+    "id":1,
+    "location":"Trondhjem"},
+
+  {"status":{"Tuborg":1},
+    "id":2,
+    "location":"Oslo"},
+
+  {"status":{"Hansa":100,"Regnvann":10},
+    "id":3,
+    "location":"Bergen"}
+
+]}
+```
+Applikasjonen er laget for å lese/skrive til én enkelt fil ettersom bedrifter antas å ville samle alle deres brusautomater i én oversikt (ett MachineTracker-objekt). Dermed benytter applikasjonen seg av såkalt implisitt lagring der brukeren ikke har et valg om hvilken fil som skal brukes, annet enn å legge inn ny fil manuelt.
+
+### Bilder og diagrammer
+
+
+Skjermbilde av applikasjonen pr. release 1:
+
+![Skjermbilde av app](../docs/release1/skjermbildeApp.png)
+
+
+- [Diagram i PlantUML](../docs/diagrams/ClassDiagram.wsd)
