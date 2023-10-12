@@ -78,6 +78,7 @@ public class VendingMachine implements IVendingMachine {
     }
 
 
+
     /**
      * Removes a specified number of a particular item from the vending machine's inventory (someone buys an item). 
      * If the quantity becomes zero, the item is no longer avaliable in the vending machine.
@@ -87,20 +88,24 @@ public class VendingMachine implements IVendingMachine {
      * @throws IllegalArgumentException If the item is not found in the vending machine's inventory.
      */
     @Override
-    public void removeItem(String item, int number) { 
-        if (!status.containsKey(item)) {
-            throw new IllegalArgumentException("The item does not exist in the vending machine's inventory");
+    public void removeItem(String item, int number) {
+        Integer itemCount = status.get(item); // Retrieve the count of the items
+
+        if (itemCount == null) {
+            throw new IllegalArgumentException("there is no item to remove");
         }
 
-        if (status.get(item) == number) {
+        if (itemCount == number) {
             status.remove(item);
+        } else if (itemCount > number) {
+            status.put(item, itemCount - number); // Use itemCount instead of status.get(item)
+        } else {
+            // This is the case where itemCount < number
+            //migth want to resolve this another way
+            throw new IllegalArgumentException("not enough items to remove");
         }
-
-        if (status.get(item) > number) {
-            status.put(item, status.get(item) - number);
-        }
-
     }
+    
 
 
     /**
