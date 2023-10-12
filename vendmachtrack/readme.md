@@ -1,28 +1,34 @@
-# Hva er appen ment til å gjøre (as of release 2) (ikke helt oppdatert)?
+# Vending Machine Tracker (Vendmachtrack)
 
-Vendmachtrack er en app som er ment for å hjelpe eiere av flere brusautomater holde oversikt og analysere deres brusautomat bedrift.
+Vending Machine Tracker er en applikasjon for å hjelpe bedrifter holde oversikt over sine brusautomater. Brukere av applikasjonen skal kunne se informasjon slik som varebeholdning på de ulike automatene.
 
-- [Skjermbilde av appen](../docs/release1/skjermbildeApp.png) 
+En brusautomat oppdaterer i utgangspunktet sin varebeholdning ved hjelp av eksterne tjenester som ikke er implementert i denne applikasjonen, for eksempel:
+- Kortterminal som håndterer salg av varer (trekker fra antall i varebeholdningen)
+- Påfylling av varer (legger til antall i varebeholdningen)
 
-![Alt text](../docs/release1/skjermbildeApp.png)
+Likevel er det behov for at en bruker av applikasjonen selv kan oppdatere varebeholdningen uten å måtte bruke eksterne tjenester.
+
+Applikasjonen vil lytte til endringer i filen og oppdatere brukergrensesnittet dersom det kommer endringer. Brukergrensesnittet vil også ha muligheten til å endre varebeholdningen og dermed filen. De eksterne tjenestene vil lytte til filen dersom den skulle bli endret av brukergrensesnittet til applikasjonen.
+
+Se [brukerhistorier](/docs/Brukerhistorier.md) for konkrete scenarier.
+
+## Funksjonalitet ved ferdig applikasjon
+
+Brukeren skal kunne:
+
+- Se en oversikt over sine brusautomater
+- Trykke seg inn på en enkelt brusautomat og se informasjon om denne:
+  - Hvor brusautomaten er plassert
+  - Hvor mye av hver vare som er igjen i brusautomaten
+- Oppdatere varebeholdning
+- Hente oversikt fra skytjeneste og fil
+- Lagre oversikt til skytjeneste og fil
+
+<br/>
+
+Skjermbilde av applikasjonen pr. release 1:
+
+![Skjermbilde av app](../docs/release1/skjermbildeApp.png)
 
 
-- [Klassediagram](../docs/release1/Klassediagram.png)
-
-![Alt text](../docs/release1/Klassediagram.png)
-
-- [Brukerhistorie](../docs/Brukerhistorier.md)
-
-<br>
-
-På GUI (når release 2 er ferdig) skal brukeren kunne:
-
-- Få opp sin vending machine tracker
-- Se en liste over alle sine brusautomater vha en dropdown meny
-
-
-<br>
-
-Annen funksjonalitet:
-
-- Lagring/henting av data fra fil vha json
+- [Diagram i PlantUML](../docs/diagrams/ClassDiagram.wsd)
