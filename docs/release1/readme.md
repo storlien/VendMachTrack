@@ -1,26 +1,25 @@
 # Release 1 
 
-## Innhold
 
-- [Lenker til andre dokumenter](#lenker-til-andre-dokumenter)
-- [Release notes](#release-notes)
+Vi har i denne iterasjonen jobbet ut ifra [brukerhistorie US-1](/docs/Brukerhistorier.md).
 
-
-## Lenker til andre dokumenter
-
-- [Brukerhistorier](/docs/release1/Brukerhistorier.md)
-- [Funksjonalitet](/docs/release1/Funksjonalitet.md)
-- [Prosjektstruktur](/docs/release1/Prosjektstruktur.md)
-
-## Release notes
+Se [arbeidsflyt](/docs/release1/Arbeidsflyt_1.md) for å lese om hvordan arbeidsflyten i gruppen har vært med tanke på arbeidsvaner, metodikk og kodekvalitet.
 
 ### Hva er nytt i denne releasen?
 
-- Lesing/skriving til én fil
-- GUI til én vending machine tracker
-- Enkel kjernelogikk 
+- Lesing/skriving til én fil i JSON-format
+- Grafisk brukergrensesnitt til et VendingMachineTracker-objekt (selve oversikten)
+  - Dropdown-meny med bedriftens brusautomater
+  - Kunne trykke seg inn på hver enkelt brusautomat for å se varebeholdning
+- Enkel kjernelogikk
+
+<br/>
 
 
+[Skjermbilde:](/docs/release1/skjermbildeApp.png)
+![Alt text](skjermbildeApp.png)
 
 
+[Klassediagram:](/docs/release1/Klassediagram.png)
 
+![Alt text](<Klassediagram.png>)

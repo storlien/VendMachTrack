@@ -1,4 +1,4 @@
-# Krav til innleveringen:
+# Krav til release 1:
 * Kodingsprosjektet skal ligge i kodelageret på gitlab (det vi har satt opp for dere), slik at det er lett for oss å klone repoet.
 
 * Dokumentasjon for hver release må plasseres i en egen mappe, så den første innleveringsdokumentasjonen må plasseres i ...groups-2023/gr23nn/gr23nn/docs/release1

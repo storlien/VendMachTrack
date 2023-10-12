@@ -1,0 +1,117 @@
+@startuml ClassDiagram
+
+interface IMachineTracker {
+  +getMachines(): List<VendingMachine>
+  +setMachines(List<VendingMachine>): void
+  +addMachine(VendingMachine): void
+  +removeMachine(VendingMachine): void
+}
+
+class MachineTracker {
+  -machines: List<VendingMachine>
+  +getMachines(): List<VendingMachine>
+  +setMachines(List<VendingMachine>): void
+  +addMachine(VendingMachine): void
+  +removeMachine(VendingMachine): void
+}
+
+
+class ToJson {
+    - mach : IMachineTracker
+
+  +toOutputStream() : OutputStream
+  +writeToFile() : boolean
+}
+
+interface IToJson {
+  +toOutputStream() : OutputStream
+  +writeToFile() : boolean
+}
+
+class FromJson {
+    - mach : IMachineTracker
+
+  +fromInputStream(Inputstream is) : MachineTracker
+  +readFromFile() : MachineTracker
+}
+
+interface IFromJson {
+  +fromInputStream(Inputstream is) : MachineTracker
+  +readFromFile() : MachineTracker
+}
+
+
+interface IItem {
+  +getId(): int
+  +getName(): String
+  +getDescription(): String
+  +getPrice(): double
+}
+
+class Item {
+  -id: int
+  -name: String
+  -description: String
+  -price: double
+  +Item(int, String, String, double)
+  +getId(): int
+  +getName(): String
+  +getDescription(): String
+  +getPrice(): double
+}
+
+interface IVendingMachine {
+  +getId(): int
+  +getName(): String
+  +getLocation(): String
+  +getStatus(): Map<String, Integer>
+  +setStatus(Map<String, Integer>): void
+  +getItems(): List<IItem>
+  +addItem(IItem): void
+  +removeItem(IItem): void
+}
+
+class VendingMachine {
+  -id: int
+  -name: String
+  -location: String
+  -status: Map<String, Integer>
+  -items: List<IItem>
+  +VendingMachine(int, String, String)
+  +getId(): int
+  +getName(): String
+  +getLocation(): String
+  +getStatus(): Map<String, Integer>
+  +setStatus(Map<String, Integer>): void
+  +getItems(): List<IItem>
+  +addItem(IItem): void
+  +removeItem(IItem): void
+}
+
+class Item{
+
+    -name: String
+    -price: double
+
+    + getName(): String
+    + getPrice(): double
+}
+
+interface IItem{
+    + getName(): String
+    + getPrice(): double
+}
+
+IMachineTracker <|.. MachineTracker
+ToJson - IMachineTracker
+IToJson <|.. ToJson
+FromJson - IMachineTracker
+IFromJson <|.. FromJson
+MachineTracker "1" o-- "*" IVendingMachine : tracks
+IVendingMachine <|.. VendingMachine
+VendingMachine "1" o-- "*" IItem : contains
+IItem <|.. Item
+
+
+
+@enduml
