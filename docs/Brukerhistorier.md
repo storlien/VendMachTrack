@@ -1,6 +1,5 @@
 # Alle brukerhistorier
 - [Brukerhistorie US-1](#brukerhistorie-us-1)
-- [Brukerhistorie US-2](#brukerhistorie-us-2)
 
 
 ## Brukerhistorie US-1
@@ -17,20 +16,3 @@ Viktige ting å kunne gjøre:
 
 - Åpne dropdown-meny for å velge ønsket brusautomat
 - Oversikten over alle brusautomater må kunne leses fra bedriftens fil
-
-
-## Brukerhistorie US-2
-
-Som eier av et brusautomat-selskap eier jeg et lager hvor jeg har mine varer midlertidig. Jeg ønsker å ha oversikt over hvor mye av hver vare lageret har til enhver tid, flytte varer fra lager til en ønsket brusautomat samt bestille varer til lageret.
-
-Viktige ting å kunne se:
-
- - Antall varer på lager.
- - Kostnader av varer.
-
-
-Viktige ting å kunne gjøre
-
- - Oppdatere varebeholdning på lager.
- - Bestille varer til lageret.
- - Flytte varer fra lager til en brusautomat.
