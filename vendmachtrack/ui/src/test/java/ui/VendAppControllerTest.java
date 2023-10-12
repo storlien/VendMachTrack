@@ -1,57 +1,43 @@
 package ui;
 
-import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.ResourceBundle;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+import java.util.Arrays;
+import java.util.List;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.testfx.api.FxAssert;
-import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationTest;
-import org.testfx.framework.junit5.Start;
 
-import core.MachineTracker;
-import core.VendingMachine;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import jsonio.FromJson;
 import jsonio.IFromJson;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.testfx.matcher.control.TextInputControlMatchers.hasText;
-import static org.testfx.api.FxAssert.verifyThat;
-import javafx.fxml.FXMLLoader;
-
-
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
-import javafx.stage.Stage;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.stream.Stream;
-
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
-import org.testfx.framework.junit5.ApplicationTest;
-import org.testfx.matcher.base.NodeMatchers;
-import org.testfx.matcher.control.LabeledMatchers;
 import org.testfx.matcher.control.TextInputControlMatchers;
 
-
+import core.IMachineTracker;
+import core.MachineTracker;
+import core.VendingMachine;
 
 
 public class VendAppControllerTest extends ApplicationTest {
@@ -59,6 +45,12 @@ public class VendAppControllerTest extends ApplicationTest {
 
  private VendAppController controller;
 
+    /**
+     * This method starts the application by loading the FXML file and setting up the stage.
+     * 
+     * @param stage The stage to be used for the application.
+     * @throws Exception If there is an error loading the FXML file.
+     */
     @Override
     public void start(Stage stage) throws Exception {
         // This uses the structure from your App class to start the application.
@@ -74,6 +66,14 @@ public class VendAppControllerTest extends ApplicationTest {
         stage.show();
     }
 
+    /**
+     * Tests the vending machine selection functionality of the VendAppController class.
+     * Assumes that the ChoiceBox's items are populated at this point. Selects the first item in the ChoiceBox,
+     * clicks the "OK" button, and verifies that the TextArea contains the expected text for the first vending machine.
+     * Then, selects the second and third items in the ChoiceBox, clicks the "OK" button for each, and verifies that
+     * the TextArea contains the expected text for the corresponding vending machines.
+     *
+     */
     @Test
     public void testVendingMachineSelection() {
         // Assuming the ChoiceBox's items are populated at this point,
@@ -89,37 +89,53 @@ public class VendAppControllerTest extends ApplicationTest {
         TextArea textArea = lookup("#textArea").queryAs(TextArea.class);
         FxAssert.verifyThat(textArea, TextInputControlMatchers.hasText("Inventory:\nCola: 5\nPepsi: 3\n"));
 
-    
+          // Second Vending Machine Selection and Verification
+
+        interact(() -> choiceBox.getSelectionModel().select(1)); // select the second item
+        clickOn("#button");
+
+        // Verify the TextArea for the second vending machine. 
+        // Change the expected text to match what's expected for your second machine.
+        FxAssert.verifyThat(textArea, TextInputControlMatchers.hasText("Inventory:\nTuborg: 1\n")); 
+
+        interact(() -> choiceBox.getSelectionModel().select(2)); // select the second item
+        clickOn("#button");
+
+        // Verify the TextArea for the third vending machine. 
+        // Change the expected text to match what's expected for your second machine.
+        FxAssert.verifyThat(textArea, TextInputControlMatchers.hasText("Inventory:\nHansa: 100\nRegnvann: 10\n")); 
     }
 
-    // private VendAppController controller;
-    // private Parent root;
-    // private MachineTracker tracker;
-    
-   
-    // @Override
-    // public void start(Stage stage) throws IOException {
-    //     FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("../App.fxml"));
-    //     root = fxmlLoader.load();
-    //     VendAppController controller = fxmlLoader.getController();
-    //     stage.setScene(new Scene(root));
-    //     stage.show();
-    // }
 
-    // public Parent getRootNode() {
-    //     return root;
-    // }
+    // private Label myLabel;
+    // private ChoiceBox<VendingMachine> menuBar;
 
     // @BeforeEach
-    // public void setUpItems(){
-    //     VendingMachine machine = new VendingMachine(); 
-    //     machine.addItem("ØL", 5);
-    //     machine.setId(1);
-    //     machine.setLocation("Trondheim");
-    //     tracker = new MachineTracker();
-    //     tracker.addVendingMachine(machine);
+    // public void setUp() {
+    //     myLabel = new Label();
+    //     menuBar = new ChoiceBox<>();
+
+    //     controller = new VendAppController();
+    //     controller.myLabel = myLabel;
+    //     controller.menuBar = menuBar;
     // }
 
     // @Test
-    // public void test
+    // public void testInitializeWithNonNullMachineTracker() {
+    //     VendingMachine machine1 = new VendingMachine(); 
+    //     VendingMachine machine2 = new VendingMachine(); 
+    //     List<VendingMachine> machines = Arrays.asList(machine1, machine2);
+    //     MachineTracker machineTracker = new MachineTracker();
+    //     machineTracker.setMachines(machines);
+
+    //     IFromJson fromJson = new TestFromJson(machineTracker);
+    //     controller.fromJson = fromJson;
+
+    //     controller.initialize(null, null);
+
+    //     ObservableList<VendingMachine> items = FXCollections.observableArrayList(machines);
+    //     assertEquals(items, menuBar.getItems());
+    //     assertEquals("", myLabel.getText());
+    // }
+
 }
