@@ -83,11 +83,11 @@ public class VendingMachineTest {
     /**
      * Tests the removeItem() method of the VendingMachine class by removing all instances of a specific item and verifying that it is no longer present in the machine's status map.
      */
-    //@Test
-    //public void testRemoveAllOfItem() {
-        //machine.removeItem("Soda", 5);
-      //  assertFalse(machine.getStatus().containsKey("Soda"));
-    //}
+    @Test
+    public void testRemoveAllOfItem() {
+        machine.removeItem("Soda", 5);
+        assertFalse(machine.getStatus().containsKey("Soda"));
+    }
 
     /**
      * Tests the removeItem method of the VendingMachine class when the item to be removed does not exist.
@@ -100,10 +100,15 @@ public class VendingMachineTest {
      * @test_subcategory functionality
      * @since 1.0
      */
-    //@Test
-    //public void testRemoveItemNotExists() {
-      //  assertThrows(IllegalArgumentException.class, () -> machine.removeItem("Water", 2));
-    //}
+    @Test
+    public void testRemoveItemNotExists() {
+       assertThrows(IllegalArgumentException.class, () -> machine.removeItem("Water", 2));
+    }
+    
+    @Test
+    public void testRemoveItemNotEnough() {
+        assertThrows(IllegalArgumentException.class, () -> machine.removeItem("Soda", 6));
+    }
 
     /**
      * Tests the setStatus method of the VendingMachine class.
