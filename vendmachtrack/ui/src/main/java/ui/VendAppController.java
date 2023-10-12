@@ -20,6 +20,9 @@ import jsonio.IFromJson;
 import jsonio.IToJson;
 import jsonio.ToJson;
 
+/**
+ * Controller class for the vending machine application's user interface.
+ */
 
 public class VendAppController implements Initializable {
 
@@ -37,21 +40,45 @@ public class VendAppController implements Initializable {
 
     private IMachineTracker machtrack;
 
+    /**
+     * Initializes the controller. It reads vending machine data from a JSON file.
+     * 
+     * @param arg0 The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param arg1 The resources used to localize the root object, or null if the root object was not localized.
+     */
+
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         IFromJson fromJson = new FromJson("tracker.json");
         this.machtrack = fromJson.readFromFile();
 
-        List<VendingMachine> machines = machtrack.getMachines();
-        menuBar.getItems().addAll(machines);
+        if (this.machtrack != null) {
+            List<VendingMachine> machines = machtrack.getMachines();
+            menuBar.getItems().addAll(machines);
+        } else {
+            myLabel.setText("Error! Cannot read file");
+        }
 
     }
+
+    /**
+     * Handles the close event of the application. It writes the vending machine data back to the JSON file before closing. 
+     */
 
     public void onClose() {
-        IToJson toJson = new ToJson("tracker.json");
-        toJson.writeToFile(machtrack);
+
+        if (this.machtrack != null) {
+            IToJson toJson = new ToJson("tracker.json");
+            toJson.writeToFile(machtrack);
+        }
     }
+
+    /**
+     * Handles the button click event. It displays the inventory of the selected vending machine in the text area.
+     * 
+     * @param event The event representing the button click.
+     */
 
     @FXML
     private void handleButtonClick(ActionEvent event) {
