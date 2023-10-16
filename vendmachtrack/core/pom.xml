@@ -11,7 +11,7 @@
     </parent>
 
     <dependencies>
-   <!-- JUnit 5 dependencies -->
+        <!-- JUnit 5 dependencies -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
@@ -34,7 +34,21 @@
             <version>2.10.1</version>
         </dependency>
 
+        <dependency>
+            <groupId>de.mkammerer</groupId>
+            <artifactId>argon2-jvm</artifactId>
+            <version>2.11</version>
+        </dependency>
+
+        <!-- Dependency necessary for Argon2 -->
+        <dependency>
+            <groupId>net.java.dev.jna</groupId>
+            <artifactId>jna</artifactId>
+            <version>5.8.0</version>
+            <scope>compile</scope>
+        </dependency>
+
     </dependencies>
 
-  
+
 </project>
