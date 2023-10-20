@@ -1,4 +1,4 @@
-package jsonio;
+package jsonio.internal;
 
 import com.google.gson.Gson;
 import core.MachineTracker;
@@ -9,17 +9,17 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
-public class FromJson implements IFromJson {
+public class FromJson {
 
     private final String filePath;
 
     /**
      * Constructor. Requires a file name for which the MachineTracker object will be read from.
      *
-     * @param file Name of file.
+     * @param fileName Name of file.
      */
-    public FromJson(String file) {
-        this.filePath = System.getProperty("user.home") + "/" + file;
+    public FromJson(String fileName) {
+        this.filePath = System.getProperty("user.home") + "/" + fileName;
     }
 
     /**
@@ -28,7 +28,6 @@ public class FromJson implements IFromJson {
      * @param is InputStream with JSON data
      * @return MachineTracker object from InputStream
      */
-    @Override
     public MachineTracker fromInputStream(InputStream is) {
         try (BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
             Gson gson = new Gson();
@@ -44,7 +43,6 @@ public class FromJson implements IFromJson {
      *
      * @return MachineTracker object
      */
-    @Override
     public MachineTracker readFromFile() {
         try (InputStream is = new FileInputStream(filePath)) {
             return fromInputStream(is);

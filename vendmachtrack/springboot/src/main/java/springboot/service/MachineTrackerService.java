@@ -1,20 +1,49 @@
 package springboot.service;
 
 import core.MachineTracker;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import core.VendingMachine;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import springboot.exception.ResourceNotFoundException;
+import springboot.repository.MachineTrackerRepository;
+
+import java.util.HashMap;
+import java.util.Optional;
 
 @Service
 public class MachineTrackerService {
 
-    public ResponseEntity<MachineTracker> getMachineTracker() {
-//        TODO
-        return new ResponseEntity<MachineTracker>((MachineTracker) null, HttpStatus.OK);
+
+    private final MachineTrackerRepository repository;
+
+    @Autowired
+    public MachineTrackerService(MachineTrackerRepository repository) {
+        this.repository = repository;
     }
 
-    public ResponseEntity<MachineTracker> postMachineTracker(MachineTracker machtrack) {
+    public HashMap<Integer, String> getVendMachList() {
+        Optional<MachineTracker> machtrack = Optional.ofNullable(repository.getVendmachtrack());
+
+        if (machtrack.isPresent()) {
+            HashMap<Integer, String> vendMachList = new HashMap<>();
+
+            for (VendingMachine vendMach : machtrack.get().getMachines()) {
+                vendMachList.put(vendMach.getId(), vendMach.getLocation());
+            }
+
+            return vendMachList;
+        } else {
+            throw new ResourceNotFoundException("Vending Machine Tracker not found");
+        }
+    }
+
+    public VendingMachine getVendingMaching(int id) {
         // TODO
-        return new ResponseEntity<MachineTracker>((MachineTracker) null, HttpStatus.CREATED);
+        return null;
+    }
+
+    public VendingMachine updateVendingMachine(VendingMachine vendmach, int id) {
+        // TODO
+        return null;
     }
 }
