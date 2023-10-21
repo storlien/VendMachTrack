@@ -26,15 +26,45 @@ public class MachineTrackerController {
         return ResponseEntity.ok(machtrackService.getVendMachList());
     }
 
-    @GetMapping("/machtrack/vendmach")
-    public ResponseEntity<VendingMachine> getVendingMachine(@RequestParam int id) {
-//        TODO
+    @GetMapping("/machtrack/{id}/name")
+    public ResponseEntity<String> getVendMachLocation(@PathVariable("id") int id) {
+        //        TODO
         return null;
     }
 
-    @PostMapping("/machtrack")
-    public ResponseEntity<VendingMachine> updateVendingMachine(@RequestBody VendingMachine vendmach, @RequestParam int id) {
-//        TODO
+    @GetMapping("/machtrack/{id}")
+    public ResponseEntity<HashMap<String, Integer>> getInventory(@PathVariable("id") int id) {
+        //        TODO
+        return null;
+    }
+
+    @PutMapping("/machtrack/{id}/add")
+    public ResponseEntity<HashMap<String, Integer>> addItem(@PathVariable("id") int id, @RequestParam String item, @RequestParam int amount) {
+        //        TODO
+        return null;
+    }
+
+    @PutMapping("/machtrack/{id}/remove")
+    public ResponseEntity<HashMap<String, Integer>> removeItem(@PathVariable("id") int id, @RequestParam String item, @RequestParam int amount) {
+        //        TODO
+        return null;
+    }
+
+    @PostMapping("/machtrack/add")
+    public ResponseEntity<HashMap<Integer, String>> addVendMach(@RequestParam int id, @RequestParam String location) {
+        //        TODO
+        return null;
+    }
+
+    @DeleteMapping("/machtrack/{id}")
+    public ResponseEntity<HashMap<Integer, String>> removeVendMach(@PathVariable("id") int id) {
+        //        TODO
+        return null;
+    }
+
+    @PutMapping("/machtrack/{id}")
+    public ResponseEntity<HashMap<Integer, String>> changeLocation(@PathVariable("id") int id, @RequestParam String location) {
+        //        TODO
         return null;
     }
 }

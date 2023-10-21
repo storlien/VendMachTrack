@@ -10,11 +10,11 @@ public interface IMachineTrackerAccess {
 
     HashMap<String, Integer> getInventory(int id);
 
-    HashMap<String, Integer> addItem(int id, String item, int number);
+    HashMap<String, Integer> addItem(int id, String item, int amount);
 
-    HashMap<String, Integer> removeItem(int id, int number);
+    HashMap<String, Integer> removeItem(int id, String item, int amount);
 
-    HashMap<String, Integer> addVendMach(int id, String location);
+    HashMap<Integer, String> addVendMach(int id, String location);
 
     HashMap<Integer, String> removeVendMach(int id);
 
