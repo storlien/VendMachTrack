@@ -84,6 +84,7 @@
                 <version>4.5.2.0</version>
                 <configuration>
                     <xmlOutput>false</xmlOutput>
+                    <excludeFilterFile>config/spotbugs-exclude-filter.xml</excludeFilterFile>
                 </configuration>
                 <executions>
                     <execution>
