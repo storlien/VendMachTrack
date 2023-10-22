@@ -18,13 +18,12 @@ public class PasswordHandlerTest {
         String hashedPassword = PasswordHandler.hashPassword(password);
 
         assertNotNull(hashedPassword);
-        assertFalse(hashedPassword.isEmpty());
-        
+        assertFalse(hashedPassword.isEmpty()); 
     }
 
     @Test
     public void testVerifyPasswordWithCorrectPassword() {
-        // need to know the correct password to test this
+        
     }
 
     @Test
