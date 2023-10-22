@@ -1,6 +1,5 @@
 package springboot.controller;
 
-import core.VendingMachine;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import springboot.service.MachineTrackerService;
@@ -28,43 +27,36 @@ public class MachineTrackerController {
 
     @GetMapping("/machtrack/{id}/name")
     public ResponseEntity<String> getVendMachLocation(@PathVariable("id") int id) {
-        //        TODO
-        return null;
+        return ResponseEntity.ok(machtrackService.getVendMachLocation(id));
     }
 
     @GetMapping("/machtrack/{id}")
     public ResponseEntity<HashMap<String, Integer>> getInventory(@PathVariable("id") int id) {
-        //        TODO
-        return null;
+        return ResponseEntity.ok(machtrackService.getInventory(id));
     }
 
     @PutMapping("/machtrack/{id}/add")
     public ResponseEntity<HashMap<String, Integer>> addItem(@PathVariable("id") int id, @RequestParam String item, @RequestParam int amount) {
-        //        TODO
-        return null;
+        return ResponseEntity.ok(machtrackService.addItem(id, item, amount));
     }
 
     @PutMapping("/machtrack/{id}/remove")
     public ResponseEntity<HashMap<String, Integer>> removeItem(@PathVariable("id") int id, @RequestParam String item, @RequestParam int amount) {
-        //        TODO
-        return null;
+        return ResponseEntity.ok(machtrackService.removeItem(id, item, amount));
     }
 
     @PostMapping("/machtrack/add")
     public ResponseEntity<HashMap<Integer, String>> addVendMach(@RequestParam int id, @RequestParam String location) {
-        //        TODO
-        return null;
+        return ResponseEntity.ok(machtrackService.addVendMach(id, location));
     }
 
     @DeleteMapping("/machtrack/{id}")
     public ResponseEntity<HashMap<Integer, String>> removeVendMach(@PathVariable("id") int id) {
-        //        TODO
-        return null;
+        return ResponseEntity.ok(machtrackService.removeVendMach(id));
     }
 
     @PutMapping("/machtrack/{id}")
     public ResponseEntity<HashMap<Integer, String>> changeLocation(@PathVariable("id") int id, @RequestParam String location) {
-        //        TODO
-        return null;
+        return ResponseEntity.ok(machtrackService.changeLocation(id, location));
     }
 }
