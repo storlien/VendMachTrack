@@ -6,7 +6,8 @@ module vendmachtrack.springboot {
     requires vendmachtrack.core;
     requires spring.context;
     requires spring.beans;
-    
+    requires vendmachtrack.jsonio;
+
     opens springboot to spring.core;
     opens springboot.controller to spring.core;
     opens springboot.service to spring.core;

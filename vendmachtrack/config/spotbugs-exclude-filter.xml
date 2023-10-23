@@ -1,0 +1,21 @@
+<FindBugsFilter>
+    <!-- Ignore EI_EXPOSE_REP2 for MachineTrackerController constructor -->
+    <!-- Spotbugs complains about storing an externally mutable object in the Controller class. -->
+    <!-- This is standard practice in Spring Boot and generally not considered a security risk. -->
+    <!-- The constructor uses the @Autowired annotation for dependency injection. -->
+    <Match>
+        <Class name="springboot.controller.MachineTrackerController"/>
+        <Method name="&lt;init&gt;"/>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+    </Match>
+
+    <!-- Ignore EI_EXPOSE_REP2 for MachineTrackerService constructor -->
+    <!-- Spotbugs complains about storing an externally mutable object in the Service class. -->
+    <!-- This is standard practice in Spring Boot and generally not considered a security risk. -->
+    <!-- The constructor uses the @Autowired annotation for dependency injection. -->
+    <Match>
+        <Class name="springboot.service.MachineTrackerService"/>
+        <Method name="&lt;init&gt;"/>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+    </Match>
+</FindBugsFilter>
