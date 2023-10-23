@@ -20,42 +20,42 @@ public class MachineTrackerController {
         this.machtrackService = machtrackService;
     }
 
-    @GetMapping("/machtrack")
+    @GetMapping()
     public ResponseEntity<HashMap<Integer, String>> getVendMachList() {
         return ResponseEntity.ok(machtrackService.getVendMachList());
     }
 
-    @GetMapping("/machtrack/{id}/name")
+    @GetMapping("/{id}/name")
     public ResponseEntity<String> getVendMachLocation(@PathVariable("id") int id) {
         return ResponseEntity.ok(machtrackService.getVendMachLocation(id));
     }
 
-    @GetMapping("/machtrack/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<HashMap<String, Integer>> getInventory(@PathVariable("id") int id) {
         return ResponseEntity.ok(machtrackService.getInventory(id));
     }
 
-    @PutMapping("/machtrack/{id}/add")
+    @PutMapping("/{id}/add")
     public ResponseEntity<HashMap<String, Integer>> addItem(@PathVariable("id") int id, @RequestParam String item, @RequestParam int amount) {
         return ResponseEntity.ok(machtrackService.addItem(id, item, amount));
     }
 
-    @PutMapping("/machtrack/{id}/remove")
+    @PutMapping("/{id}/remove")
     public ResponseEntity<HashMap<String, Integer>> removeItem(@PathVariable("id") int id, @RequestParam String item, @RequestParam int amount) {
         return ResponseEntity.ok(machtrackService.removeItem(id, item, amount));
     }
 
-    @PostMapping("/machtrack/add")
+    @PostMapping("/add")
     public ResponseEntity<HashMap<Integer, String>> addVendMach(@RequestParam int id, @RequestParam String location) {
         return ResponseEntity.ok(machtrackService.addVendMach(id, location));
     }
 
-    @DeleteMapping("/machtrack/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<HashMap<Integer, String>> removeVendMach(@PathVariable("id") int id) {
         return ResponseEntity.ok(machtrackService.removeVendMach(id));
     }
 
-    @PutMapping("/machtrack/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<HashMap<Integer, String>> changeLocation(@PathVariable("id") int id, @RequestParam String location) {
         return ResponseEntity.ok(machtrackService.changeLocation(id, location));
     }

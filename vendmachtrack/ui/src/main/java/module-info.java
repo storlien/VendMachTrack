@@ -5,4 +5,6 @@ module vendmachtrack.ui {
     requires vendmachtrack.jsonio;
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.net.http;
+    requires com.google.gson;
 }
