@@ -33,7 +33,7 @@ public interface IVendingMachine {
 	 * @param number
 	 * removes the number of the item from the vendingmachine
 	 */
-    public void removeItem(String item, int number);
+    public boolean removeItem(String item, int number);
 
 
     /**
