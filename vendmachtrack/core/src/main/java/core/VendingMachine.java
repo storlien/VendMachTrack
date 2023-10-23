@@ -88,21 +88,22 @@ public class VendingMachine implements IVendingMachine {
      * @throws IllegalArgumentException If the item is not found in the vending machine's inventory.
      */
     @Override
-    public void removeItem(String item, int number) {
+    public boolean removeItem(String item, int number) {
         Integer itemCount = status.get(item); // Retrieve the count of the items
 
         if (itemCount == null) {
-            throw new IllegalArgumentException("there is no item to remove");
+            return false;
         }
 
         if (itemCount == number) {
             status.remove(item);
+            return true;
+
         } else if (itemCount > number) {
             status.put(item, itemCount - number); // Use itemCount instead of status.get(item)
+            return true;
         } else {
-            // This is the case where itemCount < number
-            //migth want to resolve this another way
-            throw new IllegalArgumentException("not enough items to remove");
+            return false;
         }
     }
     
