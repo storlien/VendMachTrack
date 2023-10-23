@@ -102,12 +102,12 @@ public class VendingMachineTest {
      */
     @Test
     public void testRemoveItemNotExists() {
-       assertThrows(IllegalArgumentException.class, () -> machine.removeItem("Water", 2));
+       assertFalse(machine.removeItem("Sodanotexist", 10), "Should return false if item does not exist");
     }
     
     @Test
     public void testRemoveItemNotEnough() {
-        assertThrows(IllegalArgumentException.class, () -> machine.removeItem("Soda", 6));
+        assertFalse(machine.removeItem("Soda", 6), "Should return false if not enough items");
     }
 
     /**
