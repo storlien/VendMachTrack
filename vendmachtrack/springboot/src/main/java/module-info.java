@@ -3,9 +3,10 @@ module vendmachtrack.springboot {
     requires spring.boot.autoconfigure;
     requires spring.core;
     requires spring.web;
-    requires vendmachtrack.core;
     requires spring.context;
     requires spring.beans;
+
+    requires vendmachtrack.core;
     requires vendmachtrack.jsonio;
 
     opens springboot to spring.core;
