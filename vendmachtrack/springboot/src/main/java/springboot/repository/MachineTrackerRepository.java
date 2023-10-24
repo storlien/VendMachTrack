@@ -14,15 +14,6 @@ public class MachineTrackerRepository {
         persistence = new VendmachtrackPersistence(fileName);
     }
 
-    /**
-     * Constructor for MachineTrackerRepository class.
-     * Used Mainly for testing purposes/Mocking of VendmachtrackPersistence class.
-     * @param persistence an instance of VendmachtrackPersistence used for database persistence
-     */
-    public MachineTrackerRepository(VendmachtrackPersistence persistence) {
-        this.persistence = persistence; 
-    }
-
     public MachineTracker getVendmachtrack() {
         return persistence.getVendmachtrack();
     }
