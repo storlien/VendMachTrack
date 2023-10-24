@@ -62,8 +62,7 @@ public class VendAppController implements Initializable {
             menuBar.getItems().addAll(machines);
             
         } catch (Exception e) {
-            System.out.println("error: " + e);
-            textArea.setText("Error in loading the vendingmachines");
+            textArea.setText(e.getMessage());
         }
         
         } 
