@@ -2,6 +2,9 @@ package ui.access;
 
 import java.util.HashMap;
 
+/**
+ * Interface for accessing Vending Machine Tracker. For instance via REST API or direct file access
+ */
 public interface IMachineTrackerAccess {
 
     /**
