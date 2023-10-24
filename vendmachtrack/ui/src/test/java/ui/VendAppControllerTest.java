@@ -52,10 +52,10 @@ public class VendAppControllerTest extends ApplicationTest {
         Parent parent = fxmlLoader.load();
         this.controller = fxmlLoader.getController();
 
-        this.tracker = this.controller.getMachtrack();
+        //this.tracker = this.controller.getMachtrack();
 
         stage.setOnCloseRequest((WindowEvent event) -> {
-            this.controller.onClose();
+            //this.controller.onClose();
         });
 
         stage.setScene(new Scene(parent));
