@@ -90,22 +90,75 @@ public class MachineTrackerAccessRemote implements IMachineTrackerAccess {
 
     @Override
     public HashMap<String, Integer> removeItem(int id, String item, int amount) {
-        return null;
+        String param1Value = URLEncoder.encode(String.valueOf(id), StandardCharsets.UTF_8);
+        String param2Key = "item";
+        String param2Value = URLEncoder.encode(item, StandardCharsets.UTF_8);
+        String param3Key = "amount";
+        String param3Value = URLEncoder.encode(String.valueOf(amount), StandardCharsets.UTF_8);
+
+        String endpointQuery = String.format("vendmachtrack/%s/remove?%s=%s&%s=%s", param1Value, param2Key, param2Value, param3Key, param3Value);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(endpointBaseUri.resolve(endpointQuery))
+                .PUT(HttpRequest.BodyPublishers.noBody())
+                .build();
+
+        HttpResponse<String> response = getResponse(request);
+        checkError(response);
+
+        return gson.fromJson(response.body(), TYPE_HASHMAP_STRING_INTEGER);
     }
 
     @Override
     public HashMap<Integer, String> addVendMach(int id, String location) {
-        return null;
+        String param1Key = "id";
+        String param1Value = URLEncoder.encode(String.valueOf(id), StandardCharsets.UTF_8);
+        String param2Key = "location";
+        String param2Value = URLEncoder.encode(location, StandardCharsets.UTF_8);
+
+        String endpointQuery = String.format("vendmachtrack/add?%s=%s&%s=%s", param1Key, param1Value, param2Key, param2Value);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(endpointBaseUri.resolve(endpointQuery))
+                .POST(HttpRequest.BodyPublishers.noBody())
+                .build();
+
+        HttpResponse<String> response = getResponse(request);
+        checkError(response);
+
+        return gson.fromJson(response.body(), TYPE_HASHMAP_INTEGER_STRING);
     }
 
     @Override
     public HashMap<Integer, String> removeVendMach(int id) {
-        return null;
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(endpointBaseUri.resolve("vendmachtrack/" + id))
+                .DELETE()
+                .build();
+
+        HttpResponse<String> response = getResponse(request);
+        checkError(response);
+
+        return gson.fromJson(response.body(), TYPE_HASHMAP_INTEGER_STRING);
     }
 
     @Override
     public HashMap<Integer, String> changeLocation(int id, String location) {
-        return null;
+        String param1Key = "location";
+        String param1Value = URLEncoder.encode(location, StandardCharsets.UTF_8);
+
+        String endpointQuery = String.format("vendmachtrack/" + id + "?%s=%s", param1Key, param1Value);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(endpointBaseUri.resolve(endpointQuery))
+                .PUT(HttpRequest.BodyPublishers.noBody())
+                .build();
+
+        HttpResponse<String> response = getResponse(request);
+        checkError(response);
+
+        return gson.fromJson(response.body(), TYPE_HASHMAP_INTEGER_STRING);
     }
 
     private void checkError(HttpResponse<String> response) {
