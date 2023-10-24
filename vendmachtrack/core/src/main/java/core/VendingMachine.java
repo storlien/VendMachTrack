@@ -43,7 +43,7 @@ public class VendingMachine implements IVendingMachine {
 
 
     /**
-     * Retrieves the unique indentifier of the vending machine. 
+     * Retrieves the unique identifier of the vending machine.
      * 
      * @return The id of the vending machine.
      */
@@ -70,9 +70,9 @@ public class VendingMachine implements IVendingMachine {
      * @param number The number of the item to add.
      */
     @Override
-    public void addItem(String item, int number) { //fylle opp hvis noen kjøper, vil evt fyllle opp fra fil... dvs. lese fra fil
+    public void addItem(String item, int number) {
         if (!status.containsKey(item)) {
-            status.put(item, 0);
+            status.put(item, number);
         }
         status.put(item, status.get(item) + number);
     }
@@ -81,7 +81,7 @@ public class VendingMachine implements IVendingMachine {
 
     /**
      * Removes a specified number of a particular item from the vending machine's inventory (someone buys an item). 
-     * If the quantity becomes zero, the item is no longer avaliable in the vending machine.
+     * If the quantity becomes zero, the item is no longer available in the vending machine.
      *
      * @param item   The name of the item to remove.
      * @param number The number of items to remove.
@@ -89,7 +89,7 @@ public class VendingMachine implements IVendingMachine {
      */
     @Override
     public boolean removeItem(String item, int number) {
-        Integer itemCount = status.get(item); // Retrieve the count of the items
+        Integer itemCount = status.get(item);
 
         if (itemCount == null) {
             return false;
@@ -100,7 +100,7 @@ public class VendingMachine implements IVendingMachine {
             return true;
 
         } else if (itemCount > number) {
-            status.put(item, itemCount - number); // Use itemCount instead of status.get(item)
+            status.put(item, itemCount - number);
             return true;
         } else {
             return false;
@@ -121,7 +121,7 @@ public class VendingMachine implements IVendingMachine {
 
 
     /**
-     * Sets the unique indentifier of the vending machine. 
+     * Sets the unique identifier of the vending machine.
      *
      * @param id The id to set for the vending machine. 
      */
@@ -138,17 +138,6 @@ public class VendingMachine implements IVendingMachine {
     @Override
     public void setLocation(String location) {
         this.location = location;
-    }
-
-
-    /**
-     * Returns a string representation of the vending machine, including its id and location. 
-     *
-     * @param location A formatted string representing the vending machine.
-     */
-    @Override
-    public String toString() {
-        return "Machine: " + id + " (" + location + ")";
     }
 
 
