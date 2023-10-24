@@ -1,24 +1,14 @@
 package springboot.repository;
 
-import org.assertj.core.api.Assertions;
-import org.junit.Assert;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-
+import org.mockito.Mockito;
+import org.springframework.test.util.ReflectionTestUtils;
 import core.MachineTracker;
 import core.VendingMachine;
 import jsonio.VendmachtrackPersistence;
-
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -34,26 +24,27 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
+
 
 
 
 public class MachineTrackerRepositoryTest {
 
-    @Mock
-    private VendmachtrackPersistence persistence;
+    
 
-    @Captor
-    private ArgumentCaptor<MachineTracker> machineTrackerCaptor;
+    
+    private VendmachtrackPersistence persistence = Mockito.mock(VendmachtrackPersistence.class);
+    private MachineTrackerRepository machineTrackerRepository = new MachineTrackerRepository("testFileName"); 
+    private ArgumentCaptor<MachineTracker> machineTrackerCaptor = ArgumentCaptor.forClass(MachineTracker.class);
 
-    @InjectMocks
-    private MachineTrackerRepository machineTrackerRepository;
+
 
     private VendingMachine vendingmachine = new VendingMachine();
     private List<VendingMachine> machines = new ArrayList<>();
     private MachineTracker machineTracker = new MachineTracker();
-    
-    
+   
+  
+
     /**
      * Sets up the test fixture before each test method is run.
      * Initializes the Mockito annotations and sets up the vending machine object with an ID of 1 and a location of "Oslo".
@@ -61,7 +52,8 @@ public class MachineTrackerRepositoryTest {
      */
     @BeforeEach
     public void setUp() {
-        MockitoAnnotations.openMocks(this);
+      
+        ReflectionTestUtils.setField(machineTrackerRepository, "persistence", persistence);
         vendingmachine.setId(1);
         vendingmachine.setLocation("Oslo");
         machines.add(vendingmachine);

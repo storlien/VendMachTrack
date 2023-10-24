@@ -12,5 +12,5 @@ module vendmachtrack.springboot {
     opens springboot to spring.core;
     opens springboot.controller to spring.core;
     opens springboot.service to spring.core;
-    opens springboot.repository to org.mockito;
+    opens springboot.repository to org.mockito, spring.core;
 }
