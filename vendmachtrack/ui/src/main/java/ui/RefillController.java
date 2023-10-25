@@ -1,6 +1,6 @@
 package ui;
 
-import core.IItem;
+import core.Item;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -10,29 +10,25 @@ import javafx.scene.control.TextField;
 public class RefillController {
 
     @FXML
-     private TextArea title;
+    private TextArea title;
 
-     @FXML
-     private ChoiceBox<IItem> choiceBox;
+    @FXML
+    private ChoiceBox<Item> choiceBox;
 
-     @FXML
-     private TextField refillNumber;
+    @FXML
+    private TextField refillNumber;
 
-     @FXML
-     private Button refillButton;
+    @FXML
+    private Button refillButton;
 
-     @FXML
-     private TextArea textArea;
-
-
+    @FXML
+    private TextArea textArea;
 
 
-     @FXML
-     private void refillItem(){
-        
-     }
+    @FXML
+    private void refillItem() {
+
+    }
 
 
-
-    
 }

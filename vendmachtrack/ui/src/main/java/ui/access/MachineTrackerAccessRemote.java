@@ -20,7 +20,7 @@ import java.util.HashMap;
  * Class for accessing Vending Machine Tracker through REST API.
  * Accesses the Spring Boot REST API server by following the documentation on possible requests to perform against the API.
  */
-public class MachineTrackerAccessRemote implements IMachineTrackerAccess {
+public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
 
     private final URI endpointBaseUri;
     private final Gson gson;

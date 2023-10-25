@@ -5,7 +5,7 @@ import java.util.HashMap;
 /**
  * Interface for accessing Vending Machine Tracker. For instance via REST API or direct file access
  */
-public interface IMachineTrackerAccess {
+public interface MachineTrackerAccessible {
 
     /**
      * Access method for the list of vending machines

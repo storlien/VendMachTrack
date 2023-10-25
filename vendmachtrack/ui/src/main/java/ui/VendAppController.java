@@ -23,7 +23,7 @@ import javafx.scene.control.ChoiceBox;
 
 import javafx.scene.control.TextArea;
 import jsonio.VendmachtrackPersistence;
-import ui.access.IMachineTrackerAccess;
+import ui.access.MachineTrackerAccessible;
 import ui.access.MachineTrackerAccessLocal;
 import ui.access.MachineTrackerAccessRemote;
 
@@ -47,7 +47,7 @@ public class VendAppController implements Initializable {
     private ChoiceBox<String> menuBar;
 
 
-    private IMachineTrackerAccess access;
+    private MachineTrackerAccessible access;
 
 
     /**

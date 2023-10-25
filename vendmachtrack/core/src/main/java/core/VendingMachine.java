@@ -4,10 +4,9 @@ import java.util.HashMap;
 
 /**
  * Represents a vending machine with unique id, inventory, and location.
- * It implements the IVendingMachine interface.
  */
 
-public class VendingMachine implements IVendingMachine {
+public class VendingMachine {
 
     private HashMap<String, Integer> status = new HashMap<>();
     private int id;
@@ -36,7 +35,6 @@ public class VendingMachine implements IVendingMachine {
      *
      * @return A HashMap containing item names as keys and their quantities as values.
      */
-    @Override
     public HashMap<String, Integer> getStatus() {
         return new HashMap<>(this.status);
     }
@@ -47,7 +45,6 @@ public class VendingMachine implements IVendingMachine {
      *
      * @return The id of the vending machine.
      */
-    @Override
     public int getId() {
         return this.id;
     }
@@ -57,7 +54,6 @@ public class VendingMachine implements IVendingMachine {
      *
      * @return The location of the vending machine.
      */
-    @Override
     public String getLocation() {
         return this.location;
     }
@@ -69,7 +65,6 @@ public class VendingMachine implements IVendingMachine {
      * @param item   The name of the item to add.
      * @param number The number of the item to add.
      */
-    @Override
     public void addItem(String item, int number) {
         if (!status.containsKey(item)) {
             status.put(item, number);
@@ -87,7 +82,6 @@ public class VendingMachine implements IVendingMachine {
      * @param number The number of items to remove.
      * @throws IllegalArgumentException If the item is not found in the vending machine's inventory.
      */
-    @Override
     public boolean removeItem(String item, int number) {
         Integer itemCount = status.get(item);
 
@@ -113,7 +107,6 @@ public class VendingMachine implements IVendingMachine {
      *
      * @param status A HashMap containing item names as keys and their quantities as values.
      */
-    @Override
     public void setStatus(HashMap<String, Integer> status) {
         this.status = new HashMap<>(status);
     }
@@ -124,7 +117,6 @@ public class VendingMachine implements IVendingMachine {
      *
      * @param id The id to set for the vending machine.
      */
-    @Override
     public void setId(int id) {
         this.id = id;
     }
@@ -134,7 +126,6 @@ public class VendingMachine implements IVendingMachine {
      *
      * @param location The location to set for the vending machine.
      */
-    @Override
     public void setLocation(String location) {
         this.location = location;
     }
