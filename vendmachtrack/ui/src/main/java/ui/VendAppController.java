@@ -14,15 +14,20 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import javafx.concurrent.Task;
+import javafx.scene.Node;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 
 import javafx.scene.control.TextArea;
 import jsonio.VendmachtrackPersistence;
+import javafx.stage.Stage;
 import ui.access.IMachineTrackerAccess;
 import ui.access.MachineTrackerAccessLocal;
 import ui.access.MachineTrackerAccessRemote;
@@ -44,17 +49,23 @@ public class VendAppController implements Initializable {
     private Button button;
 
     @FXML
-    private ChoiceBox<String> menuBar;
+    private Button refillButton;
 
+    @FXML
+    private ChoiceBox<String> menuBar;
 
     private IMachineTrackerAccess access;
 
+    private Stage stage;
+    private Scene scene;
 
     /**
      * Initializes the controller. It reads vending machine data from a JSON file.
      *
-     * @param arg0 The location used to resolve relative paths for the root object, or null if the location is not known.
-     * @param arg1 The resources used to localize the root object, or null if the root object was not localized.
+     * @param arg0 The location used to resolve relative paths for the root object,
+     *             or null if the location is not known.
+     * @param arg1 The resources used to localize the root object, or null if the
+     *             root object was not localized.
      */
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
@@ -103,8 +114,21 @@ public class VendAppController implements Initializable {
         }
     }
 
+    private boolean checkServerHealth(URI endpointUri) throws IOException, InterruptedException {
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(endpointUri.resolve("health"))
+                .timeout(Duration.ofSeconds(5))
+                .GET()
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        return response.statusCode() == HttpURLConnection.HTTP_OK;
+    }
+
     /**
-     * Handles the button click event. It displays the inventory of the selected vending machine in the text area.
+     * Handles the button click event. It displays the inventory of the selected
+     * vending machine in the text area.
      *
      * @param event The event representing the button click.
      */
@@ -136,15 +160,26 @@ public class VendAppController implements Initializable {
         }
     }
 
-    private boolean checkServerHealth(URI endpointUri) throws IOException, InterruptedException {
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(endpointUri.resolve("health"))
-                .timeout(Duration.ofSeconds(5))
-                .GET()
-                .build();
+    @FXML
+    public void changeToRefillScene(ActionEvent event) throws IOException {
+        int selectedMachineID = findID();
 
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        return response.statusCode() == HttpURLConnection.HTTP_OK;
+        if (selectedMachineID != 0) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("RefillApp.fxml"));
+            Parent root = loader.load();
+            RefillController refillController = loader.getController();
+            refillController.setSelectedMachineID(selectedMachineID);
+            refillController.setMachineTrackerAccess(access);
+            // refillController.setVendAppController(this);
+
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+
+        } else {
+            textArea.setText("No vending machine selected");
+        }
     }
+
 }
