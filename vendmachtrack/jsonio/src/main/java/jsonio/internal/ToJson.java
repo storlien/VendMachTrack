@@ -1,7 +1,7 @@
 package jsonio.internal;
 
 import com.google.gson.Gson;
-import core.IMachineTracker;
+import core.MachineTracker;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -24,7 +24,7 @@ public class ToJson {
      *
      * @return OutputStream of parsed MachineTracker object
      */
-    public OutputStream toOutputStream(IMachineTracker machtrack) {
+    public OutputStream toOutputStream(MachineTracker machtrack) {
         Gson gson = new Gson();
         String jsonString = gson.toJson(machtrack);
 
@@ -42,7 +42,7 @@ public class ToJson {
      *
      * @param machtrack MachineTracker object to be parsed and written to file.
      */
-    public void writeToFile(IMachineTracker machtrack) {
+    public void writeToFile(MachineTracker machtrack) {
         Gson gson = new Gson();
         String jsonString = gson.toJson(machtrack);
 

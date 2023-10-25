@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
  * Class for accessing Vending Machine Tracker through REST API.
  * Accesses the Spring Boot REST API server by following the documentation on possible requests to perform against the API.
  */
-public class MachineTrackerAccessLocal implements IMachineTrackerAccess {
+public class MachineTrackerAccessLocal implements MachineTrackerAccessible {
 
     private final VendmachtrackPersistence persistence;
 

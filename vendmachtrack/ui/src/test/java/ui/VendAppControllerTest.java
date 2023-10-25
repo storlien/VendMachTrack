@@ -27,7 +27,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import org.testfx.matcher.control.TextInputControlMatchers;
 
-import core.IMachineTracker;
 import core.MachineTracker;
 import core.VendingMachine;
 
@@ -36,7 +35,7 @@ public class VendAppControllerTest extends ApplicationTest {
 
 
     private VendAppController controller;
-    private IMachineTracker tracker;
+    private MachineTracker tracker;
     private MachineTracker trackerTest = new MachineTracker();
 
     /**
