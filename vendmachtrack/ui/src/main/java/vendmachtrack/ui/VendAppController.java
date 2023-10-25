@@ -1,12 +1,7 @@
 package vendmachtrack.ui;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.time.Duration;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,16 +13,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-
 import javafx.scene.control.TextArea;
-import vendmachtrack.jsonio.VendmachtrackPersistence;
-import vendmachtrack.ui.access.MachineTrackerAccessible;
-import vendmachtrack.ui.access.MachineTrackerAccessLocal;
-import vendmachtrack.ui.access.MachineTrackerAccessRemote;
+import javafx.stage.Stage;
 
-import java.net.URI;
+import vendmachtrack.ui.access.AccessService;
+import vendmachtrack.ui.access.MachineTrackerAccessible;
 
 /**
  * Controller class for the vending machine application's user interface.
@@ -44,49 +37,48 @@ public class VendAppController implements Initializable {
     private Button button;
 
     @FXML
-    private ChoiceBox<String> menuBar;
+    private Button refillButton;
 
+    @FXML
+    private ChoiceBox<String> menuBar;
 
     private MachineTrackerAccessible access;
 
+    private AccessService service;
+
+    public void setAccessService(AccessService service) {
+        this.service = service;
+    }
 
     /**
      * Initializes the controller. It reads vending machine data from a JSON file.
      *
-     * @param arg0 The location used to resolve relative paths for the root object, or null if the location is not known.
-     * @param arg1 The resources used to localize the root object, or null if the root object was not localized.
+     * @param arg0 The location used to resolve relative paths for the root object,
+     *             or null if the location is not known.
+     * @param arg1 The resources used to localize the root object, or null if the
+     *             root object was not localized.
      */
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         URI endpointUri = URI.create("http://localhost:8080/");
+        String fileName = "tracker.json";
 
-        Task<Boolean> checkServerHealthTask = new Task<Boolean>() {
-            @Override
-            protected Boolean call() throws Exception {
-                return checkServerHealth(endpointUri);
-            }
-        };
+        if (service == null) {
+            Task<Void> newAccess = new Task<>() {
+                @Override
+                protected Void call() throws Exception {
+                    AccessService service = new AccessService(endpointUri, fileName);
+                    access = service.getAccess();
+                    postInitialize();
+                    return null;
+                }
+            };
 
-        checkServerHealthTask.setOnSucceeded(event -> {
-            if (checkServerHealthTask.getValue()) {
-                access = new MachineTrackerAccessRemote(endpointUri);
-                System.out.println("Using remote access");
-            } else {
-                access = new MachineTrackerAccessLocal(new VendmachtrackPersistence("tracker.json"));
-                System.out.println("Using local access");
-            }
+            new Thread(newAccess).start();
+        } else {
+            access = service.getAccess();
+        }
 
-            postInitialize();
-        });
-
-        checkServerHealthTask.setOnFailed(event -> {
-            System.out.println("Error during server health check: " + checkServerHealthTask.getException());
-            access = new MachineTrackerAccessLocal(new VendmachtrackPersistence("tracker.json"));
-            System.out.println("Using local access as a fallback");
-            postInitialize();
-        });
-
-        new Thread(checkServerHealthTask).start();
     }
 
     private void postInitialize() {
@@ -104,12 +96,14 @@ public class VendAppController implements Initializable {
     }
 
     /**
-     * Handles the button click event. It displays the inventory of the selected vending machine in the text area.
+     * Handles the button click event. It displays the inventory of the selected
+     * vending machine in the text area.
      *
      * @param event The event representing the button click.
      */
     @FXML
     private void handleButtonClick(ActionEvent event) {
+
         if (findID() != 0) {
             Map<String, Integer> statusMap = access.getInventory(findID());
             StringBuilder formattedStatus = new StringBuilder("Inventory:\n");
@@ -136,15 +130,4 @@ public class VendAppController implements Initializable {
         }
     }
 
-    private boolean checkServerHealth(URI endpointUri) throws IOException, InterruptedException {
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(endpointUri.resolve("health"))
-                .timeout(Duration.ofSeconds(5))
-                .GET()
-                .build();
-
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        return response.statusCode() == HttpURLConnection.HTTP_OK;
-    }
 }
