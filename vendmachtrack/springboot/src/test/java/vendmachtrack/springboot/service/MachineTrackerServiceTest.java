@@ -1,5 +1,6 @@
-package springboot.service;
+package vendmachtrack.springboot.service;
 
+import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -9,10 +10,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import core.MachineTracker;
-import core.VendingMachine;
-import springboot.exception.ResourceNotFoundException;
-import springboot.repository.MachineTrackerRepository;
+import vendmachtrack.core.MachineTracker;
+import vendmachtrack.core.VendingMachine;
+import vendmachtrack.springboot.exception.IllegalInputException;
+import vendmachtrack.springboot.exception.ResourceNotFoundException;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -20,7 +21,7 @@ import java.util.HashMap;
 public class MachineTrackerServiceTest {
 
     @Mock
-    private MachineTrackerRepository repository;
+    private vendmachtrack.springboot.repository.MachineTrackerRepository repository;
 
     @InjectMocks
     private MachineTrackerService service;
@@ -105,8 +106,71 @@ public class MachineTrackerServiceTest {
         // Act
         when(repository.getVendMach(99)).thenReturn(null);
         
-        // Assert
+        //Arrange & Assert
         assertThrows(ResourceNotFoundException.class, () -> service.getInventory(99));
     }
+
+        @Test
+    public void addItem_validInput_addsItemSuccessfully() {
+        // Act
+        HashMap<String, Integer> inventory = new HashMap<>();
+        VendingMachine updatedMachine = new VendingMachine();
+        updatedMachine.setId(1);
+        updatedMachine.setStatus(inventory);
+
+        when(repository.getVendMach(1)).thenReturn(machine);
+        when(repository.addItem(1, "Cola", 5)).thenReturn(updatedMachine);
+        
+        // Arrange
+        HashMap<String, Integer> updatedInventory = service.addItem(1, "Cola", 5);
+        
+        // Assert
+        assertEquals(inventory, updatedInventory);
+    }
+    
+    @Test 
+    public void addItem_invalidItem_throwsIllegalInputException() {
+        // Arrange and Assert
+        assertThrows(IllegalInputException.class, () -> service.addItem(1, " ", 5));
+    }
+    
+    @Test
+    public void addItem_invalidAmount_throwsIllegalInputException() {
+        // Arrange and Assert
+        assertThrows(IllegalInputException.class, () -> service.addItem(1, "Cola", 0));
+    }
+    
+    @Test
+    public void addItem_invalidId_throwsResourceNotFoundException() {
+        // Act
+        when(repository.getVendMach(99)).thenReturn(null);
+        
+        // Arrange and Assert
+        assertThrows(ResourceNotFoundException.class, () -> service.addItem(99, "Cola", 5));
+    }
+    
+    @Test
+    public void addItem_negativeAmount_throwsIllegalInputException() {
+        
+        // Arrange and Assert
+        assertThrows(IllegalInputException.class, () -> service.addItem(1, "Cola", -5));
+    }
+    
+
+    
+    @Test
+    public void addVendMach_existingId_throwsIllegalInputException() {
+        // Arrange
+        when(repository.getVendMach(1)).thenReturn(machine);
+        
+        // Act & Assert
+        assertThrows(IllegalInputException.class, () -> service.addVendMach(1, "Trondheim"));
+    }
+    
+
+
+
+
   
+
 }
