@@ -166,11 +166,157 @@ public class MachineTrackerServiceTest {
         // Act & Assert
         assertThrows(IllegalInputException.class, () -> service.addVendMach(1, "Trondheim"));
     }
+
+
+    @Test
+    public void addVendMach_validInput_addsMachineSuccessfully() {
+       
+        // Arrange
+        VendingMachine newMachine = new VendingMachine();
+        newMachine.setId(2);
+        newMachine.setLocation("Bergen");
+        machineTracker.addVendingMachine(newMachine);
+        when(repository.getVendMach(2)).thenReturn(null);  // No existing machine with ID 2
+        when(repository.getVendmachtrack()).thenReturn(machineTracker);
+        
+        
+        // Act
+        HashMap<Integer, String> updatedMachineList = service.addVendMach(2, "Bergen");
+        
+        // Assert
+        assertTrue(updatedMachineList.containsKey(2));
+        assertEquals("Bergen", updatedMachineList.get(2));
+    }
     
+    
+    @Test
+    public void addVendMach_invalidLocation_throwsIllegalInputException() {
+        // Arrange 
+        when(repository.getVendMach(2)).thenReturn(null);
+        
+        // Act & Assert
+        assertThrows(IllegalInputException.class, () -> service.addVendMach(2, "123InvalidLocation"));
+    }
 
+    @Test
+    public void addVendMach_invalidId_throwsIllegalInputException() {
+        // Arrange
+        VendingMachine newMachine = new VendingMachine();
+        newMachine.setId(-1);
+        newMachine.setLocation("Bergen");
+        when(repository.getVendMach(-1)).thenReturn(newMachine);
 
+        // Act & Assert
+        assertThrows(IllegalInputException.class, () -> service.addVendMach(-1, "Trondheim"));
+    }
 
+    @Test
+    public void removeVendMach_validId_removesMachineSuccessfully() {
+        
+        // Arrange
+        when(repository.getVendMach(1)).thenReturn(machine);
+        when(repository.getVendmachtrack()).thenReturn(machineTracker);
+        machineTracker.removeVendingMachine(machine);
+        
+        // Act
+        HashMap<Integer, String> updatedMachineList = service.removeVendMach(1);
+        
+        // Assert
+        assertFalse(updatedMachineList.containsKey(1));
+    }
+    
+    @Test
+    public void removeVendMach_invalidId_throwsResourceNotFoundException() {
+        // Arrange  that there is no machine with ID 99
+        when(repository.getVendMach(99)).thenReturn(null);
+        
+        // Act & Assert
+        assertThrows(ResourceNotFoundException.class, () -> service.removeVendMach(99));
+    }
 
-  
-
+    @Test
+    public void changeLocation_validInput_changesLocationSuccessfully() {
+        // Arrange
+        VendingMachine updatedMachine = new VendingMachine();
+        updatedMachine.setId(1);
+        updatedMachine.setLocation("Trondheim");
+        MachineTracker updatedMachineTracker = new MachineTracker();
+        updatedMachineTracker.addVendingMachine(updatedMachine);
+        
+        when(repository.getVendMach(1)).thenReturn(updatedMachine);
+        when(repository.getVendmachtrack()).thenReturn(updatedMachineTracker);
+        
+        
+        // Act
+        HashMap<Integer, String> updatedMachineList = service.changeLocation(1, "Trondheim");
+        
+        // Assert
+        assertTrue(updatedMachineList.containsKey(1));
+        assertEquals("Trondheim", updatedMachineList.get(1));
+    }
+    
+    @Test
+    public void changeLocation_invalidLocation_throwsIllegalInputException() {
+        // Arrange
+        when(repository.getVendMach(1)).thenReturn(machine);
+        
+        // Act & Assert
+        assertThrows(IllegalInputException.class, () -> service.changeLocation(1, "123InvalidLocation"));
+    }
+    
+    @Test
+    public void changeLocation_invalidId_throwsResourceNotFoundException() {
+         // Arrange
+        when(repository.getVendMach(99)).thenReturn(null);
+        
+        // Act & Assert
+        assertThrows(ResourceNotFoundException.class, () -> service.changeLocation(99, "Bergen"));
+    }
+    
+    @Test
+    public void removeItem_invalidItem_throwsIllegalInputException() {
+        // Act & Assert
+        assertThrows(IllegalInputException.class, () -> service.removeItem(1, " ", 5));
+    }
+    
+    @Test
+    public void removeItem_invalidAmount_throwsIllegalInputException() {
+        // Act & Assert
+        assertThrows(IllegalInputException.class, () -> service.removeItem(1, "Cola", 0));
+    }
+    
+    @Test
+    public void removeItem_invalidId_throwsResourceNotFoundException() {
+        // Arrange  that the repository does not have a machine with ID 99
+        when(repository.getVendMach(99)).thenReturn(null);
+        
+        // Act & Assert
+        assertThrows(ResourceNotFoundException.class, () -> service.removeItem(99, "Cola", 5));
+    }
+    
+    @Test
+    public void removeItem_itemNotInInventory_throwsIllegalInputException() {
+        // Arrange 
+        HashMap<String, Integer> inventory = new HashMap<>();
+        machine.setStatus(inventory);
+        
+        when(repository.getVendMach(1)).thenReturn(machine);
+        
+        // Act & Assert
+        assertThrows(IllegalInputException.class, () -> service.removeItem(1, "Cola", 5));
+    }
+    
+    @Test
+    public void removeItem_removalAmountGreaterThanInventory_throwsIllegalInputException() {
+        // Arrange 
+        HashMap<String, Integer> inventory = new HashMap<>();
+        inventory.put("Cola", 2);
+        machine.setStatus(inventory);
+        
+        when(repository.getVendMach(1)).thenReturn(machine);
+        
+        // Act & Assert
+        assertThrows(IllegalInputException.class, () -> service.removeItem(1, "Cola", 5));
+    }
+    
 }

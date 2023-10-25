@@ -8,8 +8,6 @@ import org.springframework.test.util.ReflectionTestUtils;
 import vendmachtrack.core.MachineTracker;
 import vendmachtrack.core.VendingMachine;
 import vendmachtrack.jsonio.VendmachtrackPersistence;
-import vendmachtrack.springboot.repository.MachineTrackerRepository;
-
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -19,7 +17,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
