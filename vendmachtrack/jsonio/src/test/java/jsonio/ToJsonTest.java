@@ -1,30 +1,21 @@
 package jsonio;
 
-import core.IMachineTracker;
-import core.Item;
 import core.MachineTracker;
 import core.VendingMachine;
 
+import jsonio.internal.ToJson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
-import org.mockito.Mockito;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.HashMap;
 
-import javax.crypto.Mac;
-
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
 
 /**
  * This class contains JUnit tests for the ToJson class. It tests the serialization of MachineTracker objects to JSON format.
- * 
+ *
  * @see ToJson
  * @see MachineTracker
  */
@@ -32,9 +23,9 @@ public class ToJsonTest {
 
     private ToJson toJson;
     private String filePath;
-    private HashMap <String, Integer> inventory = new HashMap<>();
+    private HashMap<String, Integer> inventory = new HashMap<>();
 
-  
+
     /**
      * Sets up the test fixture. This method is called before each test case method is executed.
      * It initializes a new instance of the ToJson class with the filename "testfile.json".
@@ -46,11 +37,11 @@ public class ToJsonTest {
         toJson = new ToJson("testfile.json");
     }
 
- 
+
     /**
      * Tests the toJson.toOutputStream() method by creating a new MachineTracker object with a single VendingMachine object
      * and serializing it to an OutputStream. The test asserts that the OutputStream is not null and contains the expected data.
-     * 
+     *
      * @throws IOException if an I/O error occurs while writing to the OutputStream
      */
     @Test
@@ -76,10 +67,10 @@ public class ToJsonTest {
         assertEquals("{\"machines\":[{\"status\":{\"Øl\":10,\"Cola\":3},\"id\":1,\"location\":\"Trondheim\"}]}", result);
     }
 
-    
+
     /**
      * Tests the {@link ToJson#toOutputStream(MachineTracker)} method when a null MachineTracker object is passed as input.
-     * 
+     *
      * @result The method should serialize the null object to an OutputStream and return it. The OutputStream should contain the string "null".
      */
     @Test
@@ -90,16 +81,16 @@ public class ToJsonTest {
         // Assert that the OutputStream is not null and contains the expected data
         assertNotNull(outputStream);
         String result = new String(((ByteArrayOutputStream) outputStream).toByteArray(), StandardCharsets.UTF_8);
-        assertEquals("null",result);
+        assertEquals("null", result);
     }
 
- 
+
     /**
      * Tests the {@link ToJson#toOutputStream(MachineTracker)} method with an empty {@link MachineTracker} object.
-     * 
+     *
      * <p>Creates an empty {@link MachineTracker} object and serializes it to an {@link OutputStream}.
      * Then, asserts that the {@link OutputStream} is not null and contains the expected data.</p>
-     * 
+     *
      * @see ToJson#toOutputStream(MachineTracker)
      * @see MachineTracker
      */
@@ -116,14 +107,11 @@ public class ToJsonTest {
         String result = new String(((ByteArrayOutputStream) outputStream).toByteArray(), StandardCharsets.UTF_8);
         assertEquals("{\"machines\":[]}", result);
     }
-    
-  
-    
 
 
     /**
      * Tests the behavior of the writeToFile method when a null object is passed.
-     * 
+     *
      * @see ToJson#writeToFile(MachineTracker)
      */
     @Test
@@ -133,6 +121,4 @@ public class ToJsonTest {
     }
 
 
-
-    
 }

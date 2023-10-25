@@ -6,13 +6,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+
 import java.io.IOException;
+
+public class RefillApp extends Application{
+
 
 /**
  * Extends javafx.application.Application and provides a method for launching the application. 
  */
-
-public class App extends Application {
 
     /**
      * This method is called by javafx to start the application.
@@ -24,9 +26,8 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("App.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("RefillApp.fxml"));
         Parent parent = fxmlLoader.load();
-
         stage.setScene(new Scene(parent));
         stage.show();
     }
@@ -42,3 +43,5 @@ public class App extends Application {
     }
 
 }
+
+    

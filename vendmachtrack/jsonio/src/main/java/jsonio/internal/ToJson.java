@@ -1,22 +1,22 @@
-package jsonio;
+package jsonio.internal;
 
 import com.google.gson.Gson;
-import core.IMachineTracker;
+import core.MachineTracker;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
-public class ToJson implements IToJson {
+public class ToJson {
 
     private final String filePath;
 
     /**
      * Constructor. Requires a file name for the MachineTracker object to be saved to.
      *
-     * @param file File name.
+     * @param fileName File name.
      */
-    public ToJson(String file) {
-        this.filePath = System.getProperty("user.home") + "/" + file;
+    public ToJson(String fileName) {
+        this.filePath = System.getProperty("user.home") + "/" + fileName;
     }
 
     /**
@@ -24,8 +24,7 @@ public class ToJson implements IToJson {
      *
      * @return OutputStream of parsed MachineTracker object
      */
-    @Override
-    public OutputStream toOutputStream(IMachineTracker machtrack) {
+    public OutputStream toOutputStream(MachineTracker machtrack) {
         Gson gson = new Gson();
         String jsonString = gson.toJson(machtrack);
 
@@ -43,8 +42,7 @@ public class ToJson implements IToJson {
      *
      * @param machtrack MachineTracker object to be parsed and written to file.
      */
-    @Override
-    public void writeToFile(IMachineTracker machtrack) {
+    public void writeToFile(MachineTracker machtrack) {
         Gson gson = new Gson();
         String jsonString = gson.toJson(machtrack);
 
