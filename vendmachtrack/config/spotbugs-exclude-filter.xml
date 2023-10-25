@@ -18,4 +18,13 @@
         <Method name="&lt;init&gt;"/>
         <Bug pattern="EI_EXPOSE_REP2"/>
     </Match>
+
+    <!-- It is by intention that AccessService class exposes internal representation in this way. -->
+    <!-- The class is used to ensure the internal access object acts as a shared resource among the controller classes. -->
+    <!-- This is standard practice for the service pattern -->
+    <Match>
+        <Class name="vendmachtrack.ui.access.AccessService"/>
+        <Method name="getAccess"/>
+        <Bug pattern="EI_EXPOSE_REP"/>
+    </Match>
 </FindBugsFilter>
