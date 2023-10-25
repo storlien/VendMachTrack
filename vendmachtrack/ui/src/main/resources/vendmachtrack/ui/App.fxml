@@ -19,5 +19,6 @@
         <Button fx:id="button" layoutX="520.0" layoutY="89.0" mnemonicParsing="false" onAction="#handleButtonClick"
                 prefHeight="36.0" prefWidth="76.0" text="OK"/>
         <TextArea fx:id="textArea" layoutX="24.0" layoutY="155.0" prefHeight="200.0" prefWidth="553.0"/>
+        <Button fx:id="refillButton" layoutX="520.0" layoutY="361.0" mnemonicParsing="false" onAction="#changeToRefillScene" prefHeight="28.0" prefWidth="56.0" text="Refill" />
     </children>
 </Pane>
