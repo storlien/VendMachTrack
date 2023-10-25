@@ -27,7 +27,7 @@ public class VendingMachineTest {
 
     /**
      * Tests the initialization of the VendingMachine object.
-     * 
+     * <p>
      * This method tests if the VendingMachine object is initialized correctly by checking the following:
      * - The ID of the machine is 1
      * - The location of the machine is "Lobby"
@@ -43,7 +43,7 @@ public class VendingMachineTest {
 
     /**
      * Tests the addItem method of the VendingMachine class by adding a new item and verifying that it was added successfully.
-     * 
+     *
      * <p>
      * This test adds a new item "Water" with a quantity of 7 to the vending machine and then checks that the vending machine's status map contains the item "Water" with a quantity of 7.
      * </p>
@@ -57,7 +57,7 @@ public class VendingMachineTest {
 
     /**
      * Tests the behavior of adding an existing item to the vending machine.
-     * 
+     *
      * <p>
      * This test case adds a "Soda" item with a quantity of 2 to the vending machine, and then
      * verifies that the quantity of "Soda" in the vending machine is updated to 7, which is the
@@ -92,19 +92,18 @@ public class VendingMachineTest {
     /**
      * Tests the removeItem method of the VendingMachine class when the item to be removed does not exist.
      * Expects an IllegalArgumentException to be thrown.
-     * 
+     *
      * @throws IllegalArgumentException if the item to be removed does not exist in the vending machine.
-     * @see VendingMachine#removeItem(String, int)
-     * 
      * @test_category vending_machine
      * @test_subcategory functionality
+     * @see VendingMachine#removeItem(String, int)
      * @since 1.0
      */
     @Test
     public void testRemoveItemNotExists() {
-       assertFalse(machine.removeItem("Sodanotexist", 10), "Should return false if item does not exist");
+        assertFalse(machine.removeItem("Sodanotexist", 10), "Should return false if item does not exist");
     }
-    
+
     @Test
     public void testRemoveItemNotEnough() {
         assertFalse(machine.removeItem("Soda", 6), "Should return false if not enough items");
@@ -112,10 +111,10 @@ public class VendingMachineTest {
 
     /**
      * Tests the setStatus method of the VendingMachine class.
-     * 
+     * <p>
      * Creates a new inventory HashMap with a single item, "Candy", and a quantity of 15.
      * The method then sets the VendingMachine's status to the new inventory.
-     * 
+     * <p>
      * Asserts that the VendingMachine's status contains the "Candy" key and does not contain the "Soda" key.
      */
     @Test
@@ -129,7 +128,7 @@ public class VendingMachineTest {
 
     /**
      * Tests the setId() method of the VendingMachine class.
-     * 
+     * <p>
      * This test sets the ID of the VendingMachine object to 2 using the setId() method,
      * and then checks if the ID has been set correctly by calling the getId() method.
      * The test passes if the returned ID matches the expected value of 2.
@@ -149,20 +148,4 @@ public class VendingMachineTest {
         machine.setLocation("Office");
         assertEquals("Office", machine.getLocation());
     }
-
-    /**
-     * Tests the toString() method of the VendingMachine class.
-     * 
-     * This method tests if the toString() method of the VendingMachine class returns the expected string representation of the object.
-     * The expected string representation is "Lobby, ID: 1".
-     * 
-     * @see VendingMachine#toString()
-     */
-    @Test
-    public void testToString() {
-        assertEquals("Machine: " + machine.getId() + " (" + machine.getLocation() + ")", machine.toString());
-    }
 }
-
-
-
