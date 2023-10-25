@@ -1,4 +1,10 @@
+# IntelliJ
 .idea/
+/vendmachtrack/.idea/
+
+# VSCode
+.vscode/
+/vendmachtrack/.vscode/
 
 ### Linux ###
 *~
