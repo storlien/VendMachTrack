@@ -4,6 +4,8 @@ import core.MachineTracker;
 import core.VendingMachine;
 
 import jsonio.internal.ToJson;
+
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -21,8 +23,9 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class ToJsonTest {
 
+    private final String fileName = "testfile.json";
+    private final File file = new File(System.getProperty("user.home") + "/" + fileName);
     private ToJson toJson;
-    private String filePath;
     private HashMap<String, Integer> inventory = new HashMap<>();
 
 
@@ -34,10 +37,15 @@ public class ToJsonTest {
      */
     @BeforeEach
     public void setUp() throws IOException {
-        toJson = new ToJson("testfile.json");
+        toJson = new ToJson(fileName);
     }
 
-
+    @AfterEach
+    public void tearDown() {
+        if (file.exists()) {
+            file.delete();
+        }
+    }
     /**
      * Tests the toJson.toOutputStream() method by creating a new MachineTracker object with a single VendingMachine object
      * and serializing it to an OutputStream. The test asserts that the OutputStream is not null and contains the expected data.

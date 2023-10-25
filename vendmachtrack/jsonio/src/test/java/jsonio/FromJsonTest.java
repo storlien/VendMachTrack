@@ -26,7 +26,7 @@ public class FromJsonTest {
      */
     @BeforeEach
     public void setUp() throws IOException {
-        fromJson = new FromJson("tracker.json");
+        fromJson = new FromJson("testfile.json");
         File tempFile = File.createTempFile("test", ".json");
         filePath = tempFile.getAbsolutePath();
         tempFile.deleteOnExit();
@@ -105,12 +105,11 @@ public class FromJsonTest {
     @Test
     public void testReadFromFileValidFile() throws IOException {
         // Create a temporary file with valid JSON data
-        try (FileOutputStream fos = new FileOutputStream(filePath)) {
-            fos.write(jsonString.getBytes(StandardCharsets.UTF_8));
-        }
+       // Read the JSON data from the testfile.json
+        InputStream inputStream = getClass().getResourceAsStream("/testfile.json");
 
         // Deserialize the JSON data into a MachineTracker object
-        MachineTracker machineTracker = fromJson.readFromFile();
+        MachineTracker machineTracker = fromJson.fromInputStream(inputStream);
 
         // Assert that the MachineTracker object is not null and contains the expected data
         assertNotNull(machineTracker);
@@ -120,6 +119,7 @@ public class FromJsonTest {
         assertEquals(1, machineTracker.getMachines().get(1).getStatus().get("Tuborg"));
         assertEquals(100, machineTracker.getMachines().get(2).getStatus().get("Hansa"));
         assertEquals(10, machineTracker.getMachines().get(2).getStatus().get("Regnvann"));
+        
     }
 
     /**
