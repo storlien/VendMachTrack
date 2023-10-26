@@ -35,8 +35,6 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willReturn;
 
 @WebMvcTest(controllers = MachineTrackerController.class)
-@AutoConfigureMockMvc(addFilters = false)
-@ExtendWith(MockitoExtension.class)
 public class MachineTrackerControllerTest {
 
     @Autowired
@@ -47,7 +45,7 @@ public class MachineTrackerControllerTest {
 
     @Autowired
     private ObjectMapper objectMapper;
-
+ 
     
     
 
@@ -65,11 +63,14 @@ public class MachineTrackerControllerTest {
     }
 
     @Test
-    public void MachineTrackerController_addVendMach_returnAdded() throws Exception{
+    public void MachineTrackerController_addVendMach_returnAdded() throws Exception {
+        
+        //Arrange
         HashMap<Integer, String> status = new HashMap<>();
         status.put(1, "Oslo");
-        given(machineTrackerService.addVendMach(ArgumentMatchers.anyInt(), ArgumentMatchers.anyString())).willReturn(status); // change this line
+        given(machineTrackerService.addVendMach(ArgumentMatchers.anyInt(), ArgumentMatchers.anyString())).willReturn(status);
 
+        //Act
         ResultActions response = mockmvc.perform(MockMvcRequestBuilders
             .post("/vendmachtrack/add")
             .param("id", "1")
@@ -77,7 +78,17 @@ public class MachineTrackerControllerTest {
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON));
 
-        response.andExpect(MockMvcResultMatchers.status().isOk());
+        //Assert
+        response.andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(content().json("{\"1\":\"Oslo\"}"));
     }
+
+    @Test
+    public void MachineTrackerController_getVendMachList_returnVendmachList(){
+
+    }
+
+    
+ 
 
 }
