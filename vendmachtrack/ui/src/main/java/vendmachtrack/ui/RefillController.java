@@ -38,12 +38,10 @@ public class RefillController {
     @FXML
     private Text answerText;
 
+    //    private AccessService service;
     private MachineTrackerAccessible access;
 
-//    private AccessService service;
-
     private App mainApp;
-
     private int selectedMachineID;
 
     public void updateTitle(int machineID) {
@@ -89,7 +87,7 @@ public class RefillController {
     }
 
     @FXML
-    public void goBackToFirstPage(ActionEvent event) throws IOException {
+    public void switchToMainScene(ActionEvent event) throws IOException {
         mainApp.switchToMainScene(selectedMachineID);
     }
 

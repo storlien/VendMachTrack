@@ -45,6 +45,9 @@ public class VendAppController implements Initializable {
     private Button refillButton;
 
     @FXML
+    private Button userView;
+
+    @FXML
     private ChoiceBox<String> menuBar;
 
     private App mainApp;
@@ -101,6 +104,7 @@ public class VendAppController implements Initializable {
         } catch (Exception e) {
             textArea.setText(e.getMessage());
         }
+
     }
 
     public void updateInventory(int machineID) {
@@ -134,6 +138,7 @@ public class VendAppController implements Initializable {
             int endIndex = selectedItem.indexOf("(");
             return Integer.parseInt(selectedItem.substring(colonIndex + 2, endIndex).trim());
         } else {
+            System.out.println("No vending machine selected"); // Print a message for debugging
             return 0;
         }
     }
@@ -146,9 +151,9 @@ public class VendAppController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("RefillApp.fxml"));
             Parent root = loader.load();
             RefillController refillController = loader.getController();
-            refillController.setSelectedMachineID(selectedMachineID);
             refillController.setAccessService(service);
             refillController.setMainApp(mainApp);
+            refillController.setSelectedMachineID(selectedMachineID);
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
@@ -158,6 +163,29 @@ public class VendAppController implements Initializable {
         } else {
             textArea.setText("No vending machine selected");
         }
+    }
+
+    @FXML
+    public void userViewScene(ActionEvent event) throws IOException {
+        int selectedMachineID = findID();
+
+        if (selectedMachineID != 0) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("UserApp.fxml"));
+            Parent root = loader.load();
+            UserController userController = loader.getController();
+            userController.setAccessService(service);
+            userController.setMainApp(mainApp);
+            userController.setSelectedMachineID(selectedMachineID);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+            stage.setScene(scene);
+            stage.show();
+        } else {
+            textArea.setText("No vending machine selected");
+        }
+
     }
 
 }
