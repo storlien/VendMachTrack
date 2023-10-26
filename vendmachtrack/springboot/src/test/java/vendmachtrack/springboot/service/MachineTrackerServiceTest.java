@@ -17,6 +17,7 @@ import vendmachtrack.springboot.exception.ResourceNotFoundException;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 public class MachineTrackerServiceTest {
 
@@ -29,21 +30,30 @@ public class MachineTrackerServiceTest {
     private MachineTracker machineTracker = new MachineTracker();
     private VendingMachine machine = new VendingMachine();
 
+    /**
+     * Sets up the test environment before each test case.
+     * Initializes the Mockito annotations and sets the machine ID to 1, location to "Oslo",
+     * and adds the machine to the machine tracker.
+     */
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
         machine.setId(1);
         machine.setLocation("Oslo");
-         machineTracker.setMachines(Collections.singletonList(machine));
+        machineTracker.setMachines(Collections.singletonList(machine));
     }
 
+    /**
+     * Test case to verify the getVendMachList method of the MachineTrackerService class.
+     * Verifies that the method returns a list of machines when the machine tracker is present.
+     */
     @Test
     public void getVendMachList_whenMachineTrackerIsPresent_returnsListOfMachines() {
         // Arrange
         when(repository.getVendmachtrack()).thenReturn(machineTracker);
 
         // Act
-        var result = service.getVendMachList();
+        HashMap<Integer,String> result = service.getVendMachList();
 
         // Assert
         assertNotNull(result);
@@ -52,6 +62,10 @@ public class MachineTrackerServiceTest {
         assertEquals("Oslo", result.get(1));
     }
 
+    /**
+     * Test case for the getVendMachList method of the MachineTrackerService class when the machine tracker is not present.
+     * Expects a ResourceNotFoundException to be thrown.
+     */
     @Test
     public void getVendMachList_whenMachineTrackerIsNotPresent_thowsException(){
 
@@ -64,6 +78,10 @@ public class MachineTrackerServiceTest {
     }
 
 
+    /**
+     * Test case for the getVendMachLocation method of the MachineTrackerService class.
+     * Verifies that the method returns the correct location for a valid machine ID.
+     */
     @Test
     public void getVendMachLocation_validId_returnsLocation() {
         // Arrange
@@ -76,6 +94,10 @@ public class MachineTrackerServiceTest {
         assertEquals("Oslo", location);
     }
 
+    /**
+     * Test case for the getVendMachLocation method of the MachineTrackerService class when an invalid id is provided.
+     * Expects a ResourceNotFoundException to be thrown.
+     */
     @Test
     public void getVendMachLocation_invalidId_throwsResourceNotFoundException() {
         // Arrange
@@ -85,34 +107,46 @@ public class MachineTrackerServiceTest {
         assertThrows(ResourceNotFoundException.class, () -> service.getVendMachLocation(99));
     }
 
+    /**
+     * Test case for the getInventory method of the MachineTrackerService class.
+     * Verifies that the method returns the correct inventory for a valid machine ID.
+     */
     @Test
     public void getInventory_validId_returnsInventory() {
-        // Act
+        // Arrange
         HashMap<String, Integer> inventory = new HashMap<>();
         inventory.put("Cola", 10);
         inventory.put("Pepsi", 5);
         machine.setStatus(inventory);
-        
-        // Assert
         when(repository.getVendMach(1)).thenReturn(machine);
+        
+        // Act
         HashMap<String, Integer> fetchedInventory = service.getInventory(1);
         
-        // Then the fetched inventory should match the expected inventory
+        // Assert
         assertEquals(inventory, fetchedInventory);
     }
 
+    /**
+     * Test case for the getInventory method of the MachineTrackerService class when an invalid id is provided.
+     * Expects a ResourceNotFoundException to be thrown.
+     */
     @Test
     public void getInventory_invalidId_throwsResourceNotFoundException() {
-        // Act
+        // Arrange
         when(repository.getVendMach(99)).thenReturn(null);
         
-        //Arrange & Assert
+        //Act & Assert
         assertThrows(ResourceNotFoundException.class, () -> service.getInventory(99));
     }
 
-        @Test
+    /**
+     * Tests the addItem method of the MachineTrackerService class with valid input.
+     * Verifies that the method adds an item to the machine successfully when a valid id, item, and amount are provided.
+     */
+    @Test
     public void addItem_validInput_addsItemSuccessfully() {
-        // Act
+        // Arrange
         HashMap<String, Integer> inventory = new HashMap<>();
         VendingMachine updatedMachine = new VendingMachine();
         updatedMachine.setId(1);
@@ -121,43 +155,61 @@ public class MachineTrackerServiceTest {
         when(repository.getVendMach(1)).thenReturn(machine);
         when(repository.addItem(1, "Cola", 5)).thenReturn(updatedMachine);
         
-        // Arrange
+        // Act
         HashMap<String, Integer> updatedInventory = service.addItem(1, "Cola", 5);
         
         // Assert
         assertEquals(inventory, updatedInventory);
     }
     
+    /**
+     * Tests that an IllegalInputException is thrown when an invalid item is added to the machine.
+     */
     @Test 
     public void addItem_invalidItem_throwsIllegalInputException() {
-        // Arrange and Assert
+        // Act and Assert
         assertThrows(IllegalInputException.class, () -> service.addItem(1, " ", 5));
     }
     
+    /**
+     * Tests the addItem method of the MachineTrackerService class when an invalid amount is provided.
+     * Expects an IllegalInputException to be thrown.
+     * 
+     */
     @Test
     public void addItem_invalidAmount_throwsIllegalInputException() {
-        // Arrange and Assert
+        // Act and Assert
         assertThrows(IllegalInputException.class, () -> service.addItem(1, "Cola", 0));
     }
     
+    /**
+     * Tests the addItem method of the MachineTrackerService class when an invalid is is provided.
+     * Expects a ResourceNotFoundException to be thrown.
+     */
     @Test
     public void addItem_invalidId_throwsResourceNotFoundException() {
-        // Act
+        // Arrange
         when(repository.getVendMach(99)).thenReturn(null);
         
-        // Arrange and Assert
+        // Act and Assert
         assertThrows(ResourceNotFoundException.class, () -> service.addItem(99, "Cola", 5));
     }
     
+    /**
+     * Tests the addItem method of the MachineTrackerService class when a negative amount is provided.
+     * Expects an IllegalInputException to be thrown.
+     */
     @Test
     public void addItem_negativeAmount_throwsIllegalInputException() {
         
-        // Arrange and Assert
+        // Act and Assert
         assertThrows(IllegalInputException.class, () -> service.addItem(1, "Cola", -5));
     }
     
-
-    
+    /**
+     * Tests the addVendMach method of the MachineTrackerService class when an existing id is provided.
+     * Expects an IllegalInputException to be thrown.
+     */
     @Test
     public void addVendMach_existingId_throwsIllegalInputException() {
         // Arrange
@@ -168,6 +220,10 @@ public class MachineTrackerServiceTest {
     }
 
 
+    /**
+     * Test case for adding a new vending machine to the machine tracker service.
+     * It verifies that the method adds a new vending machine successfully when a valid id and location are provided.
+     */
     @Test
     public void addVendMach_validInput_addsMachineSuccessfully() {
        
@@ -189,6 +245,10 @@ public class MachineTrackerServiceTest {
     }
     
     
+    /**
+     * Tests the addVendMach method of the MachineTrackerService class when an invalid location is provided.
+     * Expects an IllegalInputException to be thrown.
+     */
     @Test
     public void addVendMach_invalidLocation_throwsIllegalInputException() {
         // Arrange 
@@ -198,6 +258,10 @@ public class MachineTrackerServiceTest {
         assertThrows(IllegalInputException.class, () -> service.addVendMach(2, "123InvalidLocation"));
     }
 
+    /**
+     * Tests the addVendMach method of the MachineTrackerService class when an invalid id is provided.
+     * Expects an IllegalInputException to be thrown.
+     */
     @Test
     public void addVendMach_invalidId_throwsIllegalInputException() {
         // Arrange
@@ -210,6 +274,10 @@ public class MachineTrackerServiceTest {
         assertThrows(IllegalInputException.class, () -> service.addVendMach(-1, "Trondheim"));
     }
 
+    /**
+     * Tests the removeVendMach method of the MachineTrackerService class.
+     * It verifies that the method removes a vending machine successfully when a valid id is provided.
+     */
     @Test
     public void removeVendMach_validId_removesMachineSuccessfully() {
         
@@ -225,15 +293,25 @@ public class MachineTrackerServiceTest {
         assertFalse(updatedMachineList.containsKey(1));
     }
     
+    /**
+     * Tests the removeVendMach method of the MachineTrackerService class when an invalid ID is provided.
+     * Expects a ResourceNotFoundException to be thrown.
+     * 
+     */
     @Test
     public void removeVendMach_invalidId_throwsResourceNotFoundException() {
-        // Arrange  that there is no machine with ID 99
+        // Arrange 
         when(repository.getVendMach(99)).thenReturn(null);
         
         // Act & Assert
         assertThrows(ResourceNotFoundException.class, () -> service.removeVendMach(99));
     }
 
+    /**
+     * Tests the changeLocation method of the MachineTrackerService class.
+     * It verifies that the method changes the location of a vending machine successfully.
+     * 
+     */
     @Test
     public void changeLocation_validInput_changesLocationSuccessfully() {
         // Arrange
@@ -255,15 +333,24 @@ public class MachineTrackerServiceTest {
         assertEquals("Trondheim", updatedMachineList.get(1));
     }
     
+    /**
+     * Tests the changeLocation method of the MachineTrackerService class when an invalid location is provided.
+     * Expects an IllegalInputException to be thrown.
+     */
     @Test
     public void changeLocation_invalidLocation_throwsIllegalInputException() {
         // Arrange
         when(repository.getVendMach(1)).thenReturn(machine);
         
         // Act & Assert
-        assertThrows(IllegalInputException.class, () -> service.changeLocation(1, "123InvalidLocation"));
+        assertThrows(IllegalInputException.class, () -> service.changeLocation(1, "1"));
     }
     
+    /**
+     * Tests the changeLocation method of the MachineTrackerService class when an invalid id is passed as input. 
+     * Expects a ResourceNotFoundException to be thrown.
+     * 
+     */
     @Test
     public void changeLocation_invalidId_throwsResourceNotFoundException() {
          // Arrange
@@ -273,39 +360,62 @@ public class MachineTrackerServiceTest {
         assertThrows(ResourceNotFoundException.class, () -> service.changeLocation(99, "Bergen"));
     }
     
+    /**
+     * Tests the removeItem method of the MachineTrackerService class when an invalid item is passed as input.
+     * Expects an IllegalInputException to be thrown.
+     * 
+     */
     @Test
     public void removeItem_invalidItem_throwsIllegalInputException() {
         // Act & Assert
         assertThrows(IllegalInputException.class, () -> service.removeItem(1, " ", 5));
     }
     
+    /**
+     * Tests the removeItem method of the MachineTrackerService class when an invalid amount is provided.
+     * Expects an IllegalInputException to be thrown.
+     */
     @Test
     public void removeItem_invalidAmount_throwsIllegalInputException() {
         // Act & Assert
         assertThrows(IllegalInputException.class, () -> service.removeItem(1, "Cola", 0));
     }
     
+    /**
+     * Tests the removeItem method of the MachineTrackerService class when an invalid id is provided.
+     * Expects a ResourceNotFoundException to be thrown.
+     * 
+     */
     @Test
     public void removeItem_invalidId_throwsResourceNotFoundException() {
-        // Arrange  that the repository does not have a machine with ID 99
+        // Arrange  
         when(repository.getVendMach(99)).thenReturn(null);
         
         // Act & Assert
         assertThrows(ResourceNotFoundException.class, () -> service.removeItem(99, "Cola", 5));
     }
     
+    /**
+     * Tests the removeItem method of the MachineTrackerService class when the item is not in the inventory.
+     * Expects an IllegalInputException to be thrown.
+     */
     @Test
     public void removeItem_itemNotInInventory_throwsIllegalInputException() {
         // Arrange 
         HashMap<String, Integer> inventory = new HashMap<>();
         machine.setStatus(inventory);
         
+        // Act
         when(repository.getVendMach(1)).thenReturn(machine);
         
-        // Act & Assert
+        // Assert
         assertThrows(IllegalInputException.class, () -> service.removeItem(1, "Cola", 5));
     }
     
+    /**
+     * Tests the removeItem method of the MachineTrackerService class when the removal amount is greater than the inventory.
+     * Expects an IllegalInputException to be thrown.
+     */
     @Test
     public void removeItem_removalAmountGreaterThanInventory_throwsIllegalInputException() {
         // Arrange 
@@ -313,9 +423,10 @@ public class MachineTrackerServiceTest {
         inventory.put("Cola", 2);
         machine.setStatus(inventory);
         
+        // Act
         when(repository.getVendMach(1)).thenReturn(machine);
         
-        // Act & Assert
+        // Assert
         assertThrows(IllegalInputException.class, () -> service.removeItem(1, "Cola", 5));
     }
     
