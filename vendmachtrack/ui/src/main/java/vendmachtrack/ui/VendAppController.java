@@ -1,12 +1,9 @@
 package vendmachtrack.ui;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.time.Duration;
+import java.net.URI;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,16 +21,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
-import vendmachtrack.jsonio.VendmachtrackPersistence;
+import vendmachtrack.ui.access.AccessService;
 import vendmachtrack.ui.access.MachineTrackerAccessible;
-import vendmachtrack.ui.access.MachineTrackerAccessLocal;
-import vendmachtrack.ui.access.MachineTrackerAccessRemote;
-
-import java.net.URI;
 
 /**
  * Controller class for the vending machine application's user interface.
@@ -55,10 +47,20 @@ public class VendAppController implements Initializable {
     @FXML
     private ChoiceBox<String> menuBar;
 
+    private App mainApp;
+
     private MachineTrackerAccessible access;
 
-    private Stage stage;
-    private Scene scene;
+    private AccessService service;
+
+    public void setAccessService(AccessService service) {
+        this.service = service;
+        this.access = service.getAccess();
+    }
+
+    public void setMainApp(App mainApp) {
+        this.mainApp = mainApp;
+    }
 
     /**
      * Initializes the controller. It reads vending machine data from a JSON file.
@@ -71,60 +73,43 @@ public class VendAppController implements Initializable {
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         URI endpointUri = URI.create("http://localhost:8080/");
+        String fileName = "tracker.json";
 
-        Task<Boolean> checkServerHealthTask = new Task<Boolean>() {
+        Task<Void> newAccess = new Task<>() {
             @Override
-            protected Boolean call() throws Exception {
-                return checkServerHealth(endpointUri);
+            protected Void call() throws Exception {
+                AccessService service = new AccessService(endpointUri, fileName);
+                setAccessService(service);
+                updateVendMachList();
+                return null;
             }
         };
 
-        checkServerHealthTask.setOnSucceeded(event -> {
-            if (checkServerHealthTask.getValue()) {
-                access = new MachineTrackerAccessRemote(endpointUri);
-                System.out.println("Using remote access");
-            } else {
-                access = new MachineTrackerAccessLocal(new VendmachtrackPersistence("tracker.json"));
-                System.out.println("Using local access");
-            }
-
-            postInitialize();
-        });
-
-        checkServerHealthTask.setOnFailed(event -> {
-            System.out.println("Error during server health check: " + checkServerHealthTask.getException());
-            access = new MachineTrackerAccessLocal(new VendmachtrackPersistence("tracker.json"));
-            System.out.println("Using local access as a fallback");
-            postInitialize();
-        });
-
-        new Thread(checkServerHealthTask).start();
+        new Thread(newAccess).start();
     }
 
-    private void postInitialize() {
+    public void updateVendMachList() {
         try {
             HashMap<Integer, String> vendingMachines = access.getVendMachList();
             List<String> machines = new ArrayList<>();
             for (Map.Entry<Integer, String> entry : vendingMachines.entrySet()) {
                 machines.add("id: " + entry.getKey() + " (" + entry.getValue() + ")");
             }
-            menuBar.getItems().addAll(machines);
+
+            menuBar.getItems().setAll(machines);
 
         } catch (Exception e) {
             textArea.setText(e.getMessage());
         }
     }
 
-    private boolean checkServerHealth(URI endpointUri) throws IOException, InterruptedException {
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(endpointUri.resolve("health"))
-                .timeout(Duration.ofSeconds(5))
-                .GET()
-                .build();
-
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        return response.statusCode() == HttpURLConnection.HTTP_OK;
+    public void updateInventory(int machineID) {
+        Map<String, Integer> statusMap = access.getInventory(machineID);
+        StringBuilder formattedStatus = new StringBuilder("Inventory:\n");
+        for (Map.Entry<String, Integer> entry : statusMap.entrySet()) {
+            formattedStatus.append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
+        }
+        textArea.setText(formattedStatus.toString());
     }
 
     /**
@@ -136,17 +121,10 @@ public class VendAppController implements Initializable {
     @FXML
     private void handleButtonClick(ActionEvent event) {
         if (findID() != 0) {
-            Map<String, Integer> statusMap = access.getInventory(findID());
-            StringBuilder formattedStatus = new StringBuilder("Inventory:\n");
-            for (Map.Entry<String, Integer> entry : statusMap.entrySet()) {
-                formattedStatus.append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
-            }
-            textArea.setText(formattedStatus.toString());
-
+            updateInventory(findID());
         } else {
             textArea.setText("No vending machine selected");
         }
-
     }
 
     private int findID() {
@@ -154,8 +132,7 @@ public class VendAppController implements Initializable {
         if (selectedItem != null) {
             int colonIndex = selectedItem.indexOf(":");
             int endIndex = selectedItem.indexOf("(");
-            int id = Integer.parseInt(selectedItem.substring(colonIndex + 2, endIndex).trim());
-            return id;
+            return Integer.parseInt(selectedItem.substring(colonIndex + 2, endIndex).trim());
         } else {
             return 0;
         }
@@ -170,11 +147,11 @@ public class VendAppController implements Initializable {
             Parent root = loader.load();
             RefillController refillController = loader.getController();
             refillController.setSelectedMachineID(selectedMachineID);
-            refillController.setMachineTrackerAccess(access);
-            // refillController.setVendAppController(this);
+            refillController.setAccessService(service);
+            refillController.setMainApp(mainApp);
 
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
 

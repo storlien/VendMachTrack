@@ -1,23 +1,18 @@
 package vendmachtrack.ui;
 
 import java.io.IOException;
-import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Pattern;
+
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
-import vendmachtrack.ui.access.MachineTrackerAccessRemote;
+
+import vendmachtrack.ui.access.AccessService;
 import vendmachtrack.ui.access.MachineTrackerAccessible;
 
 public class RefillController {
@@ -45,33 +40,32 @@ public class RefillController {
 
     private MachineTrackerAccessible access;
 
-    private int selectedMachineID;
+//    private AccessService service;
 
-    private Stage stage;
-    private Scene scene;
+    private App mainApp;
+
+    private int selectedMachineID;
 
     public void updateTitle(int machineID) {
         title.setText("Vending machine: " + machineID);
     }
 
-    public void setSelectedMachineID(int machineID) { // denne metoden sørger for at vi overfører den id-en som man er
-                                                      // på i controllerklassen hit
+    public void setSelectedMachineID(int machineID) {
         this.selectedMachineID = machineID;
         updateTitle(machineID);
     }
 
-    public void setMachineTrackerAccess(MachineTrackerAccessible access) {
-        this.access = new MachineTrackerAccessRemote(URI.create("http://localhost:8080/"));
+    public void setAccessService(AccessService service) {
+//        this.service = service;
+        this.access = service.getAccess();
+    }
 
+    public void setMainApp(App mainApp) {
+        this.mainApp = mainApp;
     }
 
     @FXML
     private void refillItem() {
-        if (refillItem.getText() == null || !isLettersOnly(refillItem.getText())
-                || !isDigitsOnly(refillNumber.getText())) {
-            answerText.setText("Not a valid input");
-        }
-
         HashMap<String, Integer> updatedInventory = new HashMap<>();
 
         try {
@@ -92,34 +86,11 @@ public class RefillController {
             textArea.setText(e.getMessage());
         }
 
-        // her skal den oppdatere inventory for den maskinen og returnere det (den må
-        // selvfølgelig også oppdatere for inventory som kommer opp på forsiden)
-
     }
 
     @FXML
     public void goBackToFirstPage(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("App.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-
-    }
-
-    public static boolean isLettersOnly(String input) {
-        String regex = "^[a-zA-Z]+$";
-        Pattern pattern = Pattern.compile(regex);
-
-        return pattern.matcher(input).matches();
-
-    }
-
-    public static boolean isDigitsOnly(String input) {
-        String regex = "\\d+";
-        Pattern pattern = Pattern.compile(regex);
-
-        return pattern.matcher(input).matches();
+        mainApp.switchToMainScene(selectedMachineID);
     }
 
 }
