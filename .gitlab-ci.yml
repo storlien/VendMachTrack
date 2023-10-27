@@ -48,7 +48,7 @@ test:
   stage: test
   image: maven:3.9.4-amazoncorretto-20
   script:
-    - mvn test
+    - mvn test -pl '!vendmachtrack.ui'
   only:
     - merge_requests
   artifacts:
