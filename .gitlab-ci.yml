@@ -20,7 +20,7 @@ checkstyle:
   stage: lint
   image: maven:3.9.4-amazoncorretto-20
   script:
-    - mvn clean checkstyle:checkstyle -Dcheckstyle.failOnViolation=true
+    - mvn checkstyle:checkstyle -Dcheckstyle.failOnViolation=true
   only:
     - merge_requests
   artifacts:
@@ -34,7 +34,7 @@ spotbugs:
   stage: lint
   image: maven:3.9.4-amazoncorretto-20
   script:
-    - mvn clean com.github.spotbugs:spotbugs-maven-plugin:check
+    - mvn com.github.spotbugs:spotbugs-maven-plugin:check
   only:
     - merge_requests
   artifacts:
@@ -44,11 +44,25 @@ spotbugs:
   needs:
     - build
 
+test: 
+  stage: test
+  image: maven:3.9.4-amazoncorretto-20
+  script:
+    - mvn test
+  only:
+    - merge_requests
+  artifacts:
+    when: always
+    paths:
+      - $CI_PROJECT_DIR/vendmachtrack/test-results/junit/**/*
+  needs:
+    - build
+
 verify:
   stage: coverage-report
   image: maven:3.9.4-amazoncorretto-20
   script:
-    - mvn clean verify
+    - mvn verify
     - cat $CI_PROJECT_DIR/vendmachtrack/test-results/jacoco/index.html | grep -o 'Total[^%]*%'
   coverage: '/<td class="ctr2">(\d+%)/'
   only:
@@ -61,3 +75,4 @@ verify:
     - build
     - checkstyle
     - spotbugs
+    - test
