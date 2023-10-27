@@ -59,7 +59,11 @@ public class MachineTrackerControllerTest {
     private MachineTracker machineTracker = new MachineTracker();
 
 
- 
+    /**
+     * Sets up the test fixture before each test method runs.
+     * Initializes the vending machine with an ID of 1 and a location of "Oslo",
+     * and adds it to the list of machines.
+     */
     @BeforeEach
     public void setUp() {
         vendingmachine.setId(1);
@@ -67,6 +71,11 @@ public class MachineTrackerControllerTest {
         machines.add(vendingmachine);
     }
 
+    /**
+     * Tests the getVendMachList method of the MachineTrackerController class. 
+     * Expects the response to be a JSON object containing the list of vending machines and the HTTP response status to be 200 (OK).
+     *
+     */
     @Test
     public void MachineTrackerController_getVendMachList_returnVendmachList() throws Exception {
         // Arrange
@@ -85,6 +94,10 @@ public class MachineTrackerControllerTest {
                 .andExpect(content().json("{\"1\":\"Oslo\"}"));
     }
 
+    /**
+     * Tests the scenario where the MachineTrackerController throws a ResourceNotFoundException when trying to get the list of vending machines.
+     * Expects the HTTP response status to be 404 Not Found and the exception to be of type ResourceNotFoundException with the message "Should throw".
+     */
     @Test
     public void MachineTrackerController_getVendMachList_throwsResourceNotFoundException() throws Exception{
 
@@ -101,6 +114,10 @@ public class MachineTrackerControllerTest {
                 .andExpect(result -> assertEquals("Should throw", result.getResolvedException().getMessage()));
     }
 
+    /**
+     * Test case for the MachineTrackerController's getVendMachLocation method.
+     * It tests if the method returns the correct location of a vending machine and the HTTP response status is 200 (OK).
+     */
     @Test
     public void MachineTrackerController_getVendMachLocation_returnLocation() throws Exception {
         // Arrange
@@ -119,6 +136,10 @@ public class MachineTrackerControllerTest {
     }
 
 
+    /**
+     * Test case for the MachineTrackerController's getVendMachLocation method when it throws a ResourceNotFoundException.
+     * Expects the HTTP response status to be 404 Not Found and the exception to be of type ResourceNotFoundException with the message "Should throw".
+     */
     @Test
     public void MachineTrackerController_getVendMachLocation_throwsResourceNotFoundException() throws Exception{
 
@@ -136,14 +157,11 @@ public class MachineTrackerControllerTest {
                 .andExpect(result -> assertTrue(result.getResolvedException() instanceof ResourceNotFoundException))
                 .andExpect(result -> assertEquals("Should throw", result.getResolvedException().getMessage()));
     }
-
-
-
-
-
-
-
-
+    
+    /**
+     * Test case for the MachineTrackerController's getInventory method.
+     * Expects the response to be a JSON object containing the inventory of the vending machine and the HTTP response status to be 200 (OK).
+     */
     @Test
     public void MachineTrackerController_getInventory_returnInventory() throws Exception {
         // Arrange
@@ -162,6 +180,10 @@ public class MachineTrackerControllerTest {
                 .andExpect(content().json("{\"Cola\":10}"));
     }
 
+    /**
+     * Tests the MachineTrackerController's getInventory method when it throws an IllegalInputException.
+     * Expects the HTTP response status to be 400 Bad Request and the exception to be of type IllegalInputException.
+     */
     @Test
     public void MachineTrackerController_getInventory_throwsIllegalInputException() throws Exception {
         // Arrange
@@ -179,6 +201,10 @@ public class MachineTrackerControllerTest {
                 .andExpect(result -> assertEquals("Should throw", result.getResolvedException().getMessage()));
     }
 
+    /**
+     * Test case for the MachineTrackerController's addItem method.
+     * Expects the response to be a JSON object containing the updated inventory of the vending machine and the HTTP response status to be 200 (OK).
+     */
     @Test
     public void MachineTrackerController_addItem_returnUpdatedInventory() throws Exception {
         // Arrange
@@ -199,6 +225,10 @@ public class MachineTrackerControllerTest {
                 .andExpect(content().json("{\"Coke\":10}"));
     }
 
+    /**
+     * Tests the addItem method of the MachineTrackerController class when an IllegalInputException is thrown.
+     * Expects the HTTP response status to be 400 Bad Request and the exception to be of type IllegalInputException.
+     */
     @Test
     public void MachineTrackerController_addItem_throwsIllegalInputException() throws Exception {
         // Arrange
@@ -218,6 +248,10 @@ public class MachineTrackerControllerTest {
                 .andExpect(result -> assertEquals("Should throw", result.getResolvedException().getMessage()));
     }
 
+    /**
+     * Tests the removeItem method of the MachineTrackerController class by mocking the HTTP request and response.
+     * It verifies that the updated inventory is returned in JSON format with a status code of 200 (OK).
+     */
     @Test
     public void MachineTrackerController_removeItem_returnUpdatedInventory() throws Exception {
         // Arrange
@@ -239,7 +273,11 @@ public class MachineTrackerControllerTest {
     }
 
 
-      @Test
+    /**
+     * Tests the removeItem method of the MachineTrackerController class when an IllegalInputException is thrown.
+     * Expects the HTTP response status to be 400 Bad Request and the exception to be of type IllegalInputException.
+     */
+    @Test
     public void MachineTrackerController_removeItem_throwsIllegalInputException() throws Exception {
         
         // Arrange
@@ -260,6 +298,10 @@ public class MachineTrackerControllerTest {
         
     }
     
+    /**
+     * Tests the addVendMach method of the MachineTrackerController class.
+     * Expects the method to return a HashMap with the added vending machine's ID and location and the HTTP response status to be 200 (OK).
+     */
     @Test
     public void MachineTrackerController_addVendMach_returnAdded() throws Exception {
         
@@ -282,6 +324,10 @@ public class MachineTrackerControllerTest {
     }
 
 
+    /**
+     * Tests the addVendMach method in the MachineTrackerController class when an IllegalInputException is thrown.
+     * Expects the HTTP response status to be 400 Bad Request and the exception to be of type IllegalInputException.
+     */
      @Test
     public void MachineTrackerController_addVendMach_throwsIllegalInputException() throws Exception {
         //Arrange
@@ -301,6 +347,10 @@ public class MachineTrackerControllerTest {
                 .andExpect(result -> assertEquals("Should throw", result.getResolvedException().getMessage()));
     }
 
+    /**
+     * Tests the removeVendMach method of the MachineTrackerController class
+     * Expects the method to return a HashMap with the updated list of vending machines and the HTTP response status to be 200 (OK).
+     */
     @Test
     public void MachineTrackerController_removeVendMach_returnUpdatedList() throws Exception {
         // Arrange
@@ -319,6 +369,10 @@ public class MachineTrackerControllerTest {
                 .andExpect(content().json("{\"2\":\"Trondheim\"}"));
     }
 
+    /**
+     * Tests the removeVendMach method of the MachineTrackerController class when an IllegalInputException is thrown.
+     * Expects the HTTP response status to be 400 Bad Request and the exception to be of type IllegalInputException.
+     */
     @Test
     public void MachineTrackerController_removeVendMach_throwsIllegalInputException() throws Exception {
         
@@ -337,6 +391,10 @@ public class MachineTrackerControllerTest {
                 .andExpect(result -> assertEquals("Should throw", result.getResolvedException().getMessage()));
     }
 
+    /**
+     * Tests the changeLocation method of the MachineTrackerController class
+     * Expects the method to return a HashMap with the updated location of the vending machine and the HTTP response status to be 200 (OK).
+     */
     @Test
     public void MachineTrackerController_changeLocation_returnUpdatedLocation() throws Exception {
         // Arrange
@@ -356,7 +414,11 @@ public class MachineTrackerControllerTest {
                 .andExpect(content().json("{\"1\":\"Trondheim\"}"));
     }
 
-      @Test
+    /**
+     * Tests the behavior of the MachineTrackerController when the changeLocation method throws an IllegalInputException.
+     * Expect the HTTP response status to be 400 Bad Request and the exception to be of type IllegalInputException.
+     */
+    @Test
     public void MachineTrackerController_changeLocation_throwsIllegalInputException() throws Exception {
        
         // Arrange
@@ -376,7 +438,11 @@ public class MachineTrackerControllerTest {
     }
 
 
-      @Test
+    /**
+     * Tests the scenario where the changeLocation method in MachineTrackerController throws a ResourceNotFoundException.
+     * Expects the HTTP response status to be 404 Not Found and the exception to be of type ResourceNotFoundException.
+     */
+    @Test
     public void MachineTrackerController_changeLocation_throwsResourceNotFoundException() throws Exception {
         
         // Arrange
