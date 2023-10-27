@@ -17,7 +17,6 @@ import vendmachtrack.springboot.exception.ResourceNotFoundException;
 
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 
 public class MachineTrackerServiceTest {
 
