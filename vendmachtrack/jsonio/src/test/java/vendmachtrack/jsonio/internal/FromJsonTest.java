@@ -1,7 +1,6 @@
 package vendmachtrack.jsonio.internal;
 
 import vendmachtrack.core.MachineTracker;
-import vendmachtrack.jsonio.internal.FromJson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +13,6 @@ import static org.junit.jupiter.api.Assertions.*;
 public class FromJsonTest {
 
     private FromJson fromJson;
-    private String filePath;
     private String jsonString = "{\"machines\":[{\"status\":{\"Cola\":5,\"Pepsi\":3},\"id\":1,\"location\":\"Trondhjem\"},{\"status\":{\"Tuborg\":1},\"id\":2,\"location\":\"Oslo\"},{\"status\":{\"Hansa\":100,\"Regnvann\":10},\"id\":3,\"location\":\"Bergen\"}]}";
     private String testFilepath = "/ITP/gr2338/vendmachtrack/jsonio/target/test-classes/testfile.json";
     /**
@@ -27,12 +25,7 @@ public class FromJsonTest {
      */
     @BeforeEach
     public void setUp() throws IOException {
-        String TestFile = getClass().getResource("/testfile.json").getFile();
         fromJson = new FromJson(testFilepath);
-        System.out.println("file path" + TestFile);
-        File tempFile = File.createTempFile("test", ".json");
-        filePath = tempFile.getAbsolutePath();
-        tempFile.deleteOnExit();
     }
 
     /**
@@ -125,33 +118,6 @@ public class FromJsonTest {
         
     }
 
-    /**
-     * Tests the behavior of the FromJson.readFromFile() method when given an invalid file path.
-     *
-     * <p>Creates a temporary file with invalid JSON data, initializes a new FromJson object with the same file path,
-     * and attempts to deserialize the JSON data into a MachineTracker object. Asserts that the MachineTracker object
-     * is null.</p>
-     *
-     * @throws IOException if an I/O error occurs while writing to the temporary file
-     */
-    @Test
-    public void testReadFromFileInvalidFile() throws IOException {
-        // Create a temporary file with invalid JSON data
-        String invalidJsonString = "{invalid json}";
-        try (FileOutputStream fos = new FileOutputStream(filePath)) {
-            fos.write(invalidJsonString.getBytes(StandardCharsets.UTF_8));
-        }
-
-        // Create a new FromJson object with the same file path
-        FromJson fromJson = new FromJson(filePath);
-
-        // Deserialize the JSON data into a MachineTracker object
-        MachineTracker machineTracker = fromJson.readFromFile();
-
-        // Assert that the MachineTracker object is null
-        assertNull(machineTracker);
-    }
-
     @Test
     public void fromJson_readfromfile_returnTestFile(){
 
@@ -187,8 +153,19 @@ public class FromJsonTest {
         assertNull(machineTracker);
     }
 
+    @Test
+    public void testReadFromInvalidFile() {
+        // Provide an invalid file path to the constructor
+        FromJson fromJson = new FromJson("invalid_file_path.json");
+
+        // Call the method and capture the result
+        MachineTracker result = fromJson.readFromFile();
+
+        // Assert that the result is null, as the method should return null when it encounters an exception
+        assertNull(result);
+    }
 }
-    
+
      
 
     

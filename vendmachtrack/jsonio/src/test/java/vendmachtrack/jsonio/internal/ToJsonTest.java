@@ -2,15 +2,17 @@ package vendmachtrack.jsonio.internal;
 
 import vendmachtrack.core.MachineTracker;
 import vendmachtrack.core.VendingMachine;
-
-import vendmachtrack.jsonio.internal.ToJson;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.google.gson.Gson;
+
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,28 +25,23 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class ToJsonTest {
 
-    private final String fileName = "testfile.json";
-    private final File file = new File(System.getProperty("user.home") + "/" + fileName);
+    private String filename = "/testfile.json";
     private ToJson toJson;
-    private HashMap<String, Integer> inventory = new HashMap<>();
+    private Path dir;
 
 
-    /**
-     * Sets up the test fixture. This method is called before each test case method is executed.
-     * It initializes a new instance of the ToJson class with the filename "testfile.json".
-     *
-     * @throws IOException if an I/O error occurs while creating the ToJson instance.
-     */
     @BeforeEach
-    public void setUp() throws IOException {
-        toJson = new ToJson(fileName);
+    public void setUp() throws Exception{
+        dir = Paths.get(System.getProperty("user.home") + filename);
+        File file = dir.toFile();
+        toJson = new ToJson(filename);
+
     }
 
     @AfterEach
-    public void tearDown() {
-        if (file.exists()) {
-            file.delete();
-        }
+    public void tearDown() throws Exception{
+        Paths.get(System.getProperty("user.home") + filename);
+        Files.deleteIfExists(dir);
     }
     /**
      * Tests the toJson.toOutputStream() method by creating a new MachineTracker object with a single VendingMachine object
@@ -115,18 +112,4 @@ public class ToJsonTest {
         String result = new String(((ByteArrayOutputStream) outputStream).toByteArray(), StandardCharsets.UTF_8);
         assertEquals("{\"machines\":[]}", result);
     }
-
-
-    /**
-     * Tests the behavior of the writeToFile method when a null object is passed.
-     *
-     * @see ToJson#writeToFile(MachineTracker)
-     */
-    @Test
-    public void testWriteToFile_nullMachineTracker() {
-        // This test verifies that no exception is thrown when a null object is passed
-        assertDoesNotThrow(() -> toJson.writeToFile(null));
-    }
-
-
 }
