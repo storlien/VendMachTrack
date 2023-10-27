@@ -1,21 +1,31 @@
 <FindBugsFilter>
-    <!-- Ignore EI_EXPOSE_REP2 for MachineTrackerController constructor -->
+    <!-- Ignore EI_EXPOSE_REP2 for MachineTrackerController and MachineTrackerService constructors -->
     <!-- Spotbugs complains about storing an externally mutable object in the Controller class. -->
     <!-- This is standard practice in Spring Boot and generally not considered a security risk. -->
     <!-- The constructor uses the @Autowired annotation for dependency injection. -->
     <Match>
-        <Class name="springboot.controller.MachineTrackerController"/>
+        <Class name="vendmachtrack.springboot.controller.MachineTrackerController"/>
+        <Method name="&lt;init&gt;"/>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+    </Match>
+    <Match>
+        <Class name="vendmachtrack.springboot.service.MachineTrackerService"/>
         <Method name="&lt;init&gt;"/>
         <Bug pattern="EI_EXPOSE_REP2"/>
     </Match>
 
-    <!-- Ignore EI_EXPOSE_REP2 for MachineTrackerService constructor -->
-    <!-- Spotbugs complains about storing an externally mutable object in the Service class. -->
-    <!-- This is standard practice in Spring Boot and generally not considered a security risk. -->
-    <!-- The constructor uses the @Autowired annotation for dependency injection. -->
+    <!-- It is by intention that AccessService class exposes internal representation in this way. -->
+    <!-- The AccessService class is used to ensure the internal access object acts as a shared resource among the controller classes. -->
+    <!-- The RefillController class needs to store the access object in this way for it to be used as a shared resource -->
+    <!-- This is standard practice for the service pattern -->
     <Match>
-        <Class name="springboot.service.MachineTrackerService"/>
-        <Method name="&lt;init&gt;"/>
-        <Bug pattern="EI_EXPOSE_REP2"/>
+        <Class name="vendmachtrack.ui.access.AccessService"/>
+        <Method name="getAccess"/>
+        <Bug pattern="EI_EXPOSE_REP"/>
     </Match>
+    <!--    <Match>-->
+    <!--        <Class name="vendmachtrack.ui.RefillController"/>-->
+    <!--        <Method name="setMachineTrackerAccess"/>-->
+    <!--        <Bug pattern="EI_EXPOSE_REP2"/>-->
+    <!--    </Match>-->
 </FindBugsFilter>
