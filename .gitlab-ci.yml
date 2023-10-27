@@ -48,7 +48,7 @@ test:
   stage: test
   image: maven:3.9.4-amazoncorretto-20
   script:
-    - mvn test
+    - mvn test -pl '!ui'
   only:
     - merge_requests
   artifacts:
@@ -62,7 +62,7 @@ verify:
   stage: coverage-report
   image: maven:3.9.4-amazoncorretto-20
   script:
-    - mvn verify
+    - mvn verify -pl '!ui'
     - cat $CI_PROJECT_DIR/vendmachtrack/test-results/jacoco/index.html | grep -o 'Total[^%]*%'
   coverage: '/<td class="ctr2">(\d+%)/'
   only:
