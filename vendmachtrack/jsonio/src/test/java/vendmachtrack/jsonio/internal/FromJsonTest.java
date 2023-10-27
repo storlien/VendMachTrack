@@ -1,12 +1,16 @@
 package vendmachtrack.jsonio.internal;
 
 import vendmachtrack.core.MachineTracker;
+
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,7 +18,10 @@ public class FromJsonTest {
 
     private FromJson fromJson;
     private String jsonString = "{\"machines\":[{\"status\":{\"Cola\":5,\"Pepsi\":3},\"id\":1,\"location\":\"Trondhjem\"},{\"status\":{\"Tuborg\":1},\"id\":2,\"location\":\"Oslo\"},{\"status\":{\"Hansa\":100,\"Regnvann\":10},\"id\":3,\"location\":\"Bergen\"}]}";
-    private String testFilepath = "/ITP/gr2338/vendmachtrack/jsonio/target/test-classes/testfile.json";
+    private String filename = "/testfile.json";
+    private Path dir;
+    
+    
     /**
      * Sets up the test fixture. This method is called before each test case method is executed.
      * It initializes the 'fromJson' object with the 'tracker.json' file and creates a temporary file
@@ -25,7 +32,16 @@ public class FromJsonTest {
      */
     @BeforeEach
     public void setUp() throws IOException {
-        fromJson = new FromJson(testFilepath);
+        dir = Paths.get(System.getProperty("user.home") + filename);
+        Files.write(dir, jsonString.getBytes(StandardCharsets.UTF_8));
+        fromJson = new FromJson("testfile.json");
+    }
+
+
+    @AfterEach
+    public void tearDown() throws Exception{
+        Paths.get(System.getProperty("user.home") + filename);
+        Files.deleteIfExists(dir);
     }
 
     /**
