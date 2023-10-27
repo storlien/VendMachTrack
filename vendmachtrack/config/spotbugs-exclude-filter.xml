@@ -4,7 +4,7 @@
     <!-- This is standard practice in Spring Boot and generally not considered a security risk. -->
     <!-- The constructor uses the @Autowired annotation for dependency injection. -->
     <Match>
-        <Class name="springboot.controller.MachineTrackerController"/>
+        <Class name="vendmachtrack.springboot.controller.MachineTrackerController"/>
         <Method name="&lt;init&gt;"/>
         <Bug pattern="EI_EXPOSE_REP2"/>
     </Match>
@@ -14,7 +14,7 @@
     <!-- This is standard practice in Spring Boot and generally not considered a security risk. -->
     <!-- The constructor uses the @Autowired annotation for dependency injection. -->
     <Match>
-        <Class name="springboot.service.MachineTrackerService"/>
+        <Class name="vendmachtrack.springboot.service.MachineTrackerService"/>
         <Method name="&lt;init&gt;"/>
         <Bug pattern="EI_EXPOSE_REP2"/>
     </Match>
