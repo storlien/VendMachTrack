@@ -10,6 +10,10 @@
         <relativePath>..</relativePath>
     </parent>
 
+    <properties>
+        <testResultsDir>${project.basedir}/../test-results/</testResultsDir>
+    </properties>
+
     <dependencies>
         <!-- JUnit 5 dependencies -->
         <dependency>
@@ -48,13 +52,13 @@
             <scope>compile</scope>
         </dependency>
 
-         <dependency>
+        <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
             <version>5.6.0</version>
             <scope>test</scope>
         </dependency>
-        
+
     </dependencies>
 
 

@@ -11,6 +11,7 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <skipTests>false</skipTests>
+        <testResultsDir>${project.basedir}/test-results/</testResultsDir>
     </properties>
 
     <dependencyManagement>
@@ -50,22 +51,34 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version> <!-- or newer version -->
             </plugin>
-
+<!-- SureFire plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M5</version> <!-- or newer version -->
+                <version>3.0.0-M5</version>
+                <configuration>
+                    <reportsDirectory>
+                        ${testResultsDir}/junit/${project.artifactId}
+                    </reportsDirectory>
+                </configuration>
             </plugin>
-
+<!-- Checkstyle plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>3.3.0</version> <!-- or newer version -->
+                <version>3.3.0</version>
                 <configuration>
                     <configLocation>google_checks.xml</configLocation>
                     <consoleOutput>true</consoleOutput>
                     <failsOnError>true</failsOnError>
                     <linkXRef>false</linkXRef>
+                    <outputFile>
+                        ${testResultsDir}/checkstyle/${project.artifactId}.xml
+                    </outputFile>
+                    <inputEncoding>UTF-8</inputEncoding>
+                    <outputEncoding>UTF-8</outputEncoding>
+                    <consoleOutput>true</consoleOutput>
+                    <excludes>**/module-info.java</excludes>
                 </configuration>
                 <executions>
                     <execution>
@@ -77,14 +90,17 @@
                     </execution>
                 </executions>
             </plugin>
-
+<!-- SpotBugs plugin -->
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
                 <version>4.5.2.0</version>
                 <configuration>
-                    <xmlOutput>false</xmlOutput>
                     <excludeFilterFile>config/spotbugs-exclude-filter.xml</excludeFilterFile>
+                    <xmlOutput>true</xmlOutput>
+                    <xmlOutputDirectory>
+                        ${testResultsDir}/spotbugs/${project.artifactId}
+                    </xmlOutputDirectory>
                 </configuration>
                 <executions>
                     <execution>
@@ -96,7 +112,7 @@
                     </execution>
                 </executions>
             </plugin>
-
+<!-- Jacoco plugin -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
@@ -114,6 +130,19 @@
                         <goals>
                             <goal>report</goal>
                         </goals>
+                    </execution>
+
+                    <execution>
+                        <id>report-aggregate</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>report-aggregate</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>
+                                ${testResultsDir}/../test-results/jacoco
+                            </outputDirectory>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
