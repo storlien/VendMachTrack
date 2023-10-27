@@ -3,11 +3,8 @@ package vendmachtrack.core;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.when;
-
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.Mockito;
+
 
 public class PasswordHandlerTest {
     
@@ -17,23 +14,28 @@ public class PasswordHandlerTest {
  */
   @Test
     public void testHashPasswordWithRegularInput() {
+        //Arrange
         String password = "normalPassword";
+
+        //Act
         String hashedPassword = PasswordHandler.hashPassword(password);
 
+        //Assert
         assertNotNull(hashedPassword);
         assertFalse(hashedPassword.isEmpty()); 
     }
 
     /**
      * This test verifies that the PasswordHandler class can correctly verify a password that has been hashed.
-     * It sets a password, hashes it, and then verifies it using the verifyPassword method of the PasswordHandler class.
-     * If the password is verified, the test passes.
+     * If the password is verified, i.e is correct, the test passes.
      * 
      */
     @Test
     public void testVerifyPasswordWithCorrectPassword() {
+        //Arrange
         String password = "brus"; // migth not be good security to have password in clear text
-        String hashedPassword = PasswordHandler.hashPassword(password);
+        
+        //Act & Assert
         assertTrue(PasswordHandler.verifyPassword(password)); 
     }
 
@@ -42,7 +44,10 @@ public class PasswordHandlerTest {
      */
     @Test
     public void testVerifyPasswordWithIncorrectPassword() {
+        //Arrange
         String password = "wrongPassword";
+        
+        //Act & Assert
         assertFalse(PasswordHandler.verifyPassword(password));
     }
 
