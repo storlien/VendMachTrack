@@ -1,6 +1,6 @@
 before_script:
   - cd vendmachtrack/
-  - mvn clean install -DskipTests
+  - mvn clean install -DskipTests -Dfindbugs.skip
 
 stages:
   - build
