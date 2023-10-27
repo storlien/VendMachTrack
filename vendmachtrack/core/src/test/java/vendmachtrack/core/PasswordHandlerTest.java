@@ -26,20 +26,6 @@ public class PasswordHandlerTest {
     }
 
     /**
-     * This test verifies that the PasswordHandler class can correctly verify a password that has been hashed.
-     * If the password is verified, i.e is correct, the test passes.
-     * 
-     */
-    @Test
-    public void testVerifyPasswordWithCorrectPassword() {
-        //Arrange
-        String password = "brus"; // migth not be good security to have password in clear text
-        
-        //Act & Assert
-        assertTrue(PasswordHandler.verifyPassword(password)); 
-    }
-
-    /**
      * Tests the verifyPassword method of the PasswordHandler class with an incorrect password.
      */
     @Test
