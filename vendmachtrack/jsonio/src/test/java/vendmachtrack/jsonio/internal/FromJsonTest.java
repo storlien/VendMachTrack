@@ -118,7 +118,7 @@ public class FromJsonTest {
     public void testReadFromFileValidFile() throws IOException {
         // Create a temporary file with valid JSON data
        // Read the JSON data from the testfile.json
-        InputStream inputStream = getClass().getResourceAsStream("/testfile.json");
+        InputStream inputStream = Files.newInputStream(dir);
 
         // Deserialize the JSON data into a MachineTracker object
         MachineTracker machineTracker = fromJson.fromInputStream(inputStream);
