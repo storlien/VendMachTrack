@@ -10,6 +10,10 @@
         <relativePath>..</relativePath>
     </parent>
 
+    <properties>
+        <testResultsDir>${project.basedir}/../test-results/</testResultsDir>
+    </properties>
+
     <dependencies>
 
         <dependency>
@@ -80,15 +84,15 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
             </plugin>
-          
+
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M5</version>
                 <configuration>
-                    <argLine>@{argLine} --add-opens vendmachtrack.ui/ui=ALL-UNNAMED --add-exports 
-                    javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
+                    <argLine>@{argLine} --add-opens vendmachtrack.ui/ui=ALL-UNNAMED --add-exports
+                        javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
                     </argLine>
                 </configuration>
             </plugin>
@@ -101,7 +105,7 @@
                 <!-- Usage: mvn javafx:run -->
                 <configuration>
                     <!-- syntax: module-name/full-app-class-name -->
-                    <mainClass>vendmachtrack.ui/ui.App</mainClass>
+                    <mainClass>vendmachtrack.ui/vendmachtrack.ui.App</mainClass>
                 </configuration>
             </plugin>
 

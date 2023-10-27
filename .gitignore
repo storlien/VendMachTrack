@@ -1,4 +1,10 @@
+# IntelliJ
 .idea/
+/vendmachtrack/.idea/
+
+# VSCode
+.vscode/
+/vendmachtrack/.vscode/
 
 ### Linux ###
 *~
@@ -49,6 +55,7 @@ Temporary Items
 *.icloud
 
 ### Maven ###
+test-results/
 target/
 pom.xml.tag
 pom.xml.releaseBackup
