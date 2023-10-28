@@ -19,3 +19,7 @@
     -fx-background-color: rgb(112, 2, 2);
     /* Endrer bakgrunnsfargen til en litt mørkere grønn når knappen er hovered */
 }
+
+.error-text {
+    -fx-text-fill: red;
+}
