@@ -12,7 +12,7 @@ module vendmachtrack.springboot {
     opens vendmachtrack.springboot to spring.core, spring.beans, spring.context;
     exports vendmachtrack.springboot.exception to spring.beans;
     opens vendmachtrack.springboot.controller; 
-    opens vendmachtrack.springboot.service to spring.core;
+    opens vendmachtrack.springboot.service to spring.core, org.mockito;
     //Opening the 'springboot.repository' to the spring.core module is necessary for testing purposes.
     // The reason why is because the Spring framework especialy the'ReflectionTestUtils' class needs
     // to gain access to the classes and their private fields within the 'springboot.repository' package.
