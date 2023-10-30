@@ -17,9 +17,6 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import vendmachtrack.core.MachineTracker;
 import vendmachtrack.core.VendingMachine;
 import vendmachtrack.springboot.exception.IllegalInputException;
@@ -48,8 +45,6 @@ public class MachineTrackerControllerTest {
     @MockBean
     private MachineTrackerService machineTrackerService;
 
-    @Autowired
-    private ObjectMapper objectMapper;
  
     
     
