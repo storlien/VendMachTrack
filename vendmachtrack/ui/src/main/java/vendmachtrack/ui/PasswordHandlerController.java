@@ -56,11 +56,6 @@ public class PasswordHandlerController {
     }
 
     @FXML
-    public void switchToMainScene(ActionEvent event) throws IOException {
-        mainApp.switchToMainScene(selectedMachineID);
-    }
-
-    @FXML
     public void backToHomePage(ActionEvent event) throws IOException {
         mainApp.switchToMainScene(selectedMachineID);
     }
