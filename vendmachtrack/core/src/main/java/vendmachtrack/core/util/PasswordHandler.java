@@ -9,14 +9,18 @@ import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 /**
- * A utility class for password hashing and verification using the Argon2 hashing algorithm.
+ * A utility class for password hashing and verification using the Argon2
+ * hashing algorithm.
  * <p>
- * This class is responsible for generating password hashes and verifying them against stored hashes.
- * It is designed to use the Argon2 algorithm for password security, which is considered one of
+ * This class is responsible for generating password hashes and verifying them
+ * against stored hashes.
+ * It is designed to use the Argon2 algorithm for password security, which is
+ * considered one of
  * the most secure and modern hashing algorithms available.
  * </p>
  * <p>
- * The reference password is stored as a hash in the {@code /vendmachtrack/core/password.txt} file,
+ * The reference password is stored as a hash in the
+ * {@code /vendmachtrack/core/password.txt} file,
  * providing an abstraction and security layer against raw password exposure.
  * </p>
  */
@@ -28,7 +32,8 @@ public class PasswordHandler {
     private static final String passwordFile = "/vendmachtrack/core/password.txt";
 
     /**
-     * Hashes a provided password using the Argon2 algorithm and returns the resultant hash.
+     * Hashes a provided password using the Argon2 algorithm and returns the
+     * resultant hash.
      *
      * @param password Password provided by the user as a string.
      * @return The resultant Argon2 hash of the provided password as a string.
@@ -47,18 +52,22 @@ public class PasswordHandler {
      * Verifies a provided password against the stored reference password hash.
      * <p>
      * This method reads the stored hash from the {@code password.txt} file and uses
-     * the Argon2 algorithm's built-in verification mechanism to determine if the provided
+     * the Argon2 algorithm's built-in verification mechanism to determine if the
+     * provided
      * password matches the reference.
      * </p>
      *
      * @param password The password provided by the user to be verified.
-     * @return {@code true} if the provided password matches the reference; {@code false} otherwise.
+     * @return {@code true} if the provided password matches the reference;
+     *         {@code false} otherwise.
      */
-    static boolean verifyPassword(String password) {
+    public static boolean verifyPassword(String password) {
         String validPasswordHash;
         Argon2 argon2 = Argon2Factory.create();
 
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(Objects.requireNonNull(PasswordHandler.class.getResourceAsStream(passwordFile)), StandardCharsets.UTF_8))) {
+        try (BufferedReader br = new BufferedReader(
+                new InputStreamReader(Objects.requireNonNull(PasswordHandler.class.getResourceAsStream(passwordFile)),
+                        StandardCharsets.UTF_8))) {
             validPasswordHash = br.readLine();
         } catch (Exception e) {
             System.err.println("Failed to read password file: " + e);
