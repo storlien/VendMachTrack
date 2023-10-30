@@ -7,31 +7,26 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-      prefHeight="574.0" prefWidth="593.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="vendmachtrack.ui.UserController">
-    <Label fx:id="mylabel" alignment="CENTER" contentDisplay="CENTER" layoutX="180.0" layoutY="21.0" prefHeight="43.0"
-           prefWidth="315.0">
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="574.0" prefWidth="593.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vendmachtrack.ui.UserController">
+    <Label fx:id="mylabel" alignment="CENTER" contentDisplay="CENTER" layoutX="180.0" layoutY="21.0" prefHeight="43.0" prefWidth="315.0">
         <font>
-            <Font name="System Bold" size="24.0"/>
+            <Font name="System Bold" size="24.0" />
         </font>
     </Label>
-    <Button fx:id="backButton" layoutX="24.0" layoutY="21.0" mnemonicParsing="false" onAction="#switchToMainScene"
-            prefHeight="43.0" prefWidth="98.0" text="Back">
+    <Button fx:id="backButton" layoutX="24.0" layoutY="21.0" mnemonicParsing="false" onAction="#switchToPasswordScene" prefHeight="43.0" prefWidth="98.0" text="Back">
         <font>
-            <Font name="System Bold Italic" size="14.0"/>
+            <Font name="System Bold Italic" size="14.0" />
         </font>
     </Button>
-    <Button fx:id="buy" layoutX="435.0" layoutY="501.0" mnemonicParsing="false" onAction="#removeItem" prefHeight="43.0"
-            prefWidth="129.0" text="Buy">
+    <Button fx:id="buy" layoutX="435.0" layoutY="501.0" mnemonicParsing="false" onAction="#removeItem" prefHeight="43.0" prefWidth="129.0" text="Buy">
         <font>
-            <Font name="System Bold Italic" size="16.0"/>
+            <Font name="System Bold Italic" size="16.0" />
         </font>
     </Button>
-    <VBox fx:id="buttonContainer" layoutX="35.0" layoutY="138.0" prefHeight="327.0" prefWidth="521.0"/>
+    <VBox fx:id="buttonContainer" layoutX="35.0" layoutY="138.0" prefHeight="327.0" prefWidth="521.0" />
     <TextField fx:id="chosenItem" layoutX="35.0" layoutY="501.0" prefHeight="43.0" prefWidth="290.0">
         <font>
-            <Font size="14.0"/>
+            <Font size="14.0" />
         </font>
     </TextField>
 </Pane>
