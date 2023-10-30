@@ -124,28 +124,28 @@ public class VendAppController implements Initializable {
      */
     @FXML
     private void handleButtonClick(ActionEvent event) {
-        if (findID() != 0) {
-            updateInventory(findID());
+        if (findID() != null) {
+            updateInventory(Integer.parseInt(findID()));
         } else {
             textArea.setText("No vending machine selected");
         }
     }
 
-    private int findID() {
+    private String findID() {
         String selectedItem = menuBar.getValue();
         if (selectedItem != null) {
             int colonIndex = selectedItem.indexOf(":");
             int endIndex = selectedItem.indexOf("(");
-            return Integer.parseInt(selectedItem.substring(colonIndex + 2, endIndex).trim());
+            return selectedItem.substring(colonIndex + 2, endIndex).trim();
         } else {
             System.out.println("No vending machine selected"); // Print a message for debugging
-            return 0;
+            return null;
         }
     }
 
     @FXML
     public void changeToRefillScene(ActionEvent event) throws IOException {
-        int selectedMachineID = findID();
+        int selectedMachineID = Integer.parseInt(findID());
 
         if (selectedMachineID != 0) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("RefillApp.fxml"));
@@ -167,7 +167,7 @@ public class VendAppController implements Initializable {
 
     @FXML
     public void userViewScene(ActionEvent event) throws IOException {
-        int selectedMachineID = findID();
+        int selectedMachineID = Integer.parseInt(findID());
 
         if (selectedMachineID != 0) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("UserApp.fxml"));
