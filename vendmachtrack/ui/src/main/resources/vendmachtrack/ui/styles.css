@@ -4,11 +4,11 @@
 .buttonContainer {
     -fx-font-size: 15px;
     /* Setter fontstørrelsen til 15 piksler */
-    -fx-min-width: 75px;
-    /* Setter minimumsbredde til 75 piksler */
-    -fx-min-height: 35px;
-    /* Setter minimumsbredde til 35 piksler */
-    -fx-background-color: #bd3434;
+    -fx-max-width: 100px;
+    /* Setter maximumsbredde til 100 piksler */
+    -fx-max-height: 50px;
+    /* Setter maximumsbredde til 50 piksler */
+    -fx-background-color: #af2d2d;
     /* Setter bakgrunnsfargen til rød */
     -fx-text-fill: rgb(255, 255, 255);
     /* Setter tekstfargen til hvit */
