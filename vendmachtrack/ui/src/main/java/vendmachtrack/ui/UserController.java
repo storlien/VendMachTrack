@@ -1,17 +1,21 @@
 package vendmachtrack.ui;
 
 import java.io.IOException;
-import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import vendmachtrack.ui.access.AccessService;
 import vendmachtrack.ui.access.MachineTrackerAccessible;
 
@@ -37,11 +41,13 @@ public class UserController {
 
     private App mainApp;
     private int selectedMachineID;
-    //    private AccessService service;
+    private AccessService service;
     private MachineTrackerAccessible access;
+    private Stage stage;
+    private Scene scene;
 
     public void setAccessService(AccessService service) {
-//        this.service = service;
+        this.service = service;
         this.access = service.getAccess();
     }
 
@@ -100,8 +106,18 @@ public class UserController {
     }
 
     @FXML
-    public void switchToMainScene(ActionEvent event) throws IOException {
-        mainApp.switchToMainScene(selectedMachineID);
+    public void switchToPasswordScene(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("PasswordApp.fxml"));
+        Parent root = fxmlLoader.load();
+        PasswordHandlerController passwordController = fxmlLoader.getController();
+        passwordController.setMainApp(mainApp);
+        passwordController.setAccessService(service);
+        passwordController.setSelectedMachineID(selectedMachineID);
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+        stage.setScene(scene);
+        stage.show();
     }
 
 }
