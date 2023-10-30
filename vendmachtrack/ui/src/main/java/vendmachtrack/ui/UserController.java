@@ -12,7 +12,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -39,6 +41,9 @@ public class UserController {
     @FXML
     private TextField chosenItem;
 
+    @FXML
+    private ScrollPane scrollPane;
+
     private App mainApp;
     private int selectedMachineID;
     private AccessService service;
@@ -58,45 +63,53 @@ public class UserController {
     public void updateButtons(int machineID, Map<String, Integer> inventory) {
         buttonContainer.getChildren().clear();
 
-        VBox currentColumn = new VBox();
-        currentColumn.setSpacing(20);
+        HBox currentRow = new HBox();
+        currentRow.setSpacing(30);
+        buttonContainer.setSpacing(30);
 
-        int buttonsInCurrentColumn = 0;
+        int buttonsInCurrentRow = 0;
 
         for (Map.Entry<String, Integer> entry : inventory.entrySet()) {
             String itemName = entry.getKey();
             int itemQuantity = entry.getValue();
 
-            Button button = new Button(itemName + ": " + itemQuantity);
+            Button button = new Button(itemName);
             button.getStyleClass().add("buttonContainer");
+            button.setPrefSize(100, 120);
 
             button.setOnAction(e -> chosenItem.setText(itemName));
 
-            currentColumn.getChildren().add(button);
-            buttonsInCurrentColumn++;
+            currentRow.getChildren().add(button);
+            buttonsInCurrentRow++;
 
-            if (buttonsInCurrentColumn >= 5) {
-                buttonContainer.getChildren().add(currentColumn);
-                currentColumn = new VBox();
-                currentColumn.setSpacing(20);
-                buttonsInCurrentColumn = 0;
+            if (buttonsInCurrentRow >= 4) {
+                buttonContainer.getChildren().add(currentRow);
+                currentRow = new HBox();
+                currentRow.setSpacing(30);
+                buttonsInCurrentRow = 0;
             }
+            scrollPane.setContent(buttonContainer);
+
         }
 
-        if (buttonsInCurrentColumn > 0) {
-            buttonContainer.getChildren().add(currentColumn);
+        if (buttonsInCurrentRow > 0) {
+            buttonContainer.getChildren().add(currentRow);
         }
     }
 
     @FXML
     private void removeItem() {
-        HashMap<String, Integer> newInventory = access.removeItem(selectedMachineID, chosenItem.getText(), 1);
-        updateButtons(selectedMachineID, newInventory);
-
+        try {
+            HashMap<String, Integer> newInventory = access.removeItem(selectedMachineID, chosenItem.getText(), 1);
+            updateButtons(selectedMachineID, newInventory);
+            chosenItem.clear();
+        } catch (Exception e) {
+            chosenItem.setText(e.getMessage());
+        }
     }
 
     public void updateTitle(int machineID) {
-        mylabel.setText("Vending machine: " + machineID);
+        mylabel.setText("Vending machine: " + access.getVendMachLocation(machineID));
     }
 
     public void setSelectedMachineID(int machineID) {
