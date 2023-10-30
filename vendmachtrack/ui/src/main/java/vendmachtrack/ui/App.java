@@ -9,7 +9,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 /**
- * Extends javafx.application.Application and provides a method for launching the application.
+ * Extends javafx.application.Application and provides a method for launching
+ * the application.
  */
 public class App extends Application {
 
@@ -23,7 +24,8 @@ public class App extends Application {
 
     /**
      * This method is called by javafx to start the application.
-     * It loads the App.fxml file, sets up the main stage, and initializes the controller.
+     * It loads the App.fxml file, sets up the main stage, and initializes the
+     * controller.
      *
      * @param stage The primary stage for the application.
      * @throws IOException If an error occurs while loading the App.fxml file.
@@ -44,6 +46,7 @@ public class App extends Application {
     public void switchToMainScene(int machineID) {
         mainController.updateVendMachList();
         mainController.updateInventory(machineID);
+        mainController.setIdToChoiceBox(machineID);
         primaryStage.setScene(mainScene);
     }
 
