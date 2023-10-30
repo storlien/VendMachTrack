@@ -3,13 +3,13 @@
 /* Stil for vanlige knapper */
 .buttonContainer {
     -fx-font-size: 15px;
-    /* Setter fontstørrelsen til 16 piksler */
+    /* Setter fontstørrelsen til 15 piksler */
     -fx-min-width: 75px;
-    /* Setter minimumsbredde til 120 piksler */
+    /* Setter minimumsbredde til 75 piksler */
     -fx-min-height: 35px;
-    /* Setter minimumsbredde til 120 piksler */
+    /* Setter minimumsbredde til 35 piksler */
     -fx-background-color: #bd3434;
-    /* Setter bakgrunnsfargen til grønn (#4CAF50) */
+    /* Setter bakgrunnsfargen til rød */
     -fx-text-fill: rgb(255, 255, 255);
     /* Setter tekstfargen til hvit */
 }
@@ -17,9 +17,10 @@
 /* Stil for hovered knapper */
 .button:hover {
     -fx-background-color: rgb(112, 2, 2);
-    /* Endrer bakgrunnsfargen til en litt mørkere grønn når knappen er hovered */
+    /* Endrer bakgrunnsfargen til en litt mørkere rød når knappen er hovered */
 }
 
+/* Stil for feilmeldingen ved feil passord */
 .error-text {
     -fx-text-fill: red;
 }
