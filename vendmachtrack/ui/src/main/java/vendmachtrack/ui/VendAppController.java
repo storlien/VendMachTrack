@@ -22,6 +22,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import vendmachtrack.ui.access.AccessService;
@@ -46,6 +47,24 @@ public class VendAppController implements Initializable {
 
     @FXML
     private Button userView;
+
+    @FXML
+    private Button addButton;
+
+    @FXML
+    private Button removeButton;
+
+    @FXML
+    private TextField idTextFieldAdd;
+
+    @FXML
+    private TextField locationTextField;
+
+    @FXML
+    private TextField idTextFieldRemove;
+
+    @FXML
+    private Label outputText;
 
     @FXML
     private ChoiceBox<String> menuBar;
@@ -101,6 +120,54 @@ public class VendAppController implements Initializable {
             formattedStatus.append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
         }
         textArea.setText(formattedStatus.toString());
+    }
+
+    @FXML
+    private void handleAddButton(ActionEvent event) {
+        try {
+            access.addVendMach(Integer.parseInt(idTextFieldAdd.getText()), locationTextField.getText());
+            updateVendMachList();
+            textArea.clear();
+            menuBar.setValue(null);
+            idTextFieldAdd.clear();
+            locationTextField.clear();
+            outputText.getStyleClass().add("success-text");
+            outputText.setText("The machine was successfully added to your tracker ");
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            textArea.clear();
+            menuBar.setValue(null);
+            idTextFieldAdd.clear();
+            locationTextField.clear();
+            outputText.getStyleClass().add("error-text");
+            outputText.setText(e.getMessage());
+
+        }
+
+    }
+
+    @FXML
+    private void handleRemoveButton(ActionEvent event) {
+        try {
+            access.removeVendMach(Integer.parseInt(idTextFieldRemove.getText()));
+            updateVendMachList();
+            textArea.clear();
+            menuBar.setValue(null);
+            idTextFieldRemove.clear();
+            outputText.getStyleClass().add("success-text");
+            outputText.setText("The machine was successfully removed from your tracker");
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            textArea.clear();
+            menuBar.setValue(null);
+            idTextFieldRemove.clear();
+            outputText.getStyleClass().add("error-text");
+            outputText.setText(e.getMessage());
+
+        }
+
     }
 
     /**
