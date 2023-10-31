@@ -131,6 +131,7 @@ public class VendAppController implements Initializable {
             menuBar.setValue(null);
             idTextFieldAdd.clear();
             locationTextField.clear();
+            outputText.getStyleClass().removeAll("success-text", "error-text");
             outputText.getStyleClass().add("success-text");
             outputText.setText("The machine was successfully added to your tracker ");
 
@@ -140,6 +141,7 @@ public class VendAppController implements Initializable {
             menuBar.setValue(null);
             idTextFieldAdd.clear();
             locationTextField.clear();
+            outputText.getStyleClass().removeAll("success-text", "error-text");
             outputText.getStyleClass().add("error-text");
             outputText.setText(e.getMessage());
 
@@ -155,6 +157,7 @@ public class VendAppController implements Initializable {
             textArea.clear();
             menuBar.setValue(null);
             idTextFieldRemove.clear();
+            outputText.getStyleClass().removeAll("success-text", "error-text");
             outputText.getStyleClass().add("success-text");
             outputText.setText("The machine was successfully removed from your tracker");
 
@@ -163,6 +166,7 @@ public class VendAppController implements Initializable {
             textArea.clear();
             menuBar.setValue(null);
             idTextFieldRemove.clear();
+            outputText.getStyleClass().removeAll("success-text", "error-text");
             outputText.getStyleClass().add("error-text");
             outputText.setText(e.getMessage());
 
