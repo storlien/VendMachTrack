@@ -39,6 +39,7 @@ public class App extends Application {
         mainController.setMainApp(this);
 
         mainScene = new Scene(parent);
+        mainScene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
         primaryStage.setScene(mainScene);
         primaryStage.show();
     }
