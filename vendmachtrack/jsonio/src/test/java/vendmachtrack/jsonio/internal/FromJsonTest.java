@@ -18,8 +18,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class FromJsonTest {
 
     private FromJson fromJson;
-    private String jsonString = "{\"machines\":[{\"status\":{\"Cola\":5,\"Pepsi\":3},\"id\":1,\"location\":\"Trondhjem\"},{\"status\":{\"Tuborg\":1},\"id\":2,\"location\":\"Oslo\"},{\"status\":{\"Hansa\":100,\"Regnvann\":10},\"id\":3,\"location\":\"Bergen\"}]}";
-    private String filename = "/testfile.json";
+    private final String jsonString = "{\"machines\":[{\"status\":{\"Cola\":5,\"Pepsi\":3},\"id\":1,\"location\":\"Trondhjem\"},{\"status\":{\"Tuborg\":1},\"id\":2,\"location\":\"Oslo\"},{\"status\":{\"Hansa\":100,\"Regnvann\":10},\"id\":3,\"location\":\"Bergen\"}]}";
+    private final String filename = "/testfile.json";
     private Path dir;
 
 

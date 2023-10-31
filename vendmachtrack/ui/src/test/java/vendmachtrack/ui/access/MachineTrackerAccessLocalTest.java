@@ -58,7 +58,7 @@ public class MachineTrackerAccessLocalTest {
     /**
      * A {@link vendmachtrack.core.VendingMachine} instance used in the tests. This is initialized in the {@link #setUp()} method before each test.
      */
-    private VendingMachine machine = new VendingMachine();
+    private final VendingMachine machine = new VendingMachine();
 
     /**
      * This method is run before each test. It initializes the mocks and the {@link vendmachtrack.ui.access.MachineTrackerAccessLocal} instance to be tested.

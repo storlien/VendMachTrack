@@ -28,7 +28,7 @@ public class VendAppControllerTest extends ApplicationTest {
 
     private VendAppController controller;
     private MachineTracker tracker;
-    private MachineTracker trackerTest = new MachineTracker();
+    private final MachineTracker trackerTest = new MachineTracker();
 
     /**
      * This method starts the application by loading the FXML file and setting up the stage.

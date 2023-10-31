@@ -38,9 +38,9 @@ public class MachineTrackerControllerTest {
     @MockBean
     private MachineTrackerService machineTrackerService;
 
-    private VendingMachine vendingmachine = new VendingMachine();
-    private List<VendingMachine> machines = new ArrayList<>();
-    private MachineTracker machineTracker = new MachineTracker();
+    private final VendingMachine vendingmachine = new VendingMachine();
+    private final List<VendingMachine> machines = new ArrayList<>();
+    private final MachineTracker machineTracker = new MachineTracker();
 
     /**
      * Sets up the test fixture before each test method runs.
