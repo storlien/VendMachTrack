@@ -36,13 +36,15 @@ public class MachineTrackerController {
     }
 
     @PutMapping("/{id}/add")
-    public ResponseEntity<HashMap<String, Integer>> addItem(@PathVariable("id") int id, @RequestParam String item, @RequestParam int amount) {
-        return ResponseEntity.ok(machtrackService.addItem(id, item, amount));
+    public ResponseEntity<HashMap<String, Integer>> addItem(@PathVariable("id") int id, @RequestParam String item,
+            @RequestParam int quantity) {
+        return ResponseEntity.ok(machtrackService.addItem(id, item, quantity));
     }
 
     @PutMapping("/{id}/remove")
-    public ResponseEntity<HashMap<String, Integer>> removeItem(@PathVariable("id") int id, @RequestParam String item, @RequestParam int amount) {
-        return ResponseEntity.ok(machtrackService.removeItem(id, item, amount));
+    public ResponseEntity<HashMap<String, Integer>> removeItem(@PathVariable("id") int id, @RequestParam String item,
+            @RequestParam int quantity) {
+        return ResponseEntity.ok(machtrackService.removeItem(id, item, quantity));
     }
 
     @PostMapping("/add")
@@ -56,7 +58,8 @@ public class MachineTrackerController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<HashMap<Integer, String>> changeLocation(@PathVariable("id") int id, @RequestParam String location) {
+    public ResponseEntity<HashMap<Integer, String>> changeLocation(@PathVariable("id") int id,
+            @RequestParam String location) {
         return ResponseEntity.ok(machtrackService.changeLocation(id, location));
     }
 }
