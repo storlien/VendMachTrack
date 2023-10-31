@@ -40,7 +40,7 @@ public class VendAppController implements Initializable {
     private TextArea textArea;
 
     @FXML
-    private Button button;
+    private Button okButton;
 
     @FXML
     private Button refillButton;
@@ -222,6 +222,7 @@ public class VendAppController implements Initializable {
 
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root);
+                scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
                 stage.setScene(scene);
                 stage.show();
 

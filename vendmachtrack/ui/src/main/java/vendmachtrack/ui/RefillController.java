@@ -27,10 +27,10 @@ public class RefillController {
     private TextField refillNumber;
 
     @FXML
-    private Button refillButton;
+    private Button refilllButton;
 
     @FXML
-    private Button back;
+    private Button backButton;
 
     @FXML
     private TextArea textArea;
@@ -38,7 +38,7 @@ public class RefillController {
     @FXML
     private Text answerText;
 
-    //    private AccessService service;
+    // private AccessService service;
     private MachineTrackerAccessible access;
 
     private App mainApp;
@@ -54,7 +54,7 @@ public class RefillController {
     }
 
     public void setAccessService(AccessService service) {
-//        this.service = service;
+        // this.service = service;
         this.access = service.getAccess();
     }
 
