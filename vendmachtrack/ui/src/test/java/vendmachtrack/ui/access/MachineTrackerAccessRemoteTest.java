@@ -14,16 +14,64 @@ import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * This class contains unit tests for the {@link MachineTrackerAccessRemote} class, which is responsible for providing remote access to a vending machine tracker.
+ * The tests cover various scenarios, including successful API responses and error handling for remote access.
+ *
+ * <p>
+ * 
+ * The WireMock framework is used to simulate HTTP responses from a remote server and ensure the expected behavior of the MachineTrackerAccessRemote class. 
+ * To read more about this library see: <a href="https://github.com/tomakehurst/wiremock" target="_blank">WireMock repository</a>.
+ *
+ * <p>
+ * 
+ * Each test method in this class corresponds to a specific scenario and tests the behavior of the MachineTrackerAccessRemote class based on the provided conditions.
+ *
+ * <p>
+ * 
+ * The WireMockServer is used to start a mock HTTP server to simulate different server states and responses .
+ * 
+ * <p>
+ * 
+ * The {@link #setup()} method starts the WireMock server before each test, and the {@link #tearDown()} method stops the WireMock server after each test.
+ *
+ */
 public class MachineTrackerAccessRemoteTest {
 
     private WireMockServer wireMockServer;
 
+    /**
+     * Sets up the environment before each test by starting the WireMock server and configuring stubs for HTTP endpoints.
+     * This method is annotated with {@link BeforeEach}, ensuring that it runs before each test method in the test class.
+     *
+     * <p>
+     * 
+     * The WireMock server is started on port 8080, allowing it to simulate HTTP responses from a remote server.
+     *
+     */
     @BeforeEach
     public void setup() {
         wireMockServer = new WireMockServer(WireMockConfiguration.options().port(8080));
         wireMockServer.start();
     }
 
+    /**
+     * Tests the {@link MachineTrackerAccessRemote#getVendMachList()} method to ensure it returns a vending machine list when the remote server responds with a 200 OK status.
+     * 
+     * This test case focuses on the scenario where:
+     * <ul>
+     *   <li>The remote server responds with a 200 OK status.</li>
+     * </ul>
+     * 
+     * <p>
+     * To conduct this test, we perform the following steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Stub the API response to return a JSON representation of the vending machine list with two entries (IDs 1 and 2) and corresponding locations (Oslo and Trondheim).</li>
+     *   <li>Act: Initialize a new MachineTrackerAccessRemote object with a mocked server URI, then invoke the getVendMachList() method.</li>
+     *   <li>Assert: Verify that the returned HashMap contains two entries with the expected IDs and locations.</li>
+     * </ol>
+     */
     @Test
     public void MachineTrackerAccessRemote_getVendMachList_returnVendingMachineAllOk() {
         
@@ -44,6 +92,23 @@ public class MachineTrackerAccessRemoteTest {
         assertEquals("Trondheim", result.get(2));
     }
 
+    /**
+     * Tests the {@link MachineTrackerAccessRemote#getVendMachList()} method to ensure it handles a bad request response from the remote server correctly.
+     * 
+     * This test case focuses on the scenario where:
+     * <ul>
+     *   <li>The remote server responds with a 400 Bad Request status.</li>
+     * </ul>
+     * 
+     * <p>
+     * To conduct this test, we perform the following steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Stub the API response to return a 400 Bad Request status code with a JSON body containing an error message.</li>
+     *   <li>Act: Initialize a new MachineTrackerAccessRemote object with a mocked server URI, then invoke the getVendMachList() method.</li>
+     *   <li>Assert: Expect a {@link RuntimeException} to be thrown and verify that the exception message contains "Bad Request".</li>
+     * </ol>
+     */
     @Test
     public void MachineTrackerAccessRemote_getVendMachList_badRequest() {
     
@@ -64,6 +129,24 @@ public class MachineTrackerAccessRemoteTest {
         assertTrue(exception.getMessage().contains("Bad Request"));
     }
 
+    /**
+     * Tests the {@link MachineTrackerAccessRemote#getVendMachLocation(int)} method to ensure it returns the location of a vending machine for a valid ID.
+     * 
+     * This test case focuses on the scenario where:
+     * <ul>
+     *   <li>The remote server responds with a 200 OK status, and the location is successfully retrieved.</li>
+     * </ul>
+     * 
+     * <p>
+     * To conduct this test, we perform the following steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Stub the API response to return 200 OK with the location "Oslo" for a specific vending machine ID.</li>
+     *   <li>Act: Initialize a new MachineTrackerAccessRemote object with a mocked server URI, then invoke the getVendMachLocation() method with a valid ID.</li>
+     *   <li>Assert: Verify that the returned location matches the expected value "Oslo".</li>
+     * </ol>
+     *
+    */
     @Test
     public void MachineTrackerAccessRemote_getVendMachLocation_returnLocationAllOk() {
         
@@ -83,6 +166,24 @@ public class MachineTrackerAccessRemoteTest {
         assertEquals("Oslo", result);
     }
 
+    /**
+     * Tests the {@link MachineTrackerAccessRemote#getVendMachLocation(int)} method when the server returns a Bad Request (400) status code.
+     * 
+     * This test case focuses on the scenario where:
+     * <ul>
+     *   <li>The remote server responds with a 400 Bad Request status.</li>
+     * </ul>
+     * 
+     * <p>
+     * To conduct this test, we perform the following steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Stub the API response to return a 400 Bad Request status code with a JSON body containing an error message.</li>
+     *   <li>Act: Initialize a new MachineTrackerAccessRemote object with a mocked server URI, then invoke the getVendMachLocation() method with the ID.</li>
+     *   <li>Assert: Expect a {@link RuntimeException} to be thrown and verify that the exception message contains "Bad Request".</li>
+     * </ol>
+     * 
+     */
     @Test
     public void MachineTrackerAccessRemote_getVendMachLocation_ServerReturnsBadRequest() {
         
@@ -104,7 +205,24 @@ public class MachineTrackerAccessRemoteTest {
         assertTrue(exception.getMessage().contains("Bad Request"));
     }
 
-
+    /**
+     * Tests the {@link MachineTrackerAccessRemote#getInventory(int)} method when the server returns a successful 200 OK status code.
+     * 
+     * This test case focuses on the scenario where:
+     * <ul>
+     *   <li>The remote server responds with a 200 OK status.</li>
+     * </ul>
+     * 
+     * <p>
+     * To conduct this test, we perform the following steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Stub the API response to return 200 OK with an inventory JSON response for a specific vending machine ID.</li>
+     *   <li>Act: Initialize a new MachineTrackerAccessRemote object with a mocked server URI, then invoke the getInventory() method with the ID.</li>
+     *   <li>Assert: Verify that the returned inventory map contains the expected items and quantities.</li>
+     * </ol>
+     * 
+     */
     @Test
     public void MachineTrackerAccessRemote_getInventory_returnsInventoryAllOk() {
         
@@ -126,6 +244,23 @@ public class MachineTrackerAccessRemoteTest {
         assertEquals(20, result.get("Øl").intValue());
     }
 
+    /**
+     * Tests the {@link MachineTrackerAccessRemote#getInventory(int)} method when the server returns a 400 Bad Request status code.
+     * 
+     * This test case focuses on the scenario where:
+     * <ul>
+     *   <li>The remote server responds with a 400 Bad Request status.</li>
+     * </ul>
+     * 
+     * <p>
+     * To conduct this test, we perform the following steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Stub the API response to return a 400 Bad Request status code with a JSON body containing an error message.</li>
+     *   <li>Act: Initialize a new MachineTrackerAccessRemote object with a mocked server URI, then invoke the getInventory() method with the ID.</li>
+     *   <li>Assert: Expect a {@link RuntimeException} to be thrown and verify that the exception message contains "Bad Request".</li>
+     * </ol>
+     */
     @Test
     public void MachineTrackerAccessRemote_getInventory_ServerReturnsBadRequest() {
         
@@ -146,23 +281,39 @@ public class MachineTrackerAccessRemoteTest {
         assertTrue(exception.getMessage().contains("Bad Request"));
     }
 
-
+    /**
+     * Tests the {@link MachineTrackerAccessRemote#addItem(int, String, int)} method when adding an item is successful.
+     * 
+     * This test case focuses on the scenario where:
+     * <ul>
+     *   <li>Adding an item to the vending machine is successful, and the remote server responds with a 200 OK status code.</li>
+     * </ul>
+     * 
+     * <p>
+     * To conduct this test, we perform the following steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Stub the API response to return 200 OK with a JSON body indicating the added item and its quantity.</li>
+     *   <li>Act: Initialize a new MachineTrackerAccessRemote object with a mocked server URI and invoke the addItem() method with the specified parameters.</li>
+     *   <li>Assert: Verify that the result contains the expected item and quantity.</li>
+     * </ol>
+     */
     @Test
     public void MachineTrackerAccessRemote_addItem_addsItemAllOk() {
         
         //Arrange
         int id = 1;
         String item = "Cola";
-        int amount = 5;
+        int quantity = 5;
         // Stubbing the API response to return 200 OK
-        stubFor(put(urlEqualTo("/vendmachtrack/" + id + "/add?item=" + URLEncoder.encode(item, StandardCharsets.UTF_8) + "&amount=" + amount))
+        stubFor(put(urlEqualTo("/vendmachtrack/" + id + "/add?item=" + URLEncoder.encode(item, StandardCharsets.UTF_8) + "&quantity=" + quantity))
                 .willReturn(aResponse()
                             .withStatus(200)
                             .withBody("{\"Cola\":5}")));
         MachineTrackerAccessRemote accessRemote = new MachineTrackerAccessRemote(URI.create("http://localhost:8080/"));
         
         //Act
-        HashMap<String, Integer> result = accessRemote.addItem(id, item, amount);
+        HashMap<String, Integer> result = accessRemote.addItem(id, item, quantity);
 
         //Assert
         assertEquals(1, result.size());
@@ -170,15 +321,32 @@ public class MachineTrackerAccessRemoteTest {
         assertEquals(5, result.get("Cola").intValue());
     }
 
+    /**
+     * Tests the {@link MachineTrackerAccessRemote#addItem(int, String, int)} method when the remote server returns a Bad Request (400) response.
+     * 
+     * This test case focuses on the scenario where:
+     * <ul>
+     *   <li>Adding an item to the vending machine results in a Bad Request response from the remote server (status code 400).</li>
+     * </ul>
+     * 
+     * <p>
+     * To conduct this test, we perform the following steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Stub the API response to return a 400 Bad Request status code with a JSON body containing an error message.</li>
+     *   <li>Act: Initialize a new MachineTrackerAccessRemote object with a mocked server URI and invoke the addItem() method with the specified parameters.</li>
+     *   <li>Assert: Expect a {@link RuntimeException} to be thrown and verify that the exception message contains "Bad Request".</li>
+     * </ol>
+     */
     @Test
     public void MachineTrackerAccessRemote_addItem_ServerReturnsBadRequest() {
         
         //Arrange
         int id = 1;
         String item = "Cola";
-        int amount = 5;
+        int quantity = 5;
         // Stubbing the API response to return 400 Bad Request
-        stubFor(put(urlEqualTo("/vendmachtrack/" + id + "/add?item=" + URLEncoder.encode(item, StandardCharsets.UTF_8) + "&amount=" + amount))
+        stubFor(put(urlEqualTo("/vendmachtrack/" + id + "/add?item=" + URLEncoder.encode(item, StandardCharsets.UTF_8) + "&quantity=" + quantity))
                 .willReturn(aResponse()
                             .withStatus(400)
                             .withBody("{\"error\":\"Bad Request\"}")));
@@ -186,28 +354,45 @@ public class MachineTrackerAccessRemoteTest {
 
         // Act & Assert
         Exception exception = assertThrows(RuntimeException.class, () -> {
-            accessRemote.addItem(id, item, amount);
+            accessRemote.addItem(id, item, quantity);
         });
         assertTrue(exception.getMessage().contains("Bad Request"));
     }
 
 
+    /**
+     * Tests the {@link MachineTrackerAccessRemote#removeItem(int, String, int)} method when successfully removing items from the vending machine.
+     * 
+     * This test case focuses on the scenario where:
+     * <ul>
+     *   <li>Removing items from the vending machine results in a successful operation, and the server responds with a 200 OK status code.</li>
+     * </ul>
+     * 
+     * <p>
+     * To conduct this test, we perform the following steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Stub the API response to return a 200 OK status with a JSON body indicating the updated quantity of the removed item.</li>
+     *   <li>Act: Initialize a new MachineTrackerAccessRemote object with a mocked server URI and invoke the removeItem() method with the specified parameters.</li>
+     *   <li>Assert: Verify that the returned HashMap contains the expected item and its updated quantity, as well as the size of the HashMap after removal.</li>
+     * </ol>
+     */
     @Test
     public void MachineTrackerAccessRemote_removeItem_removesItemAllOk() {
         
         //Arrange
         int id = 1;
         String item = "Cola";
-        int amount = 3;
+        int quantity = 3;
         // Stubbing the API response to return 200 OK
-        stubFor(put(urlEqualTo("/vendmachtrack/" + id + "/remove?item=" + URLEncoder.encode(item, StandardCharsets.UTF_8) + "&amount=" + amount))
+        stubFor(put(urlEqualTo("/vendmachtrack/" + id + "/remove?item=" + URLEncoder.encode(item, StandardCharsets.UTF_8) + "&quantity=" + quantity))
                 .willReturn(aResponse()
                             .withStatus(200)
                             .withBody("{\"Cola\":2}")));  // Assuming that there were originally 5"Colas and 3 were removed
         MachineTrackerAccessRemote accessRemote = new MachineTrackerAccessRemote(URI.create("http://localhost:8080/"));
         
         //Act
-        HashMap<String, Integer> result = accessRemote.removeItem(id, item, amount);
+        HashMap<String, Integer> result = accessRemote.removeItem(id, item, quantity);
 
         //Assert
         assertEquals(1, result.size());
@@ -215,16 +400,33 @@ public class MachineTrackerAccessRemoteTest {
         assertEquals(2, result.get("Cola").intValue()); // Expecting 2 remaining after removal
     }
 
+    /**
+     * Tests the {@link MachineTrackerAccessRemote#removeItem(int, String, int)} method when the server responds with a bad request (400 status code).
+     * 
+     * This test case focuses on the scenario where:
+     * <ul>
+     *   <li>Removing items from the vending machine results in a bad request (400 status code) response from the server.</li>
+     * </ul>
+     * 
+     * <p>
+     * To conduct this test, we perform the following steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Stub the API response to return a 400 Bad Request status code with a JSON body containing an error message.</li>
+     *   <li>Act: Initialize a new MachineTrackerAccessRemote object with a mocked server URI and invoke the removeItem() method with the specified parameters.</li>
+     *   <li>Assert: Expect a {@link RuntimeException} to be thrown and verify that the exception message contains "Bad Request".</li>
+     * </ol>
+     */
     @Test
     public void MachineTrackerAccessRemote_removeItem_ServerReturnsBadRequest() {
         
         //Arrange
         int id = 1;
         String item = "Cola";
-        int amount = 3;
+        int quantity = 3;
 
         // Stubbing the API response to return 400 Bad Request
-        stubFor(put(urlEqualTo("/vendmachtrack/" + id + "/remove?item=" + URLEncoder.encode(item, StandardCharsets.UTF_8) + "&amount=" + amount))
+        stubFor(put(urlEqualTo("/vendmachtrack/" + id + "/remove?item=" + URLEncoder.encode(item, StandardCharsets.UTF_8) + "&quantity=" + quantity))
                 .willReturn(aResponse()
                             .withStatus(400)
                             .withBody("{\"error\":\"Bad Request\"}")));
@@ -233,11 +435,28 @@ public class MachineTrackerAccessRemoteTest {
 
         // Act & Assert
         Exception exception = assertThrows(RuntimeException.class, () -> {
-            accessRemote.removeItem(id, item, amount);
+            accessRemote.removeItem(id, item, quantity);
         });
         assertTrue(exception.getMessage().contains("Bad Request"));
     }
 
+    /**
+     * Tests the {@link MachineTrackerAccessRemote#addVendMach(int, String)} method when adding a vending machine returns a successful response (200 status code).
+     * 
+     * This test case focuses on the scenario where:
+     * <ul>
+     *   <li>Adding a vending machine to the remote server results in a successful response (200 status code) with the updated vending machine details.</li>
+     * </ul>
+     * 
+     * <p>
+     * To conduct this test, we perform the following steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Stub the API response to return a 200 OK status with a JSON body containing the updated vending machine details.</li>
+     *   <li>Act: Initialize a new MachineTrackerAccessRemote object with a mocked server URI and invoke the addVendMach() method with the specified parameters.</li>
+     *   <li>Assert: Verify that the result contains the expected vending machine details, including the ID and location.</li>
+     * </ol>
+     */
     @Test
     public void MachineTrackerAccessRemote_addVendMach_RetrunsVendMachAllOk() {
         
@@ -261,6 +480,24 @@ public class MachineTrackerAccessRemoteTest {
         assertEquals("Oslo", result.get(1));
     }
 
+
+    /**
+     * Tests the {@link MachineTrackerAccessRemote#addVendMach(int, String)} method when adding a vending machine returns a BadRequest response (400 status code).
+     * 
+     * This test case focuses on the scenario where:
+     * <ul>
+     *   <li>Adding a vending machine to the remote server results in a BadRequest response (400 status code) with an error message.</li>
+     * </ul>
+     * 
+     * <p>
+     * To conduct this test, we perform the following steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Stub the API response to return a 400 Bad Request status with a JSON body containing an error message.</li>
+     *   <li>Act: Initialize a new MachineTrackerAccessRemote object with a mocked server URI and invoke the addVendMach() method with the specified parameters.</li>
+     *   <li>Assert: Expect a {@link RuntimeException} to be thrown and verify that the exception message contains "Bad Request".</li>
+     * </ol>
+     */
     @Test
     public void MachineTrackerAccessRemote_addVendMach_ServerReturnsBadRequest() {
        
@@ -281,6 +518,23 @@ public class MachineTrackerAccessRemoteTest {
         assertTrue(exception.getMessage().contains("Bad Request"));
     }
 
+    /**
+     * Tests the {@link MachineTrackerAccessRemote#removeVendMach(int)} method when removing a vending machine returns a successful response (200 status code).
+     * 
+     * This test case focuses on the scenario where:
+     * <ul>
+     *   <li>Removing a vending machine from the remote server results in a successful response (200 status code) with the updated vending machine list.</li>
+     * </ul>
+     * 
+     * <p>
+     * To conduct this test, we perform the following steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Stub the API response to return a 200 OK status with a JSON body containing the updated vending machine list.</li>
+     *   <li>Act: Initialize a new MachineTrackerAccessRemote object with a mocked server URI and invoke the removeVendMach() method with the specified vending machine ID.</li>
+     *   <li>Assert: Verify that the result contains the expected updated vending machine list with its ID and location.</li>
+     * </ol>
+     */
     @Test
     public void MachineTrackerAccessRemote_removeVendMach_returnsRemovedVendMachAllOk() {
         
@@ -302,7 +556,23 @@ public class MachineTrackerAccessRemoteTest {
         assertEquals("Stockholm", result.get(2));
     }
 
-
+    /**
+     * Tests the {@link MachineTrackerAccessRemote#removeVendMach(int)} method when removing a vending machine results in a bad request response (400 status code).
+     * 
+     * This test case focuses on the scenario where:
+     * <ul>
+     *   <li>Removing a vending machine from the remote server results in a bad request response (400 status code) with an error message.</li>
+     * </ul>
+     * 
+     * <p>
+     * To conduct this test, we perform the following steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Stub the API response to return a 400 Bad Request status code with a JSON body containing an error message.</li>
+     *   <li>Act: Initialize a new MachineTrackerAccessRemote object with a mocked server URI and invoke the removeVendMach() method with the specified vending machine ID.</li>
+     *   <li>Assert: Expect a {@link RuntimeException} to be thrown and verify that the exception message contains "Bad Request".</li>
+     * </ol>
+     */
     @Test
     public void MachineTrackerAccessRemote_removeVendMach_ServerReturnsBadRequest() {
         
@@ -321,6 +591,24 @@ public class MachineTrackerAccessRemoteTest {
         });
         assertTrue(exception.getMessage().contains("Bad Request"));
     }
+
+    /**
+     * Tests the {@link MachineTrackerAccessRemote#changeLocation(int, String)} method when changing the location of a vending machine is successful (200 status code).
+     * 
+     * This test case focuses on the scenario where:
+     * <ul>
+     *   <li>Changing the location of a vending machine on the remote server is successful, resulting in a 200 OK status code with the updated location.</li>
+     * </ul>
+     * 
+     * <p>
+     * To conduct this test, we perform the following steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Stub the API response to return a 200 OK status with a JSON body containing the updated location.</li>
+     *   <li>Act: Initialize a new MachineTrackerAccessRemote object with a mocked server URI and invoke the changeLocation() method with the specified vending machine ID and new location.</li>
+     *   <li>Assert: Verify that the returned result is a map containing the updated location, and it matches the expected values.</li>
+     * </ol>
+     */
     @Test
     public void MachineTrackerAccessRemote_changeLocation_returnsUpdatedLocationAllOk() {
         
@@ -343,7 +631,23 @@ public class MachineTrackerAccessRemoteTest {
         assertEquals("Bergen", result.get(1));
     }
     
-
+    /**
+     * Tests the {@link MachineTrackerAccessRemote#changeLocation(int, String)} method when changing the location of a vending machine results in a server error (400 Bad Request).
+     * 
+     * This test case focuses on the scenario where:
+     * <ul>
+     *   <li>Changing the location of a vending machine on the remote server results in a server error with a 400 Bad Request status code.</li>
+     * </ul>
+     * 
+     * <p>
+     * To conduct this test, we perform the following steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Stub the API response to return a 400 Bad Request status code with a JSON body containing an error message.</li>
+     *   <li>Act: Initialize a new MachineTrackerAccessRemote object with a mocked server URI and invoke the changeLocation() method with the specified vending machine ID and new location.</li>
+     *   <li>Assert: Expect a {@link RuntimeException} to be thrown and verify that the exception message contains "Bad Request".</li>
+     * </ol>
+     */
     @Test
     public void MachineTrackerAccessRemote_changeLocation_ServerReturnsBadRequest() {
         
@@ -364,22 +668,13 @@ public class MachineTrackerAccessRemoteTest {
         assertTrue(exception.getMessage().contains("Bad Request"));
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /**
+     * After each test case, this method is responsible for stopping the WireMock server.
+     * 
+     * <p>
+     * This method ensures that the WireMock server, which was started before each test case in the {@link BeforeEach} setup, is properly stoppe
+     * </p>
+     */
     @AfterEach
     public void tearDown() {
         wireMockServer.stop();
