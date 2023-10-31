@@ -21,6 +21,12 @@ import javafx.stage.Stage;
 import vendmachtrack.ui.access.AccessService;
 import vendmachtrack.ui.access.MachineTrackerAccessible;
 
+/**
+ * The UserController class manages the user interface for vending machine
+ * operations.
+ * It allows users to view inventory, select items for purchase, and remove
+ * items from the inventory.
+ */
 public class UserController {
 
     @FXML
@@ -51,6 +57,11 @@ public class UserController {
     private Stage stage;
     private Scene scene;
 
+    /**
+     * Sets the AccessService instance to interact with vending machine data.
+     *
+     * @param service The AccessService instance.
+     */
     public void setAccessService(AccessService service) {
         try {
             this.service = service;
@@ -60,10 +71,23 @@ public class UserController {
         }
     }
 
+    /**
+     * Sets the main application instance.
+     *
+     * @param mainApp The main application instance.
+     */
     public void setMainApp(App mainApp) {
         this.mainApp = mainApp;
     }
 
+    /**
+     * Updates the buttons in the user interface based on the vending machine
+     * inventory.
+     *
+     * @param machineID The ID of the vending machine to update.
+     * @param inventory A map representing the items and quantities in the vending
+     *                  machine inventory.
+     */
     public void updateButtons(int machineID, Map<String, Integer> inventory) {
         try {
             buttonContainer.getChildren().clear();
@@ -106,6 +130,9 @@ public class UserController {
 
     }
 
+    /**
+     * Removes the selected item from the vending machine inventory.
+     */
     @FXML
     private void removeItem() {
         try {
@@ -117,6 +144,11 @@ public class UserController {
         }
     }
 
+    /**
+     * Updates the title label based on the selected vending machine.
+     *
+     * @param machineID The ID of the selected vending machine.
+     */
     public void updateTitle(int machineID) {
         try {
             mylabel.setText("Vending machine: " + access.getVendMachLocation(machineID));
@@ -125,6 +157,11 @@ public class UserController {
         }
     }
 
+    /**
+     * Sets the selected vending machine ID and updates the user interface.
+     *
+     * @param machineID The ID of the selected vending machine.
+     */
     public void setSelectedMachineID(int machineID) {
         try {
             this.selectedMachineID = machineID;
@@ -135,6 +172,13 @@ public class UserController {
         }
     }
 
+    /**
+     * Switches the scene to the password authentication screen.
+     *
+     * @param event The ActionEvent triggered by the user.
+     * @throws IOException If an error occurs while loading the PasswordApp.fxml
+     *                     file.
+     */
     @FXML
     public void switchToPasswordScene(ActionEvent event) throws IOException {
         try {
