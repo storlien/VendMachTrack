@@ -6,7 +6,7 @@
     <parent>
         <groupId>gr2338</groupId>
         <artifactId>vendmachtrack</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.0</version>
         <relativePath>..</relativePath>
     </parent>
 
@@ -19,7 +19,13 @@
         <dependency>
             <groupId>gr2338</groupId>
             <artifactId>core</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>gr2338</groupId>
+            <artifactId>jsonio</artifactId>
+            <version>${project.version}</version>
+            <scope>compile</scope>
         </dependency>
 
         <!-- javafx -->
@@ -32,12 +38,6 @@
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
             <version>17.0.8</version>
-        </dependency>
-        <dependency>
-            <groupId>gr2338</groupId>
-            <artifactId>jsonio</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
         </dependency>
 
         <dependency>
@@ -111,23 +111,6 @@
                 <configuration>
                     <!-- syntax: module-name/full-app-class-name -->
                     <mainClass>vendmachtrack.ui/vendmachtrack.ui.App</mainClass>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.7</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <destFile>${project.build.directory}/coverage-reports/jacoco.exec</destFile>
-                    <dataFile>${project.build.directory}/coverage-reports/jacoco.exec</dataFile>
                 </configuration>
             </plugin>
 
