@@ -76,8 +76,12 @@ public class VendAppController implements Initializable {
     private AccessService service;
 
     public void setAccessService(AccessService service) {
-        this.service = service;
-        this.access = service.getAccess();
+        try {
+            this.service = service;
+            this.access = service.getAccess();
+        } catch (Exception e) {
+            outputText.setText(e.getMessage());
+        }
     }
 
     public void setMainApp(App mainApp) {
@@ -114,12 +118,17 @@ public class VendAppController implements Initializable {
     }
 
     public void updateInventory(int machineID) {
-        Map<String, Integer> statusMap = access.getInventory(machineID);
-        StringBuilder formattedStatus = new StringBuilder("Inventory:\n");
-        for (Map.Entry<String, Integer> entry : statusMap.entrySet()) {
-            formattedStatus.append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
+        try {
+            Map<String, Integer> statusMap = access.getInventory(machineID);
+            StringBuilder formattedStatus = new StringBuilder("Inventory:\n");
+            for (Map.Entry<String, Integer> entry : statusMap.entrySet()) {
+                formattedStatus.append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
+            }
+            textArea.setText(formattedStatus.toString());
+        } catch (Exception e) {
+            textArea.setText(e.getMessage());
+
         }
-        textArea.setText(formattedStatus.toString());
     }
 
     @FXML
@@ -186,13 +195,18 @@ public class VendAppController implements Initializable {
     }
 
     public void setIdToChoiceBox(int machineID) {
-        HashMap<Integer, String> vendingMachines = access.getVendMachList();
-        for (Map.Entry<Integer, String> entry : vendingMachines.entrySet()) {
-            if (entry.getKey() == machineID) {
-                menuBar.setValue("id: " + entry.getKey() + " (" + entry.getValue() + ")");
+        try {
+            HashMap<Integer, String> vendingMachines = access.getVendMachList();
+            for (Map.Entry<Integer, String> entry : vendingMachines.entrySet()) {
+                if (entry.getKey() == machineID) {
+                    menuBar.setValue("id: " + entry.getKey() + " (" + entry.getValue() + ")");
 
+                }
             }
+        } catch (Exception e) {
+            textArea.setText(e.getMessage());
         }
+
     }
 
     private String findID() {
@@ -212,22 +226,20 @@ public class VendAppController implements Initializable {
         try {
             int selectedMachineID = Integer.parseInt(findID());
 
-            if (selectedMachineID != 0) {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("RefillApp.fxml"));
-                Parent root = loader.load();
-                RefillController refillController = loader.getController();
-                refillController.setAccessService(service);
-                refillController.setMainApp(mainApp);
-                refillController.setSelectedMachineID(selectedMachineID);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("RefillApp.fxml"));
+            Parent root = loader.load();
+            RefillController refillController = loader.getController();
+            refillController.setAccessService(service);
+            refillController.setMainApp(mainApp);
+            refillController.setSelectedMachineID(selectedMachineID);
 
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                Scene scene = new Scene(root);
-                stage.setScene(scene);
-                stage.show();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
 
-            } else {
-                textArea.setText("No vending machine selected");
-            }
+            textArea.setText("No vending machine selected");
+
         } catch (NumberFormatException e) {
             textArea.setText("Please select a vending machine.");
         } catch (Exception e) {
@@ -240,22 +252,19 @@ public class VendAppController implements Initializable {
         try {
             int selectedMachineID = Integer.parseInt(findID());
 
-            if (selectedMachineID != 0) {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("UserApp.fxml"));
-                Parent root = loader.load();
-                UserController userController = loader.getController();
-                userController.setAccessService(service);
-                userController.setMainApp(mainApp);
-                userController.setSelectedMachineID(selectedMachineID);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("UserApp.fxml"));
+            Parent root = loader.load();
+            UserController userController = loader.getController();
+            userController.setAccessService(service);
+            userController.setMainApp(mainApp);
+            userController.setSelectedMachineID(selectedMachineID);
 
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                Scene scene = new Scene(root);
-                scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
-                stage.setScene(scene);
-                stage.show();
-            } else {
-                textArea.setText("No vending machine selected");
-            }
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+            stage.setScene(scene);
+            stage.show();
+
         } catch (NumberFormatException e) {
             textArea.setText("Please select a vending machine.");
         } catch (Exception e) {
