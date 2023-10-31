@@ -20,7 +20,12 @@
     /* Endrer bakgrunnsfargen til en litt mørkere rød når knappen er hovered */
 }
 
-/* Stil for feilmeldingen ved feil passord */
+/* Stil for feilmeldingen ved feil passord og for feilmeldinger generelt */
 .error-text {
     -fx-text-fill: red;
+}
+
+/* Stil for verification-message */
+.success-text {
+    -fx-text-fill: rgb(5, 105, 5);
 }
