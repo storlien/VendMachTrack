@@ -52,8 +52,12 @@ public class UserController {
     private Scene scene;
 
     public void setAccessService(AccessService service) {
-        this.service = service;
-        this.access = service.getAccess();
+        try {
+            this.service = service;
+            this.access = service.getAccess();
+        } catch (Exception e) {
+            mylabel.setText(e.getMessage());
+        }
     }
 
     public void setMainApp(App mainApp) {
@@ -61,40 +65,45 @@ public class UserController {
     }
 
     public void updateButtons(int machineID, Map<String, Integer> inventory) {
-        buttonContainer.getChildren().clear();
+        try {
+            buttonContainer.getChildren().clear();
 
-        HBox currentRow = new HBox();
-        currentRow.setSpacing(30);
-        buttonContainer.setSpacing(30);
+            HBox currentRow = new HBox();
+            currentRow.setSpacing(30);
+            buttonContainer.setSpacing(30);
 
-        int buttonsInCurrentRow = 0;
+            int buttonsInCurrentRow = 0;
 
-        for (Map.Entry<String, Integer> entry : inventory.entrySet()) {
-            String itemName = entry.getKey();
-            int itemQuantity = entry.getValue();
+            for (Map.Entry<String, Integer> entry : inventory.entrySet()) {
+                String itemName = entry.getKey();
+                int itemQuantity = entry.getValue();
 
-            Button button = new Button(itemName);
-            button.getStyleClass().add("buttonContainer");
-            button.setPrefSize(100, 120);
+                Button button = new Button(itemName);
+                button.getStyleClass().add("buttonContainer");
+                button.setPrefSize(100, 120);
 
-            button.setOnAction(e -> chosenItem.setText(itemName));
+                button.setOnAction(e -> chosenItem.setText(itemName));
 
-            currentRow.getChildren().add(button);
-            buttonsInCurrentRow++;
+                currentRow.getChildren().add(button);
+                buttonsInCurrentRow++;
 
-            if (buttonsInCurrentRow >= 4) {
-                buttonContainer.getChildren().add(currentRow);
-                currentRow = new HBox();
-                currentRow.setSpacing(30);
-                buttonsInCurrentRow = 0;
+                if (buttonsInCurrentRow >= 4) {
+                    buttonContainer.getChildren().add(currentRow);
+                    currentRow = new HBox();
+                    currentRow.setSpacing(30);
+                    buttonsInCurrentRow = 0;
+                }
+                scrollPane.setContent(buttonContainer);
+
             }
-            scrollPane.setContent(buttonContainer);
 
+            if (buttonsInCurrentRow > 0) {
+                buttonContainer.getChildren().add(currentRow);
+            }
+        } catch (Exception e) {
+            mylabel.setText(e.getMessage());
         }
 
-        if (buttonsInCurrentRow > 0) {
-            buttonContainer.getChildren().add(currentRow);
-        }
     }
 
     @FXML
@@ -109,27 +118,40 @@ public class UserController {
     }
 
     public void updateTitle(int machineID) {
-        mylabel.setText("Vending machine: " + access.getVendMachLocation(machineID));
+        try {
+            mylabel.setText("Vending machine: " + access.getVendMachLocation(machineID));
+        } catch (Exception e) {
+            chosenItem.setText(e.getMessage());
+        }
     }
 
     public void setSelectedMachineID(int machineID) {
-        this.selectedMachineID = machineID;
-        updateTitle(selectedMachineID);
-        updateButtons(selectedMachineID, access.getInventory(selectedMachineID));
+        try {
+            this.selectedMachineID = machineID;
+            updateTitle(selectedMachineID);
+            updateButtons(selectedMachineID, access.getInventory(selectedMachineID));
+        } catch (Exception e) {
+            chosenItem.setText(e.getMessage());
+        }
     }
 
     @FXML
     public void switchToPasswordScene(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("PasswordApp.fxml"));
-        Parent root = fxmlLoader.load();
-        PasswordHandlerController passwordController = fxmlLoader.getController();
-        passwordController.setMainApp(mainApp);
-        passwordController.setAccessService(service);
-        passwordController.setSelectedMachineID(selectedMachineID);
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("PasswordApp.fxml"));
+            Parent root = fxmlLoader.load();
+            PasswordHandlerController passwordController = fxmlLoader.getController();
+            passwordController.setMainApp(mainApp);
+            passwordController.setAccessService(service);
+            passwordController.setSelectedMachineID(selectedMachineID);
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            mylabel.setText("Could not load new scene");
+        }
     }
 
 }
