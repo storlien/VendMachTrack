@@ -1,21 +1,23 @@
 package vendmachtrack.jsonio.internal;
 
-import vendmachtrack.core.MachineTracker;
-import vendmachtrack.core.VendingMachine;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import vendmachtrack.core.MachineTracker;
+import vendmachtrack.core.VendingMachine;
 
-import com.google.gson.Gson;
-
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * This class contains JUnit tests for the ToJson class. It tests the serialization of MachineTracker objects to JSON format.
@@ -31,7 +33,7 @@ public class ToJsonTest {
 
 
     @BeforeEach
-    public void setUp() throws Exception{
+    public void setUp() throws Exception {
         dir = Paths.get(System.getProperty("user.home") + filename);
         File file = dir.toFile();
         toJson = new ToJson(filename);
@@ -39,10 +41,11 @@ public class ToJsonTest {
     }
 
     @AfterEach
-    public void tearDown() throws Exception{
+    public void tearDown() throws Exception {
         Paths.get(System.getProperty("user.home") + filename);
         Files.deleteIfExists(dir);
     }
+
     /**
      * Tests the toJson.toOutputStream() method by creating a new MachineTracker object with a single VendingMachine object
      * and serializing it to an OutputStream. The test asserts that the OutputStream is not null and contains the expected data.

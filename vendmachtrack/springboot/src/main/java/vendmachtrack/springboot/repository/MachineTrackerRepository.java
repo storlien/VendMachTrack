@@ -1,9 +1,9 @@
 package vendmachtrack.springboot.repository;
 
+import org.springframework.stereotype.Repository;
 import vendmachtrack.core.MachineTracker;
 import vendmachtrack.core.VendingMachine;
 import vendmachtrack.jsonio.VendmachtrackPersistence;
-import org.springframework.stereotype.Repository;
 
 @Repository
 public class MachineTrackerRepository {

@@ -1,7 +1,5 @@
 package vendmachtrack.ui;
 
-import java.io.IOException;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +12,8 @@ import javafx.scene.control.PasswordField;
 import javafx.stage.Stage;
 import vendmachtrack.core.PasswordHandler;
 import vendmachtrack.ui.access.AccessService;
+
+import java.io.IOException;
 
 public class PasswordHandlerController {
 

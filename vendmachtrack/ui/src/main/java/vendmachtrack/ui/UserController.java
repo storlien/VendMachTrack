@@ -1,9 +1,5 @@
 package vendmachtrack.ui;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,6 +16,10 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import vendmachtrack.ui.access.AccessService;
 import vendmachtrack.ui.access.MachineTrackerAccessible;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class UserController {
 
