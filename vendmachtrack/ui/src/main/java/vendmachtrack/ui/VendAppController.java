@@ -75,20 +75,7 @@ public class VendAppController implements Initializable {
      */
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        URI endpointUri = URI.create("http://localhost:8080/");
-        String fileName = "tracker.json";
 
-        Task<Void> newAccess = new Task<>() {
-            @Override
-            protected Void call() throws Exception {
-                AccessService service = new AccessService(endpointUri, fileName);
-                setAccessService(service);
-                updateVendMachList();
-                return null;
-            }
-        };
-
-        new Thread(newAccess).start();
     }
 
     public void updateVendMachList() {
@@ -155,45 +142,57 @@ public class VendAppController implements Initializable {
 
     @FXML
     public void changeToRefillScene(ActionEvent event) throws IOException {
-        int selectedMachineID = Integer.parseInt(findID());
+        try {
+            int selectedMachineID = Integer.parseInt(findID());
 
-        if (selectedMachineID != 0) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("RefillApp.fxml"));
-            Parent root = loader.load();
-            RefillController refillController = loader.getController();
-            refillController.setAccessService(service);
-            refillController.setMainApp(mainApp);
-            refillController.setSelectedMachineID(selectedMachineID);
+            if (selectedMachineID != 0) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("RefillApp.fxml"));
+                Parent root = loader.load();
+                RefillController refillController = loader.getController();
+                refillController.setAccessService(service);
+                refillController.setMainApp(mainApp);
+                refillController.setSelectedMachineID(selectedMachineID);
 
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
 
-        } else {
-            textArea.setText("No vending machine selected");
+            } else {
+                textArea.setText("No vending machine selected");
+            }
+        } catch (NumberFormatException e) {
+            textArea.setText("Please select a vending machine.");
+        } catch (Exception e) {
+            textArea.setText("An error occurred: " + e.getMessage());
         }
     }
 
     @FXML
     public void userViewScene(ActionEvent event) throws IOException {
-        int selectedMachineID = Integer.parseInt(findID());
+        try {
+            int selectedMachineID = Integer.parseInt(findID());
 
-        if (selectedMachineID != 0) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("UserApp.fxml"));
-            Parent root = loader.load();
-            UserController userController = loader.getController();
-            userController.setAccessService(service);
-            userController.setMainApp(mainApp);
-            userController.setSelectedMachineID(selectedMachineID);
+            if (selectedMachineID != 0) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("UserApp.fxml"));
+                Parent root = loader.load();
+                UserController userController = loader.getController();
+                userController.setAccessService(service);
+                userController.setMainApp(mainApp);
+                userController.setSelectedMachineID(selectedMachineID);
 
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
-            stage.setScene(scene);
-            stage.show();
-        } else {
-            textArea.setText("No vending machine selected");
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root);
+                scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+                stage.setScene(scene);
+                stage.show();
+            } else {
+                textArea.setText("No vending machine selected");
+            }
+        } catch (NumberFormatException e) {
+            textArea.setText("Please select a vending machine.");
+        } catch (Exception e) {
+            textArea.setText("An error occurred: " + e.getMessage());
         }
 
     }
