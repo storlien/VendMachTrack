@@ -8,26 +8,20 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
-      prefWidth="600.0" 
-      xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="vendmachtrack.ui.RefillController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vendmachtrack.ui.RefillController">
     <children>
-        <TextField fx:id="refillNumber" layoutX="186.0" layoutY="148.0" prefHeight="29.0" prefWidth="186.0"/>
-        <Button fx:id="refillButton" layoutX="452.0" layoutY="142.0" mnemonicParsing="false" onAction="#refillItem"
-                prefHeight="42.0" prefWidth="127.0" text="Refill" textFill="#2b2b2c"/>
-        <TextArea fx:id="textArea" layoutX="15.0" layoutY="195.0" prefHeight="191.0" prefWidth="570.0"/>
-        <TextField fx:id="refillItem" layoutX="186.0" layoutY="99.0" prefHeight="29.0" prefWidth="186.0"/>
-        <Label layoutX="48.0" layoutY="99.0" prefHeight="29.0" prefWidth="100.0" text="Item:" textFill="#0c0c9e"/>
-        <Label layoutX="48.0" layoutY="149.0" prefHeight="9.0" prefWidth="80.0" text="Number:" textFill="#0c0c9e"/>
-        <Button fx:id="back" layoutX="34.0" layoutY="33.0" mnemonicParsing="false" onAction="#switchToMainScene"
-                text="Back"/>
-        <Label fx:id="title" layoutX="194.0" layoutY="28.0" prefHeight="36.0" prefWidth="243.0" textFill="#0c0c9e">
+        <TextField fx:id="refillNumber" layoutX="186.0" layoutY="148.0" prefHeight="29.0" prefWidth="186.0" />
+        <Button fx:id="refilllButton" layoutX="452.0" layoutY="142.0" mnemonicParsing="false" onAction="#refillItem" prefHeight="42.0" prefWidth="127.0" styleClass="button" text="Refill" textFill="#2b2b2c" />
+        <TextArea fx:id="textArea" layoutX="15.0" layoutY="195.0" prefHeight="191.0" prefWidth="570.0" />
+        <TextField fx:id="refillItem" layoutX="186.0" layoutY="99.0" prefHeight="29.0" prefWidth="186.0" />
+        <Label layoutX="48.0" layoutY="99.0" prefHeight="29.0" prefWidth="100.0" text="Item:" />
+        <Label layoutX="48.0" layoutY="149.0" prefHeight="9.0" prefWidth="80.0" text="Number:" />
+        <Button fx:id="backButton" layoutX="34.0" layoutY="33.0" mnemonicParsing="false" onAction="#switchToMainScene" styleClass="button" text="Back" />
+        <Label fx:id="title" layoutX="194.0" layoutY="28.0" prefHeight="36.0" prefWidth="243.0" styleClass="label-style" textFill="#0c0c9e">
             <font>
-                <Font name="System Italic" size="20.0"/>
+                <Font name="System Italic" size="20.0" />
             </font>
         </Label>
-        <Text fx:id="answerText" layoutX="437.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0"
-              wrappingWidth="127.0"/>
+        <Text fx:id="answerText" layoutX="437.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="127.0" />
     </children>
 </Pane>
