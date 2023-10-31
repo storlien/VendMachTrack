@@ -45,14 +45,9 @@ public class MachineTrackerControllerTest {
     @MockBean
     private MachineTrackerService machineTrackerService;
 
- 
-    
-    
-
     private VendingMachine vendingmachine = new VendingMachine();
     private List<VendingMachine> machines = new ArrayList<>();
     private MachineTracker machineTracker = new MachineTracker();
-
 
     /**
      * Sets up the test fixture before each test method runs.
@@ -67,8 +62,9 @@ public class MachineTrackerControllerTest {
     }
 
     /**
-     * Tests the getVendMachList method of the MachineTrackerController class. 
-     * Expects the response to be a JSON object containing the list of vending machines and the HTTP response status to be 200 (OK).
+     * Tests the getVendMachList method of the MachineTrackerController class.
+     * Expects the response to be a JSON object containing the list of vending
+     * machines and the HTTP response status to be 200 (OK).
      *
      */
     @Test
@@ -80,9 +76,9 @@ public class MachineTrackerControllerTest {
 
         // Act
         ResultActions response = mockmvc.perform(MockMvcRequestBuilders
-            .get("/vendmachtrack")
-            .contentType(MediaType.APPLICATION_JSON)
-            .accept(MediaType.APPLICATION_JSON));
+                .get("/vendmachtrack")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON));
 
         // Assert
         response.andExpect(MockMvcResultMatchers.status().isOk())
@@ -111,7 +107,8 @@ public class MachineTrackerControllerTest {
 
     /**
      * Test case for the MachineTrackerController's getVendMachLocation method.
-     * It tests if the method returns the correct location of a vending machine and the HTTP response status is 200 (OK).
+     * It tests if the method returns the correct location of a vending machine and
+     * the HTTP response status is 200 (OK).
      */
     @Test
     public void MachineTrackerController_getVendMachLocation_returnLocation() throws Exception {
@@ -121,15 +118,14 @@ public class MachineTrackerControllerTest {
 
         // Act
         ResultActions response = mockmvc.perform(MockMvcRequestBuilders
-            .get("/vendmachtrack/1/name")
-            .contentType(MediaType.APPLICATION_JSON)
-            .accept(MediaType.APPLICATION_JSON));
+                .get("/vendmachtrack/1/name")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON));
 
         // Assert
         response.andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(content().string("Oslo"));
     }
-
 
     /**
      * Test case for the MachineTrackerController's getVendMachLocation method when it throws a ResourceNotFoundException.
@@ -152,10 +148,11 @@ public class MachineTrackerControllerTest {
                 .andExpect(result -> assertTrue(result.getResolvedException() instanceof ResourceNotFoundException))
                 .andExpect(result -> assertEquals("Should throw", result.getResolvedException().getMessage()));
     }
-    
+
     /**
      * Test case for the MachineTrackerController's getInventory method.
-     * Expects the response to be a JSON object containing the inventory of the vending machine and the HTTP response status to be 200 (OK).
+     * Expects the response to be a JSON object containing the inventory of the
+     * vending machine and the HTTP response status to be 200 (OK).
      */
     @Test
     public void MachineTrackerController_getInventory_returnInventory() throws Exception {
@@ -166,9 +163,9 @@ public class MachineTrackerControllerTest {
 
         // Act
         ResultActions response = mockmvc.perform(MockMvcRequestBuilders
-            .get("/vendmachtrack/1")
-            .contentType(MediaType.APPLICATION_JSON)
-            .accept(MediaType.APPLICATION_JSON));
+                .get("/vendmachtrack/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON));
 
         // Assert
         response.andExpect(MockMvcResultMatchers.status().isOk())
@@ -198,7 +195,8 @@ public class MachineTrackerControllerTest {
 
     /**
      * Test case for the MachineTrackerController's addItem method.
-     * Expects the response to be a JSON object containing the updated inventory of the vending machine and the HTTP response status to be 200 (OK).
+     * Expects the response to be a JSON object containing the updated inventory of
+     * the vending machine and the HTTP response status to be 200 (OK).
      */
     @Test
     public void MachineTrackerController_addItem_returnUpdatedInventory() throws Exception {
@@ -209,11 +207,11 @@ public class MachineTrackerControllerTest {
 
         // Act
         ResultActions response = mockmvc.perform(MockMvcRequestBuilders
-            .put("/vendmachtrack/1/add")
-            .param("item", "Coke")
-            .param("amount", "10")
-            .contentType(MediaType.APPLICATION_JSON)
-            .accept(MediaType.APPLICATION_JSON));
+                .put("/vendmachtrack/1/add")
+                .param("item", "Coke")
+                .param("quantity", "10")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON));
 
         // Assert
         response.andExpect(MockMvcResultMatchers.status().isOk())
@@ -233,7 +231,7 @@ public class MachineTrackerControllerTest {
         ResultActions response = mockmvc.perform(MockMvcRequestBuilders
             .put("/vendmachtrack/1/add")
             .param("item", "Coke")
-            .param("amount", "10")
+            .param("quantity", "10")
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON));
 
@@ -244,8 +242,10 @@ public class MachineTrackerControllerTest {
     }
 
     /**
-     * Tests the removeItem method of the MachineTrackerController class by mocking the HTTP request and response.
-     * It verifies that the updated inventory is returned in JSON format with a status code of 200 (OK).
+     * Tests the removeItem method of the MachineTrackerController class by mocking
+     * the HTTP request and response.
+     * It verifies that the updated inventory is returned in JSON format with a
+     * status code of 200 (OK).
      */
     @Test
     public void MachineTrackerController_removeItem_returnUpdatedInventory() throws Exception {
@@ -256,17 +256,16 @@ public class MachineTrackerControllerTest {
 
         // Act
         ResultActions response = mockmvc.perform(MockMvcRequestBuilders
-            .put("/vendmachtrack/1/remove")
-            .param("item", "Coke")
-            .param("amount", "5")
-            .contentType(MediaType.APPLICATION_JSON)
-            .accept(MediaType.APPLICATION_JSON));
+                .put("/vendmachtrack/1/remove")
+                .param("item", "Coke")
+                .param("quantity", "5")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON));
 
         // Assert
         response.andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(content().json("{\"Coke\":5}"));
     }
-
 
     /**
      * Tests the removeItem method of the MachineTrackerController class when an IllegalInputException is thrown.
@@ -282,7 +281,7 @@ public class MachineTrackerControllerTest {
         ResultActions response = mockmvc.perform(MockMvcRequestBuilders
             .put("/vendmachtrack/1/remove")
             .param("item", "Coke")
-            .param("amount", "5")
+            .param("quantity", "5")
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON));
 
@@ -292,32 +291,33 @@ public class MachineTrackerControllerTest {
                 .andExpect(result -> assertEquals("Should throw", result.getResolvedException().getMessage()));
         
     }
-    
+
     /**
      * Tests the addVendMach method of the MachineTrackerController class.
-     * Expects the method to return a HashMap with the added vending machine's ID and location and the HTTP response status to be 200 (OK).
+     * Expects the method to return a HashMap with the added vending machine's ID
+     * and location and the HTTP response status to be 200 (OK).
      */
     @Test
     public void MachineTrackerController_addVendMach_returnAdded() throws Exception {
-        
-        //Arrange
+
+        // Arrange
         HashMap<Integer, String> status = new HashMap<>();
         status.put(1, "Oslo");
-        given(machineTrackerService.addVendMach(ArgumentMatchers.anyInt(), ArgumentMatchers.anyString())).willReturn(status);
+        given(machineTrackerService.addVendMach(ArgumentMatchers.anyInt(), ArgumentMatchers.anyString()))
+                .willReturn(status);
 
-        //Act
+        // Act
         ResultActions response = mockmvc.perform(MockMvcRequestBuilders
-            .post("/vendmachtrack/add")
-            .param("id", "1")
-            .param("location", "Oslo")
-            .contentType(MediaType.APPLICATION_JSON)
-            .accept(MediaType.APPLICATION_JSON));
+                .post("/vendmachtrack/add")
+                .param("id", "1")
+                .param("location", "Oslo")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON));
 
-        //Assert
+        // Assert
         response.andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(content().json("{\"1\":\"Oslo\"}"));
     }
-
 
     /**
      * Tests the addVendMach method in the MachineTrackerController class when an IllegalInputException is thrown.
@@ -344,7 +344,8 @@ public class MachineTrackerControllerTest {
 
     /**
      * Tests the removeVendMach method of the MachineTrackerController class
-     * Expects the method to return a HashMap with the updated list of vending machines and the HTTP response status to be 200 (OK).
+     * Expects the method to return a HashMap with the updated list of vending
+     * machines and the HTTP response status to be 200 (OK).
      */
     @Test
     public void MachineTrackerController_removeVendMach_returnUpdatedList() throws Exception {
@@ -355,9 +356,9 @@ public class MachineTrackerControllerTest {
 
         // Act
         ResultActions response = mockmvc.perform(MockMvcRequestBuilders
-            .delete("/vendmachtrack/1")
-            .contentType(MediaType.APPLICATION_JSON)
-            .accept(MediaType.APPLICATION_JSON));
+                .delete("/vendmachtrack/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON));
 
         // Assert
         response.andExpect(MockMvcResultMatchers.status().isOk())
@@ -388,7 +389,8 @@ public class MachineTrackerControllerTest {
 
     /**
      * Tests the changeLocation method of the MachineTrackerController class
-     * Expects the method to return a HashMap with the updated location of the vending machine and the HTTP response status to be 200 (OK).
+     * Expects the method to return a HashMap with the updated location of the
+     * vending machine and the HTTP response status to be 200 (OK).
      */
     @Test
     public void MachineTrackerController_changeLocation_returnUpdatedLocation() throws Exception {
@@ -399,10 +401,10 @@ public class MachineTrackerControllerTest {
 
         // Act
         ResultActions response = mockmvc.perform(MockMvcRequestBuilders
-            .put("/vendmachtrack/1")
-            .param("location", "Trondheim")
-            .contentType(MediaType.APPLICATION_JSON)
-            .accept(MediaType.APPLICATION_JSON));
+                .put("/vendmachtrack/1")
+                .param("location", "Trondheim")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON));
 
         // Assert
         response.andExpect(MockMvcResultMatchers.status().isOk())
@@ -431,7 +433,6 @@ public class MachineTrackerControllerTest {
                 .andExpect(result -> assertTrue(result.getResolvedException() instanceof IllegalInputException))
                 .andExpect(result -> assertEquals("Should throw", result.getResolvedException().getMessage()));
     }
-
 
     /**
      * Tests the scenario where the changeLocation method in MachineTrackerController throws a ResourceNotFoundException.
