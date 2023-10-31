@@ -6,8 +6,8 @@ import vendmachtrack.jsonio.internal.ToJson;
 
 public class VendmachtrackPersistence {
 
-    private FromJson fromJson;
-    private ToJson toJson;
+    private final FromJson fromJson;
+    private final ToJson toJson;
 
     public VendmachtrackPersistence(String fileName) {
         this.fromJson = new FromJson(fileName);

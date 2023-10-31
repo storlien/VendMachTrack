@@ -45,7 +45,7 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
      * Access method for the list of vending machines
      *
      * @return HashMap of vending machine list with vending machine ID as key and
-     *         location as value
+     * location as value
      */
     @Override
     public HashMap<Integer, String> getVendMachList() {
@@ -68,7 +68,7 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
     @Override
     public String getVendMachLocation(int id) {
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(endpointBaseUri.resolve("vendmachtrack/" + String.valueOf(id) + "/name"))
+                .uri(endpointBaseUri.resolve("vendmachtrack/" + id + "/name"))
                 .build();
 
         HttpResponse<String> response = getResponse(request);
@@ -86,7 +86,7 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
     @Override
     public HashMap<String, Integer> getInventory(int id) {
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(endpointBaseUri.resolve("vendmachtrack/" + String.valueOf(id)))
+                .uri(endpointBaseUri.resolve("vendmachtrack/" + id))
                 .build();
 
         HttpResponse<String> response = getResponse(request);
@@ -161,7 +161,7 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
      * @param id       The ID of the new vending machine
      * @param location The location of the new vending machine
      * @return HashMap of vending machine list with vending machine ID as key and
-     *         location as value
+     * location as value
      */
     @Override
     public HashMap<Integer, String> addVendMach(int id, String location) {
@@ -189,7 +189,7 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
      *
      * @param id The ID of the vending machine
      * @return HashMap of vending machine list with vending machine ID as key and
-     *         location as value
+     * location as value
      */
     @Override
     public HashMap<Integer, String> removeVendMach(int id) {
@@ -211,7 +211,7 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
      * @param id       The ID of the vending machine
      * @param location The new location of the vending machine
      * @return HashMap of vending machine list with vending machine ID as key and
-     *         location as value
+     * location as value
      */
     @Override
     public HashMap<Integer, String> changeLocation(int id, String location) {

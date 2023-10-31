@@ -1,12 +1,13 @@
 package vendmachtrack.jsonio.internal;
 
-import vendmachtrack.core.MachineTracker;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import vendmachtrack.core.MachineTracker;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -17,11 +18,11 @@ import static org.junit.jupiter.api.Assertions.*;
 public class FromJsonTest {
 
     private FromJson fromJson;
-    private String jsonString = "{\"machines\":[{\"status\":{\"Cola\":5,\"Pepsi\":3},\"id\":1,\"location\":\"Trondhjem\"},{\"status\":{\"Tuborg\":1},\"id\":2,\"location\":\"Oslo\"},{\"status\":{\"Hansa\":100,\"Regnvann\":10},\"id\":3,\"location\":\"Bergen\"}]}";
-    private String filename = "/testfile.json";
+    private final String jsonString = "{\"machines\":[{\"status\":{\"Cola\":5,\"Pepsi\":3},\"id\":1,\"location\":\"Trondhjem\"},{\"status\":{\"Tuborg\":1},\"id\":2,\"location\":\"Oslo\"},{\"status\":{\"Hansa\":100,\"Regnvann\":10},\"id\":3,\"location\":\"Bergen\"}]}";
+    private final String filename = "/testfile.json";
     private Path dir;
-    
-    
+
+
     /**
      * Sets up the test fixture. This method is called before each test case method is executed.
      * It initializes the 'fromJson' object with the 'tracker.json' file and creates a temporary file
@@ -39,7 +40,7 @@ public class FromJsonTest {
 
 
     @AfterEach
-    public void tearDown() throws Exception{
+    public void tearDown() throws Exception {
         Paths.get(System.getProperty("user.home") + filename);
         Files.deleteIfExists(dir);
     }
@@ -117,7 +118,7 @@ public class FromJsonTest {
     @Test
     public void testReadFromFileValidFile() throws IOException {
         // Create a temporary file with valid JSON data
-       // Read the JSON data from the testfile.json
+        // Read the JSON data from the testfile.json
         InputStream inputStream = Files.newInputStream(dir);
 
         // Deserialize the JSON data into a MachineTracker object
@@ -131,11 +132,11 @@ public class FromJsonTest {
         assertEquals(1, machineTracker.getMachines().get(1).getStatus().get("Tuborg"));
         assertEquals(100, machineTracker.getMachines().get(2).getStatus().get("Hansa"));
         assertEquals(10, machineTracker.getMachines().get(2).getStatus().get("Regnvann"));
-        
+
     }
 
     @Test
-    public void fromJson_readfromfile_returnTestFile(){
+    public void fromJson_readfromfile_returnTestFile() {
 
         MachineTracker machineTracker = fromJson.readFromFile();
 

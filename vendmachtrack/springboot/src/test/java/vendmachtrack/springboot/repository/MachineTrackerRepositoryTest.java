@@ -8,30 +8,24 @@ import org.springframework.test.util.ReflectionTestUtils;
 import vendmachtrack.core.MachineTracker;
 import vendmachtrack.core.VendingMachine;
 import vendmachtrack.jsonio.VendmachtrackPersistence;
+
+import java.util.*;
+
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import static org.mockito.Mockito.*;
 
 public class MachineTrackerRepositoryTest {
 
-    private VendmachtrackPersistence persistence = Mockito.mock(VendmachtrackPersistence.class);
-    private MachineTrackerRepository machineTrackerRepository = new MachineTrackerRepository("testFileName");
-    private ArgumentCaptor<MachineTracker> machineTrackerCaptor = ArgumentCaptor.forClass(MachineTracker.class);
+    private final VendmachtrackPersistence persistence = Mockito.mock(VendmachtrackPersistence.class);
+    private final MachineTrackerRepository machineTrackerRepository = new MachineTrackerRepository("testFileName");
+    private final ArgumentCaptor<MachineTracker> machineTrackerCaptor = ArgumentCaptor.forClass(MachineTracker.class);
 
-    private VendingMachine vendingmachine = new VendingMachine();
-    private List<VendingMachine> machines = new ArrayList<>();
-    private MachineTracker machineTracker = new MachineTracker();
+    private final VendingMachine vendingmachine = new VendingMachine();
+    private final List<VendingMachine> machines = new ArrayList<>();
+    private final MachineTracker machineTracker = new MachineTracker();
 
     /**
      * Sets up the test fixture before each test method is run.
@@ -97,7 +91,7 @@ public class MachineTrackerRepositoryTest {
     public void MachineTrackerRepository_getVendMach_retrunsnull() {
         // Arrange
         int id = 1;
-        machineTracker.setMachines(Arrays.asList());
+        machineTracker.setMachines(List.of());
         when(persistence.getVendmachtrack()).thenReturn(machineTracker);
 
         // Act
@@ -123,9 +117,9 @@ public class MachineTrackerRepositoryTest {
 
         // Assert
         verify(persistence, times(1)).saveVendmachtrack(machineTracker); // check that saveVendmachtrack was called once
-                                                                         // with the correct parameter
+        // with the correct parameter
         assertSame(machineTracker, returnedMachineTracker); // check that the returned object is the same as the one
-                                                            // passed in
+        // passed in
     }
 
     /**
@@ -295,7 +289,7 @@ public class MachineTrackerRepositoryTest {
         verify(persistence).saveVendmachtrack(machineTrackerCaptor.capture());
         MachineTracker capturedMachineTracker = machineTrackerCaptor.getValue();
         assertEquals(machineTracker, capturedMachineTracker); // ensure the returned and saved MachineTrackers are the
-                                                              // same
+        // same
     }
 
     /**
@@ -329,7 +323,7 @@ public class MachineTrackerRepositoryTest {
         verify(persistence).saveVendmachtrack(machineTrackerCaptor.capture());
         MachineTracker capturedMachineTracker = machineTrackerCaptor.getValue();
         assertEquals(machineTracker, capturedMachineTracker); // ensure the returned and saved MachineTrackers are the
-                                                              // same
+        // same
     }
 
     /**
@@ -351,7 +345,7 @@ public class MachineTrackerRepositoryTest {
 
         vendingmachine.setStatus(status);
         MachineTracker machineTracker = new MachineTracker();
-        machineTracker.setMachines(Arrays.asList(vendingmachine));
+        machineTracker.setMachines(Collections.singletonList(vendingmachine));
         when(persistence.getVendmachtrack()).thenReturn(machineTracker);
         when(persistence.saveVendmachtrack(any(MachineTracker.class)))
                 .thenAnswer(invocation -> invocation.getArguments()[0]);
@@ -366,7 +360,7 @@ public class MachineTrackerRepositoryTest {
         verify(persistence).saveVendmachtrack(machineTrackerCaptor.capture());
         MachineTracker capturedMachineTracker = machineTrackerCaptor.getValue();
         assertEquals(machineTracker, capturedMachineTracker); // ensure the returned and saved MachineTrackers are the
-                                                              // same
+        // same
 
     }
 
@@ -382,7 +376,7 @@ public class MachineTrackerRepositoryTest {
         String item = "Cola";
         int quantity = 5;
         MachineTracker machineTracker = new MachineTracker();
-        machineTracker.setMachines(Arrays.asList()); // no vending machines
+        machineTracker.setMachines(List.of()); // no vending machines
         when(persistence.getVendmachtrack()).thenReturn(machineTracker);
 
         // Act
