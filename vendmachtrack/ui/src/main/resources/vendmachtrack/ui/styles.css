@@ -1,14 +1,75 @@
 /* styles.css */
 
+/* Common label style */
+.label-style {
+    -fx-font-family: "Dubai";
+    -fx-font-size: 26px;
+    -fx-text-fill: #a40a0a;
+    -fx-font-weight: normal;
+    -fx-text-align: center;
+}
+
+.sub-label-style {
+    -fx-font-family: "Dubai";
+    -fx-font-size: 17px;
+    -fx-text-fill: #a40a0a;
+    -fx-font-weight: normal;
+    -fx-text-align: center;
+}
+
+/*generelt for knapper */
+.button {
+    -fx-font-family: "Dubai";
+}
+
+#backButton {
+    -fx-font-size: 14px;
+    -fx-text-fill: rgb(0, 0, 0);
+    -fx-min-width: 55px;
+    -fx-min-height: 35px;
+}
+
+#buy {
+    -fx-font-family: "Dubai";
+    -fx-font-size: 16px;
+    -fx-min-width: 100px;
+    -fx-min-height: 45px;
+    -fx-text-fill: rgb(94, 0, 0);
+}
+
+#refilllButton {
+    -fx-font-size: 16px;
+    -fx-min-width: 100px;
+    -fx-min-height: 45px;
+    -fx-text-fill: rgb(94, 0, 0);
+}
+
+#okButton {
+    -fx-font-size: 14px;
+    -fx-text-fill: rgb(94, 0, 0);
+}
+
+#textArea {
+    -fx-font-size: 14px;
+    -fx-font-family: "Dubai";
+}
+
+#menuBar {
+    -fx-font-size: 14px;
+    -fx-font-family: "Dubai";
+
+}
+
 /* Stil for vanlige knapper */
 .buttonContainer {
+    -fx-font-family: "Dubai";
     -fx-font-size: 15px;
     /* Setter fontstørrelsen til 15 piksler */
     -fx-max-width: 100px;
     /* Setter maximumsbredde til 100 piksler */
     -fx-max-height: 50px;
     /* Setter maximumsbredde til 50 piksler */
-    -fx-background-color: #af2d2d;
+    -fx-background-color: #932828;
     /* Setter bakgrunnsfargen til rød */
     -fx-text-fill: rgb(255, 255, 255);
     /* Setter tekstfargen til hvit */
@@ -16,8 +77,9 @@
 
 /* Stil for hovered knapper */
 .button:hover {
-    -fx-background-color: rgb(112, 2, 2);
-    /* Endrer bakgrunnsfargen til en litt mørkere rød når knappen er hovered */
+    -fx-background-color: rgb(116, 112, 112);
+
+    /* Endrer bakgrunnsfargen til en litt mørkere grå når knappen er hovered */
 }
 
 /* Stil for feilmeldingen ved feil passord og for feilmeldinger generelt */

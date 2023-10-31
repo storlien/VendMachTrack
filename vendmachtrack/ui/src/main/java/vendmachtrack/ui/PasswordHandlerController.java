@@ -52,7 +52,11 @@ public class PasswordHandlerController {
     }
 
     public void setAccessService(AccessService service) {
-        this.service = service;
+        try {
+            this.service = service;
+        } catch (Exception e) {
+            label.setText(e.getMessage());
+        }
     }
 
     @FXML
@@ -65,16 +69,20 @@ public class PasswordHandlerController {
     }
 
     public void switchBackToUserView(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("UserApp.fxml"));
-        Parent root = fxmlLoader.load();
-        UserController userController = fxmlLoader.getController();
-        userController.setAccessService(service);
-        userController.setMainApp(mainApp);
-        userController.setSelectedMachineID(selectedMachineID);
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
-        stage.setScene(scene);
-        stage.show();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("UserApp.fxml"));
+            Parent root = fxmlLoader.load();
+            UserController userController = fxmlLoader.getController();
+            userController.setAccessService(service);
+            userController.setMainApp(mainApp);
+            userController.setSelectedMachineID(selectedMachineID);
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            label.setText("Could not load new scene");
+        }
     }
 }
