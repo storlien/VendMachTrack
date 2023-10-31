@@ -131,6 +131,16 @@ public class VendAppController implements Initializable {
         }
     }
 
+    public void setIdToChoiceBox(int machineID) {
+        HashMap<Integer, String> vendingMachines = access.getVendMachList();
+        for (Map.Entry<Integer, String> entry : vendingMachines.entrySet()) {
+            if (entry.getKey() == machineID) {
+                menuBar.setValue("id: " + entry.getKey() + " (" + entry.getValue() + ")");
+
+            }
+        }
+    }
+
     private String findID() {
         String selectedItem = menuBar.getValue();
         if (selectedItem != null) {
