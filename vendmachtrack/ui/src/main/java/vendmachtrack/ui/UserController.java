@@ -128,7 +128,6 @@ public class UserController {
         passwordController.setSelectedMachineID(selectedMachineID);
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
-        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
     }
