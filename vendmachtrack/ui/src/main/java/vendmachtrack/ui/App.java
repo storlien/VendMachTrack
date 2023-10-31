@@ -5,11 +5,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import vendmachtrack.ui.access.AccessService;
 
 import java.io.IOException;
 
 /**
- * Extends javafx.application.Application and provides a method for launching the application.
+ * Extends javafx.application.Application and provides a method for launching
+ * the application.
  */
 public class App extends Application {
 
@@ -23,27 +25,43 @@ public class App extends Application {
 
     /**
      * This method is called by javafx to start the application.
-     * It loads the App.fxml file, sets up the main stage, and initializes the controller.
+     * It loads the App.fxml file, sets up the main stage, and initializes the
+     * controller.
      *
      * @param stage The primary stage for the application.
      * @throws IOException If an error occurs while loading the App.fxml file.
      */
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("App.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("Server.fxml"));
         Parent parent = fxmlLoader.load();
 
-        mainController = fxmlLoader.getController();
-        mainController.setMainApp(this);
+        ServerController serverController = fxmlLoader.getController();
+        serverController.setMainApp(this);
 
         mainScene = new Scene(parent);
         primaryStage.setScene(mainScene);
         primaryStage.show();
     }
 
+    public void switchToVendAppScene(AccessService service) throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("App.fxml"));
+        Parent parent = loader.load(); // initialize
+
+        mainController = loader.getController();
+        mainController.setAccessService(service);
+        mainController.setMainApp(this);
+        mainController.updateVendMachList();
+
+        mainScene = new Scene(parent);
+        mainScene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+        primaryStage.setScene(mainScene);
+    }
+
     public void switchToMainScene(int machineID) {
         mainController.updateVendMachList();
         mainController.updateInventory(machineID);
+        mainController.setIdToChoiceBox(machineID);
         primaryStage.setScene(mainScene);
     }
 
