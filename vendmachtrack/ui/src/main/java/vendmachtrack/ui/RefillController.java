@@ -42,7 +42,7 @@ public class RefillController {
     private TextArea textArea;
 
     @FXML
-    private Text answerText;
+    private Label answerText;
 
     private MachineTrackerAccessible access;
 
@@ -74,8 +74,12 @@ public class RefillController {
      * @param service The AccessService instance.
      */
     public void setAccessService(AccessService service) {
-        // this.service = service;
-        this.access = service.getAccess();
+        try {
+            this.access = service.getAccess();
+        } catch (Exception e) {
+            answerText.setText(e.getMessage());
+        }
+
     }
 
     /**
@@ -95,12 +99,18 @@ public class RefillController {
     @FXML
     private void refillItem() {
         HashMap<String, Integer> updatedInventory = new HashMap<>();
+        if (!refillNumber.getText().matches("-?\\d+")) {
+            answerText.setText("Invalid input: Please enter a valid number");
+            return;
+        }
 
         try {
             updatedInventory = access.addItem(selectedMachineID, refillItem.getText(),
                     Integer.parseInt(refillNumber.getText()));
+            answerText.setText("");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            answerText.setText(e.getMessage());
+
         }
 
         try {
@@ -109,9 +119,11 @@ public class RefillController {
                 formattedStatus.append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
             }
             textArea.setText(formattedStatus.toString());
+            answerText.setText("");
 
         } catch (Exception e) {
-            textArea.setText(e.getMessage());
+            answerText.setText(e.getMessage());
+
         }
 
     }
