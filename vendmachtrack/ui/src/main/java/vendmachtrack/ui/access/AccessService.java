@@ -10,9 +10,24 @@ import java.time.Duration;
 
 import vendmachtrack.jsonio.VendmachtrackPersistence;
 
+/**
+ * The AccessService class provides access to the MachineTracker system either
+ * through a remote server or a local file,
+ * based on the provided URI and file name.
+ */
+
 public class AccessService {
 
     private MachineTrackerAccessible access;
+
+    /**
+     * Constructor for AccessService class. Initializes the access method (remote or
+     * local) based on server health check.
+     *
+     * @param endpointUri The URI of the server endpoint.
+     * @param fileName    The name of the local file to be accessed in case the
+     *                    server is not available.
+     */
 
     public AccessService(URI endpointUri, String fileName) {
 
@@ -32,6 +47,17 @@ public class AccessService {
 
     }
 
+    /**
+     * Checks the health of the server by sending a GET request to the server's
+     * health endpoint.
+     *
+     * @param endpointUri The URI of the server endpoint.
+     * @return True if the server is healthy and responds with a 200 status code,
+     *         false otherwise.
+     * @throws IOException          If an I/O error occurs while sending the
+     *                              request.
+     * @throws InterruptedException If the operation is interrupted.
+     */
     public boolean checkServerHealth(URI endpointUri) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
@@ -44,6 +70,12 @@ public class AccessService {
         return response.statusCode() == HttpURLConnection.HTTP_OK;
     }
 
+    /**
+     * Retrieves the access method (remote or local) currently being used.
+     *
+     * @return The MachineTrackerAccessible interface implementation representing
+     *         the access method.
+     */
     public MachineTrackerAccessible getAccess() {
         return access;
     }

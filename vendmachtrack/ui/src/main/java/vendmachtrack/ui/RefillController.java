@@ -15,6 +15,12 @@ import javafx.scene.text.Text;
 import vendmachtrack.ui.access.AccessService;
 import vendmachtrack.ui.access.MachineTrackerAccessible;
 
+/**
+ * The RefillController class manages the user interface for refilling vending
+ * machine items.
+ * It provides methods to refill items, update the inventory display, and
+ * navigate back to the main scene.
+ */
 public class RefillController {
 
     @FXML
@@ -38,30 +44,54 @@ public class RefillController {
     @FXML
     private Text answerText;
 
-    // private AccessService service;
     private MachineTrackerAccessible access;
 
     private App mainApp;
     private int selectedMachineID;
 
+    /**
+     * Updates the title label with the selected vending machine's ID.
+     *
+     * @param machineID The ID of the selected vending machine.
+     */
     public void updateTitle(int machineID) {
         title.setText("Vending machine: " + machineID);
     }
 
+    /**
+     * Sets the ID of the selected vending machine.
+     *
+     * @param machineID The ID of the selected vending machine.
+     */
     public void setSelectedMachineID(int machineID) {
         this.selectedMachineID = machineID;
         updateTitle(machineID);
     }
 
+    /**
+     * Sets the AccessService instance to access vending machine data.
+     *
+     * @param service The AccessService instance.
+     */
     public void setAccessService(AccessService service) {
         // this.service = service;
         this.access = service.getAccess();
     }
 
+    /**
+     * Sets the main application instance.
+     *
+     * @param mainApp The main application instance.
+     */
     public void setMainApp(App mainApp) {
         this.mainApp = mainApp;
     }
 
+    /**
+     * Refills the vending machine item based on user input, updates the inventory
+     * display,
+     * and handles exceptions if any occur during the refill process.
+     */
     @FXML
     private void refillItem() {
         HashMap<String, Integer> updatedInventory = new HashMap<>();
@@ -86,6 +116,12 @@ public class RefillController {
 
     }
 
+    /**
+     * Switches back to the main vending machine tracker scene.
+     *
+     * @param event The ActionEvent triggered by the user.
+     * @throws IOException If an error occurs during scene transition.
+     */
     @FXML
     public void switchToMainScene(ActionEvent event) throws IOException {
         mainApp.switchToMainScene(selectedMachineID);

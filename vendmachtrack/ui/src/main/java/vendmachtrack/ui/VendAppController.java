@@ -30,6 +30,7 @@ import vendmachtrack.ui.access.MachineTrackerAccessible;
 
 /**
  * Controller class for the vending machine application's user interface.
+ * Manages the interaction between the UI components and the backend services.
  */
 public class VendAppController implements Initializable {
 
@@ -75,17 +76,27 @@ public class VendAppController implements Initializable {
 
     private AccessService service;
 
+    /**
+     * Sets the AccessService instance to interact with vending machine data.
+     *
+     * @param service The AccessService instance.
+     */
     public void setAccessService(AccessService service) {
         this.service = service;
         this.access = service.getAccess();
     }
 
+    /**
+     * Sets the main application instance.
+     *
+     * @param mainApp The main application instance.
+     */
     public void setMainApp(App mainApp) {
         this.mainApp = mainApp;
     }
 
     /**
-     * Initializes the controller. It reads vending machine data from a JSON file.
+     * Initializes the controller.
      *
      * @param arg0 The location used to resolve relative paths for the root object,
      *             or null if the location is not known.
@@ -97,6 +108,9 @@ public class VendAppController implements Initializable {
 
     }
 
+    /**
+     * Updates the list of vending machines in the menu bar.
+     */
     public void updateVendMachList() {
         try {
             HashMap<Integer, String> vendingMachines = access.getVendMachList();
@@ -113,6 +127,11 @@ public class VendAppController implements Initializable {
 
     }
 
+    /**
+     * Updates the displayed inventory based on the selected vending machine.
+     *
+     * @param machineID The ID of the selected vending machine.
+     */
     public void updateInventory(int machineID) {
         Map<String, Integer> statusMap = access.getInventory(machineID);
         StringBuilder formattedStatus = new StringBuilder("Inventory:\n");
@@ -122,6 +141,11 @@ public class VendAppController implements Initializable {
         textArea.setText(formattedStatus.toString());
     }
 
+    /**
+     * Handles the add button click event. Adds a new vending machine to the system.
+     *
+     * @param event The event representing the button click.
+     */
     @FXML
     private void handleAddButton(ActionEvent event) {
         try {
@@ -149,6 +173,12 @@ public class VendAppController implements Initializable {
 
     }
 
+    /**
+     * Handles the remove button click event. Removes a vending machine from the
+     * system.
+     *
+     * @param event The event representing the button click.
+     */
     @FXML
     private void handleRemoveButton(ActionEvent event) {
         try {
@@ -189,6 +219,11 @@ public class VendAppController implements Initializable {
         }
     }
 
+    /**
+     * Sets the selected vending machine ID to the ChoiceBox menuBar.
+     *
+     * @param machineID The ID of the vending machine to be set in the menuBar.
+     */
     public void setIdToChoiceBox(int machineID) {
         HashMap<Integer, String> vendingMachines = access.getVendMachList();
         for (Map.Entry<Integer, String> entry : vendingMachines.entrySet()) {
@@ -199,6 +234,12 @@ public class VendAppController implements Initializable {
         }
     }
 
+    /**
+     * Retrieves the ID of the selected vending machine from the menuBar ChoiceBox.
+     *
+     * @return The ID of the selected vending machine, or null if no machine is
+     *         selected.
+     */
     private String findID() {
         String selectedItem = menuBar.getValue();
         if (selectedItem != null) {
@@ -211,6 +252,12 @@ public class VendAppController implements Initializable {
         }
     }
 
+    /**
+     * Switches to the refill scene based on the selected vending machine.
+     *
+     * @param event The event representing the button click.
+     * @throws IOException If an I/O error occurs while loading the refill scene.
+     */
     @FXML
     public void changeToRefillScene(ActionEvent event) throws IOException {
         try {
@@ -240,6 +287,12 @@ public class VendAppController implements Initializable {
         }
     }
 
+    /**
+     * Switches to the user view scene based on the selected vending machine.
+     *
+     * @param event The event representing the button click.
+     * @throws IOException If an I/O error occurs while loading the user view scene.
+     */
     @FXML
     public void userViewScene(ActionEvent event) throws IOException {
         try {
