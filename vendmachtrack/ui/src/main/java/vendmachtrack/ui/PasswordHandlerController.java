@@ -15,6 +15,12 @@ import vendmachtrack.ui.access.AccessService;
 
 import java.io.IOException;
 
+/**
+ * The PasswordHandlerController class handles user authentication through
+ * password validation.
+ * It provides methods to validate the user-entered password and switch between
+ * scenes based on the validation result.
+ */
 public class PasswordHandlerController {
 
     @FXML
@@ -35,6 +41,13 @@ public class PasswordHandlerController {
     private int selectedMachineID;
     private AccessService service;
 
+    /**
+     * Handles the event when the user clicks the confirm button.
+     * Validates the entered password and navigates to the appropriate scene.
+     *
+     * @param event The ActionEvent triggered by the user.
+     * @throws IOException If an error occurs during scene transition.
+     */
     public void onConfirmButtonClicked(ActionEvent event) throws IOException {
         String inputPassword = passwordField.getText();
 
@@ -47,10 +60,20 @@ public class PasswordHandlerController {
         }
     }
 
+    /**
+     * Sets the main application instance.
+     *
+     * @param mainApp The main application instance.
+     */
     public void setMainApp(App mainApp) {
         this.mainApp = mainApp;
     }
 
+    /**
+     * Sets the AccessService instance to access vending machine data.
+     *
+     * @param service The AccessService instance.
+     */
     public void setAccessService(AccessService service) {
         try {
             this.service = service;
@@ -59,15 +82,32 @@ public class PasswordHandlerController {
         }
     }
 
+    /**
+     * Navigates back to the main vending machine tracker scene.
+     *
+     * @param event The ActionEvent triggered by the user.
+     * @throws IOException If an error occurs during scene transition.
+     */
     @FXML
     public void backToHomePage(ActionEvent event) throws IOException {
         mainApp.switchToMainScene(selectedMachineID);
     }
 
+    /**
+     * Sets the ID of the selected vending machine.
+     *
+     * @param machineID The ID of the selected vending machine.
+     */
     public void setSelectedMachineID(int machineID) {
         this.selectedMachineID = machineID;
     }
 
+    /**
+     * Switches back to the user view scene.
+     *
+     * @param event The ActionEvent triggered by the user.
+     * @throws IOException If an error occurs during scene transition.
+     */
     public void switchBackToUserView(ActionEvent event) throws IOException {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("UserApp.fxml"));

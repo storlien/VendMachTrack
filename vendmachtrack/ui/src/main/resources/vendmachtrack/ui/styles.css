@@ -1,6 +1,13 @@
-/* styles.css */
+/**
+ * This class defines CSS styles for various UI elements used in the application.
+ * It provides a consistent look and feel across different components.
+ * Styles are defined for labels, buttons, text areas, and error/success messages.
+ * The styles are defined using the JavaFX CSS syntax.
+ */
 
-/* Common label style */
+/**
+* CSS class for common labels in the application.
+*/
 .label-style {
     -fx-font-family: "Dubai";
     -fx-font-size: 26px;
@@ -9,6 +16,9 @@
     -fx-text-align: center;
 }
 
+/**
+* CSS class for sub-labels in the application.
+*/
 .sub-label-style {
     -fx-font-family: "Dubai";
     -fx-font-size: 17px;
@@ -17,11 +27,16 @@
     -fx-text-align: center;
 }
 
-/*generelt for knapper */
+/**
+* CSS class for general style for all buttons in the application.
+*/
 .button {
     -fx-font-family: "Dubai";
 }
 
+/**
+* CSS ID for the back button.
+*/
 #backButton {
     -fx-font-size: 14px;
     -fx-text-fill: rgb(0, 0, 0);
@@ -29,6 +44,9 @@
     -fx-min-height: 35px;
 }
 
+/**
+* CSS ID for the buy button.
+*/
 #buy {
     -fx-font-family: "Dubai";
     -fx-font-size: 16px;
@@ -37,6 +55,9 @@
     -fx-text-fill: rgb(94, 0, 0);
 }
 
+/**
+* CSS ID for the refill button.
+*/
 #refilllButton {
     -fx-font-size: 16px;
     -fx-min-width: 100px;
@@ -44,16 +65,25 @@
     -fx-text-fill: rgb(94, 0, 0);
 }
 
+/**
+* CSS ID for the OK button.
+*/
 #okButton {
     -fx-font-size: 14px;
     -fx-text-fill: rgb(94, 0, 0);
 }
 
+/**
+* CSS ID for the textArea.
+*/
 #textArea {
     -fx-font-size: 14px;
     -fx-font-family: "Dubai";
 }
 
+/**
+* CSS ID for the menu bar.
+*/
 #menuBar {
     -fx-font-size: 14px;
     -fx-font-family: "Dubai";
@@ -64,30 +94,29 @@
 .buttonContainer {
     -fx-font-family: "Dubai";
     -fx-font-size: 15px;
-    /* Setter fontstørrelsen til 15 piksler */
     -fx-max-width: 100px;
-    /* Setter maximumsbredde til 100 piksler */
     -fx-max-height: 50px;
-    /* Setter maximumsbredde til 50 piksler */
     -fx-background-color: #932828;
-    /* Setter bakgrunnsfargen til rød */
     -fx-text-fill: rgb(255, 255, 255);
-    /* Setter tekstfargen til hvit */
 }
 
-/* Stil for hovered knapper */
+/**
+* CSS class for button hover effect.
+*/
 .button:hover {
     -fx-background-color: rgb(116, 112, 112);
-
-    /* Endrer bakgrunnsfargen til en litt mørkere grå når knappen er hovered */
 }
 
-/* Stil for feilmeldingen ved feil passord og for feilmeldinger generelt */
+/**
+* CSS class for error messages in the application.
+*/
 .error-text {
     -fx-text-fill: red;
 }
 
-/* Stil for verification-message */
+/**
+* CSS class for success messages in the application.
+*/
 .success-text {
     -fx-text-fill: rgb(5, 105, 5);
 }
