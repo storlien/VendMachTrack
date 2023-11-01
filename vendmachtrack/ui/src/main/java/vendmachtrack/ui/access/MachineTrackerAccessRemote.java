@@ -25,6 +25,9 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
 
     private final URI endpointBaseUri;
     private final Gson gson;
+    private final HttpClient httpClient;
+
+    private static final String ENDPOINT_DIRECTORY = "vendmachtrack";
 
     private final Type TYPE_HASHMAP_INTEGER_STRING = new TypeToken<HashMap<Integer, String>>() {
     }.getType();
@@ -39,6 +42,7 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
     public MachineTrackerAccessRemote(URI endpointBaseUri) {
         this.endpointBaseUri = endpointBaseUri;
         this.gson = new Gson();
+        this.httpClient = HttpClient.newBuilder().build();
     }
 
     /**
@@ -105,14 +109,8 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
      */
     @Override
     public HashMap<String, Integer> addItem(int id, String item, int quantity) {
-        String param1Value = URLEncoder.encode(String.valueOf(id), StandardCharsets.UTF_8);
-        String param2Key = "item";
-        String param2Value = URLEncoder.encode(item, StandardCharsets.UTF_8);
-        String param3Key = "quantity";
-        String param3Value = URLEncoder.encode(String.valueOf(quantity), StandardCharsets.UTF_8);
 
-        String endpointQuery = String.format("vendmachtrack/%s/add?%s=%s&%s=%s", param1Value, param2Key, param2Value,
-                param3Key, param3Value);
+        String endpointQuery = buildEndpointWithParams(ENDPOINT_DIRECTORY + "/" + id + "/add", "item", item, "quantity", String.valueOf(quantity));
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(endpointBaseUri.resolve(endpointQuery))
@@ -135,14 +133,8 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
      */
     @Override
     public HashMap<String, Integer> removeItem(int id, String item, int quantity) {
-        String param1Value = URLEncoder.encode(String.valueOf(id), StandardCharsets.UTF_8);
-        String param2Key = "item";
-        String param2Value = URLEncoder.encode(item, StandardCharsets.UTF_8);
-        String param3Key = "quantity";
-        String param3Value = URLEncoder.encode(String.valueOf(quantity), StandardCharsets.UTF_8);
 
-        String endpointQuery = String.format("vendmachtrack/%s/remove?%s=%s&%s=%s", param1Value, param2Key, param2Value,
-                param3Key, param3Value);
+        String endpointQuery = buildEndpointWithParams(ENDPOINT_DIRECTORY + "/" + id + "/remove", "item", item, "quantity", String.valueOf(quantity));
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(endpointBaseUri.resolve(endpointQuery))
@@ -165,13 +157,8 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
      */
     @Override
     public HashMap<Integer, String> addVendMach(int id, String location) {
-        String param1Key = "id";
-        String param1Value = URLEncoder.encode(String.valueOf(id), StandardCharsets.UTF_8);
-        String param2Key = "location";
-        String param2Value = URLEncoder.encode(location, StandardCharsets.UTF_8);
 
-        String endpointQuery = String.format("vendmachtrack/add?%s=%s&%s=%s", param1Key, param1Value, param2Key,
-                param2Value);
+        String endpointQuery = buildEndpointWithParams(ENDPOINT_DIRECTORY + "/add", "id", String.valueOf(id), "location", location);
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(endpointBaseUri.resolve(endpointQuery))
@@ -215,10 +202,8 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
      */
     @Override
     public HashMap<Integer, String> changeLocation(int id, String location) {
-        String param1Key = "location";
-        String param1Value = URLEncoder.encode(location, StandardCharsets.UTF_8);
 
-        String endpointQuery = String.format("vendmachtrack/" + id + "?%s=%s", param1Key, param1Value);
+        String endpointQuery = buildEndpointWithParams(ENDPOINT_DIRECTORY + "/" + id, "location", location);
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(endpointBaseUri.resolve(endpointQuery))
@@ -255,9 +240,34 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
      */
     private HttpResponse<String> getResponse(HttpRequest request) {
         try {
-            return HttpClient.newBuilder().build().send(request, HttpResponse.BodyHandlers.ofString());
+            return httpClient.send(request, HttpResponse.BodyHandlers.ofString());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * Constructs an endpoint URL by appending parameters to the base URL.
+     * Parameters are provided as varargs, with key-value pairs in sequence.
+     *
+     * @param base   The base URL to which the parameters should be appended.
+     * @param params An array of strings representing key-value pairs. Must be even-numbered.
+     *               For instance, ["key1", "value1", "key2", "value2"].
+     * @return A string representing the constructed URL with the provided parameters.
+     */
+    private String buildEndpointWithParams(String base, String... params) {
+        StringBuilder endpoint = new StringBuilder(base);
+        if (params.length > 0) {
+            endpoint.append("?");
+            for (int i = 0; i < params.length; i += 2) {
+                if (i > 0) {
+                    endpoint.append("&");
+                }
+                endpoint.append(URLEncoder.encode(params[i], StandardCharsets.UTF_8))
+                        .append("=")
+                        .append(URLEncoder.encode(params[i + 1], StandardCharsets.UTF_8));
+            }
+        }
+        return endpoint.toString();
     }
 }
