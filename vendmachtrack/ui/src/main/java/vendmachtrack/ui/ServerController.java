@@ -5,6 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import vendmachtrack.ui.access.AccessService;
 
+import java.net.MalformedURLException;
 import java.net.URI;
 
 /**
@@ -35,15 +36,16 @@ public class ServerController {
     @FXML
     private void handleSubmission() {
         String serverUrlString = serverUrlField.getText();
-        URI endpointUri = URI.create(serverUrlString);
-        String fileName = trackerFileNameField.getText();
 
         try {
-            AccessService service = new AccessService(endpointUri, fileName);
+            new URI(serverUrlString).toURL();
+            String fileName = trackerFileNameField.getText();
+            AccessService service = new AccessService(new URI(serverUrlString), fileName);
             mainApp.switchToVendAppScene(service);
-
+        } catch (MalformedURLException e) {
+            label.setText("Invalid URL: " + e.getMessage());
         } catch (Exception e) {
-            label.setText(e.getMessage());
+            label.setText("Invalid input in server URL: " + serverUrlString);
         }
     }
 
