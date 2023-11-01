@@ -1,11 +1,11 @@
 package vendmachtrack.ui;
 
-import java.net.URI;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import vendmachtrack.ui.access.AccessService;
+
+import java.net.URI;
 
 /**
  * The ServerController class manages the user interface for entering server

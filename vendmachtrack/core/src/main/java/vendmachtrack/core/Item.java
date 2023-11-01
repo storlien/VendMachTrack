@@ -6,8 +6,8 @@ package vendmachtrack.core;
 
 public class Item {
 
-    private String name;
-    private double price;
+    private final String name;
+    private final double price;
 
 
     /**

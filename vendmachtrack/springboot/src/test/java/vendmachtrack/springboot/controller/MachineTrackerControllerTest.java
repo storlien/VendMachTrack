@@ -2,18 +2,12 @@ package vendmachtrack.springboot.controller;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
-import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -27,14 +21,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.willReturn;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
 @WebMvcTest(controllers = MachineTrackerController.class)
 public class MachineTrackerControllerTest {
@@ -45,9 +38,9 @@ public class MachineTrackerControllerTest {
     @MockBean
     private MachineTrackerService machineTrackerService;
 
-    private VendingMachine vendingmachine = new VendingMachine();
-    private List<VendingMachine> machines = new ArrayList<>();
-    private MachineTracker machineTracker = new MachineTracker();
+    private final VendingMachine vendingmachine = new VendingMachine();
+    private final List<VendingMachine> machines = new ArrayList<>();
+    private final MachineTracker machineTracker = new MachineTracker();
 
     /**
      * Sets up the test fixture before each test method runs.
@@ -65,7 +58,6 @@ public class MachineTrackerControllerTest {
      * Tests the getVendMachList method of the MachineTrackerController class.
      * Expects the response to be a JSON object containing the list of vending
      * machines and the HTTP response status to be 200 (OK).
-     *
      */
     @Test
     public void MachineTrackerController_getVendMachList_returnVendmachList() throws Exception {
@@ -90,14 +82,14 @@ public class MachineTrackerControllerTest {
      * Expects the HTTP response status to be 404 Not Found and the exception to be of type ResourceNotFoundException with the message "Should throw".
      */
     @Test
-    public void MachineTrackerController_getVendMachList_throwsResourceNotFoundException() throws Exception{
+    public void MachineTrackerController_getVendMachList_throwsResourceNotFoundException() throws Exception {
 
         when(machineTrackerService.getVendMachList()).thenThrow(new ResourceNotFoundException("Should throw"));
 
         ResultActions response = mockmvc.perform(MockMvcRequestBuilders
-            .get("/vendmachtrack")
-            .contentType(MediaType.APPLICATION_JSON)
-            .accept(MediaType.APPLICATION_JSON));
+                .get("/vendmachtrack")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON));
 
         // Assert
         response.andExpect(MockMvcResultMatchers.status().isNotFound())
@@ -132,16 +124,16 @@ public class MachineTrackerControllerTest {
      * Expects the HTTP response status to be 404 Not Found and the exception to be of type ResourceNotFoundException with the message "Should throw".
      */
     @Test
-    public void MachineTrackerController_getVendMachLocation_throwsResourceNotFoundException() throws Exception{
+    public void MachineTrackerController_getVendMachLocation_throwsResourceNotFoundException() throws Exception {
 
         // Arrange
         when(machineTrackerService.getVendMachLocation(anyInt())).thenThrow(new ResourceNotFoundException("Should throw"));
 
         // Act
         ResultActions response = mockmvc.perform(MockMvcRequestBuilders
-            .get("/vendmachtrack/1/name")
-            .contentType(MediaType.APPLICATION_JSON)
-            .accept(MediaType.APPLICATION_JSON));
+                .get("/vendmachtrack/1/name")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON));
 
         // Assert
         response.andExpect(MockMvcResultMatchers.status().isNotFound())
@@ -181,11 +173,11 @@ public class MachineTrackerControllerTest {
         // Arrange
         when(machineTrackerService.getInventory(anyInt())).thenThrow(new IllegalInputException("Should throw"));
 
-         // Act
+        // Act
         ResultActions response = mockmvc.perform(MockMvcRequestBuilders
-            .get("/vendmachtrack/1")
-            .contentType(MediaType.APPLICATION_JSON)
-            .accept(MediaType.APPLICATION_JSON));
+                .get("/vendmachtrack/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON));
 
         // Assert
         response.andExpect(MockMvcResultMatchers.status().isBadRequest())
@@ -229,11 +221,11 @@ public class MachineTrackerControllerTest {
 
         // Act
         ResultActions response = mockmvc.perform(MockMvcRequestBuilders
-            .put("/vendmachtrack/1/add")
-            .param("item", "Coke")
-            .param("quantity", "10")
-            .contentType(MediaType.APPLICATION_JSON)
-            .accept(MediaType.APPLICATION_JSON));
+                .put("/vendmachtrack/1/add")
+                .param("item", "Coke")
+                .param("quantity", "10")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON));
 
         // Assert
         response.andExpect(MockMvcResultMatchers.status().isBadRequest())
@@ -273,23 +265,23 @@ public class MachineTrackerControllerTest {
      */
     @Test
     public void MachineTrackerController_removeItem_throwsIllegalInputException() throws Exception {
-        
+
         // Arrange
         when(machineTrackerService.removeItem(anyInt(), anyString(), anyInt())).thenThrow(new IllegalInputException("Should throw"));
 
         // Act
         ResultActions response = mockmvc.perform(MockMvcRequestBuilders
-            .put("/vendmachtrack/1/remove")
-            .param("item", "Coke")
-            .param("quantity", "5")
-            .contentType(MediaType.APPLICATION_JSON)
-            .accept(MediaType.APPLICATION_JSON));
+                .put("/vendmachtrack/1/remove")
+                .param("item", "Coke")
+                .param("quantity", "5")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON));
 
         // Assert
         response.andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(result -> assertTrue(result.getResolvedException() instanceof IllegalInputException))
                 .andExpect(result -> assertEquals("Should throw", result.getResolvedException().getMessage()));
-        
+
     }
 
     /**
@@ -323,18 +315,18 @@ public class MachineTrackerControllerTest {
      * Tests the addVendMach method in the MachineTrackerController class when an IllegalInputException is thrown.
      * Expects the HTTP response status to be 400 Bad Request and the exception to be of type IllegalInputException.
      */
-     @Test
+    @Test
     public void MachineTrackerController_addVendMach_throwsIllegalInputException() throws Exception {
         //Arrange
         when(machineTrackerService.addVendMach(anyInt(), anyString())).thenThrow(new IllegalInputException("Should throw"));
 
         //Act
         ResultActions response = mockmvc.perform(MockMvcRequestBuilders
-            .post("/vendmachtrack/add")
-            .param("id", "1")
-            .param("location", "Oslo")
-            .contentType(MediaType.APPLICATION_JSON)
-            .accept(MediaType.APPLICATION_JSON));
+                .post("/vendmachtrack/add")
+                .param("id", "1")
+                .param("location", "Oslo")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON));
 
         // Assert
         response.andExpect(MockMvcResultMatchers.status().isBadRequest())
@@ -371,18 +363,18 @@ public class MachineTrackerControllerTest {
      */
     @Test
     public void MachineTrackerController_removeVendMach_throwsIllegalInputException() throws Exception {
-        
+
         // Arrange
         when(machineTrackerService.removeVendMach(anyInt())).thenThrow(new IllegalInputException("Should throw"));
 
         // Act
         ResultActions response = mockmvc.perform(MockMvcRequestBuilders
-            .delete("/vendmachtrack/1")
-            .contentType(MediaType.APPLICATION_JSON)
-            .accept(MediaType.APPLICATION_JSON));
+                .delete("/vendmachtrack/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON));
 
         // Assert
-         response.andExpect(MockMvcResultMatchers.status().isBadRequest())
+        response.andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(result -> assertTrue(result.getResolvedException() instanceof IllegalInputException))
                 .andExpect(result -> assertEquals("Should throw", result.getResolvedException().getMessage()));
     }
@@ -417,16 +409,16 @@ public class MachineTrackerControllerTest {
      */
     @Test
     public void MachineTrackerController_changeLocation_throwsIllegalInputException() throws Exception {
-       
+
         // Arrange
         when(machineTrackerService.changeLocation(anyInt(), anyString())).thenThrow(new IllegalInputException("Should throw"));
 
         // Act
         ResultActions response = mockmvc.perform(MockMvcRequestBuilders
-            .put("/vendmachtrack/1")
-            .param("location", "Trondheim")
-            .contentType(MediaType.APPLICATION_JSON)
-            .accept(MediaType.APPLICATION_JSON));
+                .put("/vendmachtrack/1")
+                .param("location", "Trondheim")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON));
 
         // Assert
         response.andExpect(MockMvcResultMatchers.status().isBadRequest())
@@ -440,16 +432,16 @@ public class MachineTrackerControllerTest {
      */
     @Test
     public void MachineTrackerController_changeLocation_throwsResourceNotFoundException() throws Exception {
-        
+
         // Arrange
         when(machineTrackerService.changeLocation(anyInt(), anyString())).thenThrow(new ResourceNotFoundException("Should throw"));
 
         // Act
         ResultActions response = mockmvc.perform(MockMvcRequestBuilders
-            .put("/vendmachtrack/1")
-            .param("location", "Trondheim")
-            .contentType(MediaType.APPLICATION_JSON)
-            .accept(MediaType.APPLICATION_JSON));
+                .put("/vendmachtrack/1")
+                .param("location", "Trondheim")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON));
 
         // Assert
         response.andExpect(MockMvcResultMatchers.status().isNotFound())

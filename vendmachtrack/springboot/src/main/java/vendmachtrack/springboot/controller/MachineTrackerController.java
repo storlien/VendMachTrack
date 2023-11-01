@@ -1,9 +1,9 @@
 package vendmachtrack.springboot.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import vendmachtrack.springboot.service.MachineTrackerService;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
 
@@ -37,13 +37,13 @@ public class MachineTrackerController {
 
     @PutMapping("/{id}/add")
     public ResponseEntity<HashMap<String, Integer>> addItem(@PathVariable("id") int id, @RequestParam String item,
-            @RequestParam int quantity) {
+                                                            @RequestParam int quantity) {
         return ResponseEntity.ok(machtrackService.addItem(id, item, quantity));
     }
 
     @PutMapping("/{id}/remove")
     public ResponseEntity<HashMap<String, Integer>> removeItem(@PathVariable("id") int id, @RequestParam String item,
-            @RequestParam int quantity) {
+                                                               @RequestParam int quantity) {
         return ResponseEntity.ok(machtrackService.removeItem(id, item, quantity));
     }
 
@@ -59,7 +59,7 @@ public class MachineTrackerController {
 
     @PutMapping("/{id}")
     public ResponseEntity<HashMap<Integer, String>> changeLocation(@PathVariable("id") int id,
-            @RequestParam String location) {
+                                                                   @RequestParam String location) {
         return ResponseEntity.ok(machtrackService.changeLocation(id, location));
     }
 }
