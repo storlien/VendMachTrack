@@ -5,9 +5,11 @@ module vendmachtrack.core {
 
     // Necessary exports to other modules of this project.
     exports vendmachtrack.core to vendmachtrack.jsonio, vendmachtrack.ui, vendmachtrack.springboot;
+    exports vendmachtrack.core.util to vendmachtrack.ui;
 
     // Opening a package is a major decision.
-    // After a lot of research and attempts, it seems implementing TypeAdapter is the only way to avoid opening the package to Gson.
+    // After a lot of research and attempts, it seems implementing TypeAdapter is
+    // the only way to avoid opening the package to Gson.
     // See readme documentation for more information on this.
     opens vendmachtrack.core to com.google.gson;
 }
