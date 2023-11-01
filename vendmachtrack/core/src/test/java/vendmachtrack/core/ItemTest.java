@@ -1,9 +1,9 @@
 package vendmachtrack.core;
 
 import org.junit.jupiter.api.Test;
-import vendmachtrack.core.Item;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ItemTest {
 

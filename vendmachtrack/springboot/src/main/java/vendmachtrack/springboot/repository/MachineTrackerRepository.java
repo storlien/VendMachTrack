@@ -1,15 +1,18 @@
 package vendmachtrack.springboot.repository;
 
+import org.springframework.stereotype.Repository;
 import vendmachtrack.core.MachineTracker;
 import vendmachtrack.core.VendingMachine;
 import vendmachtrack.jsonio.VendmachtrackPersistence;
-import org.springframework.stereotype.Repository;
 
 /**
- * Repository class responsible for handling operations related to the {@code MachineTracker}.
- * This class integrates with the {@code VendmachtrackPersistence} class to manage Vending Machine data.
+ * Repository class responsible for handling operations related to the
+ * {@code MachineTracker}.
+ * This class integrates with the {@code VendmachtrackPersistence} class to
+ * manage Vending Machine data.
  * <p>
- * This class is stateless, ensuring that the data retrieved and persisted is always up-to-date with the
+ * This class is stateless, ensuring that the data retrieved and persisted is
+ * always up-to-date with the
  * data storage.
  */
 @Repository
@@ -53,7 +56,8 @@ public class MachineTrackerRepository {
      * Retrieves a {@code VendingMachine} by its ID.
      *
      * @param id The ID of the {@code VendingMachine}.
-     * @return The {@code VendingMachine} with the specified ID, or null if not found.
+     * @return The {@code VendingMachine} with the specified ID, or null if not
+     *         found.
      */
     public VendingMachine getVendMach(int id) {
         for (VendingMachine vendMach : getVendmachtrack().getMachines()) {
@@ -95,12 +99,26 @@ public class MachineTrackerRepository {
      * @param amount The quantity of the item to add.
      * @return The updated {@code VendingMachine}, or null if not found.
      */
-    public VendingMachine addItem(int id, String item, int amount) {
+    public VendingMachine addItem(int id, String item, int quantity) {
         MachineTracker machTrack = getVendmachtrack();
 
         for (VendingMachine vendMach : machTrack.getMachines()) {
             if (vendMach.getId() == id) {
-                vendMach.addItem(item, amount);
+                vendMach.addItem(item, quantity);
+                saveVendmachtrack(machTrack);
+                return vendMach;
+            }
+        }
+
+        return null;
+    }
+
+    public VendingMachine removeItem(int id, String item, int quantity) {
+        MachineTracker machTrack = getVendmachtrack();
+
+        for (VendingMachine vendMach : machTrack.getMachines()) {
+            if (vendMach.getId() == id) {
+                vendMach.removeItem(item, quantity);
                 saveVendmachtrack(machTrack);
                 return vendMach;
             }
@@ -110,29 +128,8 @@ public class MachineTrackerRepository {
     }
 
     /**
-     * Removes an item from a specific {@code VendingMachine} based on its ID.
-     *
-     * @param id     The ID of the {@code VendingMachine}.
-     * @param item   The item to remove.
-     * @param amount The quantity of the item to remove.
-     * @return The updated {@code VendingMachine}, or null if not found.
-     */
-    public VendingMachine removeItem(int id, String item, int amount) {
-        MachineTracker machTrack = getVendmachtrack();
-
-        for (VendingMachine vendMach : machTrack.getMachines()) {
-            if (vendMach.getId() == id) {
-                vendMach.removeItem(item, amount);
-                saveVendmachtrack(machTrack);
-                return vendMach;
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * Adds a new {@code VendingMachine} with a specified ID and location to the {@code MachineTracker}.
+     * Adds a new {@code VendingMachine} with a specified ID and location to the
+     * {@code MachineTracker}.
      *
      * @param id       The ID of the new {@code VendingMachine}.
      * @param location The location of the new {@code VendingMachine}.
@@ -150,7 +147,8 @@ public class MachineTrackerRepository {
     }
 
     /**
-     * Removes a {@code VendingMachine} based on its ID from the {@code MachineTracker}.
+     * Removes a {@code VendingMachine} based on its ID from the
+     * {@code MachineTracker}.
      *
      * @param id The ID of the {@code VendingMachine} to remove.
      * @return The updated {@code MachineTracker} instance.

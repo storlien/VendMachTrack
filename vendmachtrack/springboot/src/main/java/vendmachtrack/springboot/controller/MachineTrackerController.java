@@ -1,21 +1,23 @@
 package vendmachtrack.springboot.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import vendmachtrack.springboot.service.MachineTrackerService;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
 
 /**
- * Controller responsible for handling HTTP requests related to the machine tracker operations.
- * Provides endpoints to view, add, modify, and delete vending machines and their inventory.
+ * Controller responsible for handling HTTP requests related to the machine
+ * tracker operations.
+ * Provides endpoints to view, add, modify, and delete vending machines and
+ * their inventory.
  */
 @RestController
 @RequestMapping(MachineTrackerController.VENDMACHTRACK_SERVICE_PATH)
 public class MachineTrackerController {
 
-    public static final String VENDMACHTRACK_SERVICE_PATH = "vendmachtrack";
+    static final String VENDMACHTRACK_SERVICE_PATH = "vendmachtrack";
 
     private final MachineTrackerService machtrackService;
 
@@ -70,7 +72,8 @@ public class MachineTrackerController {
      * @return Updated inventory items and their quantities.
      */
     @PutMapping("/{id}/add")
-    public ResponseEntity<HashMap<String, Integer>> addItem(@PathVariable("id") int id, @RequestParam String item, @RequestParam int quantity) {
+    public ResponseEntity<HashMap<String, Integer>> addItem(@PathVariable("id") int id, @RequestParam String item,
+            @RequestParam int quantity) {
         return ResponseEntity.ok(machtrackService.addItem(id, item, quantity));
     }
 
@@ -83,7 +86,8 @@ public class MachineTrackerController {
      * @return Updated inventory items and their quantities.
      */
     @PutMapping("/{id}/remove")
-    public ResponseEntity<HashMap<String, Integer>> removeItem(@PathVariable("id") int id, @RequestParam String item, @RequestParam int quantity) {
+    public ResponseEntity<HashMap<String, Integer>> removeItem(@PathVariable("id") int id, @RequestParam String item,
+            @RequestParam int quantity) {
         return ResponseEntity.ok(machtrackService.removeItem(id, item, quantity));
     }
 
@@ -118,7 +122,8 @@ public class MachineTrackerController {
      * @return Updated list of vending machines with their IDs and locations.
      */
     @PutMapping("/{id}")
-    public ResponseEntity<HashMap<Integer, String>> changeLocation(@PathVariable("id") int id, @RequestParam String location) {
+    public ResponseEntity<HashMap<Integer, String>> changeLocation(@PathVariable("id") int id,
+            @RequestParam String location) {
         return ResponseEntity.ok(machtrackService.changeLocation(id, location));
     }
 }

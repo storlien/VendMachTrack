@@ -4,18 +4,21 @@ import java.util.Date;
 
 /**
  * Represents details of an error that occurred.
- * It encapsulates the timestamp when the error occurred, a brief error message, and details about the error.
+ * It encapsulates the timestamp when the error occurred, a brief error message,
+ * and details about the error.
  * <p>
- * This class provides a structured way to convey error information, making it easier to trace, handle and return errors to the client.
+ * This class provides a structured way to convey error information, making it
+ * easier to trace, handle and return errors to the client.
  * </p>
  */
-public class ErrorDetails {
+class ErrorDetails {
     private Date timestamp;
     private String error;
     private String details;
 
     /**
-     * Constructs an {@code ErrorDetails} instance with the specified timestamp, error message, and details.
+     * Constructs an {@code ErrorDetails} instance with the specified timestamp,
+     * error message, and details.
      *
      * @param timestamp The date and time when the error occurred.
      * @param error     A brief message indicating the type of error.

@@ -3,7 +3,10 @@ package vendmachtrack.jsonio.internal;
 import com.google.gson.Gson;
 import vendmachtrack.core.MachineTracker;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
+import java.io.FileWriter;
+import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 
 /**

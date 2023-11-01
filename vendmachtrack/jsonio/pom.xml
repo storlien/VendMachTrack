@@ -6,7 +6,7 @@
     <parent>
         <groupId>gr2338</groupId>
         <artifactId>vendmachtrack</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.0</version>
     </parent>
 
     <artifactId>jsonio</artifactId>
@@ -27,7 +27,7 @@
         <dependency>
             <groupId>gr2338</groupId>
             <artifactId>core</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -51,7 +51,6 @@
             <version>5.6.0</version>
             <scope>test</scope>
         </dependency>
-
 
     </dependencies>
 

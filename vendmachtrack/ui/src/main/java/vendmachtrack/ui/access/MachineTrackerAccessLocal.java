@@ -10,14 +10,16 @@ import java.util.regex.Pattern;
 
 /**
  * Class for accessing Vending Machine Tracker through REST API.
- * Accesses the Spring Boot REST API server by following the documentation on possible requests to perform against the API.
+ * Accesses the Spring Boot REST API server by following the documentation on
+ * possible requests to perform against the API.
  */
 public class MachineTrackerAccessLocal implements MachineTrackerAccessible {
 
     private final VendmachtrackPersistence persistence;
 
     /**
-     * Constructor. Requires an object of VendmachtrackPersistence for reading/writing to file.
+     * Constructor. Requires an object of VendmachtrackPersistence for
+     * reading/writing to file.
      *
      * @param persistence VendmachtrackPersistence object
      */
@@ -28,7 +30,8 @@ public class MachineTrackerAccessLocal implements MachineTrackerAccessible {
     /**
      * Access method for the list of vending machines
      *
-     * @return HashMap of vending machine list with vending machine ID as key and location as value
+     * @return HashMap of vending machine list with vending machine ID as key and
+     *         location as value
      */
     @Override
     public HashMap<Integer, String> getVendMachList() {
@@ -62,7 +65,7 @@ public class MachineTrackerAccessLocal implements MachineTrackerAccessible {
      * Access method for inventory
      *
      * @param id The ID of the vending machine
-     * @return HashMap of inventory with item as key and amount as value
+     * @return HashMap of inventory with item as key and quantity as value
      */
     @Override
     public HashMap<String, Integer> getInventory(int id) {
@@ -72,21 +75,21 @@ public class MachineTrackerAccessLocal implements MachineTrackerAccessible {
     /**
      * Access method for adding item to vending machine's inventory
      *
-     * @param id     The ID of the vending machine
-     * @param item   The item name to be added
-     * @param amount The amount of the item to be added
-     * @return HashMap of inventory with item as key and amount as value
+     * @param id       The ID of the vending machine
+     * @param item     The item name to be added
+     * @param quantity The quantity of the item to be added
+     * @return HashMap of inventory with item as key and quantity as value
      */
     @Override
-    public HashMap<String, Integer> addItem(int id, String item, int amount) {
+    public HashMap<String, Integer> addItem(int id, String item, int quantity) {
         validateItem(item);
-        validateAmount(amount);
+        validateQuantity(quantity);
 
         MachineTracker machtrack = getMachtrack();
 
         for (VendingMachine vendMach : machtrack.getMachines()) {
             if (vendMach.getId() == id) {
-                vendMach.addItem(item, amount);
+                vendMach.addItem(item, quantity);
                 persistence.saveVendmachtrack(machtrack);
                 return vendMach.getStatus();
             }
@@ -96,30 +99,31 @@ public class MachineTrackerAccessLocal implements MachineTrackerAccessible {
     }
 
     /**
-     * Access method for removing an amount of an item
+     * Access method for removing an quantity of an item
      *
-     * @param id     The ID of the vending machine
-     * @param item   The item to be removed
-     * @param amount The amount to be removed from the item
-     * @return HashMap of inventory with item as key and amount as value
+     * @param id       The ID of the vending machine
+     * @param item     The item to be removed
+     * @param quantity The quantity to be removed from the item
+     * @return HashMap of inventory with item as key and quantity as value
      */
     @Override
-    public HashMap<String, Integer> removeItem(int id, String item, int amount) {
+    public HashMap<String, Integer> removeItem(int id, String item, int quantity) {
         validateItem(item);
-        validateAmount(amount);
+        validateQuantity(quantity);
 
         VendingMachine vendMach = getVendMach(id);
 
         if (!vendMach.getStatus().containsKey(item)) {
             throw new IllegalArgumentException("The vending machine's inventory does not contain this item");
-        } else if (amount > vendMach.getStatus().get(item)) {
-            throw new IllegalArgumentException("The vending machine's inventory contains less than the given amount to remove of item: " + item);
+        } else if (quantity > vendMach.getStatus().get(item)) {
+            throw new IllegalArgumentException(
+                    "The vending machine's inventory contains less than the given quantity to remove of item: " + item);
         } else {
             MachineTracker machTrack = getMachtrack();
 
             for (VendingMachine v : machTrack.getMachines()) {
                 if (v.getId() == id) {
-                    v.removeItem(item, amount);
+                    v.removeItem(item, quantity);
                     persistence.saveVendmachtrack(machTrack);
                     return v.getStatus();
                 }
@@ -134,7 +138,8 @@ public class MachineTrackerAccessLocal implements MachineTrackerAccessible {
      *
      * @param id       The ID of the new vending machine
      * @param location The location of the new vending machine
-     * @return HashMap of vending machine list with vending machine ID as key and location as value
+     * @return HashMap of vending machine list with vending machine ID as key and
+     *         location as value
      */
     @Override
     public HashMap<Integer, String> addVendMach(int id, String location) {
@@ -156,7 +161,8 @@ public class MachineTrackerAccessLocal implements MachineTrackerAccessible {
      * Access method for removing a vending machine
      *
      * @param id The ID of the vending machine
-     * @return HashMap of vending machine list with vending machine ID as key and location as value
+     * @return HashMap of vending machine list with vending machine ID as key and
+     *         location as value
      */
     @Override
     public HashMap<Integer, String> removeVendMach(int id) {
@@ -179,7 +185,8 @@ public class MachineTrackerAccessLocal implements MachineTrackerAccessible {
      *
      * @param id       The ID of the vending machine
      * @param location The new location of the vending machine
-     * @return HashMap of vending machine list with vending machine ID as key and location as value
+     * @return HashMap of vending machine list with vending machine ID as key and
+     *         location as value
      */
     @Override
     public HashMap<Integer, String> changeLocation(int id, String location) {
@@ -211,14 +218,14 @@ public class MachineTrackerAccessLocal implements MachineTrackerAccessible {
     }
 
     /**
-     * Internal method for validating amount.
-     * Throws IllegalArgumentException if amount is not valid.
+     * Internal method for validating quantity.
+     * Throws IllegalArgumentException if quantity is not valid.
      *
-     * @param amount Amount to be validated
+     * @param quantity Quantity to be validated
      */
-    private void validateAmount(int amount) {
-        if (amount < 1) {
-            throw new IllegalArgumentException("Amount has to be higher than zero");
+    private void validateQuantity(int quantity) {
+        if (quantity < 1) {
+            throw new IllegalArgumentException("Quantity has to be higher than zero");
         }
     }
 
@@ -287,7 +294,8 @@ public class MachineTrackerAccessLocal implements MachineTrackerAccessible {
 
     /**
      * Internal method for retrieving vending machine tracker.
-     * Throws RunTimeException if no vending machine tracker could be found with the persistence object given to constructor.
+     * Throws RunTimeException if no vending machine tracker could be found with the
+     * persistence object given to constructor.
      *
      * @return Vending machine tracker object
      */

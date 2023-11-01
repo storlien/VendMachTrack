@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  */
 public class ToJsonTest {
 
-    private String filename = "/testfile.json";
+    private final String filename = "/testfile.json";
     private ToJson toJson;
     private Path dir;
 
@@ -71,7 +71,7 @@ public class ToJsonTest {
 
         // Assert that the OutputStream is not null and contains the expected data
         assertNotNull(outputStream);
-        String result = new String(((ByteArrayOutputStream) outputStream).toByteArray(), StandardCharsets.UTF_8);
+        String result = ((ByteArrayOutputStream) outputStream).toString(StandardCharsets.UTF_8);
         assertEquals("{\"machines\":[{\"status\":{\"Øl\":10,\"Cola\":3},\"id\":1,\"location\":\"Trondheim\"}]}", result);
     }
 
@@ -88,7 +88,7 @@ public class ToJsonTest {
 
         // Assert that the OutputStream is not null and contains the expected data
         assertNotNull(outputStream);
-        String result = new String(((ByteArrayOutputStream) outputStream).toByteArray(), StandardCharsets.UTF_8);
+        String result = ((ByteArrayOutputStream) outputStream).toString(StandardCharsets.UTF_8);
         assertEquals("null", result);
     }
 
@@ -112,7 +112,7 @@ public class ToJsonTest {
 
         // Assert that the OutputStream is not null and contains the expected data
         assertNotNull(outputStream);
-        String result = new String(((ByteArrayOutputStream) outputStream).toByteArray(), StandardCharsets.UTF_8);
+        String result = ((ByteArrayOutputStream) outputStream).toString(StandardCharsets.UTF_8);
         assertEquals("{\"machines\":[]}", result);
     }
 }

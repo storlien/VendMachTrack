@@ -2,8 +2,6 @@ package vendmachtrack.core;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import vendmachtrack.core.MachineTracker;
-import vendmachtrack.core.VendingMachine;
 
 import java.util.Arrays;
 import java.util.List;

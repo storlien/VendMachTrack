@@ -1,34 +1,24 @@
 package vendmachtrack.ui;
 
-import java.io.IOException;
-import java.net.URL;
-import java.net.URI;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
-
-import javafx.concurrent.Task;
-import javafx.scene.Node;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
-
 import vendmachtrack.ui.access.AccessService;
 import vendmachtrack.ui.access.MachineTrackerAccessible;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.*;
+
 /**
  * Controller class for the vending machine application's user interface.
+ * Manages the interaction between the UI components and the backend services.
  */
 public class VendAppController implements Initializable {
 
@@ -39,13 +29,31 @@ public class VendAppController implements Initializable {
     private TextArea textArea;
 
     @FXML
-    private Button button;
+    private Button okButton;
 
     @FXML
     private Button refillButton;
 
     @FXML
     private Button userView;
+
+    @FXML
+    private Button addButton;
+
+    @FXML
+    private Button removeButton;
+
+    @FXML
+    private TextField idTextFieldAdd;
+
+    @FXML
+    private TextField locationTextField;
+
+    @FXML
+    private TextField idTextFieldRemove;
+
+    @FXML
+    private Label outputText;
 
     @FXML
     private ChoiceBox<String> menuBar;
@@ -56,17 +64,31 @@ public class VendAppController implements Initializable {
 
     private AccessService service;
 
+    /**
+     * Sets the AccessService instance to interact with vending machine data.
+     *
+     * @param service The AccessService instance.
+     */
     public void setAccessService(AccessService service) {
-        this.service = service;
-        this.access = service.getAccess();
+        try {
+            this.service = service;
+            this.access = service.getAccess();
+        } catch (Exception e) {
+            outputText.setText(e.getMessage());
+        }
     }
 
+    /**
+     * Sets the main application instance.
+     *
+     * @param mainApp The main application instance.
+     */
     public void setMainApp(App mainApp) {
         this.mainApp = mainApp;
     }
 
     /**
-     * Initializes the controller. It reads vending machine data from a JSON file.
+     * Initializes the controller.
      *
      * @param arg0 The location used to resolve relative paths for the root object,
      *             or null if the location is not known.
@@ -75,22 +97,12 @@ public class VendAppController implements Initializable {
      */
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        URI endpointUri = URI.create("http://localhost:8080/");
-        String fileName = "tracker.json";
 
-        Task<Void> newAccess = new Task<>() {
-            @Override
-            protected Void call() throws Exception {
-                AccessService service = new AccessService(endpointUri, fileName);
-                setAccessService(service);
-                updateVendMachList();
-                return null;
-            }
-        };
-
-        new Thread(newAccess).start();
     }
 
+    /**
+     * Updates the list of vending machines in the menu bar.
+     */
     public void updateVendMachList() {
         try {
             HashMap<Integer, String> vendingMachines = access.getVendMachList();
@@ -107,13 +119,100 @@ public class VendAppController implements Initializable {
 
     }
 
+    /**
+     * Updates the displayed inventory based on the selected vending machine.
+     *
+     * @param machineID The ID of the selected vending machine.
+     */
     public void updateInventory(int machineID) {
-        Map<String, Integer> statusMap = access.getInventory(machineID);
-        StringBuilder formattedStatus = new StringBuilder("Inventory:\n");
-        for (Map.Entry<String, Integer> entry : statusMap.entrySet()) {
-            formattedStatus.append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
+        try {
+            Map<String, Integer> statusMap = access.getInventory(machineID);
+            StringBuilder formattedStatus = new StringBuilder("Inventory:\n");
+            for (Map.Entry<String, Integer> entry : statusMap.entrySet()) {
+                formattedStatus.append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
+            }
+            textArea.setText(formattedStatus.toString());
+        } catch (Exception e) {
+            textArea.setText(e.getMessage());
+
         }
-        textArea.setText(formattedStatus.toString());
+    }
+
+    /**
+     * Handles the add button click event. Adds a new vending machine to the system.
+     *
+     * @param event The event representing the button click.
+     */
+    @FXML
+    private void handleAddButton(ActionEvent event) {
+        try {
+            int machineId = Integer.parseInt(idTextFieldAdd.getText());
+            String location = locationTextField.getText();
+            access.addVendMach(machineId, location);
+            updateVendMachList();
+            textArea.clear();
+            menuBar.setValue(null);
+            idTextFieldAdd.clear();
+            locationTextField.clear();
+            outputText.getStyleClass().removeAll("success-text", "error-text");
+            outputText.getStyleClass().add("success-text");
+            outputText.setText("The machine " + machineId + " was successfully added to your tracker ");
+
+        } catch (NumberFormatException e) {
+            textArea.clear();
+            menuBar.setValue(null);
+            idTextFieldAdd.clear();
+            locationTextField.clear();
+            outputText.getStyleClass().removeAll("success-text", "error-text");
+            outputText.getStyleClass().add("error-text");
+            outputText.setText("Machine ID must be an integer");
+        } catch (Exception e) {
+            textArea.clear();
+            menuBar.setValue(null);
+            idTextFieldAdd.clear();
+            locationTextField.clear();
+            outputText.getStyleClass().removeAll("success-text", "error-text");
+            outputText.getStyleClass().add("error-text");
+            outputText.setText(e.getMessage());
+        }
+    }
+
+    /**
+     * Handles the remove button click event. Removes a vending machine from the
+     * system.
+     *
+     * @param event The event representing the button click.
+     */
+    @FXML
+    private void handleRemoveButton(ActionEvent event) {
+        try {
+            int machineId = Integer.parseInt(idTextFieldRemove.getText());
+            access.removeVendMach(machineId);
+            updateVendMachList();
+            textArea.clear();
+            menuBar.setValue(null);
+            idTextFieldRemove.clear();
+            outputText.getStyleClass().removeAll("success-text", "error-text");
+            outputText.getStyleClass().add("success-text");
+            outputText.setText("The machine " + machineId + " was successfully removed from your tracker");
+
+        } catch (NumberFormatException e) {
+            textArea.clear();
+            menuBar.setValue(null);
+            idTextFieldRemove.clear();
+            outputText.getStyleClass().removeAll("success-text", "error-text");
+            outputText.getStyleClass().add("error-text");
+            outputText.setText("Machine ID must be an integer");
+        } catch (Exception e) {
+            textArea.clear();
+            menuBar.setValue(null);
+            idTextFieldRemove.clear();
+            outputText.getStyleClass().removeAll("success-text", "error-text");
+            outputText.getStyleClass().add("error-text");
+            outputText.setText(e.getMessage());
+
+        }
+
     }
 
     /**
@@ -126,21 +225,38 @@ public class VendAppController implements Initializable {
     private void handleButtonClick(ActionEvent event) {
         if (findID() != null) {
             updateInventory(Integer.parseInt(findID()));
+            outputText.setText(null);
         } else {
             textArea.setText("No vending machine selected");
         }
     }
 
+    /**
+     * Sets the selected vending machine ID to the ChoiceBox menuBar.
+     *
+     * @param machineID The ID of the vending machine to be set in the menuBar.
+     */
     public void setIdToChoiceBox(int machineID) {
-        HashMap<Integer, String> vendingMachines = access.getVendMachList();
-        for (Map.Entry<Integer, String> entry : vendingMachines.entrySet()) {
-            if (entry.getKey() == machineID) {
-                menuBar.setValue("id: " + entry.getKey() + " (" + entry.getValue() + ")");
+        try {
+            HashMap<Integer, String> vendingMachines = access.getVendMachList();
+            for (Map.Entry<Integer, String> entry : vendingMachines.entrySet()) {
+                if (entry.getKey() == machineID) {
+                    menuBar.setValue("id: " + entry.getKey() + " (" + entry.getValue() + ")");
 
+                }
             }
+        } catch (Exception e) {
+            textArea.setText(e.getMessage());
         }
+
     }
 
+    /**
+     * Retrieves the ID of the selected vending machine from the menuBar ChoiceBox.
+     *
+     * @return The ID of the selected vending machine, or null if no machine is
+     *         selected.
+     */
     private String findID() {
         String selectedItem = menuBar.getValue();
         if (selectedItem != null) {
@@ -148,16 +264,21 @@ public class VendAppController implements Initializable {
             int endIndex = selectedItem.indexOf("(");
             return selectedItem.substring(colonIndex + 2, endIndex).trim();
         } else {
-            System.out.println("No vending machine selected"); // Print a message for debugging
             return null;
         }
     }
 
+    /**
+     * Switches to the refill scene based on the selected vending machine.
+     *
+     * @param event The event representing the button click.
+     * @throws IOException If an I/O error occurs while loading the refill scene.
+     */
     @FXML
     public void changeToRefillScene(ActionEvent event) throws IOException {
-        int selectedMachineID = Integer.parseInt(findID());
+        try {
+            int selectedMachineID = Integer.parseInt(findID());
 
-        if (selectedMachineID != 0) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("RefillApp.fxml"));
             Parent root = loader.load();
             RefillController refillController = loader.getController();
@@ -167,19 +288,30 @@ public class VendAppController implements Initializable {
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
             stage.setScene(scene);
             stage.show();
 
-        } else {
             textArea.setText("No vending machine selected");
+
+        } catch (NumberFormatException e) {
+            textArea.setText("Please select a vending machine.");
+        } catch (Exception e) {
+            textArea.setText("An error occurred: " + e.getMessage());
         }
     }
 
+    /**
+     * Switches to the user view scene based on the selected vending machine.
+     *
+     * @param event The event representing the button click.
+     * @throws IOException If an I/O error occurs while loading the user view scene.
+     */
     @FXML
     public void userViewScene(ActionEvent event) throws IOException {
-        int selectedMachineID = Integer.parseInt(findID());
+        try {
+            int selectedMachineID = Integer.parseInt(findID());
 
-        if (selectedMachineID != 0) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("UserApp.fxml"));
             Parent root = loader.load();
             UserController userController = loader.getController();
@@ -192,8 +324,11 @@ public class VendAppController implements Initializable {
             scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
             stage.setScene(scene);
             stage.show();
-        } else {
-            textArea.setText("No vending machine selected");
+
+        } catch (NumberFormatException e) {
+            textArea.setText("Please select a vending machine.");
+        } catch (Exception e) {
+            textArea.setText("An error occurred: " + e.getMessage());
         }
 
     }

@@ -1,25 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
-      prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="vendmachtrack.ui.VendAppController">
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vendmachtrack.ui.VendAppController">
     <children>
-        <ChoiceBox fx:id="menuBar" layoutX="35.0" layoutY="86.0" prefHeight="45.0" prefWidth="475.0"/>
-        <Label fx:id="myLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="7.0" layoutY="15.0" prefHeight="45.0"
-               prefWidth="583.0" text="Choose a vending machine " textAlignment="CENTER" textFill="#9d2020">
+        <ChoiceBox fx:id="menuBar" layoutX="60.0" layoutY="104.0" prefHeight="45.0" prefWidth="422.0" />
+        <Label fx:id="myLabel" styleClass="label-style" alignment="CENTER" contentDisplay="CENTER" layoutX="9.0" layoutY="22.0" prefHeight="45.0" prefWidth="583.0" text="Choose a vending machine" textAlignment="CENTER" textFill="#9d2020">
             <font>
-                <Font size="25.0"/>
+                <Font size="25.0" />
             </font>
         </Label>
-        <Button fx:id="button" layoutX="520.0" layoutY="89.0" mnemonicParsing="false" onAction="#handleButtonClick"
-                prefHeight="36.0" prefWidth="76.0" text="OK"/>
-        <TextArea fx:id="textArea" layoutX="24.0" layoutY="155.0" prefHeight="200.0" prefWidth="553.0"/>
-        <Button fx:id="refillButton" layoutX="520.0" layoutY="361.0" mnemonicParsing="false" onAction="#changeToRefillScene" prefHeight="28.0" prefWidth="56.0" text="Refill" />
-        <Button fx:id="userView" layoutX="506.0" layoutY="25.0" mnemonicParsing="false" onAction="#userViewScene" text="User View" />
+        <Button fx:id="okButton" styleClass="button" layoutX="493.0" layoutY="109.0" mnemonicParsing="false" onAction="#handleButtonClick" prefHeight="36.0" prefWidth="76.0" text="OK" />
+        <TextArea fx:id="textArea" layoutX="36.0" layoutY="163.0" prefHeight="231.0" prefWidth="477.0" />
+        <Button fx:id="refillButton" styleClass="button" layoutX="520.0" layoutY="358.0" mnemonicParsing="false" onAction="#changeToRefillScene" prefHeight="36.0" prefWidth="66.0" text="Refill" />
+        <Button fx:id="userView" styleClass="button" layoutX="504.0" layoutY="32.0" mnemonicParsing="false" onAction="#userViewScene" text="User View" />
+      <Label styleClass="sub-label-style" layoutX="95.0" layoutY="416.0" prefHeight="26.0" prefWidth="208.0" text="Add machines">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <TextField fx:id="idTextFieldAdd" layoutX="95.0" layoutY="451.0" prefHeight="26.0" prefWidth="165.0" />
+      <TextField fx:id="locationTextField" layoutX="95.0" layoutY="487.0" prefHeight="26.0" prefWidth="165.0" />
+      <Button fx:id="addButton" styleClass="button" layoutX="271.0" layoutY="509.0" mnemonicParsing="false" onAction="#handleAddButton" text="Add" />
+      <Button fx:id="removeButton" styleClass="button" layoutX="509.0" layoutY="509.0" mnemonicParsing="false" onAction="#handleRemoveButton" text="Remove" />
+      <Label layoutX="60.0" layoutY="456.0" text="Id:" />
+      <Label layoutX="29.0" layoutY="492.0" text="Location:" />
+      <TextField fx:id="idTextFieldRemove" layoutX="355.0" layoutY="451.0" prefHeight="26.0" prefWidth="165.0" />
+      <Label layoutX="325.0" layoutY="456.0" text="Id:" />
+      <Label styleClass="sub-label-style" layoutX="355.0" layoutY="416.0" prefHeight="26.0" prefWidth="208.0" text="Remove machines">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="outputText" layoutX="36.0" layoutY="545.0" prefHeight="26.0" prefWidth="393.0" />
     </children>
 </Pane>
+
+

@@ -20,13 +20,15 @@ public class Item {
      */
     private double price;
 
-
     /**
-     * Constructs a new instance of the Item class with the specified name and price.
+     * Constructs a new instance of the Item class with the specified name and
+     * price.
      *
      * @param name  The name used to identify this item.
-     * @param price The monetary value of this item. This must always be a positive value.
-     * @throws IllegalArgumentException If the price provided is negative or has a zero value.
+     * @param price The monetary value of this item. This must always be a positive
+     *              value.
+     * @throws IllegalArgumentException If the price provided is negative or has a
+     *                                  zero value.
      */
     public Item(String name, double price) {
         if (price <= 0) {
@@ -44,7 +46,6 @@ public class Item {
     public String getName() {
         return this.name;
     }
-
 
     /**
      * Retrieves the price associated with this item.
@@ -70,8 +71,10 @@ public class Item {
     /**
      * Updates the price of this item to the specified value.
      *
-     * @param newPrice The new price for this item. This must always be a positive value.
-     * @throws IllegalArgumentException If the new price provided is negative or has a zero value.
+     * @param newPrice The new price for this item. This must always be a positive
+     *                 value.
+     * @throws IllegalArgumentException If the new price provided is negative or has
+     *                                  a zero value.
      */
     public void setPrice(double newPrice) {
         if (newPrice <= 0) {

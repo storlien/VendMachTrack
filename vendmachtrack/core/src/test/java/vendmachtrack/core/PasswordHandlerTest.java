@@ -1,18 +1,18 @@
 package vendmachtrack.core;
 
+import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import org.junit.jupiter.api.Test;
 
 
 public class PasswordHandlerTest {
-    
-    
-/**
- * Tests the hashPassword method of the PasswordHandler class with regular input.
- */
-  @Test
+
+
+    /**
+     * Tests the hashPassword method of the PasswordHandler class with regular input.
+     */
+    @Test
     public void testHashPasswordWithRegularInput() {
         //Arrange
         String password = "normalPassword";
@@ -22,7 +22,7 @@ public class PasswordHandlerTest {
 
         //Assert
         assertNotNull(hashedPassword);
-        assertFalse(hashedPassword.isEmpty()); 
+        assertFalse(hashedPassword.isEmpty());
     }
 
     /**
@@ -32,7 +32,7 @@ public class PasswordHandlerTest {
     public void testVerifyPasswordWithIncorrectPassword() {
         //Arrange
         String password = "wrongPassword";
-        
+
         //Act & Assert
         assertFalse(PasswordHandler.verifyPassword(password));
     }

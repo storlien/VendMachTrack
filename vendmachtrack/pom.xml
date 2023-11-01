@@ -3,8 +3,9 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>gr2338</groupId>
     <artifactId>vendmachtrack</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0</version>
     <packaging>pom</packaging>
+    <url>https://gitlab.stud.idi.ntnu.no/it1901/groups-2023/gr2338/gr2338</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -13,6 +14,14 @@
         <skipTests>false</skipTests>
         <testResultsDir>${project.basedir}/test-results/</testResultsDir>
     </properties>
+
+    <modules>
+        <module>core</module>
+        <module>ui</module>
+        <module>jsonio</module>
+        <module>springboot</module>
+        <module>jacoco-aggregator</module>
+    </modules>
 
     <dependencyManagement>
         <dependencies>
@@ -51,7 +60,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version> <!-- or newer version -->
             </plugin>
-<!-- SureFire plugin -->
+            <!-- SureFire plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -62,7 +71,7 @@
                     </reportsDirectory>
                 </configuration>
             </plugin>
-<!-- Checkstyle plugin -->
+            <!-- Checkstyle plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
@@ -90,7 +99,7 @@
                     </execution>
                 </executions>
             </plugin>
-<!-- SpotBugs plugin -->
+            <!-- SpotBugs plugin -->
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
@@ -112,48 +121,23 @@
                     </execution>
                 </executions>
             </plugin>
-<!-- Jacoco plugin -->
+            <!-- Jacoco plugin -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.11</version> <!-- Use the latest version -->
+                <version>0.8.11</version>
                 <executions>
+                    <!-- This will ensure the JaCoCo runtime agent is added to the test process -->
                     <execution>
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
                     </execution>
-                    <!-- attached to Maven test phase -->
-                    <execution>
-                        <id>report</id>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                    </execution>
 
-                    <execution>
-                        <id>report-aggregate</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>report-aggregate</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>
-                                ${testResultsDir}/../test-results/jacoco
-                            </outputDirectory>
-                        </configuration>
-                    </execution>
                 </executions>
             </plugin>
 
         </plugins>
     </build>
 
-    <modules>
-        <module>core</module>
-        <module>ui</module>
-        <module>jsonio</module>
-        <module>springboot</module>
-    </modules>
 </project>
