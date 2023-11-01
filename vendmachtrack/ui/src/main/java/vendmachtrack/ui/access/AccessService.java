@@ -18,7 +18,7 @@ import vendmachtrack.jsonio.VendmachtrackPersistence;
 
 public class AccessService {
 
-    private MachineTrackerAccessible access;
+    private final MachineTrackerAccessible access;
 
     /**
      * Constructor for AccessService class. Initializes the access method (remote or
@@ -31,19 +31,22 @@ public class AccessService {
 
     public AccessService(URI endpointUri, String fileName) {
 
+        MachineTrackerAccessible newAccess;
+
         try {
             if (checkServerHealth(endpointUri)) {
-                access = new MachineTrackerAccessRemote(endpointUri);
+                newAccess = new MachineTrackerAccessRemote(endpointUri);
                 System.out.println("Using remote access");
             } else {
-                access = new MachineTrackerAccessLocal(new VendmachtrackPersistence(fileName));
+                newAccess = new MachineTrackerAccessLocal(new VendmachtrackPersistence(fileName));
                 System.out.println("Using local access");
             }
         } catch (Exception e) {
-            System.out.println("Error during server health check: " + e);
-            access = new MachineTrackerAccessLocal(new VendmachtrackPersistence(fileName));
-            System.out.println("Using local access as a fallback");
+            newAccess = new MachineTrackerAccessLocal(new VendmachtrackPersistence(fileName));
+            System.out.println("Using local access");
         }
+
+        this.access = newAccess;
 
     }
 
