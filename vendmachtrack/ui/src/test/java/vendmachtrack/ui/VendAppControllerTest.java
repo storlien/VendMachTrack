@@ -62,7 +62,11 @@ public class VendAppControllerTest extends ApplicationTest {
          controller.updateVendMachList();
 
         // Set the scene and show the stage
-        stage.setScene(new Scene(parent));
+        Scene scene = new Scene(parent);
+        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+        stage.setScene(scene);
+
+        stage.setScene(scene);
         stage.show();
     }
 
@@ -215,10 +219,6 @@ public class VendAppControllerTest extends ApplicationTest {
 
        @Test
     public void VendAppController_testAddVendingMachine_NoIdWritten(){
-
-        // Arrange
-        when(mockAccess.addVendMach(5, ""))
-        .thenThrow(new RuntimeException("Location Name not valid"));
         
         // Act
         clickOn("#locationTextField").write("5");  
