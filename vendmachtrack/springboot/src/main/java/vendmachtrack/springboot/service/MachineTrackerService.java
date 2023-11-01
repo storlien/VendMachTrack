@@ -108,7 +108,6 @@ public class MachineTrackerService {
         validateVendMachId(id);
 
         return repository.addItem(id, item, quantity).getStatus();
-        return repository.addItem(id, item, quantity).getStatus();
     }
 
     /**
@@ -140,7 +139,6 @@ public class MachineTrackerService {
             throw new IllegalInputException(
                     "The vending machine's inventory contains less than the given quantity to remove of item: " + item);
         } else {
-            return repository.removeItem(id, item, quantity).getStatus();
             return repository.removeItem(id, item, quantity).getStatus();
         }
     }
