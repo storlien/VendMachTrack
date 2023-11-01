@@ -11,7 +11,7 @@ import java.util.HashMap;
 @RequestMapping(MachineTrackerController.VENDMACHTRACK_SERVICE_PATH)
 public class MachineTrackerController {
 
-    public static final String VENDMACHTRACK_SERVICE_PATH = "vendmachtrack";
+    static final String VENDMACHTRACK_SERVICE_PATH = "vendmachtrack";
 
     private final MachineTrackerService machtrackService;
 

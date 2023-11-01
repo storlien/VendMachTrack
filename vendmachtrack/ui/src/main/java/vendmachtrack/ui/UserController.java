@@ -88,7 +88,7 @@ public class UserController {
      * @param inventory A map representing the items and quantities in the vending
      *                  machine inventory.
      */
-    public void updateButtons(int machineID, Map<String, Integer> inventory) {
+    private void updateButtons(int machineID, Map<String, Integer> inventory) {
         try {
             buttonContainer.getChildren().clear();
 
@@ -149,7 +149,7 @@ public class UserController {
      *
      * @param machineID The ID of the selected vending machine.
      */
-    public void updateTitle(int machineID) {
+    private void updateTitle(int machineID) {
         try {
             mylabel.setText("Vending machine: " + access.getVendMachLocation(machineID));
         } catch (Exception e) {

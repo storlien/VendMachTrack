@@ -2,7 +2,7 @@ package vendmachtrack.springboot.exception;
 
 import java.util.Date;
 
-public class ErrorDetails {
+class ErrorDetails {
     private final Date timestamp;
     private final String error;
     private final String details;
