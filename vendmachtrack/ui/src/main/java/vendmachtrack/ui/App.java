@@ -62,7 +62,7 @@ public class App extends Application {
      */
     public void switchToVendAppScene(AccessService service) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("App.fxml"));
-        Parent parent = loader.load(); // initialize
+        Parent parent = loader.load();
 
         mainController = loader.getController();
         mainController.setAccessService(service);
