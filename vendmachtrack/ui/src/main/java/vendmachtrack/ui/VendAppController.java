@@ -158,7 +158,9 @@ public class VendAppController implements Initializable {
     @FXML
     private void handleAddButton(ActionEvent event) {
         try {
-            access.addVendMach(Integer.parseInt(idTextFieldAdd.getText()), locationTextField.getText());
+            int machineId = Integer.parseInt(idTextFieldAdd.getText());
+            String location = locationTextField.getText();
+            access.addVendMach(machineId, location);
             updateVendMachList();
             textArea.clear();
             menuBar.setValue(null);
@@ -166,10 +168,17 @@ public class VendAppController implements Initializable {
             locationTextField.clear();
             outputText.getStyleClass().removeAll("success-text", "error-text");
             outputText.getStyleClass().add("success-text");
-            outputText.setText("The machine was successfully added to your tracker ");
+            outputText.setText("The machine " + machineId + " was successfully added to your tracker ");
 
+        } catch (NumberFormatException e) {
+            textArea.clear();
+            menuBar.setValue(null);
+            idTextFieldAdd.clear();
+            locationTextField.clear();
+            outputText.getStyleClass().removeAll("success-text", "error-text");
+            outputText.getStyleClass().add("error-text");
+            outputText.setText("Machine ID must be an integer");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             textArea.clear();
             menuBar.setValue(null);
             idTextFieldAdd.clear();
@@ -177,9 +186,7 @@ public class VendAppController implements Initializable {
             outputText.getStyleClass().removeAll("success-text", "error-text");
             outputText.getStyleClass().add("error-text");
             outputText.setText(e.getMessage());
-
         }
-
     }
 
     /**
@@ -191,17 +198,24 @@ public class VendAppController implements Initializable {
     @FXML
     private void handleRemoveButton(ActionEvent event) {
         try {
-            access.removeVendMach(Integer.parseInt(idTextFieldRemove.getText()));
+            int machineId = Integer.parseInt(idTextFieldRemove.getText());
+            access.removeVendMach(machineId);
             updateVendMachList();
             textArea.clear();
             menuBar.setValue(null);
             idTextFieldRemove.clear();
             outputText.getStyleClass().removeAll("success-text", "error-text");
             outputText.getStyleClass().add("success-text");
-            outputText.setText("The machine was successfully removed from your tracker");
+            outputText.setText("The machine " + machineId + " was successfully removed from your tracker");
 
+        } catch (NumberFormatException e) {
+            textArea.clear();
+            menuBar.setValue(null);
+            idTextFieldRemove.clear();
+            outputText.getStyleClass().removeAll("success-text", "error-text");
+            outputText.getStyleClass().add("error-text");
+            outputText.setText("Machine ID must be an integer");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             textArea.clear();
             menuBar.setValue(null);
             idTextFieldRemove.clear();
@@ -223,6 +237,7 @@ public class VendAppController implements Initializable {
     private void handleButtonClick(ActionEvent event) {
         if (findID() != null) {
             updateInventory(Integer.parseInt(findID()));
+            outputText.setText(null);
         } else {
             textArea.setText("No vending machine selected");
         }
@@ -261,7 +276,6 @@ public class VendAppController implements Initializable {
             int endIndex = selectedItem.indexOf("(");
             return selectedItem.substring(colonIndex + 2, endIndex).trim();
         } else {
-            System.out.println("No vending machine selected"); // Print a message for debugging
             return null;
         }
     }
