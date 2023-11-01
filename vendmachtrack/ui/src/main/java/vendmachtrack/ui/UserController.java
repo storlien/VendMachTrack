@@ -100,7 +100,6 @@ public class UserController {
 
             for (Map.Entry<String, Integer> entry : inventory.entrySet()) {
                 String itemName = entry.getKey();
-                int itemQuantity = entry.getValue();
 
                 Button button = new Button(itemName);
                 button.getStyleClass().add("buttonContainer");

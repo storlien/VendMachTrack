@@ -43,7 +43,6 @@ public class ServerController {
             mainApp.switchToVendAppScene(service);
 
         } catch (Exception e) {
-            System.out.println("test");
             label.setText(e.getMessage());
         }
     }
