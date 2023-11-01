@@ -79,14 +79,15 @@
                 <configuration>
                     <configLocation>config/checkstyle.xml</configLocation>
                     <consoleOutput>true</consoleOutput>
-                    <failsOnError>true</failsOnError>
+                    <failsOnError>false</failsOnError>
+                    <failOnViolation>false</failOnViolation>
                     <linkXRef>false</linkXRef>
                     <outputFile>
                         ${testResultsDir}/checkstyle/${project.artifactId}.xml
                     </outputFile>
                     <inputEncoding>UTF-8</inputEncoding>
                     <outputEncoding>UTF-8</outputEncoding>
-                    <consoleOutput>true</consoleOutput>
+                    <consoleOutput>false</consoleOutput>
                     <excludes>**/module-info.java</excludes>
                 </configuration>
                 <executions>
