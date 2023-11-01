@@ -4,6 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+/**
+ * The {@code SpringbootApplication} class serves as the main entry point for the Spring Boot application.
+ */
 @SpringBootApplication
 public class SpringbootApplication {
 
