@@ -31,7 +31,7 @@ public class MachineTrackerAccessLocal implements MachineTrackerAccessible {
      * Access method for the list of vending machines
      *
      * @return HashMap of vending machine list with vending machine ID as key and
-     *         location as value
+     * location as value
      */
     @Override
     public HashMap<Integer, String> getVendMachList() {
@@ -99,12 +99,13 @@ public class MachineTrackerAccessLocal implements MachineTrackerAccessible {
     }
 
     /**
-     * Access method for removing an quantity of an item
+     * Access method for removing a quantity of an item
      *
      * @param id       The ID of the vending machine
      * @param item     The item to be removed
      * @param quantity The quantity to be removed from the item
      * @return HashMap of inventory with item as key and quantity as value
+     * @throws IllegalArgumentException if inventory doesn't contain item or contains less than the quantity to be removed
      */
     @Override
     public HashMap<String, Integer> removeItem(int id, String item, int quantity) {
@@ -139,7 +140,7 @@ public class MachineTrackerAccessLocal implements MachineTrackerAccessible {
      * @param id       The ID of the new vending machine
      * @param location The location of the new vending machine
      * @return HashMap of vending machine list with vending machine ID as key and
-     *         location as value
+     * location as value
      */
     @Override
     public HashMap<Integer, String> addVendMach(int id, String location) {
@@ -162,7 +163,7 @@ public class MachineTrackerAccessLocal implements MachineTrackerAccessible {
      *
      * @param id The ID of the vending machine
      * @return HashMap of vending machine list with vending machine ID as key and
-     *         location as value
+     * location as value
      */
     @Override
     public HashMap<Integer, String> removeVendMach(int id) {
@@ -186,7 +187,7 @@ public class MachineTrackerAccessLocal implements MachineTrackerAccessible {
      * @param id       The ID of the vending machine
      * @param location The new location of the vending machine
      * @return HashMap of vending machine list with vending machine ID as key and
-     *         location as value
+     * location as value
      */
     @Override
     public HashMap<Integer, String> changeLocation(int id, String location) {
@@ -207,9 +208,9 @@ public class MachineTrackerAccessLocal implements MachineTrackerAccessible {
 
     /**
      * Internal method for validating location name.
-     * Throws IllegalArgumentException if name is not valid.
      *
      * @param location Location name to be validated
+     * @throws IllegalArgumentException if name is not valid.
      */
     private void validateLocation(String location) {
         if (!Pattern.compile("[A-ZÆØÅ][a-zæøå]*( [A-ZÆØÅ][a-zæøå]*)*").matcher(location).matches()) {
@@ -219,9 +220,9 @@ public class MachineTrackerAccessLocal implements MachineTrackerAccessible {
 
     /**
      * Internal method for validating quantity.
-     * Throws IllegalArgumentException if quantity is not valid.
      *
      * @param quantity Quantity to be validated
+     * @throws IllegalArgumentException if quantity is not valid.
      */
     private void validateQuantity(int quantity) {
         if (quantity < 1) {
@@ -231,9 +232,9 @@ public class MachineTrackerAccessLocal implements MachineTrackerAccessible {
 
     /**
      * Internal method for validating item name.
-     * Throws IllegalArgumentException if item name is not valid.
      *
      * @param item Item name to be validated
+     * @throws IllegalArgumentException if item name is not valid.
      */
     private void validateItem(String item) {
         if (!Pattern.compile("\\S(.*\\S)?").matcher(item).matches()) {
@@ -243,9 +244,9 @@ public class MachineTrackerAccessLocal implements MachineTrackerAccessible {
 
     /**
      * Internal method for validating if the vending machine with given ID exists.
-     * Throws IllegalArgumentException if no vending machine with given ID exists.
      *
-     * @param id The ID of the vending machine to be validated
+     * @param id The ID of the vending machine to be validated.
+     * @throws IllegalArgumentException if no vending machine with given ID exists.
      */
     private void validateVendMachId(int id) {
         for (VendingMachine vendMach : getMachtrack().getMachines()) {
@@ -259,9 +260,9 @@ public class MachineTrackerAccessLocal implements MachineTrackerAccessible {
 
     /**
      * Internal method for validating new ID for vending machine.
-     * Throws IllegalArgumentException if new ID is not valid or already existing.
      *
      * @param id The ID to be validated
+     * @throws IllegalArgumentException if new ID is not valid or already existing.
      */
     private void validateNewVendMachId(int id) {
         if (!Pattern.compile("\\d+").matcher(String.valueOf(id)).matches()) {
@@ -277,35 +278,27 @@ public class MachineTrackerAccessLocal implements MachineTrackerAccessible {
 
     /**
      * Internal method for retrieving a vending machine based on ID.
-     * Throws IllegalArgumentException if no vending machine with given ID exists.
      *
      * @param id The ID of the vending machine
      * @return Vending Machine with given ID
+     * @throws IllegalArgumentException if no vending machine with given ID exists.
      */
     private VendingMachine getVendMach(int id) {
-        for (VendingMachine vendMach : getMachtrack().getMachines()) {
-            if (vendMach.getId() == id) {
-                return vendMach;
-            }
-        }
-
-        throw new IllegalArgumentException("No such Vending Machine with ID: " + id);
+        return getMachtrack().getMachines()
+                .stream()
+                .filter(vendMach -> vendMach.getId() == id)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("No such Vending Machine with ID: " + id));
     }
 
     /**
      * Internal method for retrieving vending machine tracker.
-     * Throws RunTimeException if no vending machine tracker could be found with the
-     * persistence object given to constructor.
      *
      * @return Vending machine tracker object
+     * @throws RuntimeException if no vending machine tracker could be found with the persistence object given to constructor.
      */
     private MachineTracker getMachtrack() {
-        Optional<MachineTracker> machtrack = Optional.ofNullable(persistence.getVendmachtrack());
-
-        if (machtrack.isEmpty()) {
-            throw new RuntimeException("Vending Machine Tracker not found");
-        }
-
-        return machtrack.get();
+        return Optional.ofNullable(persistence.getVendmachtrack())
+                .orElseThrow(() -> new RuntimeException("Vending Machine Tracker not found"));
     }
 }
