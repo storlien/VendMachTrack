@@ -2,20 +2,21 @@
 
 Velkommen til prosjektet Vendmachtrack!
 
-
 ## Innhold
 
 - [Lenker til andre dokumenter](#lenker-til-andre-dokumenter) 
 - [Dokumentajson fra ulike releases](#dokumentasjon-fra-ulike-releases)
 - [Hvordan kjøre applikasjonen i Eclipse Che](#hvordan-kjøre-applikasjonen-i-eclipse-che)
-- [Hvordan kjøre applikasjonen lokalt](#hvordan-kjøre-applikasjonen-lokalt)  
+- [Hvordan kjøre applikasjonen lokalt](#hvordan-kjøre-applikasjonen-lokalt)
+- [Hvordan bruke applikasjonen](#hvordan-bruke-applikasjonen) 
 - [Hvordan kjøre tester](#hvordan-kjøre-tester)
-- [Hvordan se testdekningsgrad](#hvordan-se-testdekningsgrad)
+- [Hvordan se testresultater](#hvordan-se-testresultater)
 - [Prosjektstruktur](#prosjektstruktur)
 
 ## Lenker til andre dokumenter
 
 - [readme.md for kodeprosjektet](/vendmachtrack/readme.md)
+- [Dokumentasjon av REST API-et](/docs/rest_api.md)
 - [Brukerhistorier](/docs/Brukerhistorier.md)
 
 ## Dokumentasjon fra ulike releases
@@ -31,31 +32,47 @@ Velkommen til prosjektet Vendmachtrack!
   - [Arbeidsflyt](/docs/release2/Arbeidsflyt_2.md)
   - [Krav](/docs/release2/Krav_2.md)
 
+- release 3:
+  - [readme.md](/docs/release3/readme.md)
+  - [Arbeidsflyt](/docs/release3/Arbeidsflyt_3.md)
+  - [Krav](/docs/release3/Krav_3.md)
+
 ## Hvordan kjøre applikasjonen i Eclipse Che
 
 1. Sørg først for at Eclipse Che er koblet opp mot Gitlab med Personal Access Token.
 2. [Åpne prosjektet i Eclipse Che.](https://che.stud.ntnu.no/#https://gitlab.stud.idi.ntnu.no/it1901/groups-2023/gr2338/gr2338?new)
-3. Når IDE-en har startet opp, kopierer du "endpoint URL" for "6080-tcp-desktop-ui (6080/http)" under "Endpoints" nederst til venstre i IDE-en. Se skjermbildet:
+3. Sørg for at prosjektet er oppdatert ved å kjøre følgende kommando i terminalen:
+```bash
+git pull
+```
+4. Når IDE-en har startet opp, kopierer du "endpoint URL" for "6080-tcp-desktop-ui (6080/http)" under "Endpoints" nederst til venstre i IDE-en. Se skjermbildet:
 ![Alt text](/docs/images/endpoint_eclipse-che.png)
-4. Åpne nettsiden i en ny fane med den kopierte URL-en.
-5. Gå tilbake til IDE-en. Åpne en terminal.
-6. Kjør kommando for å kopiere tracker.json-filen til home directory:
+5. Åpne nettsiden i en ny fane med den kopierte URL-en.
+6. Gå tilbake til IDE-en. Åpne en terminal.
+7. Kjør kommando for å kopiere tracker.json-filen til home directory:
 ```bash
 cp tracker.json /home/dev/
 ```
-7. Kjør kommando for å navigere til vendmachtrack/:
+8. Kjør kommando for å navigere til vendmachtrack/:
 ```bash
 cd vendmachtrack/
 ```
-8. Kjør kommando:
+9. Kjør kommando:
 ```bash
 mvn clean install
 ```
-9. Kjør kommando:
+10. Kjør kommando:
+```bash
+mvn spring-boot:run -f springboot/pom.xml
+```
+11. Kjør kommando:
 ```bash
 mvn javafx:run -f ui/pom.xml
 ```
-10. Applikasjonen kommer da til å starte i workspacet sitt desktop (nettsiden fra endpoint URL-en)
+
+Applikasjonen kommer da til å starte i workspacet sitt desktop (nettsiden fra endpoint URL-en)
+
+Se videre [hvordan man bruker applikasjonen](#hvordan-bruke-applikasjonen) for å komme i gang.
 
 ## Hvordan kjøre applikasjonen lokalt
 
@@ -63,7 +80,7 @@ mvn javafx:run -f ui/pom.xml
     - Java versjon 17.0.5 eller nyere
     - Apache Maven 3.8.7 eller nyere
     - Andre repoer som prosjektet er avhengig av vil man få automatisk lastet ned og installert ved hjelp av Maven
-2. Klon dette repositoret til din lokale maskin
+2. Klon eller last ned dette kodelageret til din maskin.
 3. Kopier filen "tracker.json" til ditt "home directory". Filen ligger i rotnivå av repoet.
 
     - På Linux er dette under /home/ditt-brukernavn
@@ -71,18 +88,51 @@ mvn javafx:run -f ui/pom.xml
     - På Mac er dette under /Users/ditt-brukernavn
 
 
-4. Åpne en ønsket terminal (for eksempel i VSCode).
+4. Åpne en ønsket terminal.
 5. Sørg for at filstien er: vendmachtrack/
-6. Kjør følgende kommando i terminalen:
+6. Kjør kommando:
 
 ```bash
  mvn clean install 
 ```
-
-7. Kjør følgende kommando i terminalen:
+7. Kjør kommando:
+```bash
+mvn spring-boot:run -f springboot/pom.xml
+```
+8. Kjør kommando:
 
 ```bash
 mvn javafx:run -f ui/pom.xml
+```
+
+Applikasjonen skal da dukke opp på skjermen.
+
+Se videre [hvordan man bruker applikasjonen](#hvordan-bruke-applikasjonen) for å komme i gang.
+<br>
+
+## Hvordan bruke applikasjonen
+
+Applikasjonen kommuniserer med Spring Boot REST API-serveren som kjører på samme maskin.
+
+Hvis man sløyfer kommandoen for å starte Spring Boot (punkt 10 for kjøring i Eclipse Che eller punkt 7 for kjøring lokalt), vil applikasjonen heller jobbe direkte mot samme fil i stedet for å gjøre det gjennom REST API-et.
+
+1. Skriv inn Server URL og filnavn i vinduet som vises når man kjører applikasjonen. For dette prosjektet skal følgende brukes:
+
+
+
+**Server URL**
+
+```
+http://localhost:8080
+```
+**Tracker File Name**
+```
+tracker.json
+```
+
+2. Passordet for å komme seg ut av "User View" for dette prosjektet er:
+```
+Brus123
 ```
 
 <br>
@@ -90,35 +140,54 @@ mvn javafx:run -f ui/pom.xml
 ## Hvordan kjøre tester
 
 - Tester skal kjøres ved hjelp av Maven.
-- Sørg for at du befinner deg i rotmappen for prosjektet (gr2338/vendmachtrack)
-- Skriv følgende kommando i terminalen:  
+- Sørg for at du befinner deg i prosjektmappen (gr2338/vendmachtrack)
+- Skriv følgende kommando i terminalen:
 
 ```bash
-mvn clean install 
+mvn clean verify
 ```
-
-```bash
-mvn test 
-```
-
 <br>
 
-## Hvordan se testdekningsgrad
+## Hvordan se testresultater
 
-1. Last ned en live server extension til din IDE (for eksempel Live Server extension til VSCode)
-2. Kjør følgende kommando i terminalen for å generere JaCoCo-rapporten:
+Disse stegene forutsetter at man har kjørt en av følgende kommandoer i forkant:
 
 ```bash
-mvn test jacoco:report
+mvn clean install
+```
+eller
+```bash
+mvn verify
 ```
 
-3. Etter at kommandoen er fullført, vil en ny mappe kalt 'target' bli generert i hver modul (core, jsonio, ui).
-4. Inne i 'target' mappen, naviger til 'site/jacoco' mappen. Her vil du finne en 'index.html' fil.
-5. Åpne denne filen i en nettleser ved hjelp av live server extensionen.
+### JUnit
 
+For å se en komplett oversikt over alle JUnit-tester kjørt:
+
+1. Naviger til mappen 'vendmachtrack/test-results/junit'
+2. Her ligger det én mappe for hver modul. I hver modulmappe ligger det én .txt-fil med testresultatet for hver klasse som har blitt testet.
+
+Man kan eventuelt lese det som blir skrevet til terminalen når tester blir kjørt, men det er det samme som ligger i .txt-filene.
+
+
+### Checkstyle og SpotBugs
+
+For å se en komplett oversikt over alle anmerkninger gitt av Checkstyle og SpotBugs:
+
+1. Naviger til mappen 'vendmachtrack/test-results/'
+2. I mappen 'vendmachtrack/test-results/checkstyle/' ligger resultatet fra Checkstyle til alle modulene i hver sin .xml-fil.
+3. I mappen 'vendmachtrack/test-results/spotbugs/' ligger resultatet fra SpotBugs til alle modulene i hvert sin .xml-fil i sin respektive mappe.
+
+Det kan være tungvint å lese .xml-filene, men de gir en komplett oversikt over alt som er rapportert. Eventuelt kan man lese det som blir skrevet til terminalen når tester blir kjørt, men det er det samme som ligger i .xml-filene.
+
+### JaCoCo
+
+For å se testdekningsgrad gitt av JaCoCo:
+
+1. Naviger til mappen 'vendmachtrack/test-results/jacoco'
+3. Åpne filen 'index.html' i en nettleser. Rapporten vil da dukke opp i nettleseren. Her vises testdekningsgraden for prosjektet.
 
 <br>
-
 
 ## Prosjektstruktur
 
@@ -178,6 +247,10 @@ Repoet er organisert i flere mapper. Selve kodeprosjektet ligger i mappen vendma
     - src/test/java/ui/
       - VendMachAppTest.java - inneholder testene til ui-mappen
       - AppTest.java
+
+
+
+
 
 
 
