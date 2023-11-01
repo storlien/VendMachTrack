@@ -53,7 +53,7 @@ public class RefillController {
      *
      * @param machineID The ID of the selected vending machine.
      */
-    public void updateTitle(int machineID) {
+    private void updateTitle(int machineID) {
         title.setText("Vending machine: " + machineID);
     }
 

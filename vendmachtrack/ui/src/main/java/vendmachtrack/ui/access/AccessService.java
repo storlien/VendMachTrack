@@ -53,12 +53,12 @@ public class AccessService {
      *
      * @param endpointUri The URI of the server endpoint.
      * @return True if the server is healthy and responds with a 200 status code,
-     *         false otherwise.
+     * false otherwise.
      * @throws IOException          If an I/O error occurs while sending the
      *                              request.
      * @throws InterruptedException If the operation is interrupted.
      */
-    public boolean checkServerHealth(URI endpointUri) throws IOException, InterruptedException {
+    private boolean checkServerHealth(URI endpointUri) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(endpointUri.resolve("health"))
@@ -74,7 +74,7 @@ public class AccessService {
      * Retrieves the access method (remote or local) currently being used.
      *
      * @return The MachineTrackerAccessible interface implementation representing
-     *         the access method.
+     * the access method.
      */
     public MachineTrackerAccessible getAccess() {
         return access;
