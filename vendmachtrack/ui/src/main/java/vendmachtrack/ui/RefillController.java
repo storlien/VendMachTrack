@@ -10,7 +10,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
 
 import vendmachtrack.ui.access.AccessService;
 import vendmachtrack.ui.access.MachineTrackerAccessible;
@@ -65,6 +64,7 @@ public class RefillController {
      */
     public void setSelectedMachineID(int machineID) {
         this.selectedMachineID = machineID;
+        setInventory(access.getInventory(machineID));
         updateTitle(machineID);
     }
 
@@ -80,6 +80,19 @@ public class RefillController {
             answerText.setText(e.getMessage());
         }
 
+    }
+
+    public void setInventory(Map<String, Integer> inventory) {
+        try {
+            StringBuilder formattedStatus = new StringBuilder("Inventory:\n");
+            for (Map.Entry<String, Integer> entry : inventory.entrySet()) {
+                formattedStatus.append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
+            }
+            textArea.setText(formattedStatus.toString());
+        } catch (Exception e) {
+            textArea.setText(e.getMessage());
+
+        }
     }
 
     /**
@@ -99,8 +112,8 @@ public class RefillController {
     @FXML
     private void refillItem() {
         HashMap<String, Integer> updatedInventory = new HashMap<>();
-        if (!refillNumber.getText().matches("-?\\d+")) {
-            answerText.setText("Invalid input: Please enter a valid number");
+        if (!refillNumber.getText().matches("-?\\d+") || refillItem.getText().trim().isEmpty()) {
+            answerText.setText("Invalid input: Please enter a valid number and item");
             return;
         }
 
