@@ -1,0 +1,101 @@
+before_script:
+  - cd vendmachtrack/
+
+stages:
+  - build
+  - lint
+  - test
+  - coverage-report
+#  - coverage-visualize
+
+build:
+  stage: build
+  image: maven:3.9.4-amazoncorretto-20
+  script:
+    - mvn clean install -DskipTests
+    - mvn compile
+  only:
+    - merge_requests
+
+checkstyle:
+  stage: lint
+  image: maven:3.9.4-amazoncorretto-20
+  script:
+    - mvn clean install -DskipTests
+    - mvn checkstyle:checkstyle -Dcheckstyle.failOnViolation=true
+  only:
+    - merge_requests
+  artifacts:
+    when: always
+    paths:
+      - $CI_PROJECT_DIR/vendmachtrack/test-results/checkstyle/*.xml
+  needs:
+    - build
+
+spotbugs:
+  stage: lint
+  image: maven:3.9.4-amazoncorretto-20
+  script:
+    - mvn clean install -DskipTests
+    - mvn com.github.spotbugs:spotbugs-maven-plugin:check
+  only:
+    - merge_requests
+  artifacts:
+    when: always
+    paths:
+      - $CI_PROJECT_DIR/vendmachtrack/test-results/spotbugs/**/spotbugs.xml
+  needs:
+    - build
+
+test: 
+  stage: test
+  image: maven:3.9.4-amazoncorretto-20
+  script:
+    - mvn clean install -DskipTests
+    - mvn test -pl '!ui'
+  only:
+    - merge_requests
+  artifacts:
+    when: always
+    reports:
+      junit: $CI_PROJECT_DIR/vendmachtrack/test-results/junit/**/*xml
+  needs:
+    - build
+
+verify:
+  stage: coverage-report
+  image: maven:3.9.4-amazoncorretto-20
+  script:
+    - mvn clean install -DskipTests
+    - mvn verify -pl '!ui'
+    - cat $CI_PROJECT_DIR/vendmachtrack/test-results/jacoco/index.html | grep -o 'Total[^%]*%'
+  coverage: '/<td class="ctr2">(\d+%)/'
+  only:
+    - merge_requests
+  artifacts:
+    when: always
+    paths:
+      - $CI_PROJECT_DIR/vendmachtrack/test-results/jacoco/
+    expire_in: 1 hour
+  needs:
+    - build
+    - checkstyle
+    - spotbugs
+    - test
+
+#visualize:
+#  stage: coverage-visualize
+#  image: registry.gitlab.com/haynes/jacoco2cobertura:1.0.9
+#  script:
+#    - python /opt/cover2cover.py $CI_PROJECT_DIR/vendmachtrack/test-results/jacoco/jacoco.xml $CI_PROJECT_DIR/ > $CI_PROJECT_DIR/vendmachtrack/test-results/jacoco/cobertura/cobertura.xml
+#  artifacts:
+#    reports:
+#      coverage_report:
+#        coverage_format: cobertura
+#        path: $CI_PROJECT_DIR/vendmachtrack/test-results/jacoco/cobertura/cobertura.xml
+#  needs:
+#    - build
+#    - checkstyle
+#    - spotbugs
+#    - test
+#    - verify

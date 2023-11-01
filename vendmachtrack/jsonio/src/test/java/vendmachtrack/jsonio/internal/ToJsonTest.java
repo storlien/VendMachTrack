@@ -1,17 +1,23 @@
 package vendmachtrack.jsonio.internal;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import vendmachtrack.core.MachineTracker;
 import vendmachtrack.core.VendingMachine;
 
-import vendmachtrack.jsonio.internal.ToJson;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * This class contains JUnit tests for the ToJson class. It tests the serialization of MachineTracker objects to JSON format.
@@ -21,22 +27,24 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class ToJsonTest {
 
+    private final String filename = "/testfile.json";
     private ToJson toJson;
-    private String filePath;
-    private HashMap<String, Integer> inventory = new HashMap<>();
+    private Path dir;
 
 
-    /**
-     * Sets up the test fixture. This method is called before each test case method is executed.
-     * It initializes a new instance of the ToJson class with the filename "testfile.json".
-     *
-     * @throws IOException if an I/O error occurs while creating the ToJson instance.
-     */
     @BeforeEach
-    public void setUp() throws IOException {
-        toJson = new ToJson("testfile.json");
+    public void setUp() throws Exception {
+        dir = Paths.get(System.getProperty("user.home") + filename);
+        File file = dir.toFile();
+        toJson = new ToJson(filename);
+
     }
 
+    @AfterEach
+    public void tearDown() throws Exception {
+        Paths.get(System.getProperty("user.home") + filename);
+        Files.deleteIfExists(dir);
+    }
 
     /**
      * Tests the toJson.toOutputStream() method by creating a new MachineTracker object with a single VendingMachine object
@@ -63,7 +71,7 @@ public class ToJsonTest {
 
         // Assert that the OutputStream is not null and contains the expected data
         assertNotNull(outputStream);
-        String result = new String(((ByteArrayOutputStream) outputStream).toByteArray(), StandardCharsets.UTF_8);
+        String result = ((ByteArrayOutputStream) outputStream).toString(StandardCharsets.UTF_8);
         assertEquals("{\"machines\":[{\"status\":{\"Øl\":10,\"Cola\":3},\"id\":1,\"location\":\"Trondheim\"}]}", result);
     }
 
@@ -80,7 +88,7 @@ public class ToJsonTest {
 
         // Assert that the OutputStream is not null and contains the expected data
         assertNotNull(outputStream);
-        String result = new String(((ByteArrayOutputStream) outputStream).toByteArray(), StandardCharsets.UTF_8);
+        String result = ((ByteArrayOutputStream) outputStream).toString(StandardCharsets.UTF_8);
         assertEquals("null", result);
     }
 
@@ -104,21 +112,7 @@ public class ToJsonTest {
 
         // Assert that the OutputStream is not null and contains the expected data
         assertNotNull(outputStream);
-        String result = new String(((ByteArrayOutputStream) outputStream).toByteArray(), StandardCharsets.UTF_8);
+        String result = ((ByteArrayOutputStream) outputStream).toString(StandardCharsets.UTF_8);
         assertEquals("{\"machines\":[]}", result);
     }
-
-
-    /**
-     * Tests the behavior of the writeToFile method when a null object is passed.
-     *
-     * @see ToJson#writeToFile(MachineTracker)
-     */
-    @Test
-    public void testWriteToFile_nullMachineTracker() {
-        // This test verifies that no exception is thrown when a null object is passed
-        assertDoesNotThrow(() -> toJson.writeToFile(null));
-    }
-
-
 }

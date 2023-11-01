@@ -1,9 +1,9 @@
 package vendmachtrack.springboot.service;
 
-import vendmachtrack.core.MachineTracker;
-import vendmachtrack.core.VendingMachine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import vendmachtrack.core.MachineTracker;
+import vendmachtrack.core.VendingMachine;
 import vendmachtrack.springboot.exception.IllegalInputException;
 import vendmachtrack.springboot.exception.ResourceNotFoundException;
 import vendmachtrack.springboot.repository.MachineTrackerRepository;
@@ -14,7 +14,6 @@ import java.util.regex.Pattern;
 
 @Service
 public class MachineTrackerService {
-
 
     private final MachineTrackerRepository repository;
 
@@ -53,27 +52,28 @@ public class MachineTrackerService {
         return getVendMach(id).getStatus();
     }
 
-    public HashMap<String, Integer> addItem(int id, String item, int amount) {
+    public HashMap<String, Integer> addItem(int id, String item, int quantity) {
         validateItem(item);
-        validateAmount(amount);
+        validateQuantity(quantity);
         validateVendMachId(id);
 
-        return repository.addItem(id, item, amount).getStatus();
+        return repository.addItem(id, item, quantity).getStatus();
     }
 
-    public HashMap<String, Integer> removeItem(int id, String item, int amount) {
+    public HashMap<String, Integer> removeItem(int id, String item, int quantity) {
         validateItem(item);
-        validateAmount(amount);
+        validateQuantity(quantity);
         validateVendMachId(id);
 
         VendingMachine vendMach = getVendMach(id);
 
         if (!vendMach.getStatus().containsKey(item)) {
             throw new IllegalInputException("The vending machine's inventory does not contain this item");
-        } else if (amount > vendMach.getStatus().get(item)) {
-            throw new IllegalInputException("The vending machine's inventory contains less than the given amount to remove of item: " + item);
+        } else if (quantity > vendMach.getStatus().get(item)) {
+            throw new IllegalInputException(
+                    "The vending machine's inventory contains less than the given quantity to remove of item: " + item);
         } else {
-            return repository.removeItem(id, item, amount).getStatus();
+            return repository.removeItem(id, item, quantity).getStatus();
         }
     }
 
@@ -106,9 +106,9 @@ public class MachineTrackerService {
         }
     }
 
-    private void validateAmount(int amount) {
-        if (amount < 1) {
-            throw new IllegalInputException("Amount has to be higher than zero");
+    private void validateQuantity(int quantity) {
+        if (quantity < 1) {
+            throw new IllegalInputException("Quantity has to be higher than zero");
         }
     }
 

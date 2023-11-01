@@ -2,7 +2,6 @@ package vendmachtrack.core;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import vendmachtrack.core.VendingMachine;
 
 import java.util.HashMap;
 

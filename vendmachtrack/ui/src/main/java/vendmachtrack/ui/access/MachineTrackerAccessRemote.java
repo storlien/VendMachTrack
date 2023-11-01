@@ -18,7 +18,8 @@ import java.util.HashMap;
 
 /**
  * Class for accessing Vending Machine Tracker through REST API.
- * Accesses the Spring Boot REST API server by following the documentation on possible requests to perform against the API.
+ * Accesses the Spring Boot REST API server by following the documentation on
+ * possible requests to perform against the API.
  */
 public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
 
@@ -43,7 +44,8 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
     /**
      * Access method for the list of vending machines
      *
-     * @return HashMap of vending machine list with vending machine ID as key and location as value
+     * @return HashMap of vending machine list with vending machine ID as key and
+     * location as value
      */
     @Override
     public HashMap<Integer, String> getVendMachList() {
@@ -66,7 +68,7 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
     @Override
     public String getVendMachLocation(int id) {
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(endpointBaseUri.resolve("vendmachtrack/" + String.valueOf(id) + "/name"))
+                .uri(endpointBaseUri.resolve("vendmachtrack/" + id + "/name"))
                 .build();
 
         HttpResponse<String> response = getResponse(request);
@@ -79,12 +81,12 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
      * Access method for inventory
      *
      * @param id The ID of the vending machine
-     * @return HashMap of inventory with item as key and amount as value
+     * @return HashMap of inventory with item as key and as value
      */
     @Override
     public HashMap<String, Integer> getInventory(int id) {
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(endpointBaseUri.resolve("vendmachtrack/" + String.valueOf(id)))
+                .uri(endpointBaseUri.resolve("vendmachtrack/" + id))
                 .build();
 
         HttpResponse<String> response = getResponse(request);
@@ -96,20 +98,21 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
     /**
      * Access method for adding item to vending machine's inventory
      *
-     * @param id     The ID of the vending machine
-     * @param item   The item name to be added
-     * @param amount The amount of the item to be added
-     * @return HashMap of inventory with item as key and amount as value
+     * @param id       The ID of the vending machine
+     * @param item     The item name to be added
+     * @param quantity The quantity of the item to be added
+     * @return HashMap of inventory with item as key and quantity as value
      */
     @Override
-    public HashMap<String, Integer> addItem(int id, String item, int amount) {
+    public HashMap<String, Integer> addItem(int id, String item, int quantity) {
         String param1Value = URLEncoder.encode(String.valueOf(id), StandardCharsets.UTF_8);
         String param2Key = "item";
         String param2Value = URLEncoder.encode(item, StandardCharsets.UTF_8);
-        String param3Key = "amount";
-        String param3Value = URLEncoder.encode(String.valueOf(amount), StandardCharsets.UTF_8);
+        String param3Key = "quantity";
+        String param3Value = URLEncoder.encode(String.valueOf(quantity), StandardCharsets.UTF_8);
 
-        String endpointQuery = String.format("vendmachtrack/%s/add?%s=%s&%s=%s", param1Value, param2Key, param2Value, param3Key, param3Value);
+        String endpointQuery = String.format("vendmachtrack/%s/add?%s=%s&%s=%s", param1Value, param2Key, param2Value,
+                param3Key, param3Value);
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(endpointBaseUri.resolve(endpointQuery))
@@ -123,22 +126,23 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
     }
 
     /**
-     * Access method for removing an amount of an item
+     * Access method for removing a quantity of an item
      *
-     * @param id     The ID of the vending machine
-     * @param item   The item to be removed
-     * @param amount The amount to be removed from the item
-     * @return HashMap of inventory with item as key and amount as value
+     * @param id       The ID of the vending machine
+     * @param item     The item to be removed
+     * @param quantity The quantity to be removed from the item
+     * @return HashMap of inventory with item as key and quantity as value
      */
     @Override
-    public HashMap<String, Integer> removeItem(int id, String item, int amount) {
+    public HashMap<String, Integer> removeItem(int id, String item, int quantity) {
         String param1Value = URLEncoder.encode(String.valueOf(id), StandardCharsets.UTF_8);
         String param2Key = "item";
         String param2Value = URLEncoder.encode(item, StandardCharsets.UTF_8);
-        String param3Key = "amount";
-        String param3Value = URLEncoder.encode(String.valueOf(amount), StandardCharsets.UTF_8);
+        String param3Key = "quantity";
+        String param3Value = URLEncoder.encode(String.valueOf(quantity), StandardCharsets.UTF_8);
 
-        String endpointQuery = String.format("vendmachtrack/%s/remove?%s=%s&%s=%s", param1Value, param2Key, param2Value, param3Key, param3Value);
+        String endpointQuery = String.format("vendmachtrack/%s/remove?%s=%s&%s=%s", param1Value, param2Key, param2Value,
+                param3Key, param3Value);
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(endpointBaseUri.resolve(endpointQuery))
@@ -156,7 +160,8 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
      *
      * @param id       The ID of the new vending machine
      * @param location The location of the new vending machine
-     * @return HashMap of vending machine list with vending machine ID as key and location as value
+     * @return HashMap of vending machine list with vending machine ID as key and
+     * location as value
      */
     @Override
     public HashMap<Integer, String> addVendMach(int id, String location) {
@@ -165,7 +170,8 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
         String param2Key = "location";
         String param2Value = URLEncoder.encode(location, StandardCharsets.UTF_8);
 
-        String endpointQuery = String.format("vendmachtrack/add?%s=%s&%s=%s", param1Key, param1Value, param2Key, param2Value);
+        String endpointQuery = String.format("vendmachtrack/add?%s=%s&%s=%s", param1Key, param1Value, param2Key,
+                param2Value);
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(endpointBaseUri.resolve(endpointQuery))
@@ -182,7 +188,8 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
      * Access method for removing a vending machine
      *
      * @param id The ID of the vending machine
-     * @return HashMap of vending machine list with vending machine ID as key and location as value
+     * @return HashMap of vending machine list with vending machine ID as key and
+     * location as value
      */
     @Override
     public HashMap<Integer, String> removeVendMach(int id) {
@@ -203,7 +210,8 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
      *
      * @param id       The ID of the vending machine
      * @param location The new location of the vending machine
-     * @return HashMap of vending machine list with vending machine ID as key and location as value
+     * @return HashMap of vending machine list with vending machine ID as key and
+     * location as value
      */
     @Override
     public HashMap<Integer, String> changeLocation(int id, String location) {
@@ -225,7 +233,8 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
 
     /**
      * Internal method for checking if the response was successful or not.
-     * If not, it will throw a RunTimeExceptionError with the message being the error message from the HTTP response.
+     * If not, it will throw a RunTimeExceptionError with the message being the
+     * error message from the HTTP response.
      *
      * @param response HttpReponse to be checked
      */

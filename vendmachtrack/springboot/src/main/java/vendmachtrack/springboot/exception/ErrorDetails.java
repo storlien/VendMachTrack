@@ -2,10 +2,10 @@ package vendmachtrack.springboot.exception;
 
 import java.util.Date;
 
-public class ErrorDetails {
-    private Date timestamp;
-    private String error;
-    private String details;
+class ErrorDetails {
+    private final Date timestamp;
+    private final String error;
+    private final String details;
 
     public ErrorDetails(Date timestamp, String error, String details) {
         this.timestamp = new Date(timestamp.getTime());

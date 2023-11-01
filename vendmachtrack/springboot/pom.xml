@@ -6,7 +6,7 @@
     <parent>
         <groupId>gr2338</groupId>
         <artifactId>vendmachtrack</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.0</version>
     </parent>
 
     <artifactId>springboot</artifactId>
@@ -15,6 +15,7 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <testResultsDir>${project.basedir}/../test-results/</testResultsDir>
     </properties>
 
     <dependencyManagement>
@@ -45,20 +46,27 @@
         <dependency>
             <groupId>gr2338</groupId>
             <artifactId>core</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>gr2338</groupId>
             <artifactId>jsonio</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>3.11.2</version>
             <scope>test</scope>
         </dependency>
 

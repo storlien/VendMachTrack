@@ -1,9 +1,9 @@
 package vendmachtrack.springboot.repository;
 
+import org.springframework.stereotype.Repository;
 import vendmachtrack.core.MachineTracker;
 import vendmachtrack.core.VendingMachine;
 import vendmachtrack.jsonio.VendmachtrackPersistence;
-import org.springframework.stereotype.Repository;
 
 @Repository
 public class MachineTrackerRepository {
@@ -48,12 +48,12 @@ public class MachineTrackerRepository {
 
     }
 
-    public VendingMachine addItem(int id, String item, int amount) {
+    public VendingMachine addItem(int id, String item, int quantity) {
         MachineTracker machTrack = getVendmachtrack();
 
         for (VendingMachine vendMach : machTrack.getMachines()) {
             if (vendMach.getId() == id) {
-                vendMach.addItem(item, amount);
+                vendMach.addItem(item, quantity);
                 saveVendmachtrack(machTrack);
                 return vendMach;
             }
@@ -62,12 +62,12 @@ public class MachineTrackerRepository {
         return null;
     }
 
-    public VendingMachine removeItem(int id, String item, int amount) {
+    public VendingMachine removeItem(int id, String item, int quantity) {
         MachineTracker machTrack = getVendmachtrack();
 
         for (VendingMachine vendMach : machTrack.getMachines()) {
             if (vendMach.getId() == id) {
-                vendMach.removeItem(item, amount);
+                vendMach.removeItem(item, quantity);
                 saveVendmachtrack(machTrack);
                 return vendMach;
             }

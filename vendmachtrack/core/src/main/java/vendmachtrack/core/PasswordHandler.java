@@ -29,16 +29,19 @@ public class PasswordHandler {
     }
 
     /**
-     * Verifies a password against saved password. The correct password is hashed and located in resources/password.txt.
+     * Verifies a password against saved password. The correct password is hashed
+     * and located in resources/password.txt.
      *
      * @param password Password to be verified
      * @return True if password is correct, false if not.
      */
-    static boolean verifyPassword(String password) {
+    public static boolean verifyPassword(String password) {
         String validPasswordHash;
         Argon2 argon2 = Argon2Factory.create();
 
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(Objects.requireNonNull(PasswordHandler.class.getResourceAsStream(passwordFile)), StandardCharsets.UTF_8))) {
+        try (BufferedReader br = new BufferedReader(
+                new InputStreamReader(Objects.requireNonNull(PasswordHandler.class.getResourceAsStream(passwordFile)),
+                        StandardCharsets.UTF_8))) {
             validPasswordHash = br.readLine();
         } catch (Exception e) {
             System.err.println("Failed to read password file: " + e);

@@ -1,20 +1,27 @@
 package vendmachtrack.jsonio.internal;
 
-import vendmachtrack.core.MachineTracker;
-import vendmachtrack.jsonio.internal.FromJson;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import vendmachtrack.core.MachineTracker;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class FromJsonTest {
 
     private FromJson fromJson;
-    private String filePath;
-    private String jsonString = "{\"machines\":[{\"status\":{\"Cola\":5,\"Pepsi\":3},\"id\":1,\"location\":\"Trondhjem\"},{\"status\":{\"Tuborg\":1},\"id\":2,\"location\":\"Oslo\"},{\"status\":{\"Hansa\":100,\"Regnvann\":10},\"id\":3,\"location\":\"Bergen\"}]}";
+    private final String jsonString = "{\"machines\":[{\"status\":{\"Cola\":5,\"Pepsi\":3},\"id\":1,\"location\":\"Trondhjem\"},{\"status\":{\"Tuborg\":1},\"id\":2,\"location\":\"Oslo\"},{\"status\":{\"Hansa\":100,\"Regnvann\":10},\"id\":3,\"location\":\"Bergen\"}]}";
+    private final String filename = "/testfile.json";
+    private Path dir;
+
 
     /**
      * Sets up the test fixture. This method is called before each test case method is executed.
@@ -26,10 +33,16 @@ public class FromJsonTest {
      */
     @BeforeEach
     public void setUp() throws IOException {
-        fromJson = new FromJson("tracker.json");
-        File tempFile = File.createTempFile("test", ".json");
-        filePath = tempFile.getAbsolutePath();
-        tempFile.deleteOnExit();
+        dir = Paths.get(System.getProperty("user.home") + filename);
+        Files.write(dir, jsonString.getBytes(StandardCharsets.UTF_8));
+        fromJson = new FromJson("testfile.json");
+    }
+
+
+    @AfterEach
+    public void tearDown() throws Exception {
+        Paths.get(System.getProperty("user.home") + filename);
+        Files.deleteIfExists(dir);
     }
 
     /**
@@ -105,12 +118,11 @@ public class FromJsonTest {
     @Test
     public void testReadFromFileValidFile() throws IOException {
         // Create a temporary file with valid JSON data
-        try (FileOutputStream fos = new FileOutputStream(filePath)) {
-            fos.write(jsonString.getBytes(StandardCharsets.UTF_8));
-        }
+        // Read the JSON data from the testfile.json
+        InputStream inputStream = Files.newInputStream(dir);
 
         // Deserialize the JSON data into a MachineTracker object
-        MachineTracker machineTracker = fromJson.readFromFile();
+        MachineTracker machineTracker = fromJson.fromInputStream(inputStream);
 
         // Assert that the MachineTracker object is not null and contains the expected data
         assertNotNull(machineTracker);
@@ -120,33 +132,21 @@ public class FromJsonTest {
         assertEquals(1, machineTracker.getMachines().get(1).getStatus().get("Tuborg"));
         assertEquals(100, machineTracker.getMachines().get(2).getStatus().get("Hansa"));
         assertEquals(10, machineTracker.getMachines().get(2).getStatus().get("Regnvann"));
+
     }
 
-    /**
-     * Tests the behavior of the FromJson.readFromFile() method when given an invalid file path.
-     *
-     * <p>Creates a temporary file with invalid JSON data, initializes a new FromJson object with the same file path,
-     * and attempts to deserialize the JSON data into a MachineTracker object. Asserts that the MachineTracker object
-     * is null.</p>
-     *
-     * @throws IOException if an I/O error occurs while writing to the temporary file
-     */
     @Test
-    public void testReadFromFileInvalidFile() throws IOException {
-        // Create a temporary file with invalid JSON data
-        String invalidJsonString = "{invalid json}";
-        try (FileOutputStream fos = new FileOutputStream(filePath)) {
-            fos.write(invalidJsonString.getBytes(StandardCharsets.UTF_8));
-        }
+    public void fromJson_readfromfile_returnTestFile() {
 
-        // Create a new FromJson object with the same file path
-        FromJson fromJson = new FromJson(filePath);
-
-        // Deserialize the JSON data into a MachineTracker object
         MachineTracker machineTracker = fromJson.readFromFile();
 
-        // Assert that the MachineTracker object is null
-        assertNull(machineTracker);
+        assertNotNull(machineTracker);
+        assertEquals(3, machineTracker.getMachines().size());
+        assertEquals(5, machineTracker.getMachines().get(0).getStatus().get("Cola"));
+        assertEquals(3, machineTracker.getMachines().get(0).getStatus().get("Pepsi"));
+        assertEquals(1, machineTracker.getMachines().get(1).getStatus().get("Tuborg"));
+        assertEquals(100, machineTracker.getMachines().get(2).getStatus().get("Hansa"));
+        assertEquals(10, machineTracker.getMachines().get(2).getStatus().get("Regnvann"));
     }
 
 
@@ -170,8 +170,19 @@ public class FromJsonTest {
         assertNull(machineTracker);
     }
 
+    @Test
+    public void testReadFromInvalidFile() {
+        // Provide an invalid file path to the constructor
+        FromJson fromJson = new FromJson("invalid_file_path.json");
+
+        // Call the method and capture the result
+        MachineTracker result = fromJson.readFromFile();
+
+        // Assert that the result is null, as the method should return null when it encounters an exception
+        assertNull(result);
+    }
 }
-    
+
      
 
     
