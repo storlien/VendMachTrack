@@ -38,7 +38,6 @@ public class ServerController {
         String serverUrlString = serverUrlField.getText();
 
         try {
-            new URI(serverUrlString).toURL();
             String fileName = trackerFileNameField.getText();
             AccessService service = new AccessService(new URI(serverUrlString), fileName);
             mainApp.switchToVendAppScene(service);
