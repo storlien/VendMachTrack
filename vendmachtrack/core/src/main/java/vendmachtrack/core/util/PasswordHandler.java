@@ -38,7 +38,7 @@ public class PasswordHandler {
      * @param password Password provided by the user as a string.
      * @return The resultant Argon2 hash of the provided password as a string.
      */
-    static String hashPassword(String password) {
+    public static String hashPassword(String password) {
         Argon2 argon2 = Argon2Factory.create();
 
         int iterations = 10;
