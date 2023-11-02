@@ -1,6 +1,7 @@
 module vendmachtrack.ui {
-    // The usage of 'opens' here allows for reflection, required by JavaFX for FXML.
-    opens vendmachtrack.ui to javafx.graphics, javafx.fxml;
+    // The usage of 'opens' here allows for reflection, required by JavaFX for FXML and for Unit Testing.
+    opens vendmachtrack.ui to javafx.fxml, javafx.graphics, org.junit.jupiter, org.mockito, org.testfx;
+
 
     requires vendmachtrack.core;
     requires vendmachtrack.jsonio;
