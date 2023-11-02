@@ -112,7 +112,8 @@ public class RefillController {
     @FXML
     private void refillItem() {
         HashMap<String, Integer> updatedInventory = new HashMap<>();
-        if (!refillNumber.getText().matches("-?\\d+") || refillItem.getText().trim().isEmpty()) {
+        if (!refillNumber.getText().matches("-?\\d+") || refillItem.getText().trim().isEmpty()
+                || Integer.parseInt(refillNumber.getText()) < 1) {
             answerText.setText("Invalid input: Please enter a valid number and item");
             return;
         }
