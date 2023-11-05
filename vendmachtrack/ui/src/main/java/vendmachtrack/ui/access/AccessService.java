@@ -41,7 +41,7 @@ public class AccessService {
                 newAccess = new MachineTrackerAccessLocal(new VendmachtrackPersistence(fileName));
                 System.out.println("Using local access");
             }
-        } catch (Exception e) {
+        } catch (IOException | InterruptedException e) {
             newAccess = new MachineTrackerAccessLocal(new VendmachtrackPersistence(fileName));
             System.out.println("Using local access");
         }
