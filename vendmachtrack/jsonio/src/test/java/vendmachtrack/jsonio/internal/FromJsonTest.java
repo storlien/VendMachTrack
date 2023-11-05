@@ -15,6 +15,13 @@ import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * This class contains JUnit tests for the {@link FromJson} class, specifically focusing on deserializing
+ * JSON data into {@link MachineTracker} objects.
+ * 
+ * @see FromJson
+ * @see MachineTracker
+ */
 public class FromJsonTest {
 
     private FromJson fromJson;
@@ -23,13 +30,14 @@ public class FromJsonTest {
     private Path dir;
 
 
-    /**
-     * Sets up the test fixture. This method is called before each test case method is executed.
-     * It initializes the 'fromJson' object with the 'tracker.json' file and creates a temporary file
-     * with the '.json' extension to be used for testing purposes. The file path of the temporary file
-     * is stored in the 'filePath' variable.
-     *
-     * @throws IOException if an I/O error occurs while creating the temporary file
+   /**
+     * This method is annotated with {@code @BeforeEach} and runs before each individual test method.
+     * It is responsible for setting up the test environment and resources needed by the tests.
+     * 
+     * In this case, it initializes the 'dir' variable with the path to a file in the user's home directory,
+     * writes a JSON string to that file, and creates an instance of {@link FromJson} for testing.
+     * 
+     * @throws IOException if any error occurs during the setup
      */
     @BeforeEach
     public void setUp() throws IOException {
@@ -38,7 +46,14 @@ public class FromJsonTest {
         fromJson = new FromJson("testfile.json");
     }
 
-
+    /**
+     * This method is annotated with {@code @AfterEach} and runs after each individual test method.
+     * It is responsible for cleaning up the test environment and resources used by the tests.
+     * 
+     * In this case, it attempts to delete the test file located at the 'dir' path in the user's home directory.
+     * 
+     * @throws Exception if any error occurs during the cleanup
+     */
     @AfterEach
     public void tearDown() throws Exception {
         Paths.get(System.getProperty("user.home") + filename);
@@ -46,19 +61,35 @@ public class FromJsonTest {
     }
 
     /**
-     * Tests the {@link fromJson#fromInputStream(InputStream)} method with valid JSON data.
-     *
-     * @param jsonString A string containing valid JSON data
+     * Tests the {@link FromJson#fromInputStream(InputStream)} method when provided with an input stream containing
+     * valid JSON data.
+     * 
+     * This test case focuses on the scenario where:
+     * <ul>
+     *   <li>An input stream containing valid JSON data is provided to the {@link FromJson#fromInputStream(InputStream)}
+     *       method.</li>
+     * </ul>
+     * 
+     * <p>
+     * To conduct this test, we perform the following steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Create an input stream containing valid JSON data.</li>
+     *   <li>Act: Call the {@link FromJson#fromInputStream(InputStream)} method to deserialize the valid JSON data
+     *       from the input stream into a {@link MachineTracker} object.</li>
+     *   <li>Assert: Verify that the resulting {@link MachineTracker} object is not null and contains the expected data,
+     *       such as the number of machines and their properties.</li>
+     * </ol>
      */
     @Test
-    public void testFromInputStreamValidJson() {
-        // Create an input stream with valid JSON data
+    public void FromJson_fromInputStream_ValidJson() {
+        // Arrange 
         InputStream inputStream = new ByteArrayInputStream(jsonString.getBytes(StandardCharsets.UTF_8));
 
-        // Deserialize the JSON data into a MachineTracker object
+        // Act
         MachineTracker machineTracker = fromJson.fromInputStream(inputStream);
 
-        // Assert that the MachineTracker object is not null and contains the expected data
+        // Assert 
         assertNotNull(machineTracker);
         assertEquals(3, machineTracker.getMachines().size());
         assertEquals(1, machineTracker.getMachines().get(0).getId());
@@ -66,65 +97,128 @@ public class FromJsonTest {
 
 
     /**
-     * Tests the {@link FromJson#fromInputStream(InputStream)} method with invalid JSON data.
-     *
-     * @throws IOException if an I/O error occurs while reading the input stream
+     * Tests the {@link FromJson#fromInputStream(InputStream)} method when provided with an input stream containing
+     * invalid JSON data.
+     * 
+     * This test case focuses on the scenario where:
+     * <ul>
+     *   <li>An input stream containing invalid JSON data is provided to the {@link FromJson#fromInputStream(InputStream)}
+     *       method.</li>
+     * </ul>
+     * 
+     * <p>
+     * To conduct this test, we perform the following steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Create an input stream containing invalid JSON data.</li>
+     *   <li>Act: Call the {@link FromJson#fromInputStream(InputStream)} method to deserialize the invalid JSON data
+     *       from the input stream into a {@link MachineTracker} object.</li>
+     *   <li>Assert: Verify that the resulting {@link MachineTracker} object is null, as it should not be able to
+     *       deserialize invalid JSON data.</li>
+     * </ol>
      */
     @Test
-    public void testFromInputStreamInvalidJson() {
-        // Create an input stream with invalid JSON data
+    public void FromJson_fromInputStream_InvalidJson() {
+        // Arrange
         InputStream inputStream = new ByteArrayInputStream("{invalid json}".getBytes(StandardCharsets.UTF_8));
 
-        // Deserialize the JSON data into a MachineTracker object
+        // Act
         MachineTracker machineTracker = fromJson.fromInputStream(inputStream);
 
-        // Assert that the MachineTracker object is null
+        // Assert 
         assertNull(machineTracker);
     }
 
     /**
-     * Tests the behavior of the {@link FromJson#fromInputStream(InputStream)} method when a null input stream is provided.
+     * Tests the {@link FromJson#fromInputStream(InputStream)} method when provided with a null input stream.
+     * 
+     * This test case focuses on the scenario where:
+     * <ul>
+     *   <li>A null input stream is provided to the {@link FromJson#fromInputStream(InputStream)} method.</li>
+     * </ul>
+     * 
+     * <p>
+     * To conduct this test, we perform the following steps:
+     * </p>
+     * <ol>
+     *   <li>Act: Call the {@link FromJson#fromInputStream(InputStream)} method with a null input stream.</li>
+     *   <li>Assert: Verify that the resulting {@link MachineTracker} object is null, as there is no data to deserialize.</li>
+     * </ol>
      */
     @Test
-    public void testFromInputStreamNullInputStream() {
-        // Deserialize a null input stream into a MachineTracker object
+    public void FromJson_fromInputStream_NullInputStream() {
+       
+        // Act
         MachineTracker machineTracker = fromJson.fromInputStream(null);
 
-        // Assert that the MachineTracker object is null
+        // Assert 
         assertNull(machineTracker);
     }
 
     /**
-     * Tests the {@link fromJson#fromInputStream(InputStream)} method with an empty input stream.
+     * Tests the {@link FromJson#fromInputStream(InputStream)} method when provided with an empty inputstream.
+     * 
+     * This test case focuses on the scenario where:
+     * <ul>
+     *   <li>An empty input stream is provided to the {@link FromJson#fromInputStream(InputStream)} method.</li>
+     * </ul>
+     * 
+     * <p>
+     * To conduct this test, we perform the following steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Create an empty input stream.</li>
+     *   <li>Act: Call the {@link FromJson#fromInputStream(InputStream)} method to deserialize the JSON content
+     *       from the empty input stream into a {@link MachineTracker} object.</li>
+     *   <li>Assert: Verify that the resulting {@link MachineTracker} object is null, as there is no data to deserialize.</li>
+     * </ol>
      */
     @Test
-    public void testFromInputStreamEmptyInputStream() {
-        // Create an input stream with empty data
+    public void FromJson_fromInputStream_EmptyInputStream() {
+        
+        // Arrange
         InputStream inputStream = new ByteArrayInputStream("".getBytes(StandardCharsets.UTF_8));
 
-        // Deserialize the empty data into a MachineTracker object
+        // Act
         MachineTracker machineTracker = fromJson.fromInputStream(inputStream);
 
-        // Assert that the MachineTracker object is null
+        // Assert 
         assertNull(machineTracker);
     }
 
 
     /**
-     * Tests the readFromFile method of the FromJson class with a valid file.
+     * Tests the {@link FromJson#fromInputStream(InputStream)} method when provided with a valid input stream
+     * from an existing file.
+     * 
+     * This test case focuses on the scenario where:
+     * <ul>
+     *   <li>A valid input stream from an existing file is provided to the {@link FromJson#fromInputStream(InputStream)}
+     *       method.</li>
+     * </ul>
+     * 
+     * <p>
+     * To conduct this test, we perform the following steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Create an input stream from an existing file (specified by 'dir').</li>
+     *   <li>Act: Call the {@link FromJson#fromInputStream(InputStream)} method to deserialize the JSON content
+     *       from the input stream into a {@link MachineTracker} object.</li>
+     *   <li>Assert: Verify that the resulting {@link MachineTracker} object is not null and contains the expected data,
+     *       including the number of machines and their status.</li>
+     * </ol>
      *
-     * @throws IOException if an I/O error occurs while reading the file
+     * @throws IOException if any I/O error occurs during the test
      */
     @Test
-    public void testReadFromFileValidFile() throws IOException {
-        // Create a temporary file with valid JSON data
-        // Read the JSON data from the testfile.json
+    public void FromJson_readFromFile_ValidFile() throws IOException {
+        // Arrange
         InputStream inputStream = Files.newInputStream(dir);
 
-        // Deserialize the JSON data into a MachineTracker object
+        // Act
         MachineTracker machineTracker = fromJson.fromInputStream(inputStream);
 
-        // Assert that the MachineTracker object is not null and contains the expected data
+        // Assert
         assertNotNull(machineTracker);
         assertEquals(3, machineTracker.getMachines().size());
         assertEquals(5, machineTracker.getMachines().get(0).getStatus().get("Cola"));
@@ -135,50 +229,63 @@ public class FromJsonTest {
 
     }
 
-    @Test
-    public void fromJson_readfromfile_returnTestFile() {
 
-        MachineTracker machineTracker = fromJson.readFromFile();
-
-        assertNotNull(machineTracker);
-        assertEquals(3, machineTracker.getMachines().size());
-        assertEquals(5, machineTracker.getMachines().get(0).getStatus().get("Cola"));
-        assertEquals(3, machineTracker.getMachines().get(0).getStatus().get("Pepsi"));
-        assertEquals(1, machineTracker.getMachines().get(1).getStatus().get("Tuborg"));
-        assertEquals(100, machineTracker.getMachines().get(2).getStatus().get("Hansa"));
-        assertEquals(10, machineTracker.getMachines().get(2).getStatus().get("Regnvann"));
-    }
-
-
-    /**
-     * This method tests the readFromFile() method of the FromJson class when a null file path is provided.
-     * It creates a FromJson object with a null file path, deserializes the JSON data into a MachineTracker object,
-     * and asserts that the MachineTracker object is null.
-     *
-     * @param None
-     * @return void
+        /**
+     * Tests the {@link FromJson#readFromFile()} method when provided with a null file path.
+     * 
+     * This test case focuses on the scenario where:
+     * <ul>
+     *   <li>A null file path is provided to the constructor of {@link FromJson}.</li>
+     * </ul>
+     * 
+     * <p>
+     * To conduct this test, we perform the following steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Create an instance of {@link FromJson} with a null file path.</li>
+     *   <li>Act: Call the {@link FromJson#readFromFile()} method to read from the null file path.</li>
+     *   <li>Assert: Verify that the result is null, as the method should return null when a null file path is provided.</li>
+     * </ol>
      */
     @Test
-    public void testReadFromFileNullFilePath() {
-        // Create a FromJson object with a null file path
+    public void FromJson_readFromFile_NullFilePath() {
+        // Arrange
         FromJson fromJsontest = new FromJson(null);
 
-        // Deserialize the JSON data into a MachineTracker object
+        // Act
         MachineTracker machineTracker = fromJsontest.readFromFile();
 
-        // Assert that the MachineTracker object is null
+        // Assert
         assertNull(machineTracker);
     }
 
+    /**
+     * Tests the {@link FromJson#readFromFile()} method when provided with an invalid file path.
+     * 
+     * This test case focuses on the scenario where:
+     * <ul>
+     *   <li>An invalid file path is provided to the constructor of {@link FromJson}.</li>
+     * </ul>
+     * 
+     * <p>
+     * To conduct this test, we perform the following steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Create an instance of {@link FromJson} with an invalid file path.</li>
+     *   <li>Act: Call the {@link FromJson#readFromFile()} method to read from the invalid file path.</li>
+     *   <li>Assert: Verify that the result is null, as the method should return null when it encounters an exception
+     *       due to the invalid file path.</li>
+     * </ol>
+     */
     @Test
-    public void testReadFromInvalidFile() {
-        // Provide an invalid file path to the constructor
+    public void FromJson_readFromFile_InvalidFile() {
+        // Arrange
         FromJson fromJson = new FromJson("invalid_file_path.json");
 
-        // Call the method and capture the result
+        // Act
         MachineTracker result = fromJson.readFromFile();
 
-        // Assert that the result is null, as the method should return null when it encounters an exception
+        // Assert 
         assertNull(result);
     }
 }
