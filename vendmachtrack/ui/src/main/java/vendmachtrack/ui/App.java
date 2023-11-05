@@ -38,7 +38,7 @@ public class App extends Application {
      * @throws IOException If an error occurs while loading the Server.fxml file.
      */
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(final Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("Server.fxml"));
         Parent parent = fxmlLoader.load();
 
@@ -60,7 +60,7 @@ public class App extends Application {
      *                data.
      * @throws IOException If an error occurs while loading the App.fxml file.
      */
-    public void switchToVendAppScene(AccessService service) throws Exception {
+    public void switchToVendAppScene(final AccessService service) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("App.fxml"));
         Parent parent = loader.load();
 
@@ -81,7 +81,7 @@ public class App extends Application {
      *
      * @param machineID The ID of the selected vending machine.
      */
-    public void switchToMainScene(int machineID) {
+    public void switchToMainScene(final int machineID) {
         mainController.updateVendMachList();
         mainController.updateInventory(machineID);
         mainController.setIdToChoiceBox(machineID);
@@ -93,7 +93,7 @@ public class App extends Application {
      *
      * @param args Command-line arguments that are not used in this application.
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         launch();
     }
 

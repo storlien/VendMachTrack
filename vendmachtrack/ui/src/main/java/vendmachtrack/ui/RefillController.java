@@ -11,7 +11,6 @@ import vendmachtrack.ui.access.AccessService;
 import vendmachtrack.ui.access.MachineTrackerAccessible;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -53,7 +52,7 @@ public class RefillController {
      *
      * @param machineID The ID of the selected vending machine.
      */
-    private void updateTitle(int machineID) {
+    private void updateTitle(final int machineID) {
         title.setText("Vending machine: " + machineID);
     }
 
@@ -62,7 +61,7 @@ public class RefillController {
      *
      * @param machineID The ID of the selected vending machine.
      */
-    public void setSelectedMachineID(int machineID) {
+    public void setSelectedMachineID(final int machineID) {
         this.selectedMachineID = machineID;
         setInventory(access.getInventory(machineID));
         updateTitle(machineID);
@@ -73,26 +72,19 @@ public class RefillController {
      *
      * @param service The AccessService instance.
      */
-    public void setAccessService(AccessService service) {
-        try {
-            this.access = service.getAccess();
-        } catch (Exception e) {
-            answerText.setText(e.getMessage());
-        }
-
+    public void setAccessService(final AccessService service) {
+        this.access = service.getAccess();
     }
 
-    public void setInventory(Map<String, Integer> inventory) {
-        try {
-            StringBuilder formattedStatus = new StringBuilder("Inventory:\n");
-            for (Map.Entry<String, Integer> entry : inventory.entrySet()) {
-                formattedStatus.append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
-            }
-            textArea.setText(formattedStatus.toString());
-        } catch (Exception e) {
-            textArea.setText(e.getMessage());
-
-        }
+    /**
+     * Sets the inventory display with the current items and quantities.
+     *
+     * @param inventory The inventory to display.
+     */
+    public void setInventory(final Map<String, Integer> inventory) {
+        StringBuilder formattedStatus = new StringBuilder("Inventory:\n");
+        inventory.forEach((item, quantity) -> formattedStatus.append(item).append(": ").append(quantity).append("\n"));
+        textArea.setText(formattedStatus.toString());
     }
 
     /**
@@ -100,18 +92,16 @@ public class RefillController {
      *
      * @param mainApp The main application instance.
      */
-    public void setMainApp(App mainApp) {
+    public void setMainApp(final App mainApp) {
         this.mainApp = mainApp;
     }
 
     /**
      * Refills the vending machine item based on user input, updates the inventory
-     * display,
-     * and handles exceptions if any occur during the refill process.
+     * display, and handles exceptions if any occur during the refill process.
      */
     @FXML
     private void refillItem() {
-        HashMap<String, Integer> updatedInventory = new HashMap<>();
         if (!refillNumber.getText().matches("-?\\d+") || refillItem.getText().trim().isEmpty()
                 || Integer.parseInt(refillNumber.getText()) < 1) {
             answerText.setText("Invalid input: Please enter a valid number and item");
@@ -119,27 +109,13 @@ public class RefillController {
         }
 
         try {
-            updatedInventory = access.addItem(selectedMachineID, refillItem.getText(),
+            Map<String, Integer> updatedInventory = access.addItem(selectedMachineID, refillItem.getText(),
                     Integer.parseInt(refillNumber.getText()));
+            setInventory(updatedInventory);
             answerText.setText("");
         } catch (Exception e) {
-            answerText.setText(e.getMessage());
-
+            answerText.setText("Error during refill: " + e.getMessage());
         }
-
-        try {
-            StringBuilder formattedStatus = new StringBuilder("Inventory:\n");
-            for (Map.Entry<String, Integer> entry : updatedInventory.entrySet()) {
-                formattedStatus.append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
-            }
-            textArea.setText(formattedStatus.toString());
-            answerText.setText("");
-
-        } catch (Exception e) {
-            answerText.setText(e.getMessage());
-
-        }
-
     }
 
     /**
@@ -149,8 +125,7 @@ public class RefillController {
      * @throws IOException If an error occurs during scene transition.
      */
     @FXML
-    public void switchToMainScene(ActionEvent event) throws IOException {
+    public void switchToMainScene(final ActionEvent event) throws IOException {
         mainApp.switchToMainScene(selectedMachineID);
     }
-
 }

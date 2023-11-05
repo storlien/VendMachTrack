@@ -29,18 +29,16 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
 
     private static final String ENDPOINT_DIRECTORY = "vendmachtrack";
 
-    private final Type TYPE_HASHMAP_INTEGER_STRING = new TypeToken<HashMap<Integer, String>>() {
-    }.getType();
-    private final Type TYPE_HASHMAP_STRING_INTEGER = new TypeToken<HashMap<String, Integer>>() {
-    }.getType();
+    private static final Type TYPE_HASHMAP_INTEGER_STRING = new TypeToken<HashMap<Integer, String>>() { }.getType();
+    private static final Type TYPE_HASHMAP_STRING_INTEGER = new TypeToken<HashMap<String, Integer>>() { }.getType();
 
     /**
      * Constructor. Requires a base URI for the REST API endpoint.
      *
      * @param endpointBaseUri The base URI of the REST API endpoint
      */
-    public MachineTrackerAccessRemote(URI endpointBaseUri) {
-        this.endpointBaseUri = endpointBaseUri;
+    public MachineTrackerAccessRemote(final URI endpointBaseUri) {
+        this.endpointBaseUri = endpointBaseUri; // Use 'this' to refer to the class field
         this.gson = new Gson();
         this.httpClient = HttpClient.newBuilder().build();
     }
@@ -70,7 +68,7 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
      * @return Location of vending machine
      */
     @Override
-    public String getVendMachLocation(int id) {
+    public String getVendMachLocation(final int id) {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(endpointBaseUri.resolve("vendmachtrack/" + id + "/name"))
                 .build();
@@ -88,7 +86,7 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
      * @return HashMap of inventory with item as key and as value
      */
     @Override
-    public HashMap<String, Integer> getInventory(int id) {
+    public HashMap<String, Integer> getInventory(final int id) {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(endpointBaseUri.resolve("vendmachtrack/" + id))
                 .build();
@@ -108,9 +106,10 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
      * @return HashMap of inventory with item as key and quantity as value
      */
     @Override
-    public HashMap<String, Integer> addItem(int id, String item, int quantity) {
+    public HashMap<String, Integer> addItem(final int id, final String item, final int quantity) {
 
-        String endpointQuery = buildEndpointWithParams(ENDPOINT_DIRECTORY + "/" + id + "/add", "item", item, "quantity", String.valueOf(quantity));
+        String endpointQuery = buildEndpointWithParams(ENDPOINT_DIRECTORY + "/" + id + "/add",
+         "item", item, "quantity", String.valueOf(quantity));
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(endpointBaseUri.resolve(endpointQuery))
@@ -132,9 +131,10 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
      * @return HashMap of inventory with item as key and quantity as value
      */
     @Override
-    public HashMap<String, Integer> removeItem(int id, String item, int quantity) {
+    public HashMap<String, Integer> removeItem(final int id, final String item, final int quantity) {
 
-        String endpointQuery = buildEndpointWithParams(ENDPOINT_DIRECTORY + "/" + id + "/remove", "item", item, "quantity", String.valueOf(quantity));
+        String endpointQuery = buildEndpointWithParams(ENDPOINT_DIRECTORY + "/" + id + "/remove",
+        "item", item, "quantity", String.valueOf(quantity));
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(endpointBaseUri.resolve(endpointQuery))
@@ -156,9 +156,10 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
      * location as value
      */
     @Override
-    public HashMap<Integer, String> addVendMach(int id, String location) {
+    public HashMap<Integer, String> addVendMach(final int id, final String location) {
 
-        String endpointQuery = buildEndpointWithParams(ENDPOINT_DIRECTORY + "/add", "id", String.valueOf(id), "location", location);
+        String endpointQuery = buildEndpointWithParams(ENDPOINT_DIRECTORY + "/add",
+         "id", String.valueOf(id), "location", location);
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(endpointBaseUri.resolve(endpointQuery))
@@ -179,7 +180,7 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
      * location as value
      */
     @Override
-    public HashMap<Integer, String> removeVendMach(int id) {
+    public HashMap<Integer, String> removeVendMach(final int id) {
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(endpointBaseUri.resolve("vendmachtrack/" + id))
@@ -201,7 +202,7 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
      * location as value
      */
     @Override
-    public HashMap<Integer, String> changeLocation(int id, String location) {
+    public HashMap<Integer, String> changeLocation(final int id, final String location) {
 
         String endpointQuery = buildEndpointWithParams(ENDPOINT_DIRECTORY + "/" + id, "location", location);
 
@@ -223,7 +224,7 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
      *
      * @param response HttpReponse to be checked
      */
-    private void checkError(HttpResponse<String> response) {
+    private void checkError(final HttpResponse<String> response) {
         if (response.statusCode() != HttpURLConnection.HTTP_OK) {
             JsonElement rootElement = JsonParser.parseString(response.body());
             JsonObject rootObject = rootElement.getAsJsonObject();
@@ -238,7 +239,7 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
      * @param request HttpRequest to be sent
      * @return HttpReponse from the request sent
      */
-    private HttpResponse<String> getResponse(HttpRequest request) {
+    private HttpResponse<String> getResponse(final HttpRequest request) {
         try {
             return httpClient.send(request, HttpResponse.BodyHandlers.ofString());
         } catch (Exception e) {
@@ -255,7 +256,7 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
      *               For instance, ["key1", "value1", "key2", "value2"].
      * @return A string representing the constructed URL with the provided parameters.
      */
-    private String buildEndpointWithParams(String base, String... params) {
+    private String buildEndpointWithParams(final String base, final String... params) {
         StringBuilder endpoint = new StringBuilder(base);
         if (params.length > 0) {
             endpoint.append("?");

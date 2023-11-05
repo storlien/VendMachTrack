@@ -19,6 +19,9 @@ import vendmachtrack.jsonio.VendmachtrackPersistence;
 public class AccessService {
 
     private final MachineTrackerAccessible access;
+    private static final int TIMEOUT_SECONDS = 5;
+
+
 
     /**
      * Constructor for AccessService class. Initializes the access method (remote or
@@ -29,7 +32,7 @@ public class AccessService {
      *                    server is not available.
      */
 
-    public AccessService(URI endpointUri, String fileName) {
+    public AccessService(final URI endpointUri, final String fileName) {
 
         MachineTrackerAccessible newAccess;
 
@@ -61,11 +64,11 @@ public class AccessService {
      *                              request.
      * @throws InterruptedException If the operation is interrupted.
      */
-    private boolean checkServerHealth(URI endpointUri) throws IOException, InterruptedException {
+    private boolean checkServerHealth(final URI endpointUri) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(endpointUri.resolve("health"))
-                .timeout(Duration.ofSeconds(5))
+                .timeout(Duration.ofSeconds(TIMEOUT_SECONDS))
                 .GET()
                 .build();
 
