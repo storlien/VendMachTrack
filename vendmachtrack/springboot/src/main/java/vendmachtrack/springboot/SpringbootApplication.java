@@ -12,7 +12,7 @@ public class SpringbootApplication {
         return "tracker.json";
     }
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         SpringApplication.run(SpringbootApplication.class, args);
     }
 
