@@ -31,7 +31,7 @@ public class ServerControllerTest extends ApplicationTest {
     private App mockApp;
     
     private WireMockServer wireMockServer;
-    private ServerController serverController;
+  
 
     /**
      * Initializes and starts the JavaFX application, including the server controller and WireMock server.
@@ -56,11 +56,9 @@ public class ServerControllerTest extends ApplicationTest {
      */
     @Override
     public void start(Stage stage) throws Exception {
-        // Set up the GUI
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Server.fxml"));
         Parent root = loader.load();
-        serverController = loader.getController();
-
+       
         stage.setScene(new Scene(root));
         stage.show();
         wireMockServer = new WireMockServer(WireMockConfiguration.options().port(8080));
