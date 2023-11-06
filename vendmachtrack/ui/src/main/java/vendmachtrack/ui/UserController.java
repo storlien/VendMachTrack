@@ -57,12 +57,16 @@ public class UserController {
     private Stage stage;
     private Scene scene;
 
+    private static final int BUTTONS_PER_ROW = 4;
+    private static final int BUTTON_SPACING = 30;
+    private static final double BUTTON_WIDTH = 100;
+    private static final double BUTTON_HEIGHT = 120;
     /**
      * Sets the AccessService instance to interact with vending machine data.
      *
      * @param service The AccessService instance.
      */
-    public void setAccessService(AccessService service) {
+    public void setAccessService(final AccessService service) {
         try {
             this.service = service;
             this.access = service.getAccess();
@@ -76,7 +80,7 @@ public class UserController {
      *
      * @param mainApp The main application instance.
      */
-    public void setMainApp(App mainApp) {
+    public void setMainApp(final App mainApp) {
         this.mainApp = mainApp;
     }
 
@@ -88,45 +92,40 @@ public class UserController {
      * @param inventory A map representing the items and quantities in the vending
      *                  machine inventory.
      */
-    private void updateButtons(int machineID, Map<String, Integer> inventory) {
+    private void updateButtons(final int machineID, final Map<String, Integer> inventory) {
         try {
-            buttonContainer.getChildren().clear();
+        buttonContainer.getChildren().clear();
 
-            HBox currentRow = new HBox();
-            currentRow.setSpacing(30);
-            buttonContainer.setSpacing(30);
+        HBox currentRow = new HBox(BUTTON_SPACING);
+        buttonContainer.setSpacing(BUTTON_SPACING);
 
-            int buttonsInCurrentRow = 0;
+        int buttonsInCurrentRow = 0;
 
-            for (Map.Entry<String, Integer> entry : inventory.entrySet()) {
-                String itemName = entry.getKey();
+        for (Map.Entry<String, Integer> entry : inventory.entrySet()) {
+            String itemName = entry.getKey();
 
-                Button button = new Button(itemName);
-                button.getStyleClass().add("buttonContainer");
-                button.setPrefSize(100, 120);
+            Button button = new Button(itemName);
+            button.getStyleClass().add("buttonContainer");
+            button.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 
-                button.setOnAction(e -> chosenItem.setText(itemName));
+            button.setOnAction(e -> chosenItem.setText(itemName));
 
-                currentRow.getChildren().add(button);
-                buttonsInCurrentRow++;
+            currentRow.getChildren().add(button);
+            buttonsInCurrentRow++;
 
-                if (buttonsInCurrentRow >= 4) {
-                    buttonContainer.getChildren().add(currentRow);
-                    currentRow = new HBox();
-                    currentRow.setSpacing(30);
-                    buttonsInCurrentRow = 0;
-                }
-                scrollPane.setContent(buttonContainer);
-
-            }
-
-            if (buttonsInCurrentRow > 0) {
+            if (buttonsInCurrentRow >= BUTTONS_PER_ROW) {
                 buttonContainer.getChildren().add(currentRow);
+                currentRow = new HBox(BUTTON_SPACING);
+                buttonsInCurrentRow = 0;
             }
+        }
+        if (buttonsInCurrentRow > 0) {
+            buttonContainer.getChildren().add(currentRow);
+        }
+        scrollPane.setContent(buttonContainer);
         } catch (Exception e) {
             mylabel.setText(e.getMessage());
         }
-
     }
 
     /**
@@ -148,7 +147,7 @@ public class UserController {
      *
      * @param machineID The ID of the selected vending machine.
      */
-    private void updateTitle(int machineID) {
+    private void updateTitle(final int machineID) {
         try {
             mylabel.setText("Vending machine: " + access.getVendMachLocation(machineID));
         } catch (Exception e) {
@@ -161,7 +160,7 @@ public class UserController {
      *
      * @param machineID The ID of the selected vending machine.
      */
-    public void setSelectedMachineID(int machineID) {
+    public void setSelectedMachineID(final int machineID) {
         try {
             this.selectedMachineID = machineID;
             updateTitle(selectedMachineID);
@@ -179,7 +178,7 @@ public class UserController {
      *                     file.
      */
     @FXML
-    public void switchToPasswordScene(ActionEvent event) throws IOException {
+    public void switchToPasswordScene(final ActionEvent event) throws IOException {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("PasswordApp.fxml"));
             Parent root = fxmlLoader.load();

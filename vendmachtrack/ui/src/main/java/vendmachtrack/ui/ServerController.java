@@ -36,7 +36,9 @@ public class ServerController {
     @FXML
     private void handleSubmission() {
         String serverUrlString = serverUrlField.getText();
-
+        if (!serverUrlString.endsWith("/")) {
+            serverUrlString += "/";
+        }
         try {
             String fileName = trackerFileNameField.getText();
             AccessService service = new AccessService(new URI(serverUrlString), fileName);
@@ -53,7 +55,7 @@ public class ServerController {
      *
      * @param mainApp The main application instance.
      */
-    public void setMainApp(App mainApp) {
+    public void setMainApp(final App mainApp) {
         this.mainApp = mainApp;
     }
 }
