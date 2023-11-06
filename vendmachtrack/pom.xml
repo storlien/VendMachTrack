@@ -17,9 +17,9 @@
 
     <modules>
         <module>core</module>
-        <module>ui</module>
         <module>jsonio</module>
         <module>springboot</module>
+        <module>ui</module>
         <module>jacoco-aggregator</module>
     </modules>
 
@@ -54,6 +54,22 @@
 
     <build>
         <plugins>
+            <!-- Specifying that Maven should delete everything in test-results/ directory in the "clean" phase -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.3.2</version>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>${project.basedir}/test-results</directory>
+                            <includes>
+                                <include>**/*</include>
+                            </includes>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

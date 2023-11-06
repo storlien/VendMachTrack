@@ -2,6 +2,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <artifactId>ui</artifactId>
+    <packaging>jar</packaging>
 
     <parent>
         <groupId>gr2338</groupId>
@@ -96,7 +97,7 @@
                 <version>3.0.0-M5</version>
                 <configuration>
                     <argLine>
-                        ${argLine} --add-opens javafx.graphics/com.sun.javafx.application=ALL-UNNAMED  
+                        ${argLine} --add-opens javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
                         <!-- for JavaFX Testing, We need this because we cannot find out the name of the unnamed module-->
                         <!-- if we don't have this the tests will fail. bacause javafx.graphics can't open to the "unnamed module"-->
                     </argLine>
@@ -111,11 +112,72 @@
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
-                <!-- Default configuration for running -->
-                <!-- Usage: mvn javafx:run -->
                 <configuration>
-                    <!-- syntax: module-name/full-app-class-name -->
                     <mainClass>vendmachtrack.ui/vendmachtrack.ui.App</mainClass>
+                </configuration>
+            </plugin>
+
+            <!-- Plugin for creating uber JAR to be used with Jpackage -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.5.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <shadedArtifactAttached>true</shadedArtifactAttached>
+                            <transformers>
+                                <!-- Transformer for the manifest file -->
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>vendmachtrack.ui.Main</mainClass>
+                                </transformer>
+                                <!-- Transformer for service resources -->
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                            </transformers>
+                            <filters>
+                                <filter>
+                                    <!-- Do not filter out any artifacts -->
+                                    <artifact>*:*</artifact>
+                                </filter>
+                            </filters>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Jpackage plugin -->
+            <plugin>
+                <groupId>org.panteleyev</groupId>
+                <artifactId>jpackage-maven-plugin</artifactId>
+                <version>1.6.0</version>
+                <configuration>
+                    <name>VendMachTrackApp</name>
+                    <appVersion>${project.version}</appVersion>
+                    <vendor>gr2338</vendor>
+                    <input>${project.build.directory}/</input>
+                    <mainJar>${project.build.finalName}-shaded.jar</mainJar>
+                    <mainClass>vendmachtrack.ui.Main</mainClass>
+                    <destination>${project.build.directory}/jpackage/</destination>
+                    <javaOptions>
+                        <option>-Dfile.encoding=UTF-8</option>
+                    </javaOptions>
+
+                    <!-- Linux options -->
+                    <linuxShortcut>true</linuxShortcut>
+                    <linuxMenuGroup>VendMachTrackApp</linuxMenuGroup>
+
+                    <!-- Windows options -->
+                    <winDirChooser>true</winDirChooser>
+                    <winShortcut>true</winShortcut>
+                    <winMenu>true</winMenu>
+                    <winMenuGroup>VendMachTrackApp</winMenuGroup>
                 </configuration>
             </plugin>
 
