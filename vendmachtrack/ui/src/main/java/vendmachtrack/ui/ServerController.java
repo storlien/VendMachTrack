@@ -36,7 +36,9 @@ public class ServerController {
     @FXML
     private void handleSubmission() {
         String serverUrlString = serverUrlField.getText();
-
+        if (!serverUrlString.endsWith("/")) {
+            serverUrlString += "/";
+        }
         try {
             String fileName = trackerFileNameField.getText();
             AccessService service = new AccessService(new URI(serverUrlString), fileName);
