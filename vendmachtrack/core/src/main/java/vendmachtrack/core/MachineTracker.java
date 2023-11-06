@@ -39,7 +39,9 @@ public class MachineTracker {
 
   /**
    * Adds the specified vending machine to the machine tracker.
-   *
+   * <p>
+   * The method ensures that each vending machine in the tracker is unique.
+   * 
    * @param v The vending machine to be added to the tracker.
    * @throws IllegalArgumentException If the vending machine is already in the
    *                                  tracker.

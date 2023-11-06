@@ -10,15 +10,28 @@ package vendmachtrack.core;
  */
 public class Item {
 
+    /**
+     * The name by which the item is identified.
+     */
+
     private final String name;
+
+    /**
+     * The monetary value associated with this item.
+     */
+
     private final double price;
 
     /**
-     * Constructor. Represents an item with a speciific name and price.
+     * Constructs a new instance of the Item class with the specified name and
+     * price.
      *
-     * @param newName  The name of the item.
-     * @param newPrice The price of the item. Must be a positive value.
-     * @throws IllegalArgumentException If the price is negative or zero value.
+     * @param newName  The name used to identify this item.
+     * @param newPrice The monetary value of this item. This must always be a
+     *                 positive
+     *                 value.
+     * @throws IllegalArgumentException If the price provided is negative or has a
+     *                                  zero value.
      */
     public Item(final String newName, final double newPrice) {
         if (newPrice <= 0) {

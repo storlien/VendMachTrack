@@ -31,7 +31,8 @@ public class MachineTrackerController {
     /**
      * Constructor injection of the MachineTrackerService dependency.
      *
-     * @param machtrackService The service layer handling the machine tracker logic.
+     * @param machineTrackerService The service layer handling the machine tracker
+     *                              logic.
      */
     @Autowired
     public MachineTrackerController(final MachineTrackerService machineTrackerService) {
