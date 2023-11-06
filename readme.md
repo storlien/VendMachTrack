@@ -200,53 +200,93 @@ Repoet er organisert i flere mapper. Selve kodeprosjektet ligger i mappen vendma
     - Arbeidsflyt_1.md - inneholder info om kommunikasjon og arbeidsflyt innad i gruppen til release 1
     - Klassediagram.png - klassediagram over kildekoden til prosjektet
     - Krav_1.md - inneholder kravene for release 1
-    - skjermbildeApp.png - bilde av brukergrensesnittet til release 1
     - readme.md - inneholder readme.md for release 1
+    - skjermbildeApp.png - bilde av brukergrensesnittet til release 1
   - release2/
     - Arbeidsflyt_2.md - inneholder info om kommunikasjon og arbeidsflyt innad i gruppen til release 2
     - Krav_2.md - inneholder kravene for release 2
-    - readme.md - inneholder informaasjon om hva som ble gjort i release 2
+    - readme.md - inneholder informasjon om hva som ble gjort i release 2
+  - release3/
+    - Arbeidsflyt_3.md - inneholder info om kommunikasjon og arbeidsflyt innad i gruppen til release 3
+    - Krav_3.md - inneholder kravene for release 3
+    - readme.md - inneholder informasjon om hva som ble gjort i release 3
   - Brukerhistorier.md - inneholder brukerhistoriene til prosjektet
+  - rest_api.mc - inneholder informasjon om rest-api
 - vendmachtrack/ - Hovedmappe som inneholder all kildekoden for prosjektet
   - pom.xml - Dette er rot-pom.xml filen som hører til hele prosjektet
+  - readme.md - inneholder informasjon om vår applikasjon
   - core/ - Inneholder backend- logikken til appen
     - pom.xml - Dette er Maven prosjekt filen som hører til core modulen
     - src/main/java/
-        - core/ - Inneholder kildekoden til backend-koden  
-            - IItem.java
-            - Item.java
-            - IMachineTracker.java
-            - MachineTracker.java
-            - IVendingMachine.java
-            - VendingMachine.java
+        - core/ - Inneholder kildekoden til backend-koden
+            - util/
         - module-info.java
+    - src/main/resources/core/
+      - password.txt
     - src/test/java/core/
-      - ItemTest.java - inneholder tester for Item- klassen
-      - MachineTrackerTest.java - inneholder tester for MachineTracker- klassen
-      - VendingMachineTest.java - inneholder tester for Vendingmachine- klassen
+  - jacoco- aggregator
+    - pom.xml
   - jsonio/
     - pom.xml - Dette er Maven prosjektfilen som hører til jsonio-modulen
     - src/main/java/
       - jsonio/ - inneholder kildekoden til filhåndtering: 
-        - FromJson.java
-        - IFromJson.java
-        - ToJson.java
-        - IToJson.java
+        - internal - inneholder kode for å lese og skrive fra Json
+        - VendmachtrackPersistence.java
       - module-info.java
-    - src/test/java/jsonio/ - inneholder tester:
-      - jsonioTest.java - inneholder testene til jsonio-mappen
+    - src/test/java/jsonio/ - inneholder tester
+  - springboot/
+    - pom.xml
+    - src/main/java/
+      - springboot/
+        - controller
+        - exception
+        - repository
+        - service
+        - SpringbootApplication.java
+    - module-info.java
+    - test/java/springboot/ - testklasser for springboot
+      - controller
+      - repository
+      - service
+  - test-results/ - alle testresultater for ulike deler av applikasjonen
+    - checkstyle
+      - core.xml
+      - jacoco-aggregator.xml
+      - jsonio.xml
+      - springboot.xml
+      - ui.xml
+      - vendmachtrack.xml
+    - jacoco
+      - core
+      - jacoco-resources
+      - jsonio
+      - springboot
+      - ui
+      - index.html
+      - jacoco-sessions.html
+      - jacoco.csv
+      - jacoco.xml
+    - junit
+      - core
+      - jsonio
+      - springboot
+      - ui
+    - spotbugs
+      - core
+      - jsonio
+      - springboot
+      - ui
   - ui/ - inneholder frontend-logikken til appen
-    - pom.xml - Dette er Maven prosjektfilen som hører til ui-modulen
-    - src/main - inneholder java og resources/ui - mappen
-      - java/
-        - ui/
-            - App.java
-            - VendAppController.java - kildekode til frontend
-      - resources/
-        - App.fxml
-    - src/test/java/ui/
-      - VendMachAppTest.java - inneholder testene til ui-mappen
-      - AppTest.java
+    - pom.xml
+    - src/main/java
+      - module-info.java
+      - ui/ - kildekode til frontend
+        - access
+    - src/main/resources/ui - inneholder alle fxml-filer for ui
+    - src/test/java/ui - inneholder tester for ui-mappen
+      - access - tester for access- klassene
+
+
 
 
 
