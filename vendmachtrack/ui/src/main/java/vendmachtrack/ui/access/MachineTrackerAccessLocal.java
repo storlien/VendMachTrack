@@ -106,7 +106,7 @@ public class MachineTrackerAccessLocal implements MachineTrackerAccessible {
      * @param quantity The quantity to be removed from the item
      * @return HashMap of inventory with item as key and quantity as value
      * @throws IllegalArgumentException if inventory doesn't
-     * contain item or contains less than the quantity to be removed
+     *                                  contain item or contains less than the quantity to be removed
      */
     @Override
     public HashMap<String, Integer> removeItem(final int id, final String item, final int quantity) {
@@ -120,7 +120,7 @@ public class MachineTrackerAccessLocal implements MachineTrackerAccessible {
         } else if (quantity > vendMach.getStatus().get(item)) {
             throw new IllegalArgumentException(
                     "The vending machine's inventory contains less than the given quantity to remove of item: "
-                     + item);
+                            + item);
         } else {
             MachineTracker machTrack = getMachtrack();
 
@@ -295,8 +295,9 @@ public class MachineTrackerAccessLocal implements MachineTrackerAccessible {
 
     /**
      * Internal method for retrieving vending machine tracker.
+     *
      * @return Vending machine tracker object
-     * @throws RuntimeException if no vending machine tracker could be found 
+     * @throws RuntimeException if no vending machine tracker could be found
      */
     private MachineTracker getMachtrack() {
         return Optional.ofNullable(persistence.getVendmachtrack())
