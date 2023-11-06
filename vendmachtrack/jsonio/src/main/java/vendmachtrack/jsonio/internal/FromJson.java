@@ -34,7 +34,7 @@ public class FromJson {
      * @param fileName Name of the file in the user's home directory from which the
      *                 {@link MachineTracker} object will be read.
      */
-    public FromJson(String fileName) {
+    public FromJson(final String fileName) {
         this.filePath = System.getProperty("user.home") + "/" + fileName;
     }
 
@@ -48,7 +48,7 @@ public class FromJson {
      * @param is InputStream containing the JSON data of a {@link MachineTracker} object.
      * @return The deserialized {@link MachineTracker} object or {@code null} if deserialization fails.
      */
-    public MachineTracker fromInputStream(InputStream is) {
+    public MachineTracker fromInputStream(final InputStream is) {
         try (BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
             Gson gson = new Gson();
             return gson.fromJson(br, MachineTracker.class);

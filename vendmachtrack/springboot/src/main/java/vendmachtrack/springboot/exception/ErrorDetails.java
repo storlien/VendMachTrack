@@ -12,9 +12,9 @@ import java.util.Date;
  * </p>
  */
 class ErrorDetails {
-    private Date timestamp;
-    private String error;
-    private String details;
+    private final Date timestamp;
+    private final String error;
+    private final String details;
 
     /**
      * Constructs an {@code ErrorDetails} instance with the specified timestamp,
@@ -24,7 +24,7 @@ class ErrorDetails {
      * @param error     A brief message indicating the type of error.
      * @param details   Details of the error.
      */
-    public ErrorDetails(Date timestamp, String error, String details) {
+    public ErrorDetails(final Date timestamp, final String error, final String details) {
         this.timestamp = new Date(timestamp.getTime());
         this.error = error;
         this.details = details;
@@ -56,5 +56,4 @@ class ErrorDetails {
     public String getDetails() {
         return details;
     }
-
 }

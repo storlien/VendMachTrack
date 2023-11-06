@@ -18,7 +18,10 @@ import vendmachtrack.jsonio.VendmachtrackPersistence;
 
 public class AccessService {
 
-    private MachineTrackerAccessible access;
+    private final MachineTrackerAccessible access;
+    private static final int TIMEOUT_SECONDS = 5;
+
+
 
     /**
      * Constructor for AccessService class. Initializes the access method (remote or
@@ -29,21 +32,24 @@ public class AccessService {
      *                    server is not available.
      */
 
-    public AccessService(URI endpointUri, String fileName) {
+    public AccessService(final URI endpointUri, final String fileName) {
+
+        MachineTrackerAccessible newAccess;
 
         try {
             if (checkServerHealth(endpointUri)) {
-                access = new MachineTrackerAccessRemote(endpointUri);
+                newAccess = new MachineTrackerAccessRemote(endpointUri);
                 System.out.println("Using remote access");
             } else {
-                access = new MachineTrackerAccessLocal(new VendmachtrackPersistence(fileName));
+                newAccess = new MachineTrackerAccessLocal(new VendmachtrackPersistence(fileName));
                 System.out.println("Using local access");
             }
-        } catch (Exception e) {
-            System.out.println("Error during server health check: " + e);
-            access = new MachineTrackerAccessLocal(new VendmachtrackPersistence(fileName));
-            System.out.println("Using local access as a fallback");
+        } catch (IOException | InterruptedException e) {
+            newAccess = new MachineTrackerAccessLocal(new VendmachtrackPersistence(fileName));
+            System.out.println("Using local access");
         }
+
+        this.access = newAccess;
 
     }
 
@@ -58,11 +64,11 @@ public class AccessService {
      *                              request.
      * @throws InterruptedException If the operation is interrupted.
      */
-    private boolean checkServerHealth(URI endpointUri) throws IOException, InterruptedException {
+    private boolean checkServerHealth(final URI endpointUri) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(endpointUri.resolve("health"))
-                .timeout(Duration.ofSeconds(5))
+                .timeout(Duration.ofSeconds(TIMEOUT_SECONDS))
                 .GET()
                 .build();
 

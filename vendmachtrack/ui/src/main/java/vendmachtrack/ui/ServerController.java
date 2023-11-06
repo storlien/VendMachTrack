@@ -53,7 +53,7 @@ public class ServerController {
      *
      * @param mainApp The main application instance.
      */
-    public void setMainApp(App mainApp) {
+    public void setMainApp(final App mainApp) {
         this.mainApp = mainApp;
     }
 }

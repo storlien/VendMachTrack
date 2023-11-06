@@ -28,7 +28,7 @@ public class GlobalExceptionHandler {
      * @return a structured error response containing a timestamp, the error message, and a description.
      */
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<?> resourceNotFoundException(ResourceNotFoundException ex, WebRequest request) {
+    public ResponseEntity<?> resourceNotFoundException(final ResourceNotFoundException ex, final WebRequest request) {
         ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(), request.getDescription(false));
         return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
     }
@@ -42,7 +42,7 @@ public class GlobalExceptionHandler {
      * @return a structured error response containing a timestamp, the error message, and a description.
      */
     @ExceptionHandler(IllegalInputException.class)
-    public ResponseEntity<?> illegalInputException(IllegalInputException ex, WebRequest request) {
+    public ResponseEntity<?> illegalInputException(final IllegalInputException ex, final WebRequest request) {
         ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(), request.getDescription(false));
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }

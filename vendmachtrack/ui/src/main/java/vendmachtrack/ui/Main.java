@@ -1,7 +1,11 @@
 package vendmachtrack.ui;
 
-public class Main {
-    public static void main(String[] args) {
+public final class Main {
+    private Main() {
+        // private constructor to prevent instantiation
+    }
+
+    public static void main(final String[] args) {
         App.main(args);
     }
 }

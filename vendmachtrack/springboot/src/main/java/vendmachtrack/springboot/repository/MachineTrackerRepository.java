@@ -23,12 +23,7 @@ public class MachineTrackerRepository {
      */
     private final VendmachtrackPersistence persistence;
 
-    /**
-     * Constructs a new {@code MachineTrackerRepository} instance.
-     *
-     * @param fileName The name of the file where the data is stored.
-     */
-    public MachineTrackerRepository(String fileName) {
+    public MachineTrackerRepository(final String fileName) {
         persistence = new VendmachtrackPersistence(fileName);
     }
 
@@ -41,42 +36,21 @@ public class MachineTrackerRepository {
         return persistence.getVendmachtrack();
     }
 
-    /**
-     * Persists the given {@code MachineTracker} instance.
-     *
-     * @param vendmachtrack The {@code MachineTracker} instance to save.
-     * @return The saved {@code MachineTracker} instance.
-     */
-    public MachineTracker saveVendmachtrack(MachineTracker vendmachtrack) {
+    public MachineTracker saveVendmachtrack(final MachineTracker vendmachtrack) {
         persistence.saveVendmachtrack(vendmachtrack);
         return vendmachtrack;
     }
 
-    /**
-     * Retrieves a {@code VendingMachine} by its ID.
-     *
-     * @param id The ID of the {@code VendingMachine}.
-     * @return The {@code VendingMachine} with the specified ID, or null if not
-     *         found.
-     */
-    public VendingMachine getVendMach(int id) {
+    public VendingMachine getVendMach(final int id) {
         for (VendingMachine vendMach : getVendmachtrack().getMachines()) {
             if (vendMach.getId() == id) {
                 return vendMach;
             }
         }
-
         return null;
     }
 
-    /**
-     * Updates the location of a specific {@code VendingMachine} based on its ID.
-     *
-     * @param id       The ID of the {@code VendingMachine}.
-     * @param location The new location.
-     * @return The updated {@code VendingMachine}, or null if not found.
-     */
-    public VendingMachine changeLocation(int id, String location) {
+    public VendingMachine changeLocation(final int id, final String location) {
         MachineTracker machTrack = getVendmachtrack();
 
         for (VendingMachine vendMach : machTrack.getMachines()) {
@@ -86,20 +60,10 @@ public class MachineTrackerRepository {
                 return vendMach;
             }
         }
-
         return null;
-
     }
 
-    /**
-     * Adds an item to a specific {@code VendingMachine} based on its ID.
-     *
-     * @param id     The ID of the {@code VendingMachine}.
-     * @param item   The item to add.
-     * @param amount The quantity of the item to add.
-     * @return The updated {@code VendingMachine}, or null if not found.
-     */
-    public VendingMachine addItem(int id, String item, int quantity) {
+    public VendingMachine addItem(final int id, final String item, final int quantity) {
         MachineTracker machTrack = getVendmachtrack();
 
         for (VendingMachine vendMach : machTrack.getMachines()) {
@@ -109,11 +73,10 @@ public class MachineTrackerRepository {
                 return vendMach;
             }
         }
-
         return null;
     }
 
-    public VendingMachine removeItem(int id, String item, int quantity) {
+    public VendingMachine removeItem(final int id, final String item, final int quantity) {
         MachineTracker machTrack = getVendmachtrack();
 
         for (VendingMachine vendMach : machTrack.getMachines()) {
@@ -123,19 +86,10 @@ public class MachineTrackerRepository {
                 return vendMach;
             }
         }
-
         return null;
     }
 
-    /**
-     * Adds a new {@code VendingMachine} with a specified ID and location to the
-     * {@code MachineTracker}.
-     *
-     * @param id       The ID of the new {@code VendingMachine}.
-     * @param location The location of the new {@code VendingMachine}.
-     * @return The updated {@code MachineTracker} instance.
-     */
-    public MachineTracker addVendMach(int id, String location) {
+    public MachineTracker addVendMach(final int id, final String location) {
         MachineTracker machTrack = getVendmachtrack();
         VendingMachine vendMach = new VendingMachine();
 
@@ -146,14 +100,7 @@ public class MachineTrackerRepository {
         return saveVendmachtrack(machTrack);
     }
 
-    /**
-     * Removes a {@code VendingMachine} based on its ID from the
-     * {@code MachineTracker}.
-     *
-     * @param id The ID of the {@code VendingMachine} to remove.
-     * @return The updated {@code MachineTracker} instance.
-     */
-    public MachineTracker removeVendMach(int id) {
+    public MachineTracker removeVendMach(final int id) {
         MachineTracker machTrack = getVendmachtrack();
 
         for (VendingMachine vendMach : machTrack.getMachines()) {

@@ -48,12 +48,11 @@ public class PasswordHandlerController {
      * @param event The ActionEvent triggered by the user.
      * @throws IOException If an error occurs during scene transition.
      */
-    public void onConfirmButtonClicked(ActionEvent event) throws IOException {
+    public void onConfirmButtonClicked(final ActionEvent event) throws IOException {
         String inputPassword = passwordField.getText();
 
         if (PasswordHandler.verifyPassword(inputPassword)) {
             backToHomePage(event);
-
         } else {
             label.getStyleClass().add("error-text");
             label.setText("Incorrect password. Please try again");
@@ -65,7 +64,7 @@ public class PasswordHandlerController {
      *
      * @param mainApp The main application instance.
      */
-    public void setMainApp(App mainApp) {
+    public void setMainApp(final App mainApp) {
         this.mainApp = mainApp;
     }
 
@@ -74,12 +73,8 @@ public class PasswordHandlerController {
      *
      * @param service The AccessService instance.
      */
-    public void setAccessService(AccessService service) {
-        try {
-            this.service = service;
-        } catch (Exception e) {
-            label.setText(e.getMessage());
-        }
+    public void setAccessService(final AccessService service) {
+        this.service = service;
     }
 
     /**
@@ -89,7 +84,7 @@ public class PasswordHandlerController {
      * @throws IOException If an error occurs during scene transition.
      */
     @FXML
-    public void backToHomePage(ActionEvent event) throws IOException {
+    public void backToHomePage(final ActionEvent event) throws IOException {
         mainApp.switchToMainScene(selectedMachineID);
     }
 
@@ -98,7 +93,7 @@ public class PasswordHandlerController {
      *
      * @param machineID The ID of the selected vending machine.
      */
-    public void setSelectedMachineID(int machineID) {
+    public void setSelectedMachineID(final int machineID) {
         this.selectedMachineID = machineID;
     }
 
@@ -108,7 +103,7 @@ public class PasswordHandlerController {
      * @param event The ActionEvent triggered by the user.
      * @throws IOException If an error occurs during scene transition.
      */
-    public void switchBackToUserView(ActionEvent event) throws IOException {
+    public void switchBackToUserView(final ActionEvent event) throws IOException {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("UserApp.fxml"));
             Parent root = fxmlLoader.load();
