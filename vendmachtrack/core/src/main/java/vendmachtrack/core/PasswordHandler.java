@@ -25,7 +25,7 @@ public final class PasswordHandler {
      * @param password Password as string from input field
      * @return Hashed password as string
      */
-    static String hashPassword(final String password) { 
+    static String hashPassword(final String password) {
         Argon2 argon2 = Argon2Factory.create();
 
         // Using constants instead of magic numbers
@@ -39,7 +39,7 @@ public final class PasswordHandler {
      * @param password Password to be verified
      * @return True if password is correct, false if not.
      */
-    public static boolean verifyPassword(final String password) { 
+    public static boolean verifyPassword(final String password) {
         String validPasswordHash;
         Argon2 argon2 = Argon2Factory.create();
 
