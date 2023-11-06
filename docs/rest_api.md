@@ -13,7 +13,7 @@ Response body: "Running"
 Response code: OK (200)
 
 **Eksempel på respons:**
-```bash
+```
 GET http://localhost:8080/health
 ```
 
@@ -31,7 +31,7 @@ Response body: En liste over brusautomater med deres ID-er og plasseringer.
 Response code: OK (200)
 
 **Eksempel på respons:**
-```bash
+```
 GET http://localhost:8080/vendmachtrack 
 ```
 
@@ -58,7 +58,7 @@ Response body: Plassering av brusautomaten.
 Response code: OK (200)
 
 **Eksempel på respons:**
-```bash
+```
 GET http://localhost:8080/vendmachtrack/1/name
 ```
 
@@ -79,7 +79,7 @@ Response body: Varer og deres antall.
 Response code: OK (200)
 
 **Eksempel på respons:**
-```bash
+```
 GET http://localhost:8080/vendmachtrack/3
 ```
 
@@ -110,7 +110,7 @@ Response body: Oppdatert varebeholdning.
 Response code: OK (200)
 
 **Eksempel på respons:**
-```bash
+```
 PUT http://localhost:8080/vendmachtrack/3/add?item=Paraply&quantity=2
 ```
 
@@ -142,7 +142,7 @@ Response body: Oppdatert varebeholdning.
 Response code: OK (200)
 
 **Eksempel på respons:**
-```bash
+```
 GET http://localhost:8080/vendmachtrack/3/remove?item=Paraply&quantity=1
 ```
 
@@ -171,8 +171,8 @@ Response body: Oppdatert liste over brusautomater med deres ID-er og plasseringe
 Response code: OK (200)
 
 **Eksempel på respons:**
-```bash
-GET http://localhost:8080/vendmachtrack 
+```
+POST http://localhost:8080/vendmachtrack/add?id=6&location=Bodø
 ```
 
 ```json
@@ -181,7 +181,8 @@ GET http://localhost:8080/vendmachtrack
     "2": "Oslo",
     "3": "Bergen",
     "4": "Stavanger",
-    "5": "Tromsø"
+    "5": "Tromsø",
+    "6": "Bodø"
 }
 ```
 ---
@@ -198,8 +199,8 @@ Response body: Oppdatert liste over brusautomater med deres ID-er og plasseringe
 Response code: OK (200)
 
 **Eksempel på respons:**
-```bash
-GET http://localhost:8080/vendmachtrack 
+```
+DELETE http://localhost:8080/vendmachtrack/6
 ```
 
 ```json
@@ -228,13 +229,13 @@ Response body: Oppdatert liste over brusautomater med deres ID-er og plasseringe
 Response code: OK (200)
 
 **Eksempel på respons:**
-```bash
-GET http://localhost:8080/vendmachtrack 
+```
+PUT http://localhost:8080/vendmachtrack/1?location="Throndhjem"
 ```
 
 ```json
 {
-    "1": "Trondheim",
+    "1": "Throndhjem",
     "2": "Oslo",
     "3": "Bergen",
     "4": "Stavanger",
