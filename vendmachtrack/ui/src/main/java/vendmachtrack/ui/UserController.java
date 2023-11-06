@@ -93,6 +93,7 @@ public class UserController {
      *                  machine inventory.
      */
     private void updateButtons(final int machineID, final Map<String, Integer> inventory) {
+        try {
         buttonContainer.getChildren().clear();
 
         HBox currentRow = new HBox(BUTTON_SPACING);
@@ -118,11 +119,13 @@ public class UserController {
                 buttonsInCurrentRow = 0;
             }
         }
-
         if (buttonsInCurrentRow > 0) {
             buttonContainer.getChildren().add(currentRow);
         }
         scrollPane.setContent(buttonContainer);
+        } catch (Exception e) {
+            mylabel.setText(e.getMessage());
+        }
     }
 
     /**
