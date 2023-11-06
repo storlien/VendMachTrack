@@ -8,9 +8,16 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
-public class PasswordHandler {
+public final class PasswordHandler {
 
-    private static final String passwordFile = "/vendmachtrack/core/password.txt";
+    private static final String PASSWORD_FILE = "/vendmachtrack/core/password.txt"; // Renamed to all uppercase
+    private static final int ARGON2_ITERATIONS = 10; // Defined magic number as constant
+    private static final int ARGON2_MEMORY = 65536; // Defined magic number as constant
+    private static final int ARGON2_PARALLELISM = 1; // Defined magic number as constant
+
+    private PasswordHandler() {
+        // Private constructor to prevent instantiation
+    }
 
     /**
      * Hashes a password with Argon2 and returns the hash value as String.
@@ -18,14 +25,11 @@ public class PasswordHandler {
      * @param password Password as string from input field
      * @return Hashed password as string
      */
-    static String hashPassword(String password) {
+    static String hashPassword(final String password) { 
         Argon2 argon2 = Argon2Factory.create();
 
-        int iterations = 10;
-        int memory = 65536;
-        int parallelism = 1;
-
-        return argon2.hash(iterations, memory, parallelism, password.toCharArray());
+        // Using constants instead of magic numbers
+        return argon2.hash(ARGON2_ITERATIONS, ARGON2_MEMORY, ARGON2_PARALLELISM, password.toCharArray());
     }
 
     /**
@@ -35,12 +39,12 @@ public class PasswordHandler {
      * @param password Password to be verified
      * @return True if password is correct, false if not.
      */
-    public static boolean verifyPassword(String password) {
+    public static boolean verifyPassword(final String password) { 
         String validPasswordHash;
         Argon2 argon2 = Argon2Factory.create();
 
         try (BufferedReader br = new BufferedReader(
-                new InputStreamReader(Objects.requireNonNull(PasswordHandler.class.getResourceAsStream(passwordFile)),
+                new InputStreamReader(Objects.requireNonNull(PasswordHandler.class.getResourceAsStream(PASSWORD_FILE)),
                         StandardCharsets.UTF_8))) {
             validPasswordHash = br.readLine();
         } catch (Exception e) {

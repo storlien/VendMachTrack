@@ -16,18 +16,19 @@ public class ToJson {
     /**
      * Constructor. Requires a file name for the MachineTracker object to be saved to.
      *
-     * @param fileName File name.
+     * @param fileName File name where the MachineTracker object will be saved.
      */
-    public ToJson(String fileName) {
+    public ToJson(final String fileName) {
         this.filePath = System.getProperty("user.home") + "/" + fileName;
     }
 
     /**
      * Parses MachineTracker object to JSON data and returns as OutputStream.
      *
+     * @param machtrack MachineTracker object to be parsed.
      * @return OutputStream of parsed MachineTracker object
      */
-    public OutputStream toOutputStream(MachineTracker machtrack) {
+    public OutputStream toOutputStream(final MachineTracker machtrack) {
         Gson gson = new Gson();
         String jsonString = gson.toJson(machtrack);
 
@@ -45,7 +46,7 @@ public class ToJson {
      *
      * @param machtrack MachineTracker object to be parsed and written to file.
      */
-    public void writeToFile(MachineTracker machtrack) {
+    public void writeToFile(final MachineTracker machtrack) {
         Gson gson = new Gson();
         String jsonString = gson.toJson(machtrack);
 
