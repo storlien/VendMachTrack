@@ -186,37 +186,26 @@ public class FromJsonTest {
         assertNull(machineTracker);
     }
 
-
-    /**
-     * Tests the {@link FromJson#fromInputStream(InputStream)} method when provided with a valid input stream
-     * from an existing file.
-     * 
+       /**
+     * Tests the {@link FromJson#readFromFile()} method when reading from a valid file
+     *   
      * This test case focuses on the scenario where:
      * <ul>
-     *   <li>A valid input stream from an existing file is provided to the {@link FromJson#fromInputStream(InputStream)}
-     *       method.</li>
+     *     <li>A valid file path is provided to the constructor of {@link FromJson}.</li>
      * </ul>
      * 
      * <p>
      * To conduct this test, we perform the following steps:
      * </p>
      * <ol>
-     *   <li>Arrange: Create an input stream from an existing file (specified by 'dir').</li>
-     *   <li>Act: Call the {@link FromJson#fromInputStream(InputStream)} method to deserialize the JSON content
-     *       from the input stream into a {@link MachineTracker} object.</li>
-     *   <li>Assert: Verify that the resulting {@link MachineTracker} object is not null and contains the expected data,
-     *       including the number of machines and their status.</li>
+     *   <li>Act: Call the {@link FromJson#readFromFile()} method to read from the valid file path.</li>
+     *   <li>Assert: Verify that the result is a Valid MachineTracker, with the correct VedningMachines</li>
      * </ol>
-     *
-     * @throws IOException if any I/O error occurs during the test
      */
     @Test
     public void FromJson_readFromFile_ValidFile() throws IOException {
-        // Arrange
-        InputStream inputStream = Files.newInputStream(dir);
-
         // Act
-        MachineTracker machineTracker = fromJson.fromInputStream(inputStream);
+        MachineTracker machineTracker = fromJson.readFromFile();
 
         // Assert
         assertNotNull(machineTracker);
@@ -288,6 +277,7 @@ public class FromJsonTest {
         // Assert 
         assertNull(result);
     }
+
 }
 
      

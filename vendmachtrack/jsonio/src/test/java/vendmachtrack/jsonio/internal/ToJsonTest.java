@@ -7,7 +7,6 @@ import vendmachtrack.core.MachineTracker;
 import vendmachtrack.core.VendingMachine;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
