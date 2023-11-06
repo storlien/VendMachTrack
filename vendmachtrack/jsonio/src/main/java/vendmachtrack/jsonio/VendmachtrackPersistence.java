@@ -9,7 +9,7 @@ public class VendmachtrackPersistence {
     private final FromJson fromJson;
     private final ToJson toJson;
 
-    public VendmachtrackPersistence(String fileName) {
+    public VendmachtrackPersistence(final String fileName) {
         this.fromJson = new FromJson(fileName);
         this.toJson = new ToJson(fileName);
     }
@@ -18,7 +18,7 @@ public class VendmachtrackPersistence {
         return fromJson.readFromFile();
     }
 
-    public MachineTracker saveVendmachtrack(MachineTracker vendmachtrack) {
+    public MachineTracker saveVendmachtrack(final MachineTracker vendmachtrack) {
         toJson.writeToFile(vendmachtrack);
         return vendmachtrack;
     }

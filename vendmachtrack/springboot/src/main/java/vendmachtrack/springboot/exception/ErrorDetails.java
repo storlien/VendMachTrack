@@ -7,10 +7,10 @@ class ErrorDetails {
     private final String error;
     private final String details;
 
-    public ErrorDetails(Date timestamp, String error, String details) {
-        this.timestamp = new Date(timestamp.getTime());
-        this.error = error;
-        this.details = details;
+    ErrorDetails(final Date timestampParam, final String errorParam, final String detailsParam) {
+        this.timestamp = new Date(timestampParam.getTime());
+        this.error = errorParam;
+        this.details = detailsParam;
     }
 
     public Date getTimestamp() {
@@ -24,5 +24,4 @@ class ErrorDetails {
     public String getDetails() {
         return details;
     }
-
 }

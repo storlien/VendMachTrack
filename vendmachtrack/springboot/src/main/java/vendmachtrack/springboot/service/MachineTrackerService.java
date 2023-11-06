@@ -18,7 +18,7 @@ public class MachineTrackerService {
     private final MachineTrackerRepository repository;
 
     @Autowired
-    public MachineTrackerService(MachineTrackerRepository repository) {
+    public MachineTrackerService(final MachineTrackerRepository repository) {
         this.repository = repository;
     }
 
@@ -38,7 +38,7 @@ public class MachineTrackerService {
         }
     }
 
-    public String getVendMachLocation(int id) {
+    public String getVendMachLocation(final int id) {
         HashMap<Integer, String> vendMachList = getVendMachList();
 
         if (vendMachList.containsKey(id)) {
@@ -48,11 +48,11 @@ public class MachineTrackerService {
         }
     }
 
-    public HashMap<String, Integer> getInventory(int id) {
+    public HashMap<String, Integer> getInventory(final int id) {
         return getVendMach(id).getStatus();
     }
 
-    public HashMap<String, Integer> addItem(int id, String item, int quantity) {
+    public HashMap<String, Integer> addItem(final int id, final String item, final int quantity) {
         validateItem(item);
         validateQuantity(quantity);
         validateVendMachId(id);
@@ -60,7 +60,7 @@ public class MachineTrackerService {
         return repository.addItem(id, item, quantity).getStatus();
     }
 
-    public HashMap<String, Integer> removeItem(int id, String item, int quantity) {
+    public HashMap<String, Integer> removeItem(final int id, final String item, final int quantity) {
         validateItem(item);
         validateQuantity(quantity);
         validateVendMachId(id);
@@ -77,7 +77,7 @@ public class MachineTrackerService {
         }
     }
 
-    public HashMap<Integer, String> addVendMach(int id, String location) {
+    public HashMap<Integer, String> addVendMach(final int id, final String location) {
         validateNewVendMachId(id);
         validateLocation(location);
         repository.addVendMach(id, location);
@@ -85,14 +85,14 @@ public class MachineTrackerService {
         return getVendMachList();
     }
 
-    public HashMap<Integer, String> removeVendMach(int id) {
+    public HashMap<Integer, String> removeVendMach(final int id) {
         validateVendMachId(id);
         repository.removeVendMach(id);
 
         return getVendMachList();
     }
 
-    public HashMap<Integer, String> changeLocation(int id, String location) {
+    public HashMap<Integer, String> changeLocation(final int id, final String location) {
         validateLocation(location);
         validateVendMachId(id);
         repository.changeLocation(id, location);
@@ -100,25 +100,25 @@ public class MachineTrackerService {
         return getVendMachList();
     }
 
-    private void validateLocation(String location) {
+    private void validateLocation(final String location) {
         if (!Pattern.compile("[A-ZÆØÅ][a-zæøå]*( [A-ZÆØÅ][a-zæøå]*)*").matcher(location).matches()) {
             throw new IllegalInputException("Location name not valid");
         }
     }
 
-    private void validateQuantity(int quantity) {
+    private void validateQuantity(final int quantity) {
         if (quantity < 1) {
             throw new IllegalInputException("Quantity has to be higher than zero");
         }
     }
 
-    private void validateItem(String item) {
+    private void validateItem(final String item) {
         if (!Pattern.compile("\\S(.*\\S)?").matcher(item).matches()) {
             throw new IllegalInputException("Item name not valid");
         }
     }
 
-    private void validateVendMachId(int id) {
+    private void validateVendMachId(final int id) {
         Optional<VendingMachine> vendMach = Optional.ofNullable(repository.getVendMach(id));
 
         if (vendMach.isEmpty()) {
@@ -126,8 +126,8 @@ public class MachineTrackerService {
         }
     }
 
-    private void validateNewVendMachId(int id) {
-        Optional<VendingMachine> vendMach = Optional.ofNullable(repository.getVendMach(id));
+    private void validateNewVendMachId(final int id) {
+    Optional<VendingMachine> vendMach = Optional.ofNullable(repository.getVendMach(id));
 
         if (vendMach.isPresent()) {
             throw new IllegalInputException("A vending machine with id " + id + " already exists");
@@ -136,8 +136,9 @@ public class MachineTrackerService {
         }
     }
 
-    private VendingMachine getVendMach(int id) {
+    private VendingMachine getVendMach(final int id) {
         validateVendMachId(id);
         return repository.getVendMach(id);
     }
+
 }

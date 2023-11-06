@@ -10,7 +10,7 @@ public class MachineTrackerRepository {
 
     private final VendmachtrackPersistence persistence;
 
-    public MachineTrackerRepository(String fileName) {
+    public MachineTrackerRepository(final String fileName) {
         persistence = new VendmachtrackPersistence(fileName);
     }
 
@@ -18,22 +18,21 @@ public class MachineTrackerRepository {
         return persistence.getVendmachtrack();
     }
 
-    public MachineTracker saveVendmachtrack(MachineTracker vendmachtrack) {
+    public MachineTracker saveVendmachtrack(final MachineTracker vendmachtrack) {
         persistence.saveVendmachtrack(vendmachtrack);
         return vendmachtrack;
     }
 
-    public VendingMachine getVendMach(int id) {
+    public VendingMachine getVendMach(final int id) {
         for (VendingMachine vendMach : getVendmachtrack().getMachines()) {
             if (vendMach.getId() == id) {
                 return vendMach;
             }
         }
-
         return null;
     }
 
-    public VendingMachine changeLocation(int id, String location) {
+    public VendingMachine changeLocation(final int id, final String location) {
         MachineTracker machTrack = getVendmachtrack();
 
         for (VendingMachine vendMach : machTrack.getMachines()) {
@@ -43,12 +42,10 @@ public class MachineTrackerRepository {
                 return vendMach;
             }
         }
-
         return null;
-
     }
 
-    public VendingMachine addItem(int id, String item, int quantity) {
+    public VendingMachine addItem(final int id, final String item, final int quantity) {
         MachineTracker machTrack = getVendmachtrack();
 
         for (VendingMachine vendMach : machTrack.getMachines()) {
@@ -58,11 +55,10 @@ public class MachineTrackerRepository {
                 return vendMach;
             }
         }
-
         return null;
     }
 
-    public VendingMachine removeItem(int id, String item, int quantity) {
+    public VendingMachine removeItem(final int id, final String item, final int quantity) {
         MachineTracker machTrack = getVendmachtrack();
 
         for (VendingMachine vendMach : machTrack.getMachines()) {
@@ -72,11 +68,10 @@ public class MachineTrackerRepository {
                 return vendMach;
             }
         }
-
         return null;
     }
 
-    public MachineTracker addVendMach(int id, String location) {
+    public MachineTracker addVendMach(final int id, final String location) {
         MachineTracker machTrack = getVendmachtrack();
         VendingMachine vendMach = new VendingMachine();
 
@@ -87,7 +82,7 @@ public class MachineTrackerRepository {
         return saveVendmachtrack(machTrack);
     }
 
-    public MachineTracker removeVendMach(int id) {
+    public MachineTracker removeVendMach(final int id) {
         MachineTracker machTrack = getVendmachtrack();
 
         for (VendingMachine vendMach : machTrack.getMachines()) {

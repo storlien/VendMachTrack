@@ -7,14 +7,22 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import vendmachtrack.ui.access.AccessService;
 import vendmachtrack.ui.access.MachineTrackerAccessible;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.ResourceBundle;
 
 /**
  * Controller class for the vending machine application's user interface.
@@ -69,7 +77,7 @@ public class VendAppController implements Initializable {
      *
      * @param service The AccessService instance.
      */
-    public void setAccessService(AccessService service) {
+    public void setAccessService(final AccessService service) {
         try {
             this.service = service;
             this.access = service.getAccess();
@@ -83,7 +91,7 @@ public class VendAppController implements Initializable {
      *
      * @param mainApp The main application instance.
      */
-    public void setMainApp(App mainApp) {
+    public void setMainApp(final App mainApp) {
         this.mainApp = mainApp;
     }
 
@@ -96,7 +104,7 @@ public class VendAppController implements Initializable {
      *             root object was not localized.
      */
     @Override
-    public void initialize(URL arg0, ResourceBundle arg1) {
+    public void initialize(final URL arg0, final ResourceBundle arg1) {
 
     }
 
@@ -124,7 +132,7 @@ public class VendAppController implements Initializable {
      *
      * @param machineID The ID of the selected vending machine.
      */
-    public void updateInventory(int machineID) {
+    public void updateInventory(final int machineID) {
         try {
             Map<String, Integer> statusMap = access.getInventory(machineID);
             StringBuilder formattedStatus = new StringBuilder("Inventory:\n");
@@ -144,7 +152,7 @@ public class VendAppController implements Initializable {
      * @param event The event representing the button click.
      */
     @FXML
-    private void handleAddButton(ActionEvent event) {
+    private void handleAddButton(final ActionEvent event) {
         try {
             int machineId = Integer.parseInt(idTextFieldAdd.getText());
             String location = locationTextField.getText();
@@ -184,7 +192,7 @@ public class VendAppController implements Initializable {
      * @param event The event representing the button click.
      */
     @FXML
-    private void handleRemoveButton(ActionEvent event) {
+    private void handleRemoveButton(final ActionEvent event) {
         try {
             int machineId = Integer.parseInt(idTextFieldRemove.getText());
             access.removeVendMach(machineId);
@@ -222,7 +230,7 @@ public class VendAppController implements Initializable {
      * @param event The event representing the button click.
      */
     @FXML
-    private void handleButtonClick(ActionEvent event) {
+    private void handleButtonClick(final ActionEvent event) {
         if (findID() != null) {
             updateInventory(Integer.parseInt(findID()));
             outputText.setText(null);
@@ -236,7 +244,7 @@ public class VendAppController implements Initializable {
      *
      * @param machineID The ID of the vending machine to be set in the menuBar.
      */
-    public void setIdToChoiceBox(int machineID) {
+    public void setIdToChoiceBox(final int machineID) {
         try {
             HashMap<Integer, String> vendingMachines = access.getVendMachList();
             for (Map.Entry<Integer, String> entry : vendingMachines.entrySet()) {
@@ -275,7 +283,7 @@ public class VendAppController implements Initializable {
      * @throws IOException If an I/O error occurs while loading the refill scene.
      */
     @FXML
-    public void changeToRefillScene(ActionEvent event) throws IOException {
+    public void changeToRefillScene(final ActionEvent event) throws IOException {
         try {
             int selectedMachineID = Integer.parseInt(findID());
 
@@ -308,7 +316,7 @@ public class VendAppController implements Initializable {
      * @throws IOException If an I/O error occurs while loading the user view scene.
      */
     @FXML
-    public void userViewScene(ActionEvent event) throws IOException {
+    public void userViewScene(final ActionEvent event) throws IOException {
         try {
             int selectedMachineID = Integer.parseInt(findID());
 
