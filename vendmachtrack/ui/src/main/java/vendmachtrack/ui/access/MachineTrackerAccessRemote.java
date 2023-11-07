@@ -6,7 +6,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
+import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URLEncoder;
@@ -29,8 +31,10 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
 
     private static final String ENDPOINT_DIRECTORY = "vendmachtrack";
 
-    private static final Type TYPE_HASHMAP_INTEGER_STRING = new TypeToken<HashMap<Integer, String>>() { }.getType();
-    private static final Type TYPE_HASHMAP_STRING_INTEGER = new TypeToken<HashMap<String, Integer>>() { }.getType();
+    private static final Type TYPE_HASHMAP_INTEGER_STRING = new TypeToken<HashMap<Integer, String>>() {
+    }.getType();
+    private static final Type TYPE_HASHMAP_STRING_INTEGER = new TypeToken<HashMap<String, Integer>>() {
+    }.getType();
 
     /**
      * Constructor. Requires a base URI for the REST API endpoint.
@@ -47,18 +51,23 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
      * Access method for the list of vending machines
      *
      * @return HashMap of vending machine list with vending machine ID as key and
-     * location as value
+     *         location as value
+     * @throws ConnectException
      */
     @Override
-    public HashMap<Integer, String> getVendMachList() {
+    public HashMap<Integer, String> getVendMachList() throws ConnectException {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(endpointBaseUri.resolve("vendmachtrack"))
                 .build();
 
-        HttpResponse<String> response = getResponse(request);
-        checkError(response);
+        try {
+            HttpResponse<String> response = getResponse(request);
+            checkError(response);
 
-        return gson.fromJson(response.body(), TYPE_HASHMAP_INTEGER_STRING);
+            return gson.fromJson(response.body(), TYPE_HASHMAP_INTEGER_STRING);
+        } catch (ConnectException ce) {
+            throw ce;
+        }
     }
 
     /**
@@ -68,7 +77,7 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
      * @return Location of vending machine
      */
     @Override
-    public String getVendMachLocation(final int id) {
+    public String getVendMachLocation(final int id) throws ConnectException {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(endpointBaseUri.resolve("vendmachtrack/" + id + "/name"))
                 .build();
@@ -84,9 +93,10 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
      *
      * @param id The ID of the vending machine
      * @return HashMap of inventory with item as key and as value
+     * @throws ConnectException
      */
     @Override
-    public HashMap<String, Integer> getInventory(final int id) {
+    public HashMap<String, Integer> getInventory(final int id) throws ConnectException {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(endpointBaseUri.resolve("vendmachtrack/" + id))
                 .build();
@@ -104,12 +114,14 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
      * @param item     The item name to be added
      * @param quantity The quantity of the item to be added
      * @return HashMap of inventory with item as key and quantity as value
+     * @throws ConnectException
      */
     @Override
-    public HashMap<String, Integer> addItem(final int id, final String item, final int quantity) {
+    public HashMap<String, Integer> addItem(final int id, final String item, final int quantity)
+            throws ConnectException {
 
         String endpointQuery = buildEndpointWithParams(ENDPOINT_DIRECTORY + "/" + id + "/add",
-         "item", item, "quantity", String.valueOf(quantity));
+                "item", item, "quantity", String.valueOf(quantity));
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(endpointBaseUri.resolve(endpointQuery))
@@ -129,12 +141,14 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
      * @param item     The item to be removed
      * @param quantity The quantity to be removed from the item
      * @return HashMap of inventory with item as key and quantity as value
+     * @throws ConnectException
      */
     @Override
-    public HashMap<String, Integer> removeItem(final int id, final String item, final int quantity) {
+    public HashMap<String, Integer> removeItem(final int id, final String item, final int quantity)
+            throws ConnectException {
 
         String endpointQuery = buildEndpointWithParams(ENDPOINT_DIRECTORY + "/" + id + "/remove",
-        "item", item, "quantity", String.valueOf(quantity));
+                "item", item, "quantity", String.valueOf(quantity));
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(endpointBaseUri.resolve(endpointQuery))
@@ -153,13 +167,14 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
      * @param id       The ID of the new vending machine
      * @param location The location of the new vending machine
      * @return HashMap of vending machine list with vending machine ID as key and
-     * location as value
+     *         location as value
+     * @throws ConnectException
      */
     @Override
-    public HashMap<Integer, String> addVendMach(final int id, final String location) {
+    public HashMap<Integer, String> addVendMach(final int id, final String location) throws ConnectException {
 
         String endpointQuery = buildEndpointWithParams(ENDPOINT_DIRECTORY + "/add",
-         "id", String.valueOf(id), "location", location);
+                "id", String.valueOf(id), "location", location);
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(endpointBaseUri.resolve(endpointQuery))
@@ -177,10 +192,11 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
      *
      * @param id The ID of the vending machine
      * @return HashMap of vending machine list with vending machine ID as key and
-     * location as value
+     *         location as value
+     * @throws ConnectException
      */
     @Override
-    public HashMap<Integer, String> removeVendMach(final int id) {
+    public HashMap<Integer, String> removeVendMach(final int id) throws ConnectException {
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(endpointBaseUri.resolve("vendmachtrack/" + id))
@@ -199,10 +215,11 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
      * @param id       The ID of the vending machine
      * @param location The new location of the vending machine
      * @return HashMap of vending machine list with vending machine ID as key and
-     * location as value
+     *         location as value
+     * @throws ConnectException
      */
     @Override
-    public HashMap<Integer, String> changeLocation(final int id, final String location) {
+    public HashMap<Integer, String> changeLocation(final int id, final String location) throws ConnectException {
 
         String endpointQuery = buildEndpointWithParams(ENDPOINT_DIRECTORY + "/" + id, "location", location);
 
@@ -238,10 +255,13 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
      *
      * @param request HttpRequest to be sent
      * @return HttpReponse from the request sent
+     * @throws ConnectException
      */
-    private HttpResponse<String> getResponse(final HttpRequest request) {
+    private HttpResponse<String> getResponse(final HttpRequest request) throws ConnectException {
         try {
             return httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (IOException | InterruptedException e) {
+            throw new ConnectException("Connection to server failed. Please try reconnecting.");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -252,9 +272,11 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
      * Parameters are provided as varargs, with key-value pairs in sequence.
      *
      * @param base   The base URL to which the parameters should be appended.
-     * @param params An array of strings representing key-value pairs. Must be even-numbered.
+     * @param params An array of strings representing key-value pairs. Must be
+     *               even-numbered.
      *               For instance, ["key1", "value1", "key2", "value2"].
-     * @return A string representing the constructed URL with the provided parameters.
+     * @return A string representing the constructed URL with the provided
+     *         parameters.
      */
     private String buildEndpointWithParams(final String base, final String... params) {
         StringBuilder endpoint = new StringBuilder(base);
