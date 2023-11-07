@@ -10,7 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.stage.Stage;
-import vendmachtrack.core.util.PasswordHandler;
+import vendmachtrack.core.PasswordHandler;
 import vendmachtrack.ui.access.AccessService;
 
 import java.io.IOException;

@@ -2,8 +2,6 @@ package vendmachtrack.core;
 
 import org.junit.jupiter.api.Test;
 
-import vendmachtrack.core.util.PasswordHandler;
-
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
