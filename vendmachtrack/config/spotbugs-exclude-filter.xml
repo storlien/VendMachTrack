@@ -24,7 +24,7 @@
         <Bug pattern="EI_EXPOSE_REP"/>
     </Match>
     <!--    <Match>-->
-    <!--        <Class name="vendmachtrack.ui.RefillController"/>-->
+    <!--        <Class name="vendmachtrack.ui.controller.RefillController"/>-->
     <!--        <Method name="setMachineTrackerAccess"/>-->
     <!--        <Bug pattern="EI_EXPOSE_REP2"/>-->
     <!--    </Match>-->

@@ -1,0 +1,132 @@
+@startuml ClassDiagram2
+
+package vendmachtrack.springboot.controller {
+    class HealthController {
+        + getHealth(): ResponseEntity<String>
+    }
+    class MachineTrackerController {
+        - machtrackService: MachineTrackerService
+        + getVendMachList(): ResponseEntity<HashMap<Integer, String>>
+        + getVendMachLocation(id: int): ResponseEntity<String>
+        + getInventory(id: int): ResponseEntity<HashMap<String, Integer>>
+        + addItem(id: int, item: String, quantity: int): ResponseEntity<HashMap<String, Integer>>
+        + removeItem(id: int, item: String, quantity: int): ResponseEntity<HashMap<String, Integer>>
+        + addVendMach(id: int, location: String): ResponseEntity<HashMap<Integer, String>>
+        + removeVendMach(id: int): ResponseEntity<HashMap<Integer, String>>
+        + changeLocation(id: int, location: String): ResponseEntity<HashMap<Integer, String>>
+    }
+}
+
+package vendmachtrack.springboot.exception {
+    class ErrorDetails {
+        - timestamp: Date
+        - error: String
+        - details: String
+        + getTimestamp(): Date
+        + getError(): String
+        + getDetails(): String
+    }
+    class GlobalExceptionHandler {
+        + resourceNotFoundException(ex: ResourceNotFoundException, request: WebRequest): ResponseEntity<?>
+        + illegalInputException(ex: IllegalInputException, request: WebRequest): ResponseEntity<?>
+    }
+    class IllegalInputException {
+        + IllegalInputException(message: String)
+    }
+    class ResourceNotFoundException {
+        + ResourceNotFoundException(message: String)
+    }
+}
+
+package vendmachtrack.springboot.service {
+    class MachineTrackerService {
+        + getVendMachList(): HashMap<Integer, String>
+        + getVendMachLocation(id: int): String
+        + getInventory(id: int): HashMap<String, Integer>
+        + addItem(id: int, item: String, quantity: int): HashMap<String, Integer>
+        + removeItem(id: int, item: String, quantity: int): HashMap<String, Integer>
+        + addVendMach(id: int, location: String): HashMap<Integer, String>
+        + removeVendMach(id: int): HashMap<Integer, String>
+        + changeLocation(id: int, location: String): HashMap<Integer, String>
+    }
+}
+
+package vendmachtrack.jsonio {
+    class VendmachtrackPersistence {
+        - fromJson: FromJson
+        - toJson: ToJson
+        + getVendmachtrack(): MachineTracker
+        + saveVendmachtrack(vendmachtrack: MachineTracker): MachineTracker
+    }
+}
+
+package vendmachtrack.springboot.repository {
+    class MachineTrackerRepository {
+        - persistence: VendmachtrackPersistence
+        + getVendmachtrack(): MachineTracker
+        + saveVendmachtrack(vendmachtrack: MachineTracker): MachineTracker
+        + getVendMach(id: int): VendingMachine
+        + changeLocation(id: int, location: String): VendingMachine
+        + addItem(id: int, item: String, quantity: int): VendingMachine
+        + removeItem(id: int, item: String, quantity: int): VendingMachine
+        + addVendMach(id: int, location: String): MachineTracker
+        + removeVendMach(id: int): MachineTracker
+    }
+}
+
+package vendmachtrack.core {
+    class MachineTracker {
+        - machines: List<VendingMachine>
+        + removeVendingMachine(v: VendingMachine): void
+        + addVendingMachine(v: VendingMachine): void
+        + getMachines(): List<VendingMachine>
+        + setMachines(machines: List<VendingMachine>): void
+    }
+
+    class VendingMachine {
+        - status: HashMap<String, Integer>
+        - id: int
+        - location: String
+        + getStatus(): HashMap<String, Integer>
+        + getId(): int
+        + getLocation(): String
+        + addItem(item: String, quantity: int): void
+        + removeItem(item: String, quantity: int): boolean
+        + setStatus(status: HashMap<String, Integer>): void
+        + setId(id: int): void
+        + setLocation(location: String): void
+    }
+}
+
+package vendmachtrack.core {
+    class Item {
+        - name: String
+        - price: double
+        + Item(name: String, price: double)
+        + getName(): String
+        + getPrice(): double
+        + setName(newName: String): void
+        + setPrice(newPrice: double): void
+    }
+}
+
+class ResponseEntity<T> {
+    - body: T
+    - statusCode: HttpStatus
+    + getBody(): T
+    + getStatusCode(): HttpStatus
+}
+
+MachineTrackerRepository --|> VendmachtrackPersistence
+VendmachtrackPersistence --|> MachineTracker
+MachineTrackerService --|> MachineTracker
+MachineTrackerService --|> MachineTrackerRepository
+MachineTrackerController --|> MachineTrackerService
+MachineTrackerController --|> ResponseEntity
+GlobalExceptionHandler --|> ResourceNotFoundException
+GlobalExceptionHandler --|> IllegalInputException
+MachineTrackerService --|> ResourceNotFoundException
+MachineTracker "1" o-- "*" VendingMachine : tracks
+VendingMachine "1" o-- "*" Item : contains
+
+@enduml

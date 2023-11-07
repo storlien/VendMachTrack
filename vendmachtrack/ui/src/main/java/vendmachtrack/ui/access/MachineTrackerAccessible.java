@@ -14,7 +14,7 @@ public interface MachineTrackerAccessible {
      *
      * @return HashMap of vending machine list with vending machine ID as key and
      *         location as value
-     * @throws ConnectException
+     * @throws ConnectException Throws {@link ConnectException} if connection to server is lost
      */
     HashMap<Integer, String> getVendMachList() throws ConnectException;
 
@@ -23,7 +23,7 @@ public interface MachineTrackerAccessible {
      *
      * @param id The ID of the vending machine
      * @return Location of vending machine
-     * @throws ConnectException
+     * @throws ConnectException Throws {@link ConnectException} if connection to server is lost
      */
     String getVendMachLocation(int id) throws ConnectException;
 
@@ -32,6 +32,7 @@ public interface MachineTrackerAccessible {
      *
      * @param id The ID of the vending machine
      * @return HashMap of inventory with item as key and quantity as value
+     * @throws ConnectException Throws {@link ConnectException} if connection to server is lost
      */
     HashMap<String, Integer> getInventory(int id) throws ConnectException;
 
@@ -42,17 +43,18 @@ public interface MachineTrackerAccessible {
      * @param item     The item name to be added
      * @param quantity The quantity of the item to be added
      * @return HashMap of inventory with item as key and quantity as value
-     * @throws ConnectException
+     * @throws ConnectException Throws {@link ConnectException} if connection to server is lost
      */
     HashMap<String, Integer> addItem(int id, String item, int quantity) throws ConnectException;
 
     /**
-     * Access method for removing an quantity of an item
+     * Access method for removing a quantity of an item
      *
      * @param id       The ID of the vending machine
      * @param item     The item to be removed
      * @param quantity The quantity to be removed from the item
      * @return HashMap of inventory with item as key and quantity as value
+     * @throws ConnectException Throws {@link ConnectException} if connection to server is lost
      */
     HashMap<String, Integer> removeItem(int id, String item, int quantity) throws ConnectException;
 
@@ -63,7 +65,7 @@ public interface MachineTrackerAccessible {
      * @param location The location of the new vending machine
      * @return HashMap of vending machine list with vending machine ID as key and
      *         location as value
-     * @throws ConnectException
+     * @throws ConnectException Throws {@link ConnectException} if connection to server is lost
      */
     HashMap<Integer, String> addVendMach(int id, String location) throws ConnectException;
 
@@ -73,7 +75,7 @@ public interface MachineTrackerAccessible {
      * @param id The ID of the vending machine
      * @return HashMap of vending machine list with vending machine ID as key and
      *         location as value
-     * @throws ConnectException
+     * @throws ConnectException Throws {@link ConnectException} if connection to server is lost
      */
     HashMap<Integer, String> removeVendMach(int id) throws ConnectException;
 
@@ -84,7 +86,7 @@ public interface MachineTrackerAccessible {
      * @param location The new location of the vending machine
      * @return HashMap of vending machine list with vending machine ID as key and
      *         location as value
-     * @throws ConnectException
+     * @throws ConnectException Throws {@link ConnectException} if connection to server is lost
      */
     HashMap<Integer, String> changeLocation(int id, String location) throws ConnectException;
 }

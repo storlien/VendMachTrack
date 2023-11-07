@@ -1,0 +1,76 @@
+@startuml PackageDiagram
+
+skinparam package {
+  BackgroundColor LightBlue
+}
+
+component "core" {
+  folder vendmachtrack.core {
+  }
+}
+
+component "jsonio" {
+  folder vendmachtrack.jsonio {
+  }
+  folder vendmachtrack.jsonio.internal {
+  }
+}
+
+component "springboot (REST API)" {
+  folder vendmachtrack.springboot {
+  }
+  folder vendmachtrack.springboot.controller {
+  }
+  folder vendmachtrack.springboot.exception {
+  }
+  folder vendmachtrack.springboot.repository {
+  }
+  folder vendmachtrack.springboot.service {
+  }
+}
+
+
+
+component "ui" {
+  folder vendmachtrack.ui {
+  }
+  folder vendmachtrack.ui.access
+}
+
+component "javafx"{
+  component "fxml" {
+}
+}
+
+component "GSON" {
+}
+component "Spring Boot" as springboot{
+}
+
+vendmachtrack.ui ..> vendmachtrack.ui.access
+vendmachtrack.ui ..> javafx
+vendmachtrack.ui ..> fxml
+
+vendmachtrack.ui.access ..> vendmachtrack.springboot
+vendmachtrack.ui.access ..> vendmachtrack.core
+vendmachtrack.ui.access ..> vendmachtrack.jsonio
+
+
+vendmachtrack.springboot ..> vendmachtrack.springboot.controller
+vendmachtrack.springboot ..> vendmachtrack.springboot.exception
+vendmachtrack.springboot ..> vendmachtrack.springboot.repository
+vendmachtrack.springboot ..> vendmachtrack.springboot.service
+vendmachtrack.springboot.repository ..> vendmachtrack.core
+vendmachtrack.springboot.repository ..> vendmachtrack.jsonio
+vendmachtrack.springboot.controller ..> vendmachtrack.springboot.service
+vendmachtrack.springboot.service ..> vendmachtrack.core
+vendmachtrack.springboot.service ..> vendmachtrack.springboot.exception
+vendmachtrack.springboot.service ..> vendmachtrack.springboot.repository
+vendmachtrack.springboot ..> springboot
+
+vendmachtrack.jsonio ..> vendmachtrack.jsonio.internal
+vendmachtrack.jsonio ..> vendmachtrack.core
+vendmachtrack.jsonio.internal ..> vendmachtrack.core
+vendmachtrack.jsonio.internal ..> GSON
+
+@enduml
