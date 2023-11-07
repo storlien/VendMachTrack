@@ -108,11 +108,54 @@ For aksessering av filen direkte blir et Local Access-objekt (MachineTrackerAcce
 ## Bilder og diagrammer
 
 
-Skjermbilde av applikasjonen pr. release 1:
+### Klassediagram
 
-![Skjermbilde av app](../docs/release1/skjermbildeApp.png)
+Klassediagrammet viser en oversikt over alle klassene i modulen "springboot" og hvilke klasser utenfor modulen som de interagerer med.
 
-// TODO
-- [Diagram i PlantUML](../docs/diagrams/ClassDiagram.wsd)
+[Diagrammet i PlantUML](/docs/diagrams/ClassDiagram2.puml)
 
-// TODO
+
+[Åpne bildet av diagrammet](/docs/images/diagrams/ClassDiagram2.png)
+![Diagram](/docs/images/diagrams/ClassDiagram2.png)
+
+
+### Pakkediagram
+
+Pakkediagrammet viser alle pakkene i modulen "springboot" og hvilke pakker utenfor modulen som de interagerer med.
+
+[Diagrammet i PlantUML](/docs/diagrams/PackageDiagram.puml)
+
+
+[Åpne bildet av diagrammet](/docs/images/diagrams/PackageDiagram.png)
+![Diagram](/docs/images/diagrams/PackageDiagram.png)
+
+
+### Sekvensdiagram
+
+Sekvensdiagrammet viser sekvenser for når en bruker åpner applikasjonen, skriver inn server-URL og får hentet inn en oversikt over alle brusautomater.
+
+[Diagrammet i PlantUML](/docs/diagrams/SequenceDiagram.puml)
+
+
+[Åpne bildet av diagrammet](/docs/images/diagrams/SequenceDiagram.png)
+![Diagram](/docs/images/diagrams/SequenceDiagram.png)
+
+
+## Diverse skjermbilder
+
+Her er diverse skjermbilder fra applikasjonen:
+
+
+![Skjermbilde](/docs/images/screenshots/Screenshot1.png)
+
+
+![Skjermbilde](/docs/images/screenshots/Screenshot2.png)
+
+
+![Skjermbilde](/docs/images/screenshots/Screenshot3.png)
+
+
+![Skjermbilde](/docs/images/screenshots/Screenshot4.png)
+
+
+![Skjermbilde](/docs/images/screenshots/Screenshot5.png)
