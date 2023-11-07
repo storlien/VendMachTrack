@@ -11,6 +11,7 @@ import vendmachtrack.ui.access.AccessService;
 import vendmachtrack.ui.access.MachineTrackerAccessible;
 
 import java.io.IOException;
+import java.net.ConnectException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -61,8 +62,9 @@ public class RefillController {
      * Sets the ID of the selected vending machine.
      *
      * @param machineID The ID of the selected vending machine.
+     * @throws ConnectException
      */
-    public void setSelectedMachineID(final int machineID) {
+    public void setSelectedMachineID(final int machineID) throws ConnectException {
         this.selectedMachineID = machineID;
         setInventory(access.getInventory(machineID));
         updateTitle(machineID);
@@ -82,11 +84,12 @@ public class RefillController {
      *
      * @param inventory The inventory to display.
      */
-    public void setInventory(final Map<String, Integer> inventory) {
+    public void setInventory(final Map<String, Integer> inventory) throws ConnectException {
         try {
-        StringBuilder formattedStatus = new StringBuilder("Inventory:\n");
-        inventory.forEach((item, quantity) -> formattedStatus.append(item).append(": ").append(quantity).append("\n"));
-        textArea.setText(formattedStatus.toString());
+            StringBuilder formattedStatus = new StringBuilder("Inventory:\n");
+            inventory.forEach(
+                    (item, quantity) -> formattedStatus.append(item).append(": ").append(quantity).append("\n"));
+            textArea.setText(formattedStatus.toString());
         } catch (Exception e) {
             textArea.setText(e.getMessage());
         }
@@ -101,7 +104,7 @@ public class RefillController {
         this.mainApp = mainApp;
     }
 
-      /**
+    /**
      * Refills the vending machine item based on user input, updates the inventory
      * display,
      * and handles exceptions if any occur during the refill process.
@@ -122,8 +125,12 @@ public class RefillController {
         } catch (Exception e) {
             answerText.setText(e.getMessage());
         }
-
         try {
+            if (updatedInventory.isEmpty()) {
+                textArea.setText(null);
+                answerText.setText("Connection to server failed. Please try reconnecting.");
+                return;
+            }
             StringBuilder formattedStatus = new StringBuilder("Inventory:\n");
             for (Map.Entry<String, Integer> entry : updatedInventory.entrySet()) {
                 formattedStatus.append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
