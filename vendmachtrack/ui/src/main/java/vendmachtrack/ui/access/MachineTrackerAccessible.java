@@ -12,7 +12,7 @@ public interface MachineTrackerAccessible {
      * Access method for the list of vending machines
      *
      * @return HashMap of vending machine list with vending machine ID as key and
-     *         location as value
+     * location as value
      */
     HashMap<Integer, String> getVendMachList();
 
@@ -43,7 +43,7 @@ public interface MachineTrackerAccessible {
     HashMap<String, Integer> addItem(int id, String item, int quantity);
 
     /**
-     * Access method for removing an quantity of an item
+     * Access method for removing a quantity of an item
      *
      * @param id       The ID of the vending machine
      * @param item     The item to be removed
@@ -58,7 +58,7 @@ public interface MachineTrackerAccessible {
      * @param id       The ID of the new vending machine
      * @param location The location of the new vending machine
      * @return HashMap of vending machine list with vending machine ID as key and
-     *         location as value
+     * location as value
      */
     HashMap<Integer, String> addVendMach(int id, String location);
 
@@ -67,7 +67,7 @@ public interface MachineTrackerAccessible {
      *
      * @param id The ID of the vending machine
      * @return HashMap of vending machine list with vending machine ID as key and
-     *         location as value
+     * location as value
      */
     HashMap<Integer, String> removeVendMach(int id);
 
@@ -77,7 +77,7 @@ public interface MachineTrackerAccessible {
      * @param id       The ID of the vending machine
      * @param location The new location of the vending machine
      * @return HashMap of vending machine list with vending machine ID as key and
-     *         location as value
+     * location as value
      */
     HashMap<Integer, String> changeLocation(int id, String location);
 }

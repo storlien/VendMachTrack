@@ -22,7 +22,7 @@ public class IllegalInputException extends RuntimeException {
      * @param message the detail message, providing the reason the exception was
      *                thrown.
      */
-    public IllegalInputException(String message) {
+    public IllegalInputException(final String message) {
         super(message);
     }
 }

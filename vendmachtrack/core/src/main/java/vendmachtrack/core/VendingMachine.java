@@ -5,12 +5,9 @@ import java.util.HashMap;
 /**
  * Represents a vending machine with its essential attributes and behaviors.
  * <p>
- * The VendingMachine class captures the core characteristics of a vending
- * machine including
- * its unique identifier, location, and the inventory status. The inventory is
- * managed using a
- * hashmap where the items are keys and their quantities serve as values. The
- * class provides
+ * The VendingMachine class captures the core characteristics of a vending machine including
+ * its unique identifier, location, and the inventory status. The inventory is managed using a
+ * hashmap where the items are keys and their quantities serve as values. The class provides
  * methods to manipulate and query these attributes.
  * </p>
  */
@@ -19,7 +16,7 @@ public class VendingMachine {
     /**
      * A HashMap holding the inventory status of the vending machine.
      */
-    private HashMap<String, Integer> status = new HashMap<>();
+    private HashMap<String, Integer> status;
 
     /**
      * A unique identifier for the vending machine.
@@ -39,13 +36,12 @@ public class VendingMachine {
     }
 
     /**
-     * Initializes a new vending machine with the provided id, inventory, and
-     * location.
+     * Initializes a new vending machine with the specified attributes.
      *
-     * @param newId        The unique id of the vending machine.
-     * @param newInventory A map containing the items in the vending machine and
-     *                     their quantities.
-     * @param newLocation  The location where the vending machine is placed.
+     * @param newId        The unique identifier for the vending machine.
+     * @param newInventory A map representing the initial inventory status with
+     *                     item names as keys and their quantities as values.
+     * @param newLocation  The physical location where the vending machine is placed.
      */
     public VendingMachine(final int newId, final HashMap<String, Integer> newInventory, final String newLocation) {
         this.status = new HashMap<>(newInventory);
@@ -57,7 +53,7 @@ public class VendingMachine {
      * Returns a defensive copy of the vending machine's inventory status.
      *
      * @return A map representing the inventory with item names as keys and their
-     *         quantities as values.
+     * quantities as values.
      */
     public HashMap<String, Integer> getStatus() {
         return new HashMap<>(this.status);
@@ -83,8 +79,7 @@ public class VendingMachine {
 
     /**
      * Modifies the inventory by adding a specified quantity of an item.
-     * If the item does not exist in the inventory, it gets added; otherwise, its
-     * quantity is updated.
+     * If the item does not exist in the inventory, it gets added; otherwise, its quantity is updated.
      *
      * @param item   The name of the item.
      * @param number The quantity of the item to be added.
@@ -99,10 +94,8 @@ public class VendingMachine {
 
     /**
      * Modifies the inventory by removing a specified quantity of an item.
-     * If the remaining quantity becomes zero after removal, the item is removed
-     * from the inventory.
-     * If the item does not exist or the specified quantity to remove exceeds the
-     * available amount, no action is taken.
+     * If the remaining quantity becomes zero after removal, the item is removed from the inventory.
+     * If the item does not exist or the specified quantity to remove exceeds the available amount, no action is taken.
      *
      * @param item   The name of the item.
      * @param number The quantity of the item to be removed.

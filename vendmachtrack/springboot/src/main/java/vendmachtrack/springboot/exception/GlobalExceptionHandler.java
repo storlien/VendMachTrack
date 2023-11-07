@@ -9,7 +9,8 @@ import org.springframework.web.context.request.WebRequest;
 import java.util.Date;
 
 /**
- * Represents a global exception handler that catches exceptions thrown across the entire Spring Boot server application.
+ * Represents a global exception handler that catches exceptions thrown
+ * across the entire Spring Boot server application.
  * <p>
  * This handler provides centralized logic for handling specific exceptions and returning relevant HTTP
  * status codes and error details to the client. Using the {@code @ControllerAdvice} annotation, it applies

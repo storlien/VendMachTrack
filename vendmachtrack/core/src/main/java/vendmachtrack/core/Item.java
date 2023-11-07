@@ -13,13 +13,11 @@ public class Item {
     /**
      * The name by which the item is identified.
      */
-
     private final String name;
 
     /**
-     * The monetary value associated with this item.
+     * The price of this item.
      */
-
     private final double price;
 
     /**
@@ -27,8 +25,7 @@ public class Item {
      * price.
      *
      * @param newName  The name used to identify this item.
-     * @param newPrice The monetary value of this item. This must always be a
-     *                 positive
+     * @param newPrice The monetary value of this item. This must always be a positive
      *                 value.
      * @throws IllegalArgumentException If the price provided is negative or has a
      *                                  zero value.
@@ -53,7 +50,7 @@ public class Item {
     /**
      * Retrieves the price associated with this item.
      *
-     * @return The monetary value of this item.
+     * @return The price of this item.
      */
     public double getPrice() {
         return this.price;

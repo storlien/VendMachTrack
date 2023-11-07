@@ -27,10 +27,15 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
     private final Gson gson;
     private final HttpClient httpClient;
 
+    /**
+     * Endpoint directory for the Vending Machine Tracker server.
+     */
     private static final String ENDPOINT_DIRECTORY = "vendmachtrack";
 
-    private static final Type TYPE_HASHMAP_INTEGER_STRING = new TypeToken<HashMap<Integer, String>>() { }.getType();
-    private static final Type TYPE_HASHMAP_STRING_INTEGER = new TypeToken<HashMap<String, Integer>>() { }.getType();
+    private static final Type TYPE_HASHMAP_INTEGER_STRING = new TypeToken<HashMap<Integer, String>>() {
+    }.getType();
+    private static final Type TYPE_HASHMAP_STRING_INTEGER = new TypeToken<HashMap<String, Integer>>() {
+    }.getType();
 
     /**
      * Constructor. Requires a base URI for the REST API endpoint.
@@ -109,7 +114,7 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
     public HashMap<String, Integer> addItem(final int id, final String item, final int quantity) {
 
         String endpointQuery = buildEndpointWithParams(ENDPOINT_DIRECTORY + "/" + id + "/add",
-         "item", item, "quantity", String.valueOf(quantity));
+                "item", item, "quantity", String.valueOf(quantity));
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(endpointBaseUri.resolve(endpointQuery))
@@ -134,7 +139,7 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
     public HashMap<String, Integer> removeItem(final int id, final String item, final int quantity) {
 
         String endpointQuery = buildEndpointWithParams(ENDPOINT_DIRECTORY + "/" + id + "/remove",
-        "item", item, "quantity", String.valueOf(quantity));
+                "item", item, "quantity", String.valueOf(quantity));
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(endpointBaseUri.resolve(endpointQuery))
@@ -159,7 +164,7 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
     public HashMap<Integer, String> addVendMach(final int id, final String location) {
 
         String endpointQuery = buildEndpointWithParams(ENDPOINT_DIRECTORY + "/add",
-         "id", String.valueOf(id), "location", location);
+                "id", String.valueOf(id), "location", location);
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(endpointBaseUri.resolve(endpointQuery))
@@ -222,7 +227,7 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
      * If not, it will throw a RunTimeExceptionError with the message being the
      * error message from the HTTP response.
      *
-     * @param response HttpReponse to be checked
+     * @param response HttpResponse to be checked
      */
     private void checkError(final HttpResponse<String> response) {
         if (response.statusCode() != HttpURLConnection.HTTP_OK) {
@@ -237,7 +242,7 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
      * Internal method for sending the request and returning the response.
      *
      * @param request HttpRequest to be sent
-     * @return HttpReponse from the request sent
+     * @return HttpResponse from the request sent
      */
     private HttpResponse<String> getResponse(final HttpRequest request) {
         try {
