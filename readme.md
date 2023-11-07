@@ -77,9 +77,13 @@ mvn spring-boot:run -f springboot/pom.xml
 mvn javafx:run -f ui/pom.xml
 ```
 
-Applikasjonen kommer da til å starte i workspacet sitt desktop (nettsiden fra endpoint URL-en)
+Applikasjonen kommer da til å starte i workspacet sitt desktop (nettsiden fra endpoint URL-en).
 
 Se videre [hvordan man bruker applikasjonen](#hvordan-bruke-applikasjonen) for å komme i gang.
+
+**Stopp applikasjon og server:**
+- Stopp applikasjonen ved å trykke Exit i øvre hjørne.
+- Stopp serveren ved å trykke Ctrl+C eller Cmd+C i terminalen som startet Spring Boot.
 
 
 ## Hvordan kjøre applikasjonen lokalt uten installasjon
@@ -117,6 +121,10 @@ Applikasjonen skal da dukke opp på skjermen.
 
 Se videre [hvordan man bruker applikasjonen](#hvordan-bruke-applikasjonen) for å komme i gang.
 
+**Stopp applikasjon og server:**
+- Stopp applikasjonen ved å trykke Exit i øvre hjørne.
+- Stopp serveren ved å trykke Ctrl+C eller Cmd+C i terminalen som startet Spring Boot.
+
 
 ## Hvordan kjøre applikasjonen lokalt med installasjon
 
@@ -143,9 +151,11 @@ Se videre [hvordan man bruker applikasjonen](#hvordan-bruke-applikasjonen) for �
       2. Installer serveren på vanlig vis med .exe-filen ved å trykke deg igjennom Installation Wizard.
       3. Naviger til mappen med installasjonsfilen til applikasjonen.
       4. Installer applikasjonen på vanlig vis med .exe-filen ved å trykke deg igjennom Installation Wizard.
-      5. // TODO
     - For MacOS:
-      1. // TODO
+      1. Naviger til mappen med installasjonsfilen til serveren.
+      2. Installer serveren på vanlig vis med .dmg-filen ved å legge den til "Applikasjoner".
+      3. Naviger til mappen med installasjonsfilen til applikasjonen.
+      4. Installer applikasjonen på vanlig vis med .dmg-filen ved å legge den til "Applikasjoner".
 5. Kjør applikasjonen. Her er noen eksempler på hvordan:
     - For Linux i terminal:
       1. For å kjøre serveren fra terminalen, kjør kommando:
@@ -163,10 +173,29 @@ Se videre [hvordan man bruker applikasjonen](#hvordan-bruke-applikasjonen) for �
       2. Kjør applikasjonen ved å søke opp VendMachTrackApp blant programmer.
       3. Applikasjonen vil da dukke opp mens serveren kjører i bakgrunnen.
     - For Windows:
-      1. // TODO
+      1. Trykk Windows-tasten og søk opp VendMachTrackServer. Kjør programmet (det legger seg i bakgrunnen og skriver ingenting til terminal).
+      2. Trykk Windows-tasten og søk opp VendMachTrackApp. Kjør programmet og applikasjonen vil dukke opp.
     - For MacOS:
-      1. // TODO
+      1. Naviger til mappen der applikasjoner blir lagt, typisk under "/Applications/". Kjør VendMachTrackServer (programmet legger seg i bakgrunnen og skriver ingenting til terminal).
+      2. Kjør VendMachTrackApp og applikasjonen vil dukke opp.
 
+**NB:** For alle måter å kjøre serveren på utenom i terminalen til Linux, vil det ikke være mulig avslutte serveren på en enkel måte. Den legger seg i bakgrunnen i den forstand at man ikke direkte kan stoppe serveren ved å ta Ctrl+C eller Cmd+C i terminalen. For å stoppe serveren må dette gjøres ved å stoppe prosessen som kjøres i bakgrunnen, her er noen eksempler på hvordan:
+
+- For Linux:
+  1. Finn prosess-ID til serveren:
+      ```bash
+      ps -e | grep VendMachTrack
+      ```
+  2.  Stopp prosessen:
+      ```bash
+      kill <prossess-ID>
+      ```
+- For Windows:
+  1. Åpne Oppgavebehandling
+  2. Søk opp VendMachTrackServer
+  3. Høyreklikk på prosessen og avslutt
+- For MacOS:
+  1. Følg samme steg som for Linux
 
 ### Hvordan lage egen installasjonsfil
 
