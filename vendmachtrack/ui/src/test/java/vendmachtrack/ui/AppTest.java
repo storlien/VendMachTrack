@@ -14,18 +14,18 @@ import javafx.stage.Stage;
  *
  * @see App
  */
-public class AppTest extends ApplicationTest{
+public class AppTest extends ApplicationTest {
 
     private App app;
-    
+
     /**
      * Initializes and starts the {@link App} application for testing purposes.
-     * 
+     *
      * <p>
      * This method is an override of the JavaFX {@code start} method and is responsible for creating and starting
      * the {@link App} instance within the testing environment.
      * </p>
-     * 
+     *
      * <p>
      * It performs the following steps:
      * </p>
@@ -33,20 +33,20 @@ public class AppTest extends ApplicationTest{
      *   <li>Create a new instance of the {@link App} class.</li>
      *   <li>Starts the application using the provided {@link Stage} instance.</li>
      * </ol>
-     * 
+     *
      * @param stage The primary stage for the JavaFX application.
      * @throws IOException if an I/O error occurs during application startup.
      */
     @Override
     public void start(Stage stage) throws IOException {
-       
+
         this.app = new App();
-        app.start(stage); 
+        app.start(stage);
     }
 
     /**
      * Tests the initialization of the {@link App} application and verifies the presence of certain GUI elements.
-     * 
+     *
      * <p>
      * This test method checks the following:
      * </p>
@@ -54,7 +54,7 @@ public class AppTest extends ApplicationTest{
      *   <li>Asserts that the {@code app} instance is not null, indicating a successful initialization of the application.</li>
      *   <li>Asserts the presence of the "serverURLField" GUI element by looking it up using the provided selector.</li>
      * </ol>
-     * 
+     *
      * @throws InterruptedException if the test is interrupted while waiting.
      */
     @Test

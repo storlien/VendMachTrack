@@ -1,4 +1,4 @@
-package vendmachtrack.ui;
+package vendmachtrack.ui.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import vendmachtrack.ui.App;
 import vendmachtrack.ui.access.AccessService;
 import vendmachtrack.ui.access.MachineTrackerAccessible;
 
@@ -263,7 +264,7 @@ public class VendAppController implements Initializable {
      * Retrieves the ID of the selected vending machine from the menuBar ChoiceBox.
      *
      * @return The ID of the selected vending machine, or null if no machine is
-     *         selected.
+     * selected.
      */
     private String findID() {
         String selectedItem = menuBar.getValue();

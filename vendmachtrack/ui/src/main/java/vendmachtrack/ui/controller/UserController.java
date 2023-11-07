@@ -1,4 +1,4 @@
-package vendmachtrack.ui;
+package vendmachtrack.ui.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,6 +14,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import vendmachtrack.ui.App;
 import vendmachtrack.ui.access.AccessService;
 import vendmachtrack.ui.access.MachineTrackerAccessible;
 
