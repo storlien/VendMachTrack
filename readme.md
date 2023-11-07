@@ -298,57 +298,64 @@ For å se testdekningsgrad gitt av JaCoCo:
 
 Repoet er organisert i flere mapper. Selve kodeprosjektet ligger i mappen vendmachtrack/. I denne mappen ligger det flere mapper som inneholder kode for forskjellige deler av prosjektet. Her er en oversikt over modulene og pakkene, samt noen viktige filer, til prosjektet:
 
-// TODO oppdatere struktur
-
-- docs/ - dokumentasjon
-  - diagrams/ - inneholder diagrammer
-  - images/ - inneholder bilder
-  - release1/ - inneholder dokumentasjon for release 1
-  - release2/ - inneholder dokumentasjon for release 2
-  - release3/ - inneholder dokumentasjon for release 3
+- docs/ - Dokumentasjon
+  - diagrams/ - Diagrammer
+  - images/ - Bilder
+    - diagrams/
+    - screenshots/
+  - release1/ - Dokumentasjon for release 1
+  - release2/ - Dokumentasjon for release 2
+  - release3/ - Dokumentasjon for release 3
 - vendmachtrack/ - Hovedmappe som inneholder all kildekoden for prosjektet
-  - pom.xml - Dette er rot-pom.xml filen som hører til hele prosjektet
-  - core/ - Inneholder backend- logikken til appen
-    - pom.xml - Dette er Maven prosjekt filen som hører til core modulen
+  - pom.xml - Konfigurasjonsfil for Maven
+  - config/ - Konfigurasjonsfiler til Checkstyle og SpotBugs
+  - core/ - Kildekode for core-modulen
+    - pom.xml - Konfigurasjonsfil for Maven
     - src/main/java/
-        - core/ - Inneholder kildekoden til backend-koden
+        - vendmachtrack/core/
+          - model/ - Modellklasser
+          - util/ - Verktøyklasser
         - module-info.java
-    - src/main/resources/core/
+    - src/main/resources/core/util/
       - password.txt
-    - src/test/java/core/
-  - jacoco-aggregator/
-    - pom.xml
-  - jsonio/
-    - pom.xml - Dette er Maven prosjektfilen som hører til jsonio-modulen
+    - src/test/java/vendmachtrack/core/ - Tester for core-modulen
+      - model/
+      - util/
+  - jacoco-aggregator/ - Modul for samling av JaCoCo-rapporter til én samlet
+    - pom.xml - Konfigurasjonsfil for Maven
+  - jsonio/ - Kildekode for jsonio-modulen
+    - pom.xml - Konfigurasjonsfil for Maven
     - src/main/java/
-      - jsonio/ - inneholder kildekoden til filhåndtering: 
-        - internal/ - inneholder kode for å lese og skrive fra Json
+      - vendmachtrack/jsonio/ - Kildekode for filhåndtering
+        - internal/
       - module-info.java
-    - src/test/java/jsonio/ - inneholder tester
-  - springboot/
-    - pom.xml
+    - src/test/java/vendmachtrack/jsonio/internal - Tester for jsonio-modulen
+  - springboot/ - Kildekode for springboot-modulen
+    - pom.xml - Konfigurasjonsfil for Maven
     - src/main/java/
-      - springboot/
-        - controller/
-        - exception/
-        - repository/
-        - service/
-    - module-info.java
-    - test/java/springboot/ - testklasser for springboot
+      - vendmachtrack/springboot/
+        - controller/ - Spring Boot Controller-klasser
+        - exception/ - Exception-klasser
+        - repository/ - Spring Boot Repository-klasser
+        - service/ - Spring Boot Service-klasser
+      - module-info.java
+    - src/test/java/vendmachtrack/springboot/ - Tester for springboot-modulen
       - controller/
       - repository/
       - service/
-  - test-results/ - alle testresultater for ulike deler av applikasjonen
+  - test-results/ - Alle testresultater samlet
     - checkstyle/
     - jacoco/
     - junit/
     - spotbugs/
-  - ui/ - inneholder frontend-logikken til appen
-    - pom.xml
+  - ui/ - Kildekode til grafisk brukergrensesnitt
+    - pom.xml - Konfigurasjonsfil for Maven
     - src/main/java/
+      - vendmachtrack/ui/
+        - access/ - Aksessklasser
+        - controller/ - JavaFX Controller-klasser
       - module-info.java
-      - ui/ - kildekode til frontend
-        - access/
-    - src/main/resources/ui/ - inneholder alle fxml-filer for ui
-    - src/test/java/ui/ - inneholder tester for ui-mappen
-      - access/ - tester for Access-klassene
+    - src/main/resources/vendmachtrack/ui/controller/ - CSS- og FXML-filer
+    - src/test/java/vendmachtrack/ui/ - Tester for ui-modulen
+      - access/
+      - controller/
