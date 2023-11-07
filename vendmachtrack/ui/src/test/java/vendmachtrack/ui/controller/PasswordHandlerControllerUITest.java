@@ -14,7 +14,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import vendmachtrack.core.util.PasswordHandler;
 import vendmachtrack.ui.access.AccessService;
-import vendmachtrack.ui.controller.PasswordHandlerController;
 
 /**
  * This class contains JUnit tests for the {@link PasswordHandlerController} class.
@@ -23,7 +22,7 @@ import vendmachtrack.ui.controller.PasswordHandlerController;
  *
  * @see PasswordHandlerController
  */
-public class PasswordHandlerControllerTest extends ApplicationTest {
+public class PasswordHandlerControllerUITest extends ApplicationTest {
 
     @Mock
     private PasswordHandler passwordHandler;

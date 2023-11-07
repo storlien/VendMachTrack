@@ -20,7 +20,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import vendmachtrack.ui.App;
-import vendmachtrack.ui.controller.ServerController;
 
 /**
  * This class contains JUnit tests for the {@link ServerController} class. It
@@ -28,7 +27,7 @@ import vendmachtrack.ui.controller.ServerController;
  *
  * @see ServerController
  */
-public class ServerControllerTest extends ApplicationTest {
+public class ServerControllerUITest extends ApplicationTest {
 
     @Mock
     private App mockApp;
