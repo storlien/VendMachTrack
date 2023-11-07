@@ -54,7 +54,7 @@ git pull
 ```
 4. Når IDE-en har startet opp, kopierer du "endpoint URL" for "6080-tcp-desktop-ui (6080/http)" under "Endpoints" nederst til venstre i IDE-en. Se skjermbildet:
 ![Alt text](/docs/images/endpoint_eclipse-che.png)
-5. Åpne nettsiden i en ny fane med den kopierte URL-en.
+5. Åpne nettsiden i en ny fane med den kopierte URL-en. Dersom det dukker opp et påloggingvindu for brukeren "dev", så skriver du inn passordet "dev".
 6. Gå tilbake til IDE-en. Åpne en terminal.
 7. Kjør kommando for å kopiere tracker.json-filen til home directory:
 ```bash
@@ -72,7 +72,11 @@ mvn clean install
 ```bash
 mvn spring-boot:run -f springboot/pom.xml
 ```
-11. Kjør kommando:
+11. Åpne en ny terminal og naviger til vendmachtrack/:
+```bash
+cd vendmachtrack/
+```
+12. Kjør kommando:
 ```bash
 mvn javafx:run -f ui/pom.xml
 ```
