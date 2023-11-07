@@ -4,9 +4,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
+/**
+* This class contains test methods for testing the functionality of the {@link VendingMachine} class.
+*   
+* The tests in this class focus on various aspects of the VendingMachine class, including its initialization, adding and removing items, and more.
+*/
 public class VendingMachineTest {
 
     private VendingMachine machine;
@@ -25,127 +32,225 @@ public class VendingMachineTest {
         machine = new VendingMachine(1, inventory, "Lobby");
     }
 
+
     /**
-     * Tests the initialization of the VendingMachine object.
+     * Tests the initialization of a {@link VendingMachine} object.
+     * 
+     * This test case focuses on verifying that a VendingMachine object is initialized with the correct attributes, including its ID, location, and initial status of products.
+     * 
      * <p>
-     * This method tests if the VendingMachine object is initialized correctly by checking the following:
-     * - The ID of the machine is 1
-     * - The location of the machine is "Lobby"
-     * - The machine contains a status for "Soda" and "Chips"
+     * To conduct this test, we perform the following steps:
+     * </p>
+     * <ol>
+     *   <li>Assert: Verify that the VendingMachine object has an ID of 1, a location of "Lobby," and contains initial product status for "Soda" and "Chips."</li>
+     * </ol>
      */
     @Test
-    public void testInitialization() {
+    public void VendingMachine_testInitialization() {
+        
+        // Assert
         assertEquals(1, machine.getId());
         assertEquals("Lobby", machine.getLocation());
         assertTrue(machine.getStatus().containsKey("Soda"));
         assertTrue(machine.getStatus().containsKey("Chips"));
     }
 
+    
     /**
-     * Tests the addItem method of the VendingMachine class by adding a new item and verifying that it was added successfully.
-     *
+     * Tests the {@link VendingMachine#addItem(String, int)} method to ensure it adds a new item to the machine's status.
+     *      
      * <p>
-     * This test adds a new item "Water" with a quantity of 7 to the vending machine and then checks that the vending machine's status map contains the item "Water" with a quantity of 7.
+     * To conduct this test, we perform the following steps:
      * </p>
+     * <ol>
+     *   <li>Act: Call the addItem("Water", 7) method on the VendingMachine object to add a new item "Water" with a quantity of 7.</li>
+     *   <li>Assert: Verify that the machine's status contains the new item "Water" and that its quantity is 7.</li>
+     * </ol>
      */
     @Test
-    public void testAddNewItem() {
+    public void VendingMachine_testAddNewItem() {
+
+        // Act
         machine.addItem("Water", 7);
+
+        // Assert
         assertTrue(machine.getStatus().containsKey("Water"));
         assertEquals(7, machine.getStatus().get("Water"));
     }
 
+    
     /**
-     * Tests the behavior of adding an existing item to the vending machine.
-     *
+     * Tests the {@link VendingMachine#addItem(String, int)} method to ensure it updates the quantity of an existing item in the machine's status.
+     *     
      * <p>
-     * This test case adds a "Soda" item with a quantity of 2 to the vending machine, and then
-     * verifies that the quantity of "Soda" in the vending machine is updated to 7, which is the
-     * expected quantity after adding 2 more "Soda" items to the existing quantity of 5.
+     * 
+     * To conduct this test, we perform the following steps:
      * </p>
+     * <ol>
+     *   <li>Act: Call the addItem("Soda", 2) method on the VendingMachine object to update the quantity of the existing item "Soda" to 2.</li>
+     *   <li>Assert: Verify that the quantity of the "Soda" item in the machine's status is updated to 7 (original quantity + added quantity).</li>
+     * </ol>
      */
     @Test
-    public void testAddExistingItem() {
+    public void VendingMachine_testAddExistingItem() {
+
+        // Act
         machine.addItem("Soda", 2);
+
+        // Assert
         assertEquals(7, machine.getStatus().get("Soda"));
     }
 
     /**
-     * Tests the removeItem() method of the VendingMachine class.
-     * It removes 2 items of the "Soda" product and checks if the status of "Soda" has decreased by 2.
+     * Tests the {@link VendingMachine#removeItem(String, int)} method to ensure it removes items from the machine's status correctly.
+     * 
+     * <p>
+     * 
+     * To conduct this test, we perform the following steps:
+     * </p>
+     * <ol>
+     *   <li>Act: Call the removeItem("Soda", 2) method on the VendingMachine object to remove 2 units of the "Soda" item from its status.</li>
+     *   <li>Assert: Verify that the quantity of the "Soda" item in the machine's status is reduced by 2 units.</li>
+     * </ol>
      */
     @Test
-    public void testRemoveItem() {
+    public void VendingMachine_testRemoveItem() {
+
+        // Act
         machine.removeItem("Soda", 2);
+
+        // Assert
         assertEquals(3, machine.getStatus().get("Soda"));
     }
 
     /**
-     * Tests the removeItem() method of the VendingMachine class by removing all instances of a specific item and verifying that it is no longer present in the machine's status map.
+     * Tests the {@link VendingMachine#removeItem(String, int)} method to ensure it removes all units of an item from the machine's status correctly.
+     * 
+     * <p>
+     * 
+     * To conduct this test, we perform the following steps:
+     * </p>
+     * <ol>
+     *   <li>Act: Call the removeItem("Soda", 5) method on the VendingMachine object to remove all units of the "Soda" item from its status.</li>
+     *   <li>Assert: Verify that the "Soda" item is no longer present in the machine's status after removal.</li>
+     * </ol>
      */
     @Test
-    public void testRemoveAllOfItem() {
+    public void VendingMachine_testRemoveAllOfItem() {
+
+        // Act
         machine.removeItem("Soda", 5);
+
+        // Assert
         assertFalse(machine.getStatus().containsKey("Soda"));
     }
 
     /**
-     * Tests the removeItem method of the VendingMachine class when the item to be removed does not exist.
-     * Expects an IllegalArgumentException to be thrown.
-     *
-     * @throws IllegalArgumentException if the item to be removed does not exist in the vending machine.
-     * @test_category vending_machine
-     * @test_subcategory functionality
-     * @see VendingMachine#removeItem(String, int)
-     * @since 1.0
+     * Tests the {@link VendingMachine#removeItem(String, int)} method to ensure it returns false when attempting to remove an item that does not exist in the machine's status.
+     * 
+     * This test case focuses on verifying that the removeItem() method of a {@link VendingMachine} object returns false when attempting to remove an item that is not present in its status.
+     * 
+     * <p>
+     * To conduct this test, we perform the following steps:
+     * </p>
+     * <ol>
+     *   <li>Act & Assert: Attempt to remove 10 units of the "Sodanotexist" item from the VendingMachine object's status and assert that it returns false, indicating that the item does not exist.</li>
+     * </ol>
      */
     @Test
-    public void testRemoveItemNotExists() {
+    public void VendingMachine_testRemoveItemNotExists() {
+
+        // Act & Assert
         assertFalse(machine.removeItem("Sodanotexist", 10), "Should return false if item does not exist");
     }
 
+    /**
+     * Tests the {@link VendingMachine#removeItem(String, int)} method to ensure it returns false when attempting to remove more units of an item than are available in the machine's status.
+     * 
+     * <p>
+     * 
+     * To conduct this test, we perform the following steps:
+     * </p>
+     * <ol>
+     *   <li>Act &amp; Assert: Attempt to remove 6 units of the "Soda" item from the VendingMachine object's status, which only has 5 units, and assert that it returns false, indicating that there are not enough items to remove.</li>
+     * </ol>
+     */
     @Test
-    public void testRemoveItemNotEnough() {
+    public void VendingMachine_testRemoveItemNotEnough() {
+
+        // Act & Assert
         assertFalse(machine.removeItem("Soda", 6), "Should return false if not enough items");
     }
 
     /**
-     * Tests the setStatus method of the VendingMachine class.
+     * Tests the {@link VendingMachine#setStatus(Map)} method to ensure it sets the machine's status correctly with a new inventory.
+     *  
      * <p>
-     * Creates a new inventory HashMap with a single item, "Candy", and a quantity of 15.
-     * The method then sets the VendingMachine's status to the new inventory.
-     * <p>
-     * Asserts that the VendingMachine's status contains the "Candy" key and does not contain the "Soda" key.
+     * 
+     * To conduct this test, we perform the following steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Create a new inventory {@link HashMap} (newInventory) containing a different item ("Candy") and quantity (15).</li>
+     *   <li>Act: Call the setStatus(newInventory) method on the VendingMachine object to set its status with the new inventory.</li>
+     *   <li>Assert: Verify that the machine's status now contains the new item ("Candy") and that the original item ("Soda") is no longer present.</li>
+     * </ol>
      */
     @Test
-    public void testSetStatus() {
+    public void VendingMachine_testSetStatus() {
+
+        // Arrange
         HashMap<String, Integer> newInventory = new HashMap<>();
         newInventory.put("Candy", 15);
+
+        // Act
         machine.setStatus(newInventory);
+
+        // Assert
         assertTrue(machine.getStatus().containsKey("Candy"));
         assertFalse(machine.getStatus().containsKey("Soda"));
     }
 
     /**
-     * Tests the setId() method of the VendingMachine class.
+     * Tests the {@link VendingMachine#setId(int)} method to ensure it sets the machine's ID correctly.
+     * 
      * <p>
-     * This test sets the ID of the VendingMachine object to 2 using the setId() method,
-     * and then checks if the ID has been set correctly by calling the getId() method.
-     * The test passes if the returned ID matches the expected value of 2.
+     * 
+     * To conduct this test, we perform the following steps:
+     * </p>
+     * <ol>
+     *   <li>Act: Call the setId(2) method on the VendingMachine object to set its ID to 2.</li>
+     *   <li>Assert: Verify that the machine's ID is updated to 2.</li>
+     * </ol>
      */
     @Test
-    public void testSetId() {
+    public void VendingMachine_testSetId() {
+
+        // Act
         machine.setId(2);
+
+        // Assert
         assertEquals(2, machine.getId());
     }
-
+    
     /**
-     * Tests the setLocation() method of the VendingMachine class.
-     * It sets the location of the vending machine to "Office" and then checks if the location has been set correctly.
+     * Tests the {@link VendingMachine#setLocation(String)} method to ensure it sets the machine's location correctly.
+     * 
+     * <p>
+     * 
+     * To conduct this test, we perform the following steps:
+     * </p>
+     * <ol>
+     *   <li>Act: Call the setLocation("Office") method on the VendingMachine object to set its location to "Office".</li>
+     *   <li>Assert: Verify that the machine's location is updated to "Office".</li>
+     * </ol>
      */
     @Test
-    public void testSetLocation() {
+    public void VendingMachine_testSetLocation() {
+
+        // Act
         machine.setLocation("Office");
+
+        // Assert
         assertEquals("Office", machine.getLocation());
     }
 }
