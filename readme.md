@@ -298,11 +298,11 @@ For å se testdekningsgrad gitt av JaCoCo:
 
 Repoet er organisert i flere mapper. Selve kodeprosjektet ligger i mappen vendmachtrack/. I denne mappen ligger det flere mapper som inneholder kode for forskjellige deler av prosjektet. Her er en oversikt over modulene og pakkene, samt noen viktige filer, til prosjektet:
 
-// TODO oppdatere struktur
-
 - docs/ - dokumentasjon
   - diagrams/ - inneholder diagrammer
   - images/ - inneholder bilder
+    - diagrams/
+    - screenshots/
   - release1/ - inneholder dokumentasjon for release 1
   - release2/ - inneholder dokumentasjon for release 2
   - release3/ - inneholder dokumentasjon for release 3
@@ -312,10 +312,14 @@ Repoet er organisert i flere mapper. Selve kodeprosjektet ligger i mappen vendma
     - pom.xml - Dette er Maven prosjekt filen som hører til core modulen
     - src/main/java/
         - core/ - Inneholder kildekoden til backend-koden
+          - model
+          - util
         - module-info.java
-    - src/main/resources/core/
+    - src/main/resources/core/util/
       - password.txt
-    - src/test/java/core/
+    - src/test/java/core/ 
+      - model/
+      - util/
   - jacoco-aggregator/
     - pom.xml
   - jsonio/
@@ -324,17 +328,17 @@ Repoet er organisert i flere mapper. Selve kodeprosjektet ligger i mappen vendma
       - jsonio/ - inneholder kildekoden til filhåndtering: 
         - internal/ - inneholder kode for å lese og skrive fra Json
       - module-info.java
-    - src/test/java/jsonio/ - inneholder tester
+    - src/test/java/jsonio/internal - inneholder tester
   - springboot/
     - pom.xml
     - src/main/java/
       - springboot/
-        - controller/
+        - controller/ 
         - exception/
         - repository/
         - service/
-    - module-info.java
-    - test/java/springboot/ - testklasser for springboot
+      - module-info.java
+    - src/test/java/springboot/ - testklasser for springboot
       - controller/
       - repository/
       - service/
@@ -344,11 +348,13 @@ Repoet er organisert i flere mapper. Selve kodeprosjektet ligger i mappen vendma
     - junit/
     - spotbugs/
   - ui/ - inneholder frontend-logikken til appen
-    - pom.xml
+    - pom.xml - Dette er Maven prosjektfilen som hører til ui-modulen
     - src/main/java/
       - module-info.java
       - ui/ - kildekode til frontend
-        - access/
-    - src/main/resources/ui/ - inneholder alle fxml-filer for ui
+        - access/ 
+        - controller/ - inneholder alle controllere til de ulike scenene i applikasjonen
+    - src/main/resources/ui/controller/ - inneholder alle fxml-filer for ui
     - src/test/java/ui/ - inneholder tester for ui-mappen
       - access/ - tester for Access-klassene
+      - controller/ - tester for Controller-klassene
