@@ -1,8 +1,8 @@
 package vendmachtrack.springboot.repository;
 
 import org.springframework.stereotype.Repository;
-import vendmachtrack.core.MachineTracker;
-import vendmachtrack.core.VendingMachine;
+import vendmachtrack.core.model.MachineTracker;
+import vendmachtrack.core.model.VendingMachine;
 import vendmachtrack.jsonio.VendmachtrackPersistence;
 
 /**
@@ -57,7 +57,7 @@ public class MachineTrackerRepository {
      *
      * @param id The ID of the {@code VendingMachine}.
      * @return The {@code VendingMachine} with the specified ID, or null if not
-     *         found.
+     * found.
      */
     public VendingMachine getVendMach(final int id) {
         for (VendingMachine vendMach : getVendmachtrack().getMachines()) {

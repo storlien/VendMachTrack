@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import vendmachtrack.core.MachineTracker;
-import vendmachtrack.core.VendingMachine;
+import vendmachtrack.core.model.MachineTracker;
+import vendmachtrack.core.model.VendingMachine;
 import vendmachtrack.jsonio.VendmachtrackPersistence;
 
 import java.util.ArrayList;
@@ -51,19 +51,19 @@ public class MachineTrackerAccessLocalTest {
     private MachineTrackerAccessLocal accessLocal;
 
     /**
-     * A {@link vendmachtrack.core.MachineTracker} instance used in the tests. This is initialized in the {@link #setUp()} method before each test.
+     * A {@link MachineTracker} instance used in the tests. This is initialized in the {@link #setUp()} method before each test.
      */
     private MachineTracker machineTracker;
 
     /**
-     * A {@link vendmachtrack.core.VendingMachine} instance used in the tests. This is initialized in the {@link #setUp()} method before each test.
+     * A {@link VendingMachine} instance used in the tests. This is initialized in the {@link #setUp()} method before each test.
      */
     private final VendingMachine machine = new VendingMachine();
 
     /**
      * This method is run before each test. It initializes the mocks and the {@link vendmachtrack.ui.access.MachineTrackerAccessLocal} instance to be tested.
      * <p>
-     * It also sets up a {@link vendmachtrack.core.MachineTracker} instance with a single {@link vendmachtrack.core.VendingMachine} for use in the tests.
+     * It also sets up a {@link MachineTracker} instance with a single {@link VendingMachine} for use in the tests.
      */
     @BeforeEach
     public void setUp() {

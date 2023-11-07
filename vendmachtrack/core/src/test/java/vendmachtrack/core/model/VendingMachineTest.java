@@ -1,4 +1,4 @@
-package vendmachtrack.core;
+package vendmachtrack.core.model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,10 +10,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 /**
-* This class contains test methods for testing the functionality of the {@link VendingMachine} class.
-*   
-* The tests in this class focus on various aspects of the VendingMachine class, including its initialization, adding and removing items, and more.
-*/
+ * This class contains test methods for testing the functionality of the {@link VendingMachine} class.
+ * <p>
+ * The tests in this class focus on various aspects of the VendingMachine class, including its initialization, adding and removing items, and more.
+ */
 public class VendingMachineTest {
 
     private VendingMachine machine;
@@ -35,9 +35,9 @@ public class VendingMachineTest {
 
     /**
      * Tests the initialization of a {@link VendingMachine} object.
-     * 
+     * <p>
      * This test case focuses on verifying that a VendingMachine object is initialized with the correct attributes, including its ID, location, and initial status of products.
-     * 
+     *
      * <p>
      * To conduct this test, we perform the following steps:
      * </p>
@@ -47,7 +47,7 @@ public class VendingMachineTest {
      */
     @Test
     public void VendingMachine_testInitialization() {
-        
+
         // Assert
         assertEquals(1, machine.getId());
         assertEquals("Lobby", machine.getLocation());
@@ -55,10 +55,10 @@ public class VendingMachineTest {
         assertTrue(machine.getStatus().containsKey("Chips"));
     }
 
-    
+
     /**
      * Tests the {@link VendingMachine#addItem(String, int)} method to ensure it adds a new item to the machine's status.
-     *      
+     *
      * <p>
      * To conduct this test, we perform the following steps:
      * </p>
@@ -78,12 +78,12 @@ public class VendingMachineTest {
         assertEquals(7, machine.getStatus().get("Water"));
     }
 
-    
+
     /**
      * Tests the {@link VendingMachine#addItem(String, int)} method to ensure it updates the quantity of an existing item in the machine's status.
-     *     
+     *
      * <p>
-     * 
+     * <p>
      * To conduct this test, we perform the following steps:
      * </p>
      * <ol>
@@ -103,9 +103,9 @@ public class VendingMachineTest {
 
     /**
      * Tests the {@link VendingMachine#removeItem(String, int)} method to ensure it removes items from the machine's status correctly.
-     * 
+     *
      * <p>
-     * 
+     * <p>
      * To conduct this test, we perform the following steps:
      * </p>
      * <ol>
@@ -125,9 +125,9 @@ public class VendingMachineTest {
 
     /**
      * Tests the {@link VendingMachine#removeItem(String, int)} method to ensure it removes all units of an item from the machine's status correctly.
-     * 
+     *
      * <p>
-     * 
+     * <p>
      * To conduct this test, we perform the following steps:
      * </p>
      * <ol>
@@ -147,9 +147,9 @@ public class VendingMachineTest {
 
     /**
      * Tests the {@link VendingMachine#removeItem(String, int)} method to ensure it returns false when attempting to remove an item that does not exist in the machine's status.
-     * 
+     * <p>
      * This test case focuses on verifying that the removeItem() method of a {@link VendingMachine} object returns false when attempting to remove an item that is not present in its status.
-     * 
+     *
      * <p>
      * To conduct this test, we perform the following steps:
      * </p>
@@ -166,9 +166,9 @@ public class VendingMachineTest {
 
     /**
      * Tests the {@link VendingMachine#removeItem(String, int)} method to ensure it returns false when attempting to remove more units of an item than are available in the machine's status.
-     * 
+     *
      * <p>
-     * 
+     * <p>
      * To conduct this test, we perform the following steps:
      * </p>
      * <ol>
@@ -184,9 +184,9 @@ public class VendingMachineTest {
 
     /**
      * Tests the {@link VendingMachine#setStatus(Map)} method to ensure it sets the machine's status correctly with a new inventory.
-     *  
+     *
      * <p>
-     * 
+     * <p>
      * To conduct this test, we perform the following steps:
      * </p>
      * <ol>
@@ -212,9 +212,9 @@ public class VendingMachineTest {
 
     /**
      * Tests the {@link VendingMachine#setId(int)} method to ensure it sets the machine's ID correctly.
-     * 
+     *
      * <p>
-     * 
+     * <p>
      * To conduct this test, we perform the following steps:
      * </p>
      * <ol>
@@ -231,12 +231,12 @@ public class VendingMachineTest {
         // Assert
         assertEquals(2, machine.getId());
     }
-    
+
     /**
      * Tests the {@link VendingMachine#setLocation(String)} method to ensure it sets the machine's location correctly.
-     * 
+     *
      * <p>
-     * 
+     * <p>
      * To conduct this test, we perform the following steps:
      * </p>
      * <ol>

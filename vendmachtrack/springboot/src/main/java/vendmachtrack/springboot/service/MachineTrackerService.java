@@ -2,8 +2,8 @@ package vendmachtrack.springboot.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import vendmachtrack.core.MachineTracker;
-import vendmachtrack.core.VendingMachine;
+import vendmachtrack.core.model.MachineTracker;
+import vendmachtrack.core.model.VendingMachine;
 import vendmachtrack.springboot.exception.IllegalInputException;
 import vendmachtrack.springboot.exception.ResourceNotFoundException;
 import vendmachtrack.springboot.repository.MachineTrackerRepository;
