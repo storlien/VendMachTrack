@@ -1,5 +1,6 @@
 before_script:
   - cd vendmachtrack/
+  - mvn clean install -DskipTests
 
 stages:
   - build
@@ -12,7 +13,6 @@ build:
   stage: build
   image: maven:3.9.4-amazoncorretto-20
   script:
-    - mvn clean install -DskipTests
     - mvn compile
   only:
     - merge_requests
@@ -21,7 +21,6 @@ checkstyle:
   stage: lint
   image: maven:3.9.4-amazoncorretto-20
   script:
-    - mvn clean install -DskipTests
     - mvn checkstyle:checkstyle -Dcheckstyle.failOnViolation=true
   only:
     - merge_requests
@@ -36,7 +35,6 @@ spotbugs:
   stage: lint
   image: maven:3.9.4-amazoncorretto-20
   script:
-    - mvn clean install -DskipTests
     - mvn com.github.spotbugs:spotbugs-maven-plugin:check
   only:
     - merge_requests
@@ -51,8 +49,7 @@ test:
   stage: test
   image: maven:3.9.4-amazoncorretto-20
   script:
-    - mvn clean install -DskipTests
-    - mvn test -pl '!ui'
+    - mvn test
   only:
     - merge_requests
   artifacts:
@@ -66,8 +63,7 @@ verify:
   stage: coverage-report
   image: maven:3.9.4-amazoncorretto-20
   script:
-    - mvn clean install -DskipTests
-    - mvn verify -pl '!ui'
+    - mvn verify
     - cat $CI_PROJECT_DIR/vendmachtrack/test-results/jacoco/index.html | grep -o 'Total[^%]*%'
   coverage: '/<td class="ctr2">(\d+%)/'
   only:
