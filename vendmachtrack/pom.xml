@@ -21,6 +21,7 @@
         <module>springboot</module>
         <module>ui</module>
         <module>jacoco-aggregator</module>
+        <module>e2e-tests</module>
     </modules>
 
     <dependencyManagement>
