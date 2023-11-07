@@ -33,6 +33,9 @@ public class UserController {
     private Label mylabel;
 
     @FXML
+    private Label label;
+
+    @FXML
     private Pane pane;
 
     @FXML
@@ -61,6 +64,7 @@ public class UserController {
     private static final int BUTTON_SPACING = 30;
     private static final double BUTTON_WIDTH = 100;
     private static final double BUTTON_HEIGHT = 120;
+
     /**
      * Sets the AccessService instance to interact with vending machine data.
      *
@@ -71,7 +75,7 @@ public class UserController {
             this.service = service;
             this.access = service.getAccess();
         } catch (Exception e) {
-            mylabel.setText(e.getMessage());
+            label.setText(e.getMessage());
         }
     }
 
@@ -94,35 +98,35 @@ public class UserController {
      */
     private void updateButtons(final int machineID, final Map<String, Integer> inventory) {
         try {
-        buttonContainer.getChildren().clear();
+            buttonContainer.getChildren().clear();
 
-        HBox currentRow = new HBox(BUTTON_SPACING);
-        buttonContainer.setSpacing(BUTTON_SPACING);
+            HBox currentRow = new HBox(BUTTON_SPACING);
+            buttonContainer.setSpacing(BUTTON_SPACING);
 
-        int buttonsInCurrentRow = 0;
+            int buttonsInCurrentRow = 0;
 
-        for (Map.Entry<String, Integer> entry : inventory.entrySet()) {
-            String itemName = entry.getKey();
+            for (Map.Entry<String, Integer> entry : inventory.entrySet()) {
+                String itemName = entry.getKey();
 
-            Button button = new Button(itemName);
-            button.getStyleClass().add("buttonContainer");
-            button.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
+                Button button = new Button(itemName);
+                button.getStyleClass().add("buttonContainer");
+                button.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 
-            button.setOnAction(e -> chosenItem.setText(itemName));
+                button.setOnAction(e -> chosenItem.setText(itemName));
 
-            currentRow.getChildren().add(button);
-            buttonsInCurrentRow++;
+                currentRow.getChildren().add(button);
+                buttonsInCurrentRow++;
 
-            if (buttonsInCurrentRow >= BUTTONS_PER_ROW) {
-                buttonContainer.getChildren().add(currentRow);
-                currentRow = new HBox(BUTTON_SPACING);
-                buttonsInCurrentRow = 0;
+                if (buttonsInCurrentRow >= BUTTONS_PER_ROW) {
+                    buttonContainer.getChildren().add(currentRow);
+                    currentRow = new HBox(BUTTON_SPACING);
+                    buttonsInCurrentRow = 0;
+                }
             }
-        }
-        if (buttonsInCurrentRow > 0) {
-            buttonContainer.getChildren().add(currentRow);
-        }
-        scrollPane.setContent(buttonContainer);
+            if (buttonsInCurrentRow > 0) {
+                buttonContainer.getChildren().add(currentRow);
+            }
+            scrollPane.setContent(buttonContainer);
         } catch (Exception e) {
             mylabel.setText(e.getMessage());
         }
@@ -137,8 +141,9 @@ public class UserController {
             HashMap<String, Integer> newInventory = access.removeItem(selectedMachineID, chosenItem.getText(), 1);
             updateButtons(selectedMachineID, newInventory);
             chosenItem.clear();
+            label.setText(null);
         } catch (Exception e) {
-            chosenItem.setText(e.getMessage());
+            label.setText(e.getMessage());
         }
     }
 
@@ -151,7 +156,7 @@ public class UserController {
         try {
             mylabel.setText("Vending machine: " + access.getVendMachLocation(machineID));
         } catch (Exception e) {
-            chosenItem.setText(e.getMessage());
+            label.setText(e.getMessage());
         }
     }
 
@@ -166,7 +171,7 @@ public class UserController {
             updateTitle(selectedMachineID);
             updateButtons(selectedMachineID, access.getInventory(selectedMachineID));
         } catch (Exception e) {
-            chosenItem.setText(e.getMessage());
+            label.setText(e.getMessage());
         }
     }
 

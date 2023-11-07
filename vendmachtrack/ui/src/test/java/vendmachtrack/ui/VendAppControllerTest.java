@@ -23,8 +23,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
-import java.util.HashMap;
 
+import java.net.ConnectException;
+import java.util.HashMap;
 
 public class VendAppControllerTest extends ApplicationTest {
 
@@ -36,7 +37,6 @@ public class VendAppControllerTest extends ApplicationTest {
 
     @Mock
     private MachineTrackerAccessible mockAccess;
-    
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -45,13 +45,11 @@ public class VendAppControllerTest extends ApplicationTest {
 
         // Mock the behavior of the AccessService and MachineTrackerAccessible
         when(mockService.getAccess()).thenReturn(mockAccess);
-        
+
         // Mock a vending machine list for testing purposes
         vendingMachines.put(1, "Oslo");
         vendingMachines.put(2, "Trondheim");
         when(mockAccess.getVendMachList()).thenReturn(vendingMachines);
-
-       
 
         // Load the FXML and set the mocked service to the controller
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("App.fxml"));
@@ -59,7 +57,7 @@ public class VendAppControllerTest extends ApplicationTest {
         this.controller = fxmlLoader.getController();
         this.controller.setAccessService(mockService);
 
-         controller.updateVendMachList();
+        controller.updateVendMachList();
 
         // Set the scene and show the stage
         Scene scene = new Scene(parent);
@@ -77,75 +75,74 @@ public class VendAppControllerTest extends ApplicationTest {
 
     @Test
     public void VendAppController_testMenuBarPopulation() {
-        
-        //Arrange
+
+        // Arrange
         controller.updateVendMachList();
 
-        //Act
+        // Act
         ChoiceBox<String> menuBar = lookup("#menuBar").query();
         clickOn("#menuBar");
 
-        //Assert
+        // Assert
         assertEquals(2, menuBar.getItems().size());
     }
 
-
     @Test
-    public void VendAppController_testMenuBarPopulation_selectVendingMachine() {
-        
-        //Arrange
+    public void VendAppController_testMenuBarPopulation_selectVendingMachine() throws ConnectException {
+
+        // Arrange
         HashMap<String, Integer> mockInventory = new HashMap<>();
         mockInventory.put("Cola", 5);
         mockInventory.put("Pepsi", 3);
         when(mockAccess.getInventory(1)).thenReturn(mockInventory);
 
-        //Act
+        // Act
         @SuppressWarnings("unchecked")
         ChoiceBox<String> choiceBox = (ChoiceBox<String>) lookup("#menuBar").queryAs(ChoiceBox.class);
         interact(() -> choiceBox.getSelectionModel().select(0));
 
         clickOn("#okButton");
 
-        //Assert
+        // Assert
         TextArea textArea = lookup("#textArea").queryAs(TextArea.class);
         FxAssert.verifyThat(textArea, TextInputControlMatchers.hasText("Inventory:\nCola: 5\nPepsi: 3\n"));
     }
 
     @Test
-    public void VendAppController_testMenuBarPopulation_selectNoVendingMachine(){
-     
-        //Act
+    public void VendAppController_testMenuBarPopulation_selectNoVendingMachine() {
+
+        // Act
         clickOn("#okButton");
 
-        //Assert
+        // Assert
         TextArea textArea = lookup("#textArea").queryAs(TextArea.class);
         FxAssert.verifyThat(textArea, TextInputControlMatchers.hasText("No vending machine selected"));
     }
 
     @Test
-    public void VendAppController_testRefill_noVendingMachineSelected(){
+    public void VendAppController_testRefill_noVendingMachineSelected() {
 
-        //Act
+        // Act
         clickOn("#refillButton");
 
-        //Assert
+        // Assert
         TextArea textArea = lookup("#textArea").queryAs(TextArea.class);
         FxAssert.verifyThat(textArea, TextInputControlMatchers.hasText("Please select a vending machine."));
     }
 
     @Test
-    public void VendAppController_testUserview_noVendingMachineSelected(){
+    public void VendAppController_testUserview_noVendingMachineSelected() {
 
-        //Act
+        // Act
         clickOn("#userView");
 
-        //Assert
+        // Assert
         TextArea textArea = lookup("#textArea").queryAs(TextArea.class);
         FxAssert.verifyThat(textArea, TextInputControlMatchers.hasText("Please select a vending machine."));
     }
 
     @Test
-    public void VendAppController_testAddVendingMachine_validVendingMachine(){
+    public void VendAppController_testAddVendingMachine_validVendingMachine() throws ConnectException{
          
         // Arrange
         when(mockAccess.addVendMach(anyInt(), anyString())).thenAnswer(invocation -> {
@@ -170,7 +167,7 @@ public class VendAppControllerTest extends ApplicationTest {
     }
 
     @Test
-    public void VendAppController_testAddVendingMachine_ExistingID(){
+    public void VendAppController_testAddVendingMachine_ExistingID() throws ConnectException{
         
         // Arrange
         when(mockAccess.addVendMach(2, "Random Location"))
@@ -187,21 +184,20 @@ public class VendAppControllerTest extends ApplicationTest {
     }
 
     @Test
-    public void VendAppController_testAddVendingMachine_InvalidID(){
-        
+    public void VendAppController_testAddVendingMachine_InvalidID() {
+
         // Act
-        clickOn("#idTextFieldAdd").write("NaN");  // Use the ID for the existing vending machine
-        clickOn("#locationTextField").write("Random Location");  // Add a different location for testing
-        clickOn("#addButton");  // Click the add button to attempt adding the vending machine
+        clickOn("#idTextFieldAdd").write("NaN"); // Use the ID for the existing vending machine
+        clickOn("#locationTextField").write("Random Location"); // Add a different location for testing
+        clickOn("#addButton"); // Click the add button to attempt adding the vending machine
         Label outputTextLabel = lookup("#outputText").query();
-        
+
         // Assert
         assertEquals("Machine ID must be an integer", outputTextLabel.getText());
     }
 
-    
     @Test
-    public void VendAppController_testAddVendingMachine_InvalidLocation(){
+    public void VendAppController_testAddVendingMachine_InvalidLocation() throws ConnectException{
         
         // Arrange
         when(mockAccess.addVendMach(5, "5"))
@@ -217,20 +213,20 @@ public class VendAppControllerTest extends ApplicationTest {
         assertEquals("Location Name not valid", outputTextLabel.getText());
     }
 
-       @Test
-    public void VendAppController_testAddVendingMachine_NoIdWritten(){
-        
+    @Test
+    public void VendAppController_testAddVendingMachine_NoIdWritten() {
+
         // Act
-        clickOn("#locationTextField").write("5");  
-        clickOn("#addButton");  
+        clickOn("#locationTextField").write("5");
+        clickOn("#addButton");
         Label outputTextLabel = lookup("#outputText").query();
-        
+
         // Assert
         assertEquals("Machine ID must be an integer", outputTextLabel.getText());
     }
 
     @Test
-    public void VendAppController_testAddVendingMachine_NoLocationWritten(){
+    public void VendAppController_testAddVendingMachine_NoLocationWritten() throws ConnectException{
         
         // Arrange
         when(mockAccess.addVendMach(5, ""))
@@ -244,9 +240,9 @@ public class VendAppControllerTest extends ApplicationTest {
         // Assert
         assertEquals("Location Name not valid", outputTextLabel.getText());
     }
-    
+
     @Test
-    public void VendAppController_testRemoveVendingMachine_removesVendingmachine(){
+    public void VendAppController_testRemoveVendingMachine_removesVendingmachine() throws ConnectException{
         
         // Arrange
         when(mockAccess.removeVendMach(1)).thenAnswer(invocation -> {
@@ -264,9 +260,9 @@ public class VendAppControllerTest extends ApplicationTest {
         assertEquals("The machine 1 was successfully removed from your tracker", outputTextLabel.getText());
         assertFalse(menuBar.getItems().contains("id: 1 (Oslo)"));
     }
-    
+
     @Test
-    public void VendAppController_testRemoveVendingMachine_invalidID(){
+    public void VendAppController_testRemoveVendingMachine_invalidID() throws ConnectException{
 
         // Arrange
         when(mockAccess.removeVendMach(5)).thenThrow(new RuntimeException("No such Vending Machine with ID: 5"));
@@ -281,11 +277,11 @@ public class VendAppControllerTest extends ApplicationTest {
     }
 
     @Test
-    public void VendAppController_testRemoveVendingMachine_notInteger(){
+    public void VendAppController_testRemoveVendingMachine_notInteger() {
 
-         // Act
-        clickOn("#idTextFieldRemove").write("NaN");  // Use the ID for the existing vending machine
-        clickOn("#removeButton");  // Click the remove button to attempt removing the vending machine
+        // Act
+        clickOn("#idTextFieldRemove").write("NaN"); // Use the ID for the existing vending machine
+        clickOn("#removeButton"); // Click the remove button to attempt removing the vending machine
         Label outputTextLabel = lookup("#outputText").query();
 
         // Assert

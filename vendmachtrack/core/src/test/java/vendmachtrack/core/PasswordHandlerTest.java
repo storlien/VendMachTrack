@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
     * This class contains test methods for testing the functionality of the {@link PasswordHandler} class.
     *
     *<p>
-    *   
+    *
     * The tests in this class focus on various aspects of the PasswordHandler class, including hashing and verifying passwords.
     *
     * </p>
@@ -21,9 +21,9 @@ public class PasswordHandlerTest {
 
     /**
      * Tests the {@link PasswordHandler#hashPassword(String)} method with a regular input password.
-     * 
+     *
      * <p>
-     * 
+     *
      * To conduct this test, we perform the following steps:
      * </p>
      * <ol>
@@ -34,22 +34,22 @@ public class PasswordHandlerTest {
      */
     @Test
     public void PasswordHandler_testHashPasswordWithRegularInput() {
-        //Arrange
+        // Arrange
         String password = "normalPassword";
 
-        //Act
+        // Act
         String hashedPassword = PasswordHandler.hashPassword(password);
 
-        //Assert
+        // Assert
         assertNotNull(hashedPassword);
         assertFalse(hashedPassword.isEmpty());
     }
 
     /**
      * Tests the {@link PasswordHandler#verifyPassword(String)} method with an incorrect password.
-     * 
+     *
      * This test case focuses on verifying that the verifyPassword() method of a {@link PasswordHandler} object correctly returns false when verifying an incorrect password.
-     * 
+     *
      * <p>
      * To conduct this test, we perform the following steps:
      * </p>
@@ -66,4 +66,5 @@ public class PasswordHandlerTest {
         //Act & Assert
         assertFalse(PasswordHandler.verifyPassword(password));
     }
+
 }
