@@ -1,4 +1,4 @@
-package vendmachtrack.ui;
+package vendmachtrack.ui.controller;
 
 import javafx.stage.Stage;
 import vendmachtrack.ui.access.AccessService;
@@ -15,6 +15,7 @@ import org.mockito.MockitoAnnotations;
 import org.testfx.api.FxAssert;
 import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.matcher.control.TextInputControlMatchers;
+import vendmachtrack.ui.controller.VendAppController;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -142,8 +143,8 @@ public class VendAppControllerTest extends ApplicationTest {
     }
 
     @Test
-    public void VendAppController_testAddVendingMachine_validVendingMachine() throws ConnectException{
-         
+    public void VendAppController_testAddVendingMachine_validVendingMachine() throws ConnectException {
+
         // Arrange
         when(mockAccess.addVendMach(anyInt(), anyString())).thenAnswer(invocation -> {
             int id = invocation.getArgument(0);
@@ -158,7 +159,7 @@ public class VendAppControllerTest extends ApplicationTest {
         clickOn("#addButton");  // Click the add button to add the vending machine
         ChoiceBox<String> menuBar = lookup("#menuBar").query();
         Label outputTextLabel = lookup("#outputText").query();
-        
+
 
         //Assert
         assertEquals("The machine 3 was successfully added to your tracker ", outputTextLabel.getText());
@@ -167,11 +168,11 @@ public class VendAppControllerTest extends ApplicationTest {
     }
 
     @Test
-    public void VendAppController_testAddVendingMachine_ExistingID() throws ConnectException{
-        
+    public void VendAppController_testAddVendingMachine_ExistingID() throws ConnectException {
+
         // Arrange
         when(mockAccess.addVendMach(2, "Random Location"))
-        .thenThrow(new RuntimeException("Machine with ID: 2 already exists"));
+                .thenThrow(new RuntimeException("Machine with ID: 2 already exists"));
 
         // Act
         clickOn("#idTextFieldAdd").write("2");  // Use the ID for the existing vending machine
@@ -180,7 +181,7 @@ public class VendAppControllerTest extends ApplicationTest {
         Label outputTextLabel = lookup("#outputText").query();
 
         // Assert
-        assertEquals("Machine with ID: 2 already exists", outputTextLabel.getText());    
+        assertEquals("Machine with ID: 2 already exists", outputTextLabel.getText());
     }
 
     @Test
@@ -197,18 +198,18 @@ public class VendAppControllerTest extends ApplicationTest {
     }
 
     @Test
-    public void VendAppController_testAddVendingMachine_InvalidLocation() throws ConnectException{
-        
+    public void VendAppController_testAddVendingMachine_InvalidLocation() throws ConnectException {
+
         // Arrange
         when(mockAccess.addVendMach(5, "5"))
-        .thenThrow(new RuntimeException("Location Name not valid"));
-        
+                .thenThrow(new RuntimeException("Location Name not valid"));
+
         // Act
         clickOn("#idTextFieldAdd").write("5");  // Use the ID for the existing vending machine
         clickOn("#locationTextField").write("5");  // Add a different location for testing
         clickOn("#addButton");  // Click the add button to attempt adding the vending machine
         Label outputTextLabel = lookup("#outputText").query();
-        
+
         // Assert
         assertEquals("Location Name not valid", outputTextLabel.getText());
     }
@@ -226,24 +227,24 @@ public class VendAppControllerTest extends ApplicationTest {
     }
 
     @Test
-    public void VendAppController_testAddVendingMachine_NoLocationWritten() throws ConnectException{
-        
+    public void VendAppController_testAddVendingMachine_NoLocationWritten() throws ConnectException {
+
         // Arrange
         when(mockAccess.addVendMach(5, ""))
-        .thenThrow(new RuntimeException("Location Name not valid"));
+                .thenThrow(new RuntimeException("Location Name not valid"));
 
         // Act
         clickOn("#idTextFieldAdd").write("5");  // Use the ID for the existing vending machine
         clickOn("#addButton");  // Click the add button to attempt adding the vending machine
         Label outputTextLabel = lookup("#outputText").query();
-        
+
         // Assert
         assertEquals("Location Name not valid", outputTextLabel.getText());
     }
 
     @Test
-    public void VendAppController_testRemoveVendingMachine_removesVendingmachine() throws ConnectException{
-        
+    public void VendAppController_testRemoveVendingMachine_removesVendingmachine() throws ConnectException {
+
         // Arrange
         when(mockAccess.removeVendMach(1)).thenAnswer(invocation -> {
             vendingMachines.remove(1);
@@ -262,7 +263,7 @@ public class VendAppControllerTest extends ApplicationTest {
     }
 
     @Test
-    public void VendAppController_testRemoveVendingMachine_invalidID() throws ConnectException{
+    public void VendAppController_testRemoveVendingMachine_invalidID() throws ConnectException {
 
         // Arrange
         when(mockAccess.removeVendMach(5)).thenThrow(new RuntimeException("No such Vending Machine with ID: 5"));

@@ -1,4 +1,4 @@
-package vendmachtrack.ui;
+package vendmachtrack.ui.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -23,6 +23,7 @@ import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import vendmachtrack.ui.access.AccessService;
 import vendmachtrack.ui.access.MachineTrackerAccessible;
+import vendmachtrack.ui.controller.RefillController;
 
 public class RefillControllerTest extends ApplicationTest {
 

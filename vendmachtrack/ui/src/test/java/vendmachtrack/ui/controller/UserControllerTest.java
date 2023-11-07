@@ -1,4 +1,4 @@
-package vendmachtrack.ui;
+package vendmachtrack.ui.controller;
 
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -9,6 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
 import static org.testfx.matcher.control.LabeledMatchers.hasText;
 
 import org.junit.jupiter.api.Test;
@@ -18,6 +19,7 @@ import org.testfx.framework.junit5.ApplicationTest;
 
 import vendmachtrack.ui.access.AccessService;
 import vendmachtrack.ui.access.MachineTrackerAccessible;
+import vendmachtrack.ui.controller.UserController;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -32,14 +34,14 @@ import java.util.HashMap;
 /**
  * This class contains JUnit tests for the {@link UserController} class,
  * focusing on the user interface and interactions.
- * 
+ *
  * <p>
  * The tests in this class verify the behavior of the user interface components
  * and user interactions in the {@link UserController}.
  * These tests use the JavaFX testing framework to simulate user actions and
  * interactions with the application.
  * </p>
- * 
+ *
  * @see UserController
  * @see ApplicationTest
  */
@@ -57,13 +59,13 @@ public class UserControllerTest extends ApplicationTest {
     /**
      * Initializes the JavaFX application, sets up mock behavior for services and
      * controllers, and opens the main application window.
-     * 
+     *
      * <p>
      * This method is responsible for setting up the JavaFX application, including
      * mocking the behavior of services and controllers,
      * and opening the main application window for testing purposes.
      * </p>
-     * 
+     *
      * <ol>
      * <li>Arrange: Mock the behavior of the {@link AccessService} and related
      * services using Mockito.</li>
@@ -76,7 +78,7 @@ public class UserControllerTest extends ApplicationTest {
      * <li>Arrange: Create and display the main application window with a predefined
      * scene.</li>
      * </ol>
-     * 
+     *
      * @param stage The primary stage for the JavaFX application.
      * @throws Exception if any error occurs during application initialization.
      */
@@ -115,13 +117,13 @@ public class UserControllerTest extends ApplicationTest {
     /**
      * Tests the initialization of the {@link UserController} to ensure that it is
      * not null.
-     * 
+     *
      * <p>
      * This test case focuses on verifying that the {@link UserController} object is
      * properly instantiated
      * and not null.
      * </p>
-     * 
+     *
      * <ol>
      * <li>Assert: Verify that the {@code this.userController} object is not
      * null.</li>
@@ -136,12 +138,12 @@ public class UserControllerTest extends ApplicationTest {
     /**
      * Tests the behavior of the {@link UserController} when updating buttons with
      * two rows of buttons.
-     * 
+     *
      * <p>
      * This test case focuses on verifying that the button layout is correctly
      * updated with two rows of buttons.
      * </p>
-     * 
+     *
      * <ol>
      * <li>Arrange: Set the selected machine ID to 1 on the JavaFX application
      * thread using {@link Platform#runLater(Runnable)}.</li>
@@ -149,7 +151,7 @@ public class UserControllerTest extends ApplicationTest {
      * <li>Assert: Verify that the first row of buttons contains 4 buttons and the
      * second row contains 1 button.</li>
      * </ol>
-     * 
+     *
      * @throws InterruptedException if the thread sleep is interrupted
      */
     @Test
@@ -176,13 +178,13 @@ public class UserControllerTest extends ApplicationTest {
     /**
      * Tests the behavior of the {@link UserController} when buying an item with
      * only one item remaining in the inventory.
-     * 
+     *
      * <p>
      * This test case focuses on verifying that the user interface updates correctly
      * when buying an item with only one
      * item remaining in the inventory.
      * </p>
-     * 
+     *
      * <ol>
      * <li>Arrange: Set up a mock for removing an item from inventory with one item
      * remaining.
@@ -193,7 +195,7 @@ public class UserControllerTest extends ApplicationTest {
      * <li>Assert: Verify that the "Cola" button is removed, and the button row
      * contains the expected number of buttons.</li>
      * </ol>
-     * 
+     *
      * @throws InterruptedException if the thread sleep is interrupted
      * @throws ConnectException
      */
@@ -226,29 +228,29 @@ public class UserControllerTest extends ApplicationTest {
 
     /**
      * Tests the behavior of the {@link UserController} when attempting to buy an item without making a selection.
-     * 
+     *
      * <p>
      * This test case focuses on verifying that the user interface handles the scenario where the user attempts to
      * buy an item without making a selection.
      * </p>
-     * 
+     *
      * <ol>
      *   <li>Arrange: Set up a mock to throw a {@link RuntimeException} with a specific message when removing an item.
      *       Set the selected machine ID to 1 on the JavaFX application thread using {@link Platform#runLater(Runnable)}.</li>
      *   <li>Act: Click on the "buy" button.</li>
      *   <li>Assert: Verify that the text field displaying the chosen item contains the expected error message.</li>
      * </ol>
-     * 
+     *
      * @throws InterruptedException if the thread sleep is interrupted
      * @throws ConnectException
      */
     @Test
     public void UserController_testBuy_NoSelection() throws InterruptedException, ConnectException {
-        
-        //Arrange  
+
+        //Arrange
         when(mockAccess.removeItem(anyInt(), anyString(), anyInt())).thenThrow(new RuntimeException("Item name not valid"));
         Platform.runLater(() -> {
-        this.userController.setSelectedMachineID(1);
+            this.userController.setSelectedMachineID(1);
         });
         Thread.sleep(100);
 
@@ -264,12 +266,12 @@ public class UserControllerTest extends ApplicationTest {
     /**
      * Tests the behavior of the {@link UserController} when clicking the back
      * button to open a new scene.
-     * 
+     *
      * <p>
      * This test case focuses on verifying that clicking the back button results in
      * opening a new scene.
      * </p>
-     * 
+     *
      * <ol>
      * <li>Arrange: Set the selected machine ID to 1 on the JavaFX application
      * thread using {@link Platform#runLater(Runnable)}.</li>
@@ -277,7 +279,7 @@ public class UserControllerTest extends ApplicationTest {
      * <li>Assert: Verify that a new scene is opened, indicated by the presence of a
      * password field in the new scene.</li>
      * </ol>
-     * 
+     *
      * @throws InterruptedException if the thread sleep is interrupted
      */
     @Test

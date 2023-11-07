@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import vendmachtrack.ui.access.AccessService;
+import vendmachtrack.ui.controller.ServerController;
+import vendmachtrack.ui.controller.VendAppController;
 
 import java.io.IOException;
 
@@ -39,14 +41,14 @@ public class App extends Application {
      */
     @Override
     public void start(final Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("Server.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("controller/Server.fxml"));
         Parent parent = fxmlLoader.load();
 
         ServerController serverController = fxmlLoader.getController();
         serverController.setMainApp(this);
 
         mainScene = new Scene(parent);
-        mainScene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+        mainScene.getStylesheets().add(getClass().getResource("controller/styles.css").toExternalForm());
         primaryStage.setScene(mainScene);
         primaryStage.show();
     }
@@ -61,7 +63,7 @@ public class App extends Application {
      * @throws IOException If an error occurs while loading the App.fxml file.
      */
     public void switchToVendAppScene(final AccessService service) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("App.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("controller/App.fxml"));
         Parent parent = loader.load();
 
         mainController = loader.getController();
@@ -70,7 +72,7 @@ public class App extends Application {
         mainController.updateVendMachList();
 
         mainScene = new Scene(parent);
-        mainScene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+        mainScene.getStylesheets().add(getClass().getResource("controller/styles.css").toExternalForm());
         primaryStage.setScene(mainScene);
     }
 
