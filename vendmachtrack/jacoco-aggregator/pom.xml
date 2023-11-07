@@ -39,6 +39,11 @@
             <artifactId>springboot</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>gr2338</groupId>-->
+        <!--            <artifactId>e2e-tests</artifactId>-->
+        <!--            <version>${project.version}</version>-->
+        <!--        </dependency>-->
     </dependencies>
 
     <build>
