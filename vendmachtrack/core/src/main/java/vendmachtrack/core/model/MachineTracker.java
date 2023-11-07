@@ -1,4 +1,4 @@
-package vendmachtrack.core;
+package vendmachtrack.core.model;
 
 import java.util.ArrayList;
 import java.util.List;

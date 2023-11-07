@@ -1,7 +1,7 @@
 package vendmachtrack.jsonio.internal;
 
 import com.google.gson.Gson;
-import vendmachtrack.core.MachineTracker;
+import vendmachtrack.core.model.MachineTracker;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;

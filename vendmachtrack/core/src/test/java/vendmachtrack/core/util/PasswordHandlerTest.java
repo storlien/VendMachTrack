@@ -1,4 +1,4 @@
-package vendmachtrack.core;
+package vendmachtrack.core.util;
 
 import org.junit.jupiter.api.Test;
 
@@ -6,24 +6,24 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
-    /**
-    * This class contains test methods for testing the functionality of the {@link PasswordHandler} class.
-    *
-    *<p>
-    *
-    * The tests in this class focus on various aspects of the PasswordHandler class, including hashing and verifying passwords.
-    *
-    * </p>
-    *
-    * NOTE: Due to security reasons the test case where the correct password is verified is not included in this test class
-     */
+/**
+ * This class contains test methods for testing the functionality of the {@link PasswordHandler} class.
+ *
+ * <p>
+ * <p>
+ * The tests in this class focus on various aspects of the PasswordHandler class, including hashing and verifying passwords.
+ *
+ * </p>
+ * <p>
+ * NOTE: Due to security reasons the test case where the correct password is verified is not included in this test class
+ */
 public class PasswordHandlerTest {
 
     /**
      * Tests the {@link PasswordHandler#hashPassword(String)} method with a regular input password.
      *
      * <p>
-     *
+     * <p>
      * To conduct this test, we perform the following steps:
      * </p>
      * <ol>
@@ -47,7 +47,7 @@ public class PasswordHandlerTest {
 
     /**
      * Tests the {@link PasswordHandler#verifyPassword(String)} method with an incorrect password.
-     *
+     * <p>
      * This test case focuses on verifying that the verifyPassword() method of a {@link PasswordHandler} object correctly returns false when verifying an incorrect password.
      *
      * <p>

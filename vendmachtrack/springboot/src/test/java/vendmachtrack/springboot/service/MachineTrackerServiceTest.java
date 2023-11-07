@@ -10,8 +10,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import vendmachtrack.core.MachineTracker;
-import vendmachtrack.core.VendingMachine;
+import vendmachtrack.core.model.MachineTracker;
+import vendmachtrack.core.model.VendingMachine;
 import vendmachtrack.springboot.exception.IllegalInputException;
 import vendmachtrack.springboot.exception.ResourceNotFoundException;
 
@@ -252,7 +252,7 @@ public class MachineTrackerServiceTest {
      */
     @Test
     public void addVendMach_invalidLocation_throwsIllegalInputException() {
-        // Arrange 
+        // Arrange
         when(repository.getVendMach(2)).thenReturn(null);
 
         // Act & Assert
@@ -301,7 +301,7 @@ public class MachineTrackerServiceTest {
      */
     @Test
     public void removeVendMach_invalidId_throwsResourceNotFoundException() {
-        // Arrange 
+        // Arrange
         when(repository.getVendMach(99)).thenReturn(null);
 
         // Act & Assert
@@ -387,7 +387,7 @@ public class MachineTrackerServiceTest {
      */
     @Test
     public void removeItem_invalidId_throwsResourceNotFoundException() {
-        // Arrange  
+        // Arrange
         when(repository.getVendMach(99)).thenReturn(null);
 
         // Act & Assert

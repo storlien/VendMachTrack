@@ -1,7 +1,7 @@
 package vendmachtrack.ui.access;
 
-import vendmachtrack.core.MachineTracker;
-import vendmachtrack.core.VendingMachine;
+import vendmachtrack.core.model.MachineTracker;
+import vendmachtrack.core.model.VendingMachine;
 import vendmachtrack.jsonio.VendmachtrackPersistence;
 
 import java.util.HashMap;

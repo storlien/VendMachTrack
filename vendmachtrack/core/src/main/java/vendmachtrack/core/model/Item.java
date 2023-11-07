@@ -1,4 +1,4 @@
-package vendmachtrack.core;
+package vendmachtrack.core.model;
 
 /**
  * This class encapsulates the concept of an item within a vending machine.

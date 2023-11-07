@@ -12,7 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import vendmachtrack.core.PasswordHandler;
+import vendmachtrack.core.util.PasswordHandler;
 import vendmachtrack.ui.access.AccessService;
 import vendmachtrack.ui.controller.PasswordHandlerController;
 

@@ -1,6 +1,6 @@
 package vendmachtrack.jsonio;
 
-import vendmachtrack.core.MachineTracker;
+import vendmachtrack.core.model.MachineTracker;
 import vendmachtrack.jsonio.internal.FromJson;
 import vendmachtrack.jsonio.internal.ToJson;
 

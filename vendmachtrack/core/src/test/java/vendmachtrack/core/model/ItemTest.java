@@ -1,4 +1,4 @@
-package vendmachtrack.core;
+package vendmachtrack.core.model;
 
 import org.junit.jupiter.api.Test;
 
@@ -16,9 +16,9 @@ public class ItemTest {
 
     /**
      * Tests the valid initialization of an {@link Item} object.
-     * 
+     * <p>
      * This test case focuses on ensuring that an Item object can be initialized with the correct name and price values.
-     * 
+     *
      * <p>
      * To conduct this test, we perform the following steps:
      * </p>
@@ -29,7 +29,7 @@ public class ItemTest {
      */
     @Test
     public void Item_testValidInitialization() {
-        //Arrange 
+        //Arrange
         Item item = new Item("Soda", 1.5);
 
         //Act & Assert
@@ -39,9 +39,9 @@ public class ItemTest {
 
     /**
      * Tests the initialization of an {@link Item} object with a negative price, expecting an {@link IllegalArgumentException}.
-     * 
+     * <p>
      * This test case focuses on verifying that attempting to create an Item object with a negative price results in an {@link IllegalArgumentException}.
-     * 
+     *
      * <p>
      * To conduct this test, we perform the following steps:
      * </p>
@@ -68,9 +68,9 @@ public class ItemTest {
 
     /**
      * Tests the {@link Item#getName()} method to ensure it returns the correct item name.
-     * 
+     * <p>
      * This test case focuses on verifying that the getName() method of an Item object returns the expected item name.
-     * 
+     *
      * <p>
      * To conduct this test, we perform the following steps:
      * </p>
@@ -91,9 +91,9 @@ public class ItemTest {
 
     /**
      * Tests the {@link Item#getPrice()} method to ensure it returns the correct item price.
-     * 
+     * <p>
      * This test case focuses on verifying that the getPrice() method of an Item object returns the expected item price.
-     * 
+     *
      * <p>
      * To conduct this test, we perform the following steps:
      * </p>
@@ -103,7 +103,7 @@ public class ItemTest {
      * </ol>
      */
     @Test
-    public void Item_testGetPrice(){
+    public void Item_testGetPrice() {
 
         //Arrange
         Item item = new Item("Chips", 2.5);

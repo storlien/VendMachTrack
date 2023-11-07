@@ -1,4 +1,4 @@
-package vendmachtrack.core;
+package vendmachtrack.core.model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,9 +11,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * This class contains test methods for testing the functionality of the {@link MachineTracker} class.
- * 
+ * <p>
  * The tests in this class focus on various aspects of the MachineTracker class, including adding and removing vending machines, retrieving the list of machines, and more.
- *
  */
 public class MachineTrackerTest {
 
@@ -23,9 +22,9 @@ public class MachineTrackerTest {
 
     /**
      * Sets up the initial state for each test method in the {@link MachineTrackerTest} class.
-     * 
+     *
      * <p>
-     * 
+     * <p>
      * To prepare for each test, the following steps are performed:
      * </p>
      * <ol>
@@ -43,9 +42,9 @@ public class MachineTrackerTest {
 
     /**
      * Tests the {@link MachineTracker#addVendingMachine(VendingMachine)} method to ensure it adds a vending machine to the tracker's list.
-     * 
+     * <p>
      * This test case focuses on verifying that the addVendingMachine() method of a {@link MachineTracker} object correctly adds a vending machine to its list of machines.
-     * 
+     *
      * <p>
      * To conduct this test, we perform the following steps:
      * </p>
@@ -66,9 +65,9 @@ public class MachineTrackerTest {
 
     /**
      * Tests the {@link MachineTracker#addVendingMachine(VendingMachine)} method to ensure it throws an {@link IllegalArgumentException} when attempting to add a vending machine that already exists in the tracker's list.
-     * 
+     *
      * <p>
-     * 
+     * <p>
      * To conduct this test, we perform the following steps:
      * </p>
      * <ol>
@@ -87,9 +86,9 @@ public class MachineTrackerTest {
 
     /**
      * Tests the {@link MachineTracker#removeVendingMachine(VendingMachine)} method to ensure it removes a vending machine from the tracker's list.
-     * 
+     *
      * <p>
-     * 
+     * <p>
      * To conduct this test, we perform the following steps:
      * </p>
      * <ol>
@@ -110,12 +109,12 @@ public class MachineTrackerTest {
         // Assert
         assertFalse(tracker.getMachines().contains(machine1));
     }
-    
+
     /**
      * Tests the {@link MachineTracker#removeVendingMachine(VendingMachine)} method to ensure it throws an {@link IllegalArgumentException} when attempting to remove a vending machine that does not exist in the tracker's list.
-     * 
+     *
      * <p>
-     * 
+     * <p>
      * To conduct this test, we perform the following steps:
      * </p>
      * <ol>
@@ -132,9 +131,9 @@ public class MachineTrackerTest {
 
     /**
      * Tests the {@link MachineTracker#getMachines()} method to ensure it returns the list of vending machines correctly.
-     * 
+     *
      * <p>
-     * 
+     * <p>
      * To conduct this test, we perform the following steps:
      * </p>
      * <ol>
@@ -156,12 +155,12 @@ public class MachineTrackerTest {
         assertEquals(1, machines.size());
     }
 
-    
+
     /**
      * Tests the {@link MachineTracker#setMachines(List)} method to ensure it sets the list of vending machines correctly.
-     * 
+     *
      * <p>
-     * 
+     * <p>
      * To conduct this test, we perform the following steps:
      * </p>
      * <ol>
@@ -176,7 +175,7 @@ public class MachineTrackerTest {
         // Arrange
         tracker.setMachines(Arrays.asList(machine1, machine2));
 
-        // Act 
+        // Act
         List<VendingMachine> machines = tracker.getMachines();
 
         // Assert
