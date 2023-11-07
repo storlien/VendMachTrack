@@ -23,9 +23,8 @@ import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import vendmachtrack.ui.access.AccessService;
 import vendmachtrack.ui.access.MachineTrackerAccessible;
-import vendmachtrack.ui.controller.RefillController;
 
-public class RefillControllerTest extends ApplicationTest {
+public class RefillControllerUITest extends ApplicationTest {
 
     private RefillController refillController;
     private HashMap<Integer, String> vendingMachines = new HashMap<>();

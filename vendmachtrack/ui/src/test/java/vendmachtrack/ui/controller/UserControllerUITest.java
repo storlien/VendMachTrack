@@ -19,7 +19,6 @@ import org.testfx.framework.junit5.ApplicationTest;
 
 import vendmachtrack.ui.access.AccessService;
 import vendmachtrack.ui.access.MachineTrackerAccessible;
-import vendmachtrack.ui.controller.UserController;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -45,7 +44,7 @@ import java.util.HashMap;
  * @see UserController
  * @see ApplicationTest
  */
-public class UserControllerTest extends ApplicationTest {
+public class UserControllerUITest extends ApplicationTest {
 
     private UserController userController;
     private HashMap<Integer, String> vendingMachines = new HashMap<>();
