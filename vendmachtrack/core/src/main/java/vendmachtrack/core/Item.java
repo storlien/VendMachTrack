@@ -1,19 +1,34 @@
 package vendmachtrack.core;
 
 /**
- * Represents an item with a specific name and price.
+ * This class encapsulates the concept of an item within a vending machine.
+ * <p>
+ * Each item has a distinct name and an associated price. The price of an item
+ * must always be a positive value, representing the monetary value associated
+ * with purchasing this particular item.
+ * </p>
  */
 public class Item {
 
+    /**
+     * The name by which the item is identified.
+     */
     private final String name;
+
+    /**
+     * The price of this item.
+     */
     private final double price;
 
     /**
-     * Constructor. Represents an item with a specific name and price.
+     * Constructs a new instance of the Item class with the specified name and
+     * price.
      *
-     * @param newName  The name of the item.
-     * @param newPrice The price of the item. Must be a positive value.
-     * @throws IllegalArgumentException If the price is negative or zero value.
+     * @param newName  The name used to identify this item.
+     * @param newPrice The monetary value of this item. This must always be a positive
+     *                 value.
+     * @throws IllegalArgumentException If the price provided is negative or has a
+     *                                  zero value.
      */
     public Item(final String newName, final double newPrice) {
         if (newPrice <= 0) {
@@ -24,7 +39,7 @@ public class Item {
     }
 
     /**
-     * Retrieves the name of the item.
+     * Retrieves the name associated with this item.
      *
      * @return The name of the item.
      */
@@ -33,11 +48,12 @@ public class Item {
     }
 
     /**
-     * Retrieves the price of the item.
+     * Retrieves the price associated with this item.
      *
-     * @return The price of the item.
+     * @return The price of this item.
      */
     public double getPrice() {
         return this.price;
     }
+
 }

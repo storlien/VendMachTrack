@@ -29,6 +29,9 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
     private final Gson gson;
     private final HttpClient httpClient;
 
+    /**
+     * Endpoint directory for the Vending Machine Tracker server.
+     */
     private static final String ENDPOINT_DIRECTORY = "vendmachtrack";
 
     private static final Type TYPE_HASHMAP_INTEGER_STRING = new TypeToken<HashMap<Integer, String>>() {
@@ -52,7 +55,7 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
      *
      * @return HashMap of vending machine list with vending machine ID as key and
      *         location as value
-     * @throws ConnectException
+     * @throws ConnectException Throws {@link ConnectException} if connection to server is lost
      */
     @Override
     public HashMap<Integer, String> getVendMachList() throws ConnectException {
@@ -60,14 +63,10 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
                 .uri(endpointBaseUri.resolve("vendmachtrack"))
                 .build();
 
-        try {
-            HttpResponse<String> response = getResponse(request);
-            checkError(response);
+        HttpResponse<String> response = getResponse(request);
+        checkError(response);
 
-            return gson.fromJson(response.body(), TYPE_HASHMAP_INTEGER_STRING);
-        } catch (ConnectException ce) {
-            throw ce;
-        }
+        return gson.fromJson(response.body(), TYPE_HASHMAP_INTEGER_STRING);
     }
 
     /**
@@ -75,6 +74,7 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
      *
      * @param id The ID of the vending machine
      * @return Location of vending machine
+     * @throws ConnectException Throws {@link ConnectException} if connection to server is lost
      */
     @Override
     public String getVendMachLocation(final int id) throws ConnectException {
@@ -93,7 +93,7 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
      *
      * @param id The ID of the vending machine
      * @return HashMap of inventory with item as key and as value
-     * @throws ConnectException
+     * @throws ConnectException Throws {@link ConnectException} if connection to server is lost
      */
     @Override
     public HashMap<String, Integer> getInventory(final int id) throws ConnectException {
@@ -114,7 +114,7 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
      * @param item     The item name to be added
      * @param quantity The quantity of the item to be added
      * @return HashMap of inventory with item as key and quantity as value
-     * @throws ConnectException
+     * @throws ConnectException Throws {@link ConnectException} if connection to server is lost
      */
     @Override
     public HashMap<String, Integer> addItem(final int id, final String item, final int quantity)
@@ -141,7 +141,7 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
      * @param item     The item to be removed
      * @param quantity The quantity to be removed from the item
      * @return HashMap of inventory with item as key and quantity as value
-     * @throws ConnectException
+     * @throws ConnectException Throws {@link ConnectException} if connection to server is lost
      */
     @Override
     public HashMap<String, Integer> removeItem(final int id, final String item, final int quantity)
@@ -168,7 +168,7 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
      * @param location The location of the new vending machine
      * @return HashMap of vending machine list with vending machine ID as key and
      *         location as value
-     * @throws ConnectException
+     * @throws ConnectException Throws {@link ConnectException} if connection to server is lost
      */
     @Override
     public HashMap<Integer, String> addVendMach(final int id, final String location) throws ConnectException {
@@ -193,7 +193,7 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
      * @param id The ID of the vending machine
      * @return HashMap of vending machine list with vending machine ID as key and
      *         location as value
-     * @throws ConnectException
+     * @throws ConnectException Throws {@link ConnectException} if connection to server is lost
      */
     @Override
     public HashMap<Integer, String> removeVendMach(final int id) throws ConnectException {
@@ -216,7 +216,7 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
      * @param location The new location of the vending machine
      * @return HashMap of vending machine list with vending machine ID as key and
      *         location as value
-     * @throws ConnectException
+     * @throws ConnectException Throws {@link ConnectException} if connection to server is lost
      */
     @Override
     public HashMap<Integer, String> changeLocation(final int id, final String location) throws ConnectException {
@@ -239,7 +239,7 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
      * If not, it will throw a RunTimeExceptionError with the message being the
      * error message from the HTTP response.
      *
-     * @param response HttpReponse to be checked
+     * @param response HttpResponse to be checked
      */
     private void checkError(final HttpResponse<String> response) {
         if (response.statusCode() != HttpURLConnection.HTTP_OK) {
@@ -254,14 +254,14 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
      * Internal method for sending the request and returning the response.
      *
      * @param request HttpRequest to be sent
-     * @return HttpReponse from the request sent
-     * @throws ConnectException
+     * @return HttpResponse from the request sent
+     * @throws ConnectException Throws {@link ConnectException} if connection to server is lost
      */
     private HttpResponse<String> getResponse(final HttpRequest request) throws ConnectException {
         try {
             return httpClient.send(request, HttpResponse.BodyHandlers.ofString());
         } catch (IOException | InterruptedException e) {
-            throw new ConnectException("Connection to server failed. Please try reconnecting.");
+            throw new ConnectException("Lost connection to server.");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -272,11 +272,9 @@ public class MachineTrackerAccessRemote implements MachineTrackerAccessible {
      * Parameters are provided as varargs, with key-value pairs in sequence.
      *
      * @param base   The base URL to which the parameters should be appended.
-     * @param params An array of strings representing key-value pairs. Must be
-     *               even-numbered.
+     * @param params An array of strings representing key-value pairs. Must be even-numbered.
      *               For instance, ["key1", "value1", "key2", "value2"].
-     * @return A string representing the constructed URL with the provided
-     *         parameters.
+     * @return A string representing the constructed URL with the provided parameters.
      */
     private String buildEndpointWithParams(final String base, final String... params) {
         StringBuilder endpoint = new StringBuilder(base);

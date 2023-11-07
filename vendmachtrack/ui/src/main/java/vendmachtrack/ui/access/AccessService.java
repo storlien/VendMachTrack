@@ -15,12 +15,10 @@ import vendmachtrack.jsonio.VendmachtrackPersistence;
  * through a remote server or a local file,
  * based on the provided URI and file name.
  */
-
 public class AccessService {
 
     private final MachineTrackerAccessible access;
     private static final int TIMEOUT_SECONDS = 5;
-
 
 
     /**
@@ -31,7 +29,6 @@ public class AccessService {
      * @param fileName    The name of the local file to be accessed in case the
      *                    server is not available.
      */
-
     public AccessService(final URI endpointUri, final String fileName) {
 
         MachineTrackerAccessible newAccess;

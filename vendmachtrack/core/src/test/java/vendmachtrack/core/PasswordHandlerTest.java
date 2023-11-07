@@ -5,37 +5,36 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-
 public class PasswordHandlerTest {
 
-
     /**
-     * Tests the hashPassword method of the PasswordHandler class with regular input.
+     * Tests the hashPassword method of the PasswordHandler class with regular
+     * input.
      */
     @Test
     public void testHashPasswordWithRegularInput() {
-        //Arrange
+        // Arrange
         String password = "normalPassword";
 
-        //Act
+        // Act
         String hashedPassword = PasswordHandler.hashPassword(password);
 
-        //Assert
+        // Assert
         assertNotNull(hashedPassword);
         assertFalse(hashedPassword.isEmpty());
     }
 
     /**
-     * Tests the verifyPassword method of the PasswordHandler class with an incorrect password.
+     * Tests the verifyPassword method of the PasswordHandler class with an
+     * incorrect password.
      */
     @Test
     public void testVerifyPasswordWithIncorrectPassword() {
-        //Arrange
+        // Arrange
         String password = "wrongPassword";
 
-        //Act & Assert
+        // Act & Assert
         assertFalse(PasswordHandler.verifyPassword(password));
     }
-
 
 }
