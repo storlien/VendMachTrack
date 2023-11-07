@@ -1,4 +1,4 @@
-package vendmachtrack.ui;
+package vendmachtrack.ui.controller;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
@@ -19,6 +19,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import vendmachtrack.ui.App;
+import vendmachtrack.ui.controller.ServerController;
 
 /**
  * This class contains JUnit tests for the {@link ServerController} class. It
@@ -36,13 +38,13 @@ public class ServerControllerTest extends ApplicationTest {
     /**
      * Initializes and starts the JavaFX application, including the server
      * controller and WireMock server.
-     * 
+     *
      * <p>
      * This method is an override of the JavaFX {@code start} method and is
      * responsible for setting up the graphical user interface (GUI) and
      * starting the WireMock server for testing purposes.
      * </p>
-     * 
+     *
      * <p>
      * It performs the following steps:
      * </p>
@@ -56,7 +58,7 @@ public class ServerControllerTest extends ApplicationTest {
      * <li>Call the {@code setupStub} method to set up a WireMock stub for mocking a
      * healthy server response.</li>
      * </ol>
-     * 
+     *
      * @param stage The primary stage for the JavaFX application.
      * @throws Exception if any error occurs during the initialization.
      */
@@ -74,7 +76,7 @@ public class ServerControllerTest extends ApplicationTest {
 
     /**
      * Performs cleanup after each test by stopping the WireMock server.
-     * 
+     *
      * <p>
      * This method is annotated with {@code @AfterEach} and runs after each
      * individual test method.
@@ -88,7 +90,7 @@ public class ServerControllerTest extends ApplicationTest {
 
     /**
      * Sets up a WireMock stub to mock a healthy server response.
-     * 
+     *
      * <p>
      * This method configures a WireMock stub that simulates a healthy server
      * response with an HTTP status code of 200.
@@ -104,12 +106,12 @@ public class ServerControllerTest extends ApplicationTest {
     /**
      * Tests the behavior of the {@link ServerController} when connecting to a
      * healthy server.
-     * 
+     *
      * <p>
      * This test case focuses on verifying how the controller handles the scenario
      * where it successfully connects to a healthy server.
      * </p>
-     * 
+     *
      * <ol>
      * <li>Arrange: Redirect the standard output stream to capture console
      * output.</li>
@@ -142,12 +144,12 @@ public class ServerControllerTest extends ApplicationTest {
     /**
      * Tests the behavior of the {@link ServerController} when connecting to an
      * unhealthy server.
-     * 
+     *
      * <p>
      * This test case focuses on verifying how the controller handles the scenario
      * where it attempts to connect to an unhealthy server.
      * </p>
-     * 
+     *
      * <ol>
      * <li>Arrange: Set up a WireMock stub to simulate an unhealthy server response
      * (HTTP 500 status).
@@ -182,12 +184,12 @@ public class ServerControllerTest extends ApplicationTest {
     /**
      * Tests the behavior of the {@link ServerController} when submitting an invalid
      * server URL.
-     * 
+     *
      * <p>
      * This test case focuses on verifying that the controller handles the scenario
      * where an invalid server URL is submitted.
      * </p>
-     * 
+     *
      * <ol>
      * <li>Arrange: Set up an invalid URL and an expected error message. Simulate
      * user input by writing the invalid URL to the server URL field.</li>

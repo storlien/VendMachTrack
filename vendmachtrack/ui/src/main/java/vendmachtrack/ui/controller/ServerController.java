@@ -1,8 +1,9 @@
-package vendmachtrack.ui;
+package vendmachtrack.ui.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import vendmachtrack.ui.App;
 import vendmachtrack.ui.access.AccessService;
 
 import java.net.MalformedURLException;

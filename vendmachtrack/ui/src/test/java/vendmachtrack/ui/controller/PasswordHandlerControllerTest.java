@@ -1,4 +1,4 @@
-package vendmachtrack.ui;
+package vendmachtrack.ui.controller;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import vendmachtrack.core.util.PasswordHandler;
 import vendmachtrack.ui.access.AccessService;
+import vendmachtrack.ui.controller.PasswordHandlerController;
 
 /**
  * This class contains JUnit tests for the {@link PasswordHandlerController} class.
