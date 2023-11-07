@@ -14,7 +14,7 @@ import javafx.stage.Stage;
  *
  * @see App
  */
-public class AppTest extends ApplicationTest {
+public class AppUITest extends ApplicationTest {
 
     private App app;
 

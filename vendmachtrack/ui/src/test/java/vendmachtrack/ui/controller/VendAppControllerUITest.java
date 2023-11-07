@@ -15,7 +15,6 @@ import org.mockito.MockitoAnnotations;
 import org.testfx.api.FxAssert;
 import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.matcher.control.TextInputControlMatchers;
-import vendmachtrack.ui.controller.VendAppController;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -28,7 +27,7 @@ import static org.mockito.Mockito.*;
 import java.net.ConnectException;
 import java.util.HashMap;
 
-public class VendAppControllerTest extends ApplicationTest {
+public class VendAppControllerUITest extends ApplicationTest {
 
     private VendAppController controller;
     private HashMap<Integer, String> vendingMachines = new HashMap<>();
