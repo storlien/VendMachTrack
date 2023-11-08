@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>integrationtest</artifactId>
+    <artifactId>integrationtests</artifactId>
     <packaging>jar</packaging>
 
     <parent>
@@ -86,7 +87,8 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.4.11</version>            <!-- use the appropriate version that's compatible with your Spring Boot version -->
+            <version>1.4.11
+            </version>            <!-- use the appropriate version that's compatible with your Spring Boot version -->
         </dependency>
     </dependencies>
 
@@ -131,6 +133,16 @@
 
     <build>
         <plugins>
+            <!-- SpotBugs plugin -->
+            <plugin>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+                <version>4.7.3.6</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
@@ -153,7 +165,7 @@
                 <configuration>
                     <mainClass>vendmachtrack.springboot.SpringbootApplication</mainClass>
                     <jmxPort>7070</jmxPort>
-                    <fork>true</fork>
+                    <!--                    <fork>true</fork>-->
                 </configuration>
                 <executions>
                     <execution>
@@ -164,7 +176,7 @@
                         </goals>
                         <configuration>
                             <jmxPort>7070</jmxPort>
-                            <fork>true</fork>
+                            <!--                            <fork>true</fork>-->
                             <profiles>
                                 <profile>test</profile>
                             </profiles>
@@ -178,7 +190,7 @@
                         </goals>
                         <configuration>
                             <jmxPort>7070</jmxPort>
-                            <fork>true</fork>
+                            <!--                            <fork>true</fork>-->
                         </configuration>
                     </execution>
                 </executions>
