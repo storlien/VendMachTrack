@@ -24,6 +24,19 @@ import javafx.stage.Stage;
 import vendmachtrack.ui.access.AccessService;
 import vendmachtrack.ui.access.MachineTrackerAccessible;
 
+/**
+ * UI tests for the {@link RefillController} class.
+ * This class contains a suite of UI tests to verify the behavior of the RefillController when interacting with the application's user interface.
+ * Each test case focuses on specific UI interactions and expected outcomes.
+ * 
+ * <p>
+ * Test cases cover various scenarios including valid input, invalid input, edge cases, and error handling to ensure the UI behaves as expected.
+ * </p>
+ * 
+ * <p>
+ * The tests in this class extend {@link ApplicationTest}
+ * </p>
+ */
 public class RefillControllerUITest extends ApplicationTest {
 
     private RefillController refillController;
@@ -35,6 +48,24 @@ public class RefillControllerUITest extends ApplicationTest {
     @Mock
     private MachineTrackerAccessible mockAccess;
 
+
+    /**
+     * Sets up the testing environment and initializes the JavaFX application for testing the RefillController class.
+     * 
+     * <p>
+     * Test Steps:
+     * </p>
+     * <ol>
+     *   <li>Mock the service and access objects to simulate interactions with external components.</li>
+     *   <li>Mock a vending machine list and inventory data to provide test data for the application.</li>
+     *   <li>Load the FXML file and initialize the RefillController with the mocked service and selected machine ID.</li>
+     *   <li>Create and set up the JavaFX scene with the loaded parent and necessary styles.</li>
+     *   <li>Show the JavaFX stage for testing.</li>
+     * </ol>
+     *
+     * @param stage The JavaFX stage for the application.
+     * @throws Exception if any error occurs during the setup.
+     */
     @Override
     public void start(Stage stage) throws Exception {
 
@@ -65,6 +96,21 @@ public class RefillControllerUITest extends ApplicationTest {
         stage.show();
     }
 
+    /**
+     * Test case for the {@link RefillController} class's {@code testRefill} method with valid input.
+     * Verifies that the method correctly refills an item in the inventory when valid input is provided.
+     * 
+     * <p>
+     * Test Steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Set up the necessary test data, including a mock object for the access service with expected behavior, and configure input fields and UI elements.</li>
+     *   <li>Act: Simulate user interaction by entering valid refill item information and clicking the refill button.</li>
+     *   <li>Assert: Verify that the UI elements are updated as expected, including the text area displaying the updated inventory and the answer text field being empty.</li>
+     * </ol>
+     *
+     * @throws ConnectException if there is a connection issue during the test.
+     */
     @Test
     public void RefillController_testRefill_validInput() throws ConnectException {
 
@@ -87,6 +133,18 @@ public class RefillControllerUITest extends ApplicationTest {
         assertEquals("", textField.getText());
     }
 
+    /**
+     * Test case for the {@link RefillController} class's {@code testRefill} method when an invalid number is provided.
+     * Verifies that the method handles the scenario of an invalid number input and displays the appropriate error message.
+     * 
+     * <p>
+     * Test Steps:
+     * </p>
+     * <ol>
+     *   <li>Act: Simulate user interaction by entering an invalid refill number (empty string) and a valid refill item, and clicking the refill button.</li>
+     *   <li>Assert: Verify that the answer text field displays the expected error message indicating that the input is invalid.</li>
+     * </ol>
+     */
     @Test
     public void RefillController_testRefill_invalidNumber() {
 
@@ -100,6 +158,18 @@ public class RefillControllerUITest extends ApplicationTest {
         assertEquals("Invalid input: Please enter a valid number and item", textField.getText());
     }
 
+    /**
+     * Test case for the {@link RefillController} class's {@code testRefill} method when an invalid item is provided.
+     * Verifies that the method handles the scenario of an invalid item input and displays the appropriate error message.
+     * 
+     * <p>
+     * Test Steps:
+     * </p>
+     * <ol>
+     *   <li>Act: Simulate user interaction by entering a valid refill number and an invalid refill item (empty string), and clicking the refill button.</li>
+     *   <li>Assert: Verify that the answer text field displays the expected error message indicating that the input is invalid.</li>
+     * </ol>
+     */
     @Test
     public void RefillController_testRefill_invalidItem() {
 
@@ -113,6 +183,18 @@ public class RefillControllerUITest extends ApplicationTest {
         assertEquals("Invalid input: Please enter a valid number and item", textField.getText());
     }
 
+    /**
+     * Test case for the {@link RefillController} class's {@code testRefill} method when a negative integer is provided as the refill number.
+     * Verifies that the method handles the scenario of a negative integer input and displays the appropriate error message.
+     * 
+     * <p>
+     * Test Steps:
+     * </p>
+     * <ol>
+     *   <li>Act: Simulate user interaction by entering a negative integer as the refill number and a valid refill item, and clicking the refill button.</li>
+     *   <li>Assert: Verify that the answer text field displays the expected error message indicating that the input is invalid.</li>
+     * </ol>
+     */
     @Test
     public void RefillController_testRefill_negativeInteger() {
 
@@ -126,6 +208,21 @@ public class RefillControllerUITest extends ApplicationTest {
         assertEquals("Invalid input: Please enter a valid number and item", textField.getText());
     }
 
+    /**
+     * Test case for the {@link RefillController} class's {@code testRefill} method when refilling a new item.
+     * Verifies that the method correctly adds a new item to the inventory when valid input is provided.
+     * 
+     * <p>
+     * Test Steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Set up the necessary test data, including a mock object for the access service with expected behavior, and configure input fields and UI elements.</li>
+     *   <li>Act: Simulate user interaction by entering valid refill information for a new item and clicking the refill button.</li>
+     *   <li>Assert: Verify that the UI elements are updated as expected, including the text area displaying the updated inventory and the answer text field being empty.</li>
+     * </ol>
+     *
+     * @throws ConnectException if there is a connection issue during the test.
+     */
     @Test
     public void RefillController_testRefill_newItem() throws ConnectException {
 
