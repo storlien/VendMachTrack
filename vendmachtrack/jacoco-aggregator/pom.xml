@@ -8,7 +8,6 @@
         <groupId>gr2338</groupId>
         <artifactId>vendmachtrack</artifactId>
         <version>3.0</version>
-        <relativePath>..</relativePath>
     </parent>
 
     <properties>
@@ -37,6 +36,11 @@
         <dependency>
             <groupId>gr2338</groupId>
             <artifactId>springboot</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>gr2338</groupId>
+            <artifactId>integrationtests</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

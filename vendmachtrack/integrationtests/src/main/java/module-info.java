@@ -1,0 +1,3 @@
+module vendmachtrack.integrationtests {
+    
+}

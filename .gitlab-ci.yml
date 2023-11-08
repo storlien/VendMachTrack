@@ -1,4 +1,5 @@
 before_script:
+  - cp tracker.json /root/
   - cd vendmachtrack/
   - mvn clean install -DskipTests
 
@@ -28,6 +29,7 @@ checkstyle:
     when: always
     paths:
       - $CI_PROJECT_DIR/vendmachtrack/test-results/checkstyle/*.xml
+    expire_in: 1 week
   needs:
     - build
 
@@ -42,6 +44,7 @@ spotbugs:
     when: always
     paths:
       - $CI_PROJECT_DIR/vendmachtrack/test-results/spotbugs/**/spotbugs.xml
+    expire_in: 1 week
   needs:
     - build
 
@@ -56,6 +59,7 @@ test:
     when: always
     reports:
       junit: $CI_PROJECT_DIR/vendmachtrack/test-results/junit/**/*xml
+    expire_in: 1 week
   needs:
     - build
 
@@ -72,7 +76,7 @@ verify:
     when: always
     paths:
       - $CI_PROJECT_DIR/vendmachtrack/test-results/jacoco/
-    expire_in: 1 hour
+    expire_in: 1 week
   needs:
     - build
     - checkstyle
