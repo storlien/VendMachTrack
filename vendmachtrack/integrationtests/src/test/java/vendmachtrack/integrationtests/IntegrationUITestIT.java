@@ -137,14 +137,16 @@ public class IntegrationUITestIT extends ApplicationTest {
         // Assert that the vending machine was added to the choice box
         @SuppressWarnings("unchecked") // Suppressing unchecked cast warning because we are certain that the queried object is of type ChoiceBox<String>.
         ChoiceBox<String> choiceBox = (ChoiceBox<String>) lookup("#menuBar").queryAs(ChoiceBox.class);
-        assertTrue(choiceBox.getItems().contains("id: 1001 (Beijing)"));
+        String expectedItem = "id: 1001 (Beijing)";
+        assertTrue(choiceBox.getItems().contains(expectedItem));
 
-        // Choose the newly added VendingMachine
-        int lastIndex = choiceBox.getItems().size() - 1; // Get the index of the last item
-        interact(() -> choiceBox.getSelectionModel().select(lastIndex)); // Select the last item
+        // Click on the item in the ChoiceBox by its value
+        clickOn(expectedItem);
 
         // GO to RefillController scene
         clickOn("#refillButton");
+
+        centerCurrentStage(); // Center the stage on the screen
 
         // STEP 3: RefillController: Add a Cola item with 1 quantity to the vendingmachine
         clickOn("#refillItem").write("Cola");
@@ -158,9 +160,12 @@ public class IntegrationUITestIT extends ApplicationTest {
         // GO back to VendAppController scene
         clickOn("Back");
 
+        centerCurrentStage(); // Center the stage on the screen
+
         // STEP 4: Go to UserAppController scene
         clickOn("#userView");
 
+        centerCurrentStage(); // Center the stage on the screen
 
         // Assert that the vending machine was added
         assertNotNull(lookup(".button").match(hasText("Cola")).tryQuery().orElse(null));
@@ -176,6 +181,8 @@ public class IntegrationUITestIT extends ApplicationTest {
         // Go to the PasswordHandler Scene
         clickOn("#backButton");
 
+        centerCurrentStage(); // Center the stage on the screen
+
         // STEP 5: PasswordHandlerController: Write the Wrong password
         clickOn("#passwordField").write("WRONG");
         clickOn("#confirmButton");
@@ -187,6 +194,8 @@ public class IntegrationUITestIT extends ApplicationTest {
         // GO back to the Userview
         clickOn("#backToUserView");
 
+        centerCurrentStage(); // Center the stage on the screen
+        
         // Assert that the Item still is removed
         assertNull(lookup(".button").match(hasText("Cola")).tryQuery().orElse(null));
     }
