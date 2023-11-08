@@ -49,12 +49,7 @@ public class SpringBootIntegrationTest {
 
     @Autowired
     private TestRestTemplate restTemplate;
-
     
-
-    
-
-
     /**
      * Tests adding a new vending machine via a REST API endpoint.
      * 
