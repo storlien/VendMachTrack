@@ -10,6 +10,9 @@ import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.matcher.base.NodeMatchers;
 import org.testfx.matcher.control.TextInputControlMatchers;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.matcher.control.LabeledMatchers.hasText;
@@ -72,9 +75,12 @@ public class IntegrationUITestIT extends ApplicationTest {
      * <p>
      * <p>
      * Step 1: ServerController
+     * - Redirect the standard output stream to capture console output.
      * - Set the server URL and tracker file name.
      * - Navigate to the VendAppController scene.
-     * - Asser that the "#Add" button is visible.
+     * - Assert that the captured console output indicates the use of remote access due to the healthy server connection.
+     * - Restore the original standard output stream.
+     * - Assert that the "#Add" button is visible.
      *
      * <p>
      * <p>
@@ -117,12 +123,25 @@ public class IntegrationUITestIT extends ApplicationTest {
     @Order(1)
     public void integrationTestFlow() throws InterruptedException {
 
+        // Redirect the standard output stream to capture console output.
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        PrintStream originalOut = System.out;
+        System.setOut(new PrintStream(outContent));
+
         // STEP 1: ServerController: Write the server url and the tracker file name
         clickOn("#serverUrlField").write("http://localhost:8080");
         clickOn("#trackerFileNameField").write("tracker.json");
 
         // GO to VendAppController scene
         clickOn("Submit");
+
+        // Restore the original standard output stream.
+        System.setOut(originalOut);
+
+        // Assert that the captured console output indicates the use of remote access due to the healthy server connection.
+        assertTrue(outContent.toString().contains("Using remote access"),
+                "Expected remote access but got local access");
+    
 
         verifyThat("#addButton", NodeMatchers.isVisible());
 
@@ -195,7 +214,7 @@ public class IntegrationUITestIT extends ApplicationTest {
         clickOn("#backToUserView");
 
         centerCurrentStage(); // Center the stage on the screen
-        
+
         // Assert that the Item still is removed
         assertNull(lookup(".button").match(hasText("Cola")).tryQuery().orElse(null));
     }
