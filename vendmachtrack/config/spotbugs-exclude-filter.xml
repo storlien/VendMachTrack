@@ -4,12 +4,12 @@
     <!-- This is standard practice in Spring Boot and generally not considered a security risk. -->
     <!-- The constructor uses the @Autowired annotation for dependency injection. -->
     <Match>
-        <Class name="vendmachtrack.springboot.controller.MachineTrackerController"/>
+        <Class name="gr2338.vendmachtrack.springboot.controller.MachineTrackerController"/>
         <Method name="&lt;init&gt;"/>
         <Bug pattern="EI_EXPOSE_REP2"/>
     </Match>
     <Match>
-        <Class name="vendmachtrack.springboot.service.MachineTrackerService"/>
+        <Class name="gr2338.vendmachtrack.springboot.service.MachineTrackerService"/>
         <Method name="&lt;init&gt;"/>
         <Bug pattern="EI_EXPOSE_REP2"/>
     </Match>
@@ -19,12 +19,12 @@
     <!-- The RefillController class needs to store the access object in this way for it to be used as a shared resource -->
     <!-- This is standard practice for the service pattern -->
     <Match>
-        <Class name="vendmachtrack.ui.access.AccessService"/>
+        <Class name="gr2338.vendmachtrack.ui.access.AccessService"/>
         <Method name="getAccess"/>
         <Bug pattern="EI_EXPOSE_REP"/>
     </Match>
     <!--    <Match>-->
-    <!--        <Class name="vendmachtrack.ui.controller.RefillController"/>-->
+    <!--        <Class name="gr2338.vendmachtrack.controller.ui.RefillController"/>-->
     <!--        <Method name="setMachineTrackerAccess"/>-->
     <!--        <Bug pattern="EI_EXPOSE_REP2"/>-->
     <!--    </Match>-->

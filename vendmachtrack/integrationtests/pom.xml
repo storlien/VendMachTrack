@@ -163,7 +163,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>3.1.4</version>
                 <configuration>
-                    <mainClass>vendmachtrack.springboot.SpringbootApplication</mainClass>
+                    <mainClass>gr2338.vendmachtrack.springboot.SpringbootApplication</mainClass>
                     <jmxPort>7070</jmxPort>
                     <!--                    <fork>true</fork>-->
                 </configuration>
