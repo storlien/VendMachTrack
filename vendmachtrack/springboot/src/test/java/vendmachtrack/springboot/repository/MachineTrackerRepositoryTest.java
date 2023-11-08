@@ -17,6 +17,11 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+/**
+ * This class contains unit tests for the {@link MachineTrackerRepository} class. It focuses on testing various methods of the repository that interact with vending machines and the {@link MachineTracker} object.
+ *<p>
+ * The tests are implemented using the JUnit 5 framework and Mockito. The {@link MachineTrackerRepository} class is tested in isolation from the rest of the application.
+ */
 public class MachineTrackerRepositoryTest {
 
     private final VendmachtrackPersistence persistence = Mockito.mock(VendmachtrackPersistence.class);
@@ -44,8 +49,20 @@ public class MachineTrackerRepositoryTest {
     }
 
     /**
-     * Test case for MachineTrackerRepository's getVendmachtrack method.
-     * It Verifies that the method returns the expected MachineTracker object.
+     * Tests the {@link MachineTrackerRepository#getVendmachtrack()} method of the {@link MachineTrackerRepository} class.
+     * 
+     * <p>
+     * This test case verifies that the {@link MachineTrackerRepository#getVendmachtrack()} method returns the expected {@link MachineTracker} object.
+     * </p>
+     * 
+     * <p>
+     * Test Steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Set up the necessary test data, including a {@link MachineTracker} object with machines.</li>
+     *   <li>Act: Call the {@link MachineTrackerRepository#getVendmachtrack()} method to retrieve the actual {@link MachineTracker} object.</li>
+     *   <li>Assert: Verify that the actual {@link MachineTracker} object matches the expected one and that the {@link MachinePersistence} is called once with the expected method.</li>
+     * </ol>
      */
     @Test
     public void MachineTrackerRepository_getVendmachtrack_ReturnMachineTracker() {
@@ -63,8 +80,20 @@ public class MachineTrackerRepositoryTest {
     }
 
     /**
-     * Tests the getVendMach method of the MachineTrackerRepository class.
-     * It verifies that the method returns the expected VendingMachine object.
+     * Tests the {@link MachineTrackerRepository#getVendMach(int)} method of the {@link MachineTrackerRepository} class.
+     * 
+     * <p>
+     * This test case verifies that the {@link MachineTrackerRepository#getVendMach(int)} method returns the expected {@link VendingMachine} object when given a valid machine ID.
+     * </p>
+     * 
+     * <p>
+     * Test Steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Set up the necessary test data, including a {@link MachineTracker} object with machines and a valid machine ID.</li>
+     *   <li>Act: Call the {@link MachineTrackerRepository#getVendMach(int)} method to retrieve the actual {@link VendingMachine} object.</li>
+     *   <li>Assert: Verify that the actual {@link VendingMachine} object matches the expected one.</li>
+     * </ol>
      */
     @Test
     public void MachineTrackerRepository_getVendMach_ReturnVendingMachine() {
@@ -81,11 +110,21 @@ public class MachineTrackerRepositoryTest {
         assertEquals(vendingmachine, actualVendingMachine);
     }
 
-    /**
-     * Tests the getVendMach method of the MachineTrackerRepository class when the
-     * machine is not found.
-     * Given an id, the method should return null if the machine is not found in the
-     * database.
+   /**
+     * Tests the {@link MachineTrackerRepository#getVendMach(int)} method of the {@link MachineTrackerRepository} class when the machine is not found.
+     * 
+     * <p>
+     * Given an ID, this test case verifies that the {@link MachineTrackerRepository#getVendMach(int)} method returns {@code null} if the vending machine is not found in the database.
+     * </p>
+     * 
+     * <p>
+     * Test Steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Set up the necessary test data, including a {@link MachineTracker} object with an empty list of machines and an ID for a non-existent machine.</li>
+     *   <li>Act: Call the {@link MachineTrackerRepository#getVendMach(int)} method to retrieve the actual {@link VendingMachine} object.</li>
+     *   <li>Assert: Verify that the actual {@link VendingMachine} object is {@code null} as expected.</li>
+     * </ol>
      */
     @Test
     public void MachineTrackerRepository_getVendMach_retrunsnull() {
@@ -102,9 +141,20 @@ public class MachineTrackerRepositoryTest {
     }
 
     /**
-     * Tests the saveVendmachtrack method of the MachineTrackerRepository class.
-     * It verifies that the method saves and returns a MachineTracker object
-     * correctly.
+     * Tests the {@link MachineTrackerRepository#saveVendmachtrack(MachineTracker)} method of the {@link MachineTrackerRepository} class.
+     * 
+     * <p>
+     * This test case verifies that the {@link MachineTrackerRepository#saveVendmachtrack(MachineTracker)} method correctly saves and returns a {@link MachineTracker} object.
+     * </p>
+     * 
+     * <p>
+     * Test Steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Set up the necessary test data, including a {@link MachineTracker} object with a list of machines.</li>
+     *   <li>Act: Call the {@link MachineTrackerRepository#saveVendmachtrack(MachineTracker)} method to save the {@link MachineTracker} object.</li>
+     *   <li>Assert: Verify that the method was called once with the correct parameter and that the returned {@link MachineTracker} object is the same as the one passed in.</li>
+     * </ol>
      */
     @Test
     public void MachineTrackerRepository_SaveVendmachtrack_savesAndRetursMAchinetracker() {
@@ -116,18 +166,26 @@ public class MachineTrackerRepositoryTest {
         MachineTracker returnedMachineTracker = machineTrackerRepository.saveVendmachtrack(machineTracker);
 
         // Assert
-        verify(persistence, times(1)).saveVendmachtrack(machineTracker); // check that saveVendmachtrack was called once
-        // with the correct parameter
-        assertSame(machineTracker, returnedMachineTracker); // check that the returned object is the same as the one
-        // passed in
+        verify(persistence, times(1)).saveVendmachtrack(machineTracker);
+        assertSame(machineTracker, returnedMachineTracker); 
     }
 
     /**
-     * Tests the addVendMach method of the MachineTrackerRepository class.
-     * It verifies that the method adds a vending machine to the list of machines in
-     * the MachineTracker object.
-     * It also verifies that the added vending machine has the correct id and
-     * location.
+     * Tests the {@link MachineTrackerRepository#addVendMach(int, String)} method of the {@link MachineTrackerRepository} class.
+     * 
+     * <p>
+     * This test case verifies that the {@link MachineTrackerRepository#addVendMach(int, String)} method correctly adds a vending machine to the list of machines in the {@link MachineTracker} object.
+     * It also ensures that the added vending machine has the correct ID and location.
+     * </p>
+     * 
+     * <p>
+     * Test Steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Set up the initial {@link MachineTracker} object with an empty list of machines and configure mock behavior for persistence methods.</li>
+     *   <li>Act: Call the {@link MachineTrackerRepository#addVendMach(int, String)} method to add a vending machine.</li>
+     *   <li>Assert: Verify that the {@link MachineTracker#saveVendmachtrack(MachineTracker)} method was called with the correct parameter, and ensure that the added vending machine has the expected ID and location.</li>
+     * </ol>
      */
     @Test
     public void MachineTrackerRepository_addVendMach_addsVendingMachine() {
@@ -155,10 +213,22 @@ public class MachineTrackerRepositoryTest {
         assertEquals(location, addedVendingMachine.getLocation());
     }
 
+    
     /**
-     * Tests the addItem method of the MachineTrackerRepository class.
-     * It verifies that the method adds an item to an existing vending machine and
-     * updates the MachineTracker object accordingly.
+     * Tests the {@link MachineTrackerRepository#addItem(int, String, int)} method of the {@link MachineTrackerRepository} class.
+     * 
+     * <p>
+     * This test case verifies that the {@link MachineTrackerRepository#addItem(int, String, int)} method correctly adds an item to an existing vending machine and updates the {@link MachineTracker} object accordingly.
+     * </p>
+     * 
+     * <p>
+     * Test Steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Set up initial data, including the vending machine, item, and quantity, and configure mock behavior for persistence methods.</li>
+     *   <li>Act: Call the {@link MachineTrackerRepository#addItem(int, String, int)} method to add an item to the vending machine.</li>
+     *   <li>Assert: Verify that the method call returns a non-null result with the expected ID and quantity, and ensure that the updated {@link MachineTracker} object contains the modified vending machine.</li>
+     * </ol>
      */
     @Test
     public void MachineTrackerRepository_addItem_addsItemToExistingVendingmachine() {
@@ -186,8 +256,20 @@ public class MachineTrackerRepositoryTest {
     }
 
     /**
-     * Tests the addItem method of the MachineTrackerRepository class when the
-     * vending machine does not exist.
+     * Tests the {@link MachineTrackerRepository#addItem(int, String, int)} method of the {@link MachineTrackerRepository} class when the vending machine does not exist.
+     * 
+     * <p>
+     * This test case verifies that the {@link MachineTrackerRepository#addItem(int, String, int)} method returns {@code null} when attempting to add an item to a non-existent vending machine.
+     * </p>
+     * 
+     * <p>
+     * Test Steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Set up the test by configuring mock behavior to simulate an empty list of vending machines for the {@link MachineTracker} object.</li>
+     *   <li>Act: Call the {@link MachineTrackerRepository#addItem(int, String, int)} method to add an item to the vending machine.</li>
+     *   <li>Assert: Verify that the method returns {@code null} since the vending machine does not exist.</li>
+     * </ol>
      */
     @Test
     public void MachineTrackerRepository_addItem_returnNullVendingMachinenotexist() {
@@ -207,11 +289,21 @@ public class MachineTrackerRepositoryTest {
     }
 
     /**
-     * Tests the changeLocation method of MachineTrackerRepository class.
-     * It verifies that the method updates the location of a vending machine with
-     * the given id.
-     * It also verifies that the updated vending machine is saved in the
-     * MachineTracker object.
+     * Tests the {@link MachineTrackerRepository#changeLocation(int, String)} method of the {@link MachineTrackerRepository} class.
+     * 
+     * <p>
+     * This test case verifies that the {@link MachineTrackerRepository#changeLocation(int, String)} method correctly updates the location of a vending machine with the given ID
+     *  and ensures that the updated vending machine is saved in the {@link MachineTracker} object.
+     * </p>
+     * 
+     * <p>
+     * Test Steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Set up the test by configuring mock behavior to simulate an existing vending machine with the specified ID, as well as setting the new location and configuring save behavior for the {@link MachineTracker} object.</li>
+     *   <li>Act: Call the {@link MachineTrackerRepository#changeLocation(int, String)} method to change the location of the vending machine.</li>
+     *   <li>Assert: Verify that the method returns the updated vending machine with the correct ID and location. Also, ensure that the updated vending machine is saved in the {@link MachineTracker} object.</li>
+     * </ol>
      */
     @Test
     public void MachineTrackerRepository_changeLocation_changeLocationOnVendingMachine() {
@@ -235,13 +327,24 @@ public class MachineTrackerRepositoryTest {
         MachineTracker capturedMachineTracker = machineTrackerCaptor.getValue();
         // verify that the captured MachineTracker contains the updated VendingMachine
         assertEquals(vendingmachine, capturedMachineTracker.getMachines().get(0));
-
     }
 
     /**
-     * Test case for the changeLocation method of MachineTrackerRepository class.
-     * It tests the scenario where the vending machine with the given id does not
-     * exist in the system.
+     * Test case for the {@link MachineTrackerRepository#changeLocation(int, String)} method of the {@link MachineTrackerRepository} class.
+     * 
+     * <p>
+     * This test case covers the scenario where the vending machine with the given ID does not exist in the system. 
+     * It verifies that the method correctly returns null when attempting to change the location of a non-existent vending machine.
+     * </p>
+     * 
+     * <p>
+     * Test Steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Set up the test by configuring mock behavior to simulate an existing list of vending machines and specify a non-existent vending machine ID and a new location.</li>
+     *   <li>Act: Call the {@link MachineTrackerRepository#changeLocation(int, String)} method to attempt to change the location of the non-existent vending machine.</li>
+     *   <li>Assert: Verify that the method returns null, indicating that no changes were made since the vending machine does not exist in the system.</li>
+     * </ol>
      */
     @Test
     public void MachineTrackerRepository_changeLocation_returnNullVendingMachineNotExist() {
@@ -257,18 +360,23 @@ public class MachineTrackerRepositoryTest {
 
         // Assert
         assertNull(result);
-
     }
-
+    
     /**
-     * Tests the removeVendMach method of the MachineTrackerRepository class.
-     * It verifies that the method removes a vending machine from the list of
-     * machines in the MachineTracker object,
-     * saves the updated MachineTracker object to the persistence layer, and returns
-     * the updated MachineTracker object.
-     * It also verifies that the returned and saved MachineTracker objects are the
-     * same and that the list of machines
-     * in the updated MachineTracker object is empty.
+     * Tests the {@link MachineTrackerRepository#removeVendMach(int)} method of the {@link MachineTrackerRepository} class.
+     * 
+     * <p>
+     * This test verifies that the method removes a vending machine from the list of machines in the {@link MachineTracker} object..
+     * </p>
+     * 
+     * <p>
+     * Test Steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Set up the test by configuring mock behavior to simulate an existing list of vending machines, specifying a vending machine ID to remove, and configuring mock behavior for saving the updated {@link MachineTracker} object.</li>
+     *   <li>Act: Call the {@link MachineTrackerRepository#removeVendMach(int)} method to remove the vending machine.</li>
+     *   <li>Assert: Verify that the vending machine is reoved form the machinetracker. </li>
+     * </ol>
      */
     @Test
     public void MachineTrackerRepository_removeVendMach_removesVendingmachine() {
@@ -288,21 +396,29 @@ public class MachineTrackerRepositoryTest {
         assertTrue(result.getMachines().isEmpty());
         verify(persistence).saveVendmachtrack(machineTrackerCaptor.capture());
         MachineTracker capturedMachineTracker = machineTrackerCaptor.getValue();
-        assertEquals(machineTracker, capturedMachineTracker); // ensure the returned and saved MachineTrackers are the
-        // same
+        assertEquals(machineTracker, capturedMachineTracker);
     }
 
     /**
-     * Test case for the removeVendMach method of the MachineTrackerRepository
-     * class.
-     * Tests the scenario where the vendmach to be removed does not exist in the
-     * MachineTracker.
+     * Test case for the {@link MachineTrackerRepository#removeVendMach(int)} method of the {@link MachineTrackerRepository} class.
+     * 
      * <p>
-     * The test sets up the necessary mocks and data, calls the removeVendMach
-     * method with a non-existent VendindgMachineTracker id,
-     * and verifies that the returned VendingMachineTracker is the same as the one
-     * saved, and that the saved VendingMachineTracker
-     * has the same machines as the original one.
+     * Tests the scenario where the vending machine to be removed does not exist in the {@link MachineTracker}.
+     * </p>
+     * 
+     * <p>
+     * The test sets up the necessary mocks and data, calls the {@link MachineTrackerRepository#removeVendMach(int)} method with a non-existent vending machine ID,
+     * and verifies that the returned {@link MachineTracker} is the same as the one saved.
+     * </p>
+     * 
+     * <p>
+     * Test Steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Set up the test by configuring mock behavior to simulate an existing list of vending machines, specifying a vending machine ID that does not exist in the list, and configuring mock behavior for saving the updated {@link MachineTracker} object.</li>
+     *   <li>Act: Call the {@link MachineTrackerRepository#removeVendMach(int)} method to attempt to remove a non-existent vending machine.</li>
+     *   <li>Assert: Verify that the method returns the same {@link MachineTracker} object as the one saved.</li>
+     * </ol>
      */
     @Test
     public void MachineTrackerRepository_removeVendMach_removeVendmachNotExist() {
@@ -319,20 +435,24 @@ public class MachineTrackerRepositoryTest {
 
         // Assert
         assertEquals(machineTracker, result);
-        assertNotNull(result.getMachines());
         verify(persistence).saveVendmachtrack(machineTrackerCaptor.capture());
         MachineTracker capturedMachineTracker = machineTrackerCaptor.getValue();
-        assertEquals(machineTracker, capturedMachineTracker); // ensure the returned and saved MachineTrackers are the
-        // same
+        assertEquals(machineTracker, capturedMachineTracker);
     }
 
+    
     /**
-     * Tests the removeItem method of the MachineTrackerRepository class.
-     * It verifies that the method removes the specified item from the vending
-     * machine and updates the status accordingly.
-     * It also verifies that the updated vending machine is saved correctly in the
-     * persistence layer.
-     */
+    * Test case for the {@link MachineTrackerRepository#removeItem(int, String, int)} method of the {@link MachineTrackerRepository} class.
+    * 
+    * <p>
+    * Test Steps:
+    * </p>
+    * <ol>
+    *   <li>Arrange: Set up the test by configuring mock behavior to simulate an existing vending machine with a specified item and quantity, configuring mock behavior for saving the updated {@link MachineTracker} object, and providing an existing vending machine ID.</li>
+    *   <li>Act: Call the {@link MachineTrackerRepository#removeItem(int, String, int)} method to attempt to remove the specified quantity of the item from the vending machine.</li>
+    *   <li>Assert: Verify that the method returns a non-null {@link VendingMachine} object with the updated status, the status of the removed item is as expected, and the {@link MachineTracker} object is saved correctly in the persistence layer.</li>
+    * </ol>
+    */
     @Test
     public void MachineTrackerRepository_removeitem_removesItemFromVendigMachine() {
 
@@ -356,17 +476,24 @@ public class MachineTrackerRepositoryTest {
         // Assert
         assertNotNull(result);
         assertEquals(id, result.getId());
-        assertEquals(1, result.getStatus().get(item)); // 1 item should remain
+        assertEquals(1, result.getStatus().get(item)); 
         verify(persistence).saveVendmachtrack(machineTrackerCaptor.capture());
         MachineTracker capturedMachineTracker = machineTrackerCaptor.getValue();
-        assertEquals(machineTracker, capturedMachineTracker); // ensure the returned and saved MachineTrackers are the
-        // same
-
+        assertEquals(machineTracker, capturedMachineTracker);
+    
     }
 
     /**
-     * Tests the removeItem method of the MachineTrackerRepository class when the
-     * vending machine does not exist.
+     * Test case for the {@link MachineTrackerRepository#removeItem(int, String, int)} method of the {@link MachineTrackerRepository} class when the vending machine does not exist.
+     * 
+     * <p>
+     * Test Steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Set up the test by configuring mock behavior to simulate an empty list of vending machines, specifying a vending machine ID that does not exist, and configuring mock behavior for retrieving the {@link MachineTracker} object.</li>
+     *   <li>Act: Call the {@link MachineTrackerRepository#removeItem(int, String, int)} method to attempt to remove an item from a non-existent vending machine.</li>
+     *   <li>Assert: Verify that the method returns a null {@link VendingMachine} object, indicating that the vending machine does not exist.</li>
+     * </ol>
      */
     @Test
     public void MachineTrackerRepository_removeItem_removesItemVendingMachineNotExist() {

@@ -14,10 +14,21 @@ import vendmachtrack.core.model.MachineTracker;
 import vendmachtrack.core.model.VendingMachine;
 import vendmachtrack.springboot.exception.IllegalInputException;
 import vendmachtrack.springboot.exception.ResourceNotFoundException;
+import vendmachtrack.springboot.repository.MachineTrackerRepository;
 
 import java.util.Collections;
 import java.util.HashMap;
 
+/**
+ * Unit tests for the {@link MachineTrackerService} class.
+ * This class contains test cases to verify the behavior of the {@link MachineTrackerService} methods.
+ * Each test case focuses on specific functionality and expected outcomes of the service.
+ * 
+ * <p>
+ * Test cases cover various scenarios including valid inputs, invalid inputs, exceptions, and edge cases to ensure the service behaves as expected.
+ * </p>
+ *
+ */
 public class MachineTrackerServiceTest {
 
     @Mock
@@ -44,11 +55,25 @@ public class MachineTrackerServiceTest {
     }
 
     /**
-     * Test case to verify the getVendMachList method of the MachineTrackerService class.
-     * Verifies that the method returns a list of machines when the machine tracker is present.
+     * Tests the {@link MachineTrackerService#getVendMachList()} method of the {@link MachineTrackerService} class.
+     * 
+     * <p>
+     * This test case verifies that the {@link MachineTrackerService#getVendMachList()} method returns a list of machines when the machine tracker is present.
+     * </p>
+     * 
+     * <p>
+     * Test Steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Set up the necessary test data, including a {@link MachineTracker} object with machines and configure mock behavior for the repository.</li>
+     *   <li>Act: Call the {@link MachineTrackerService#getVendMachList()} method to retrieve the actual list of machines.</li>
+     *   <li>Assert: Verify that the actual list of machines is not null, contains the expected machine(s), and has the correct mapping of machine IDs to locations. 
+     *          Also, ensure that the {@link MachineTrackerRepository#getVendmachtrack()} method is called once.</li>
+     * </ol>
      */
     @Test
     public void getVendMachList_whenMachineTrackerIsPresent_returnsListOfMachines() {
+        
         // Arrange
         when(repository.getVendmachtrack()).thenReturn(machineTracker);
 
@@ -63,8 +88,16 @@ public class MachineTrackerServiceTest {
     }
 
     /**
-     * Test case for the getVendMachList method of the MachineTrackerService class when the machine tracker is not present.
-     * Expects a ResourceNotFoundException to be thrown.
+     * Test case for the {@link MachineTrackerService#getVendMachList()} method of the {@link MachineTrackerService} class when the machine tracker is not present.
+     * Expects a {@link ResourceNotFoundException} to be thrown.
+     * 
+     * <p>
+     * Test Steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Set up the necessary test data, including a null {@link MachineTracker} object and configure mock behavior for the repository.</li>
+     *   <li>Act & Assert: Verify that calling the {@link MachineTrackerService#getVendMachList()} method results in a {@link ResourceNotFoundException} being thrown.</li>
+     * </ol>
      */
     @Test
     public void getVendMachList_whenMachineTrackerIsNotPresent_thowsException() {
@@ -78,8 +111,17 @@ public class MachineTrackerServiceTest {
     }
 
     /**
-     * Test case for the getVendMachLocation method of the MachineTrackerService class.
+     * Test case for the {@link MachineTrackerService#getVendMachLocation(int)} method of the {@link MachineTrackerService} class.
      * Verifies that the method returns the correct location for a valid machine ID.
+     * 
+     * <p>
+     * Test Steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Set up the necessary test data, including a valid machine ID and configure mock behavior for the repository.</li>
+     *   <li>Act: Call the {@link MachineTrackerService#getVendMachLocation(int)} method to retrieve the actual location.</li>
+     *   <li>Assert: Verify that the actual location matches the expected location.</li>
+     * </ol>
      */
     @Test
     public void getVendMachLocation_validId_returnsLocation() {
@@ -92,13 +134,22 @@ public class MachineTrackerServiceTest {
         // Assert
         assertEquals("Oslo", location);
     }
-
+    
     /**
-     * Test case for the getVendMachLocation method of the MachineTrackerService class when an invalid id is provided.
-     * Expects a ResourceNotFoundException to be thrown.
+     * Test case for the {@link MachineTrackerService#getVendMachLocation(int)} method of the {@link MachineTrackerService} class.
+     * Verifies that the method throws a {@link ResourceNotFoundException} when an invalid ID is provided.
+     * 
+     * <p>
+     * Test Steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Set up the necessary test data, including an invalid machine ID and configure mock behavior for the repository.</li>
+     *   <li>Act & Assert: Verify that calling the {@link MachineTrackerService#getVendMachLocation(int)} method with an invalid ID throws a {@link ResourceNotFoundException}.</li>
+     * </ol>
      */
     @Test
     public void getVendMachLocation_invalidId_throwsResourceNotFoundException() {
+       
         // Arrange
         when(repository.getVendmachtrack()).thenReturn(machineTracker);
 
@@ -107,9 +158,17 @@ public class MachineTrackerServiceTest {
     }
 
     /**
-     * Test case for the getInventory method of the MachineTrackerService class.
-     * Verifies that the method returns the correct inventory for a valid machine
-     * ID.
+     * Test case for the {@link MachineTrackerService#getInventory(int)} method of the {@link MachineTrackerService} class.
+     * Verifies that the method returns the correct inventory for a valid machine ID.
+     * 
+     * <p>
+     * Test Steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Set up the necessary test data, including a valid machine ID, inventory data, and configure mock behavior for the repository.</li>
+     *   <li>Act: Call the {@link MachineTrackerService#getInventory(int)} method to retrieve the actual inventory.</li>
+     *   <li>Assert: Verify that the actual inventory matches the expected one.</li>
+     * </ol>
      */
     @Test
     public void getInventory_validId_returnsInventory() {
@@ -128,8 +187,16 @@ public class MachineTrackerServiceTest {
     }
 
     /**
-     * Test case for the getInventory method of the MachineTrackerService class when an invalid id is provided.
-     * Expects a ResourceNotFoundException to be thrown.
+     * Test case for the {@link MachineTrackerService#getInventory(int)} method of the {@link MachineTrackerService} class when an invalid ID is provided.
+     * Expects a {@link ResourceNotFoundException} to be thrown.
+     * 
+     * <p>
+     * Test Steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Set up the necessary test data, including an invalid machine ID, and configure mock behavior for the repository.</li>
+     *   <li>Act & Assert: Call the {@link MachineTrackerService#getInventory(int)} method with an invalid ID and assert that it throws a {@link ResourceNotFoundException}.</li>
+     * </ol>
      */
     @Test
     public void getInventory_invalidId_throwsResourceNotFoundException() {
@@ -141,9 +208,17 @@ public class MachineTrackerServiceTest {
     }
 
     /**
-     * Tests the addItem method of the MachineTrackerService class with valid input.
-     * Verifies that the method adds an item to the machine successfully when a
-     * valid id, item, and quantity are provided.
+     * Test case for the {@link MachineTrackerService#addItem(int, String, int)} method of the {@link MachineTrackerService} class with valid input.
+     * Verifies that the method adds an item to the machine successfully when a valid ID, item, and quantity are provided.
+     * 
+     * <p>
+     * Test Steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Set up the necessary test data, including a valid machine ID, item, quantity, and configure mock behavior for the repository.</li>
+     *   <li>Act: Call the {@link MachineTrackerService#addItem(int, String, int)} method with valid input.</li>
+     *   <li>Assert: Verify that the method returns the expected updated inventory.</li>
+     * </ol>
      */
     @Test
     public void addItem_validInput_addsItemSuccessfully() {
@@ -163,9 +238,17 @@ public class MachineTrackerServiceTest {
         assertEquals(inventory, updatedInventory);
     }
 
+    
     /**
-     * Tests that an IllegalInputException is thrown when an invalid item is added
-     * to the machine.
+     * Test case for the {@link MachineTrackerService#addItem(int, String, int)} method of the {@link MachineTrackerService} class when an invalid item is added to the machine.
+     * Verifies that an {@link IllegalInputException} is thrown when an invalid item is provided.
+     * 
+     * <p>
+     * Test Steps:
+     * </p>
+     * <ol>
+     *   <li>Act & Assert: Verify that an {@link IllegalInputException} is thrown when an invalid item is added to the machine.</li>
+     * </ol>
      */
     @Test
     public void addItem_invalidItem_throwsIllegalInputException() {
@@ -174,9 +257,15 @@ public class MachineTrackerServiceTest {
     }
 
     /**
-     * Tests the addItem method of the MachineTrackerService class when an invalid
-     * quantity is provided.
-     * Expects an IllegalInputException to be thrown.
+     * Test case for the {@link MachineTrackerService#addItem(int, String, int)} method of the {@link MachineTrackerService} class when an invalid quantity is provided.
+     * Verifies that an {@link IllegalInputException} is thrown when an invalid quantity is provided.
+     * 
+     * <p>
+     * Test Steps:
+     * </p>
+     * <ol>
+     *   <li>Act & Assert: Verify that an {@link IllegalInputException} is thrown when an invalid quantity is provided.</li>
+     * </ol>
      */
     @Test
     public void addItem_invalidQuantity_throwsIllegalInputException() {
@@ -185,8 +274,16 @@ public class MachineTrackerServiceTest {
     }
 
     /**
-     * Tests the addItem method of the MachineTrackerService class when an invalid is is provided.
-     * Expects a ResourceNotFoundException to be thrown.
+     * Test case for the {@link MachineTrackerService#addItem(int, String, int)} method of the {@link MachineTrackerService} class when an invalid ID is provided.
+     * Verifies that a {@link ResourceNotFoundException} is thrown when an invalid ID is provided.
+     * 
+     * <p>
+     * Test Steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Set up the necessary mock behavior to simulate a non-existent vending machine with the given ID.</li>
+     *   <li>Act & Assert: Verify that a {@link ResourceNotFoundException} is thrown when an invalid ID is provided.</li>
+     * </ol>
      */
     @Test
     public void addItem_invalidId_throwsResourceNotFoundException() {
@@ -198,9 +295,18 @@ public class MachineTrackerServiceTest {
     }
 
     /**
-     * Tests the addItem method of the MachineTrackerService class when a negative
-     * quantity is provided.
-     * Expects an IllegalInputException to be thrown.
+     * Test case for the {@link MachineTrackerService#addItem(int, String, int)} method of the {@link MachineTrackerService} class
+     * when an invalid quantity is provided.
+     * Verifies that an {@link IllegalInputException} is thrown when an invalid quantity is provided.
+     * 
+     * <p>
+     * Test Steps:
+     * </p>
+     * <ol>
+     *   <li>Act & Assert: Verify that an {@link IllegalInputException} is thrown when an invalid quantity is provided.</li>
+     * </ol>
+     *
+     * @throws Exception if any error occurs during the test.
      */
     @Test
     public void addItem_negativeQuantity_throwsIllegalInputException() {
@@ -210,8 +316,19 @@ public class MachineTrackerServiceTest {
     }
 
     /**
-     * Tests the addVendMach method of the MachineTrackerService class when an existing id is provided.
-     * Expects an IllegalInputException to be thrown.
+     * Test case for the {@link MachineTrackerService#addVendMach(int, String)} method of the {@link MachineTrackerService} class
+     * when an existing ID is provided.
+     * Verifies that the method throws an {@link IllegalInputException} when an existing ID is provided.
+     * 
+     * <p>
+     * Test Steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Set up the necessary test data, including an existing machine with the same ID.</li>
+     *   <li>Act & Assert: Verify that an {@link IllegalInputException} is thrown when an existing ID is provided.</li>
+     * </ol>
+     *
+     * @throws Exception if any error occurs during the test.
      */
     @Test
     public void addVendMach_existingId_throwsIllegalInputException() {
@@ -224,8 +341,19 @@ public class MachineTrackerServiceTest {
 
     /**
      * Test case for adding a new vending machine to the machine tracker service.
-     * It verifies that the method adds a new vending machine successfully when a
-     * valid id and location are provided.
+     * Verifies that the method adds a new vending machine successfully when a
+     * valid ID and location are provided.
+     * 
+     * <p>
+     * Test Steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Set up the necessary test data, including a new vending machine with a valid ID and location, and configure mock behavior for the repository.</li>
+     *   <li>Act: Call the {@link MachineTrackerService#addVendMach(int, String)} method with valid input.</li>
+     *   <li>Assert: Verify that the method returns the expected updated machine list with the new vending machine.</li>
+     * </ol>
+     *
+     * @throws Exception if any error occurs during the test.
      */
     @Test
     public void addVendMach_validInput_addsMachineSuccessfully() {
@@ -247,8 +375,19 @@ public class MachineTrackerServiceTest {
     }
 
     /**
-     * Tests the addVendMach method of the MachineTrackerService class when an invalid location is provided.
-     * Expects an IllegalInputException to be thrown.
+     * Test case for the {@link MachineTrackerService#addVendMach(int, String)} method of the {@link MachineTrackerService} class
+     * when an invalid location is provided.
+     * Verifies that the method throws an {@link IllegalInputException} when an invalid location is provided.
+     * 
+     * <p>
+     * Test Steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Set up the necessary test data, including no existing machine with the same ID.</li>
+     *   <li>Act & Assert: Verify that an {@link IllegalInputException} is thrown when an invalid location is provided.</li>
+     * </ol>
+     *
+     * @throws Exception if any error occurs during the test.
      */
     @Test
     public void addVendMach_invalidLocation_throwsIllegalInputException() {
@@ -260,9 +399,19 @@ public class MachineTrackerServiceTest {
     }
 
     /**
-     * Tests the addVendMach method of the MachineTrackerService class when an
-     * invalid id is provided.
-     * Expects an IllegalInputException to be thrown.
+     * Test case for the {@link MachineTrackerService#addVendMach(int, String)} method of the {@link MachineTrackerService} class
+     * when an invalid ID is provided.
+     * Verifies that the method throws an {@link IllegalInputException} when an invalid ID is provided.
+     * 
+     * <p>
+     * Test Steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Set up the necessary test data, including a new vending machine with an invalid ID and a location, and configure mock behavior for the repository.</li>
+     *   <li>Act & Assert: Verify that an {@link IllegalInputException} is thrown when an invalid ID is provided.</li>
+     * </ol>
+     *
+     * @throws Exception if any error occurs during the test.
      */
     @Test
     public void addVendMach_invalidId_throwsIllegalInputException() {
@@ -277,8 +426,20 @@ public class MachineTrackerServiceTest {
     }
 
     /**
-     * Tests the removeVendMach method of the MachineTrackerService class.
-     * It verifies that the method removes a vending machine successfully when a valid id is provided.
+     * Test case for the {@link MachineTrackerService#removeVendMach(int)} method of the {@link MachineTrackerService} class
+     * when a valid ID is provided.
+     * Verifies that the method removes a vending machine successfully when a valid ID is provided.
+     * 
+     * <p>
+     * Test Steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Set up the necessary test data, including an existing vending machine with a valid ID, and configure mock behavior for the repository.</li>
+     *   <li>Act: Call the {@link MachineTrackerService#removeVendMach(int)} method with a valid ID.</li>
+     *   <li>Assert: Verify that the method removes the vending machine from the machine list.</li>
+     * </ol>
+     *
+     * @throws Exception if any error occurs during the test.
      */
     @Test
     public void removeVendMach_validId_removesMachineSuccessfully() {
@@ -296,8 +457,19 @@ public class MachineTrackerServiceTest {
     }
 
     /**
-     * Tests the removeVendMach method of the MachineTrackerService class when an invalid ID is provided.
-     * Expects a ResourceNotFoundException to be thrown.
+     * Test case for the {@link MachineTrackerService#removeVendMach(int)} method of the {@link MachineTrackerService} class
+     * when an invalid ID is provided.
+     * Verifies that the method throws a {@link ResourceNotFoundException} when an invalid ID is provided.
+     * 
+     * <p>
+     * Test Steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Set up the necessary test data.</li>
+     *   <li>Act & Assert: Verify that a {@link ResourceNotFoundException} is thrown when an invalid ID is provided.</li>
+     * </ol>
+     *
+     * @throws Exception if any error occurs during the test.
      */
     @Test
     public void removeVendMach_invalidId_throwsResourceNotFoundException() {
@@ -309,9 +481,20 @@ public class MachineTrackerServiceTest {
     }
 
     /**
-     * Tests the changeLocation method of the MachineTrackerService class.
-     * It verifies that the method changes the location of a vending machine
-     * successfully.
+     * Test case for the {@link MachineTrackerService#changeLocation(int, String)} method of the {@link MachineTrackerService} class
+     * when valid input is provided.
+     * Verifies that the method changes the location of a vending machine successfully.
+     * 
+     * <p>
+     * Test Steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Set up the necessary test data, including an existing vending machine with a valid ID and a new location, and configure mock behavior for the repository.</li>
+     *   <li>Act: Call the {@link MachineTrackerService#changeLocation(int, String)} method with valid input.</li>
+     *   <li>Assert: Verify that the method returns the expected updated machine list with the new location.</li>
+     * </ol>
+     *
+     * @throws Exception if any error occurs during the test.
      */
     @Test
     public void changeLocation_validInput_changesLocationSuccessfully() {
@@ -333,9 +516,21 @@ public class MachineTrackerServiceTest {
         assertEquals("Trondheim", updatedMachineList.get(1));
     }
 
+    
     /**
-     * Tests the changeLocation method of the MachineTrackerService class when an invalid location is provided.
-     * Expects an IllegalInputException to be thrown.
+     * Test case for the {@link MachineTrackerService#changeLocation(int, String)} method of the {@link MachineTrackerService} class
+     * when an invalid location is provided.
+     * Verifies that the method throws an {@link IllegalInputException} when an invalid location is provided.
+     * 
+     * <p>
+     * Test Steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Set up the necessary test data, including an existing vending machine with a valid ID.</li>
+     *   <li>Act & Assert: Verify that an {@link IllegalInputException} is thrown when an invalid location is provided.</li>
+     * </ol>
+     *
+     * @throws Exception if any error occurs during the test.
      */
     @Test
     public void changeLocation_invalidLocation_throwsIllegalInputException() {
@@ -347,8 +542,19 @@ public class MachineTrackerServiceTest {
     }
 
     /**
-     * Tests the changeLocation method of the MachineTrackerService class when an invalid id is passed as input.
-     * Expects a ResourceNotFoundException to be thrown.
+     * Test case for the {@link MachineTrackerService#changeLocation(int, String)} method of the {@link MachineTrackerService} class
+     * when an invalid ID is passed as input.
+     * Verifies that the method throws a {@link ResourceNotFoundException} when an invalid ID is provided.
+     * 
+     * <p>
+     * Test Steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Set up the necessary test data, including no existing vending machine with the provided invalid ID.</li>
+     *   <li>Act & Assert: Verify that a {@link ResourceNotFoundException} is thrown when an invalid ID is provided.</li>
+     * </ol>
+     *
+     * @throws Exception if any error occurs during the test.
      */
     @Test
     public void changeLocation_invalidId_throwsResourceNotFoundException() {
@@ -360,9 +566,18 @@ public class MachineTrackerServiceTest {
     }
 
     /**
-     * Tests the removeItem method of the MachineTrackerService class when an
-     * invalid item is passed as input.
-     * Expects an IllegalInputException to be thrown.
+     * Test case for the {@link MachineTrackerService#removeItem(int, String, int)} method of the {@link MachineTrackerService} class
+     * when an invalid item is passed as input.
+     * Verifies that the method throws an {@link IllegalInputException} when an invalid item is provided.
+     * 
+     * <p>
+     * Test Steps:
+     * </p>
+     * <ol>
+     *   <li>Act & Assert: Verify that an {@link IllegalInputException} is thrown when an invalid item is provided.</li>
+     * </ol>
+     *
+     * @throws Exception if any error occurs during the test.
      */
     @Test
     public void removeItem_invalidItem_throwsIllegalInputException() {
@@ -371,9 +586,18 @@ public class MachineTrackerServiceTest {
     }
 
     /**
-     * Tests the removeItem method of the MachineTrackerService class when an
-     * invalid quantity is provided.
-     * Expects an IllegalInputException to be thrown.
+     * Test case for the {@link MachineTrackerService#removeItem(int, String, int)} method of the {@link MachineTrackerService} class
+     * when an invalid quantity is provided.
+     * Verifies that the method throws an {@link IllegalInputException} when an invalid quantity is provided.
+     * 
+     * <p>
+     * Test Steps:
+     * </p>
+     * <ol>
+     *   <li>Act & Assert: Verify that an {@link IllegalInputException} is thrown when an invalid quantity is provided.</li>
+     * </ol>
+     *
+     * @throws Exception if any error occurs during the test.
      */
     @Test
     public void removeItem_invalidQuantity_throwsIllegalInputException() {
@@ -382,8 +606,19 @@ public class MachineTrackerServiceTest {
     }
 
     /**
-     * Tests the removeItem method of the MachineTrackerService class when an invalid id is provided.
-     * Expects a ResourceNotFoundException to be thrown.
+     * Test case for the {@link MachineTrackerService#removeItem(int, String, int)} method of the {@link MachineTrackerService} class
+     * when an invalid ID is provided.
+     * Verifies that the method throws a {@link ResourceNotFoundException} when an invalid ID is provided.
+     * 
+     * <p>
+     * Test Steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Set up the necessary test data, including no existing vending machine with the provided invalid ID.</li>
+     *   <li>Act & Assert: Verify that a {@link ResourceNotFoundException} is thrown when an invalid ID is provided.</li>
+     * </ol>
+     *
+     * @throws Exception if any error occurs during the test.
      */
     @Test
     public void removeItem_invalidId_throwsResourceNotFoundException() {
@@ -395,9 +630,20 @@ public class MachineTrackerServiceTest {
     }
 
     /**
-     * Tests the removeItem method of the MachineTrackerService class when the item
-     * is not in the inventory.
-     * Expects an IllegalInputException to be thrown.
+     * Test case for the {@link MachineTrackerService#removeItem(int, String, int)} method of the {@link MachineTrackerService} class
+     * when the item is not in the inventory.
+     * Verifies that the method throws an {@link IllegalInputException} when the item is not present in the inventory.
+     * 
+     * <p>
+     * Test Steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Set up the necessary test data, including an empty inventory for the vending machine.</li>
+     *   <li>Act: Call the {@link MachineTrackerService#removeItem(int, String, int)} method.</li>
+     *   <li>Assert: Verify that an {@link IllegalInputException} is thrown when the item is not in the inventory.</li>
+     * </ol>
+     *
+     * @throws Exception if any error occurs during the test.
      */
     @Test
     public void removeItem_itemNotInInventory_throwsIllegalInputException() {
@@ -413,9 +659,20 @@ public class MachineTrackerServiceTest {
     }
 
     /**
-     * Tests the removeItem method of the MachineTrackerService class when the
-     * removal quantity is greater than the inventory.
-     * Expects an IllegalInputException to be thrown.
+     * Test case for the {@link MachineTrackerService#removeItem(int, String, int)} method of the {@link MachineTrackerService} class
+     * when the removal quantity is greater than the inventory.
+     * Verifies that the method throws an {@link IllegalInputException} when the removal quantity exceeds the available quantity in the inventory.
+     * 
+     * <p>
+     * Test Steps:
+     * </p>
+     * <ol>
+     *   <li>Arrange: Set up the necessary test data, including an inventory with a lower quantity than the removal quantity.</li>
+     *   <li>Act: Call the {@link MachineTrackerService#removeItem(int, String, int)} method.</li>
+     *   <li>Assert: Verify that an {@link IllegalInputException} is thrown when the removal quantity is greater than the inventory.</li>
+     * </ol>
+     *
+     * @throws Exception if any error occurs during the test.
      */
     @Test
     public void removeItem_removalQuantityGreaterThanInventory_throwsIllegalInputException() {
