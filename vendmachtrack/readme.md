@@ -15,24 +15,60 @@ Applikasjonen kan også kjøres på en dedikert PC i stedet for på en brusautom
 
 Se [brukerhistorier](/docs/Brukerhistorier.md) for konkrete scenarier.
 
+## Innhold
+- [Funksjonalitet](#funksjonalitet)
+- [Lagring av data](#lagring-av-data)
+- [Dokumentasjon av REST API](#dokumentasjon-av-rest-api)
+  - [Server](#server)
+  - [Klient](#klient)
+    - [Fjerntilgang](#fjerntilgang)
+    - [Lokaltilgang](#lokaltilgang)
+- [Testing av applikasjonen og serveren](#testing-av-applikasjonen-og-serveren)
+- [Bilder og diagrammer](#bilder-og-diagrammer)
+  - [Klassediagram](#klassediagram)
+  - [Pakkediagram](#pakkediagram)
+  - [Sekvensdiagram](#sekvensdiagram)
+  - [Diverse skjermbilder](#diverse-skjermbilder)
+
+
 ## Funksjonalitet
 
-Bedriften/eieren skal kunne:
 
-- Se en oversikt over sine brusautomater
-- Trykke seg inn på en enkelt brusautomat og se informasjon om denne:
-  - Hvor brusautomaten er plassert
-  - Hvor mye av hver vare som er igjen i brusautomaten
+Funksjonalitet for bedriften/eieren:
+
+- Se en oversikt over sine brusautomater med ID og lokasjon
+- Trykke seg inn på en enkelt brusautomat og se varebeholdningen
 - Oppdatere varebeholdning ved å fylle på med varer
-- Gå inn i kjøpsmodus
-  - Se en oversikt over varer i automaten
-  - Kunne kjøpe vare
-- Hente oversikt fra skytjeneste og fil
-- Lagre oversikt til skytjeneste og fil
-// TODO
+  - Kunne velge en spesifikk brusautomat man vil etterfylle
+  - Legge til en ny vare i brusautomaten og det antallet man ønsker
+  - Oppdatere antallet av en vare som allerede finnes i automaten
+  - Få en oversikt over oppdatert beholdning etter varer er lagt til
+- Legge til og fjerne brusautomater
+  - Legge inn ID og lokasjon til en automat man skal legge til
+  - Legge inn ID-en til automaten man vil fjerne
+  - Se oppdatert oversikt over alle brusautomater etterpå
+- Kunne gå til side/vindu ment for kunder
+  - Velge en spesifikk automat man vil åpne side/vindu ment for kunder
+- Kunne gå tilbake til side/vindu ment for bedriften/eiere
+- En kunde har ikke tilgang på funksjonaliteten som er tiltenkt bedriften/eieren
+  - Tilgang på slik funksjonalitet er passordbeskyttet
 
-Kunden skal kunne:
-// TODO
+
+Funksjonalitet for kunden:
+
+- Se varebeholdning på den bestemte automaten
+- Kunne kjøpe en vare
+- Varebeholdningen vil oppdateres når varer kjøpes
+  - En vare forsvinner fra varebeholdning hvis automaten selges tom for den varen
+
+
+Teknisk funksjonalitet:
+- Bedriften skal kunne bruke skytjenesteløsning
+  - Applikasjonen jobber mot en REST API-server
+  - Serveren skal kunne kjøre på en dedikert maskin
+- Bedriften skal kunne bruke applikasjonen uten skytjenesteløsning
+  - Applikasjonen aksesserer lokal fil direkte
+
 
 ## Lagring av data
 
@@ -141,7 +177,7 @@ Sekvensdiagrammet viser sekvenser for når en bruker åpner applikasjonen, skriv
 ![Diagram](/docs/images/diagrams/SequenceDiagram.png)
 
 
-## Diverse skjermbilder
+### Diverse skjermbilder
 
 Her er diverse skjermbilder fra applikasjonen:
 
