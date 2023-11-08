@@ -1,5 +1,5 @@
 before_script:
-  - cp tracker.json /home/$(whoami)/
+  - cp tracker.json /root/
   - cd vendmachtrack/
   - mvn clean install -DskipTests
 
