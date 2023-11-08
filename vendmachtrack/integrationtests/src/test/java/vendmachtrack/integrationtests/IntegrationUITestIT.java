@@ -24,16 +24,19 @@ import static org.testfx.matcher.control.LabeledMatchers.hasText;
  * <p>
  * <p>
  * Before the Tests are started the Spring Boot application is started.
- * This ensures that the UI module uses RemoteAccess to communicate with the Spring Boot Rest API.
+ * This ensures that the UI module uses RemoteAccess to communicate with the
+ * Spring Boot Rest API.
  * And that the application works properly while the server is running.
  *
  * <p>
  * <p>
- * The test class simulates a user scenario by interacting with the UI and verifying the expected outcomes.
+ * The test class simulates a user scenario by interacting with the UI and
+ * verifying the expected outcomes.
  * this is done using TestFX, a testing framework for JavaFX applications.
  * <p>
  * <p>
- * Note: Test method order is controlled using `@Order` annotations to ensure that the tests are run in
+ * Note: Test method order is controlled using `@Order` annotations to ensure
+ * that the tests are run in
  * a specific sequence, as some tests depend on the outcome of previous tests.
  */
 
@@ -66,58 +69,76 @@ public class IntegrationUITestIT extends ApplicationTest {
         currentStage.setY((screenHeight - windowHeight) / 2);
     }
 
-
     /**
-     * This JUnit test method represents an integration test for our vendmachtrack APplication. It simulates
-     * a user's interaction with different controllers and scenes in the application. The test is divided into
+     * This JUnit test method represents an integration test for our vendmachtrack
+     * APplication. It simulates
+     * a user's interaction with different controllers and scenes in the
+     * application. The test is divided into
      * several steps.
      *
      * <p>
      * <p>
-     * Step 1: ServerController
-     * - Redirect the standard output stream to capture console output.
-     * - Set the server URL and tracker file name.
-     * - Navigate to the VendAppController scene.
-     * - Assert that the captured console output indicates the use of remote access due to the healthy server connection.
-     * - Restore the original standard output stream.
-     * - Assert that the "#Add" button is visible.
+     * Step 1: ServerController:
+     * <ol>
+     * <li>Redirect the standard output stream to capture console output.</li>
+     * <li>Set the server URL and tracker file name.</li>
+     * <li>Navigate to the VendAppController scene.</li>
+     * <li>Assert that the captured console output indicates the use of remote
+     * access due to the healthy server connection.</li>
+     * <li>Restore the original standard output stream.</li>
+     * <li>Assert that the "#Add" button is visible.</li>
+     * </ol>
      *
      * <p>
      * <p>
      * <p>
      * Step 2: VendAppController
-     * - Add a vending machine with ID 1001 and location "Beijing" in the VendAppController.
-     * - Verify that the vending machine was added
-     * - Choose the newly added vending machine.
-     * - Press the "Refill" button to navigate to the RefillController scene.
+     * 
+     * <ol>
+     * <li>Add a vending machine with ID 1001 and location "Beijing".</li>
+     * <li>Verify that the vending machine was added.</li>
+     * <li>Choose the newly added vending machine.</li>
+     * <li>Press the "Refill" button to navigate to the RefillController scene.</li>
+     * </ol>
      *
      * <p>
      * <p>
      * Step 3: RefillController
-     * - Add a "Cola" item with a quantity of 1 to the vending machine.
-     * - Assert that the item was successfully added to the vending machine's inventory.
-     * - Return to the VendAppController scene.
+     * <ol>
+     * <li>Add a "Cola" item with a quantity of 1 to the vending machine.</li>
+     * <li>Assert that the item was successfully added to the vending machine's
+     * inventory.</li>
+     * <li>Return to the VendAppController scene.</li>
+     * </ol>
      *
      * <p>
      * <p>
      * Step 4: UserAppController
-     * - Navigate to the UserAppController scene. By pressing the "#UserView" button.
-     * - Verify that the the "Cola" item is visible in the user interface.
-     * - Buy a "Cola" item from the vending machine.
-     * - Assert that the item was bought and removed from the user interface.
-     * - Navigate to the PasswordHandlerController scene. By pressing the "#Back" button.
+     * <ol>
+     * <li>Navigate to the UserAppController scene by pressing the "#UserView"
+     * button.</li>
+     * <li>Verify that the "Cola" item is visible in the user interface.</li>
+     * <li>Buy a "Cola" item from the vending machine.</li>
+     * <li>Assert that the item was bought and removed from the user interface.</li>
+     * <li>Navigate to the PasswordHandlerController scene by pressing the "#Back"
+     * button.</li>
+     * </ol>
      *
      * <p>
-     * <p>
-     * Step 5: passwordHandlerController
-     * - Enter a wrong password and attempt to confirm it.
-     * - Verify that an error message indicates an incorrect password.
-     * - Return to the UserAppController scene.
-     * - Assert that the bougth item remains removed.
+     * 
+     * 
+     * Step 5: passwordHandlerController:
+     * <ol>
+     * <li>Enter a wrong password and attempt to confirm it.</li>
+     * <li>Verify that an error message indicates an incorrect password.</li>
+     * <li>Return to the UserAppController scene.</li>
+     * <li>Assert that the bought item remains removed.</li>
+     * </ol>
      *
      * <p>
      *
-     * @throws InterruptedException if any thread-related issues occur during test execution.
+     * @throws InterruptedException if any thread-related issues occur during test
+     *                              execution.
      */
     @Test
     @Order(1)
@@ -138,23 +159,25 @@ public class IntegrationUITestIT extends ApplicationTest {
         // Restore the original standard output stream.
         System.setOut(originalOut);
 
-        // Assert that the captured console output indicates the use of remote access due to the healthy server connection.
+        // Assert that the captured console output indicates the use of remote access
+        // due to the healthy server connection.
         assertTrue(outContent.toString().contains("Using remote access"),
                 "Expected remote access but got local access");
-    
 
         verifyThat("#addButton", NodeMatchers.isVisible());
 
         centerCurrentStage(); // Center the stage on the screen
 
-        // STEP 2: VendAppController: Add a Vending Machine with Id: 1001 and location: Beijing
+        // STEP 2: VendAppController: Add a Vending Machine with Id: 1001 and location:
+        // Beijing
         clickOn("#idTextFieldAdd").write("1001");
         clickOn("#locationTextField").write("Beijing");
         clickOn("#addButton");
         clickOn("#menuBar");
 
         // Assert that the vending machine was added to the choice box
-        @SuppressWarnings("unchecked") // Suppressing unchecked cast warning because we are certain that the queried object is of type ChoiceBox<String>.
+        @SuppressWarnings("unchecked") // Suppressing unchecked cast warning because we are certain that the queried
+                                       // object is of type ChoiceBox<String>.
         ChoiceBox<String> choiceBox = (ChoiceBox<String>) lookup("#menuBar").queryAs(ChoiceBox.class);
         String expectedItem = "id: 1001 (Beijing)";
         assertTrue(choiceBox.getItems().contains(expectedItem));
@@ -167,7 +190,8 @@ public class IntegrationUITestIT extends ApplicationTest {
 
         centerCurrentStage(); // Center the stage on the screen
 
-        // STEP 3: RefillController: Add a Cola item with 1 quantity to the vendingmachine
+        // STEP 3: RefillController: Add a Cola item with 1 quantity to the
+        // vendingmachine
         clickOn("#refillItem").write("Cola");
         clickOn("#refillNumber").write("1");
         clickOn("Refill");
@@ -209,7 +233,6 @@ public class IntegrationUITestIT extends ApplicationTest {
         // Assert that the password was wrong
         verifyThat("#label", hasText("Incorrect password. Please try again"));
 
-
         // GO back to the Userview
         clickOn("#backToUserView");
 
@@ -219,29 +242,30 @@ public class IntegrationUITestIT extends ApplicationTest {
         assertNull(lookup(".button").match(hasText("Cola")).tryQuery().orElse(null));
     }
 
-
-    // The reason for the split in the unit tests is because i dont want to Write the correct password in plain text for security reasons.
+    // The reason for the split in the unit tests is because i dont want to Write
+    // the correct password in plain text for security reasons.
     // Workaround for now, but will be fixed in the next release.
 
-
     /**
-     * This Junit test will tests that the that you can remove a vending machine from the application.
+     * This Junit test will tests that the that you can remove a vending machine
+     * from the application.
      *
      * <p>
      * <p>
      * The test is divided into several steps.
      *
      * <p>
-     *
-     * <li> Set the server URL and tracker file name.</li>
-     * <li> Navigate to the VendAppController scene.</li>
-     * <li> Center the stage on the screen.</li>
-     * <li> Remove the vending machine with ID 1001 from the application.</li>
-     * <li> Assert that the vending machine was removed from the choice box.</li>
+     * <ol>
+     * <li>Set the server URL and tracker file name.</li>
+     * <li>Navigate to the VendAppController scene.</li>
+     * <li>Center the stage on the screen.</li>
+     * <li>Remove the vending machine with ID 1001 from the application.</li>
+     * <li>Assert that the vending machine was removed from the choice box.</li>
+     * </ol>
      */
     @Test
     @Order(2)
-    public void test() {
+    public void testIntegrationFlow2() {
 
         // STEP 1: ServerController: Write the server url and the tracker file name
         clickOn("#serverUrlField").write("http://localhost:8080");
@@ -256,7 +280,8 @@ public class IntegrationUITestIT extends ApplicationTest {
         clickOn("#removeButton");
 
         // Assert that the vending machine was removed from the choice box
-        @SuppressWarnings("unchecked") // Suppressing unchecked cast warning because we are certain that the queried object is of type ChoiceBox<String>.
+        @SuppressWarnings("unchecked") // Suppressing unchecked cast warning because we are certain that the queried
+                                       // object is of type ChoiceBox<String>.
         ChoiceBox<String> choiceBox = (ChoiceBox<String>) lookup("#menuBar").queryAs(ChoiceBox.class);
         assertFalse(choiceBox.getItems().contains("id: 1001 (Beijing)"));
     }
