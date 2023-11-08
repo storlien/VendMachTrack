@@ -1,0 +1,33 @@
+@startuml SequenceDiagram
+
+actor User
+participant ServerController
+participant MachineTrackerAccessRemote
+
+box "REST API" #LightBlue
+    participant MachineTrackerController
+    participant MachineTrackerService
+    participant "Repository / Persistence" as Repo
+end box
+
+User -> ServerController: Opens the app
+
+ServerController -> MachineTrackerAccessRemote: handleSubmission()
+
+MachineTrackerAccessRemote -> MachineTrackerController: Send http request to REST API
+
+MachineTrackerController --> MachineTrackerService: getVendMachList()
+
+MachineTrackerService -> Repo: getVendmachtrack()
+
+Repo --> MachineTrackerService: returns a MachineTracker object
+
+MachineTrackerService --> MachineTrackerController: HashMap<Integer, String> vendingMachineData
+
+MachineTrackerController -> MachineTrackerAccessRemote: returns a http respons with json data
+
+MachineTrackerAccessRemote -> ServerController: HashMap<Integer, String> vendingMachineData
+
+ServerController -> User: visualization of the vending machines
+
+@enduml

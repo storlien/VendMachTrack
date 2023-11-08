@@ -3,8 +3,8 @@ package vendmachtrack.jsonio.internal;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import vendmachtrack.core.MachineTracker;
-import vendmachtrack.core.VendingMachine;
+import vendmachtrack.core.model.MachineTracker;
+import vendmachtrack.core.model.VendingMachine;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -33,10 +33,10 @@ public class ToJsonTest {
     /**
      * This method is annotated with {@code @BeforeEach} and runs before each individual test method.
      * It is responsible for setting up the test environment and resources needed by the tests.
-     * 
+     * <p>
      * In this case, it initializes the 'dir' variable with the path to a file in the user's home directory
      * and creates a 'toJson' instance for testing.
-     * 
+     *
      * @throws Exception if any error occurs during the setup
      */
     @BeforeEach
@@ -49,9 +49,9 @@ public class ToJsonTest {
     /**
      * This method is annotated with {@code @AfterEach} and runs after each individual test method.
      * It is responsible for cleaning up the test environment and resources used by the tests.
-     * 
+     * <p>
      * In this case, it attempts to delete the test file located at the 'dir' path in the user's home directory.
-     * 
+     *
      * @throws Exception if any error occurs during the cleanup
      */
     @AfterEach
@@ -63,12 +63,12 @@ public class ToJsonTest {
     /**
      * Tests the {@link toJson#toOutputStream(MachineTracker)} method to ensure that it correctly
      * converts a valid {@link MachineTracker} object to a JSON representation and writes it to an output stream.
-     * 
+     * <p>
      * This test case focuses on the scenario where:
      * <ul>
      *   <li>A valid {@link MachineTracker} object is provided.</li>
      * </ul>
-     * 
+     *
      * <p>
      * To conduct this test, we perform the following steps:
      * </p>
@@ -80,7 +80,7 @@ public class ToJsonTest {
      */
     @Test
     public void ToJson_ToOutputStream_ValidMachineTracker() {
-    
+
         //Arrange
         HashMap<String, Integer> inventory = new HashMap<>();
         inventory.put("Øl", 10);
@@ -89,10 +89,10 @@ public class ToJsonTest {
         MachineTracker machineTracker = new MachineTracker();
         machineTracker.addVendingMachine(v1);
 
-       // Act
+        // Act
         OutputStream outputStream = toJson.toOutputStream(machineTracker);
 
-        // Assert 
+        // Assert
         assertNotNull(outputStream);
         String result = ((ByteArrayOutputStream) outputStream).toString(StandardCharsets.UTF_8);
         assertEquals("{\"machines\":[{\"status\":{\"Øl\":10,\"Cola\":3},\"id\":1,\"location\":\"Trondheim\"}]}", result);
@@ -101,12 +101,12 @@ public class ToJsonTest {
 
     /**
      * Tests the {@link toJson#toOutputStream(MachineTracker)} method when a null {@link MachineTracker} object is provided.
-     * 
+     * <p>
      * This test case focuses on the scenario where:
      * <ul>
      *   <li>A null {@link MachineTracker} object is provided as input.</li>
      * </ul>
-     * 
+     *
      * <p>
      * To conduct this test, we perform the following steps:
      * </p>
@@ -127,14 +127,14 @@ public class ToJsonTest {
     }
 
 
-     /**
+    /**
      * Tests the {@link toJson#toOutputStream(MachineTracker)} method when an empty {@link MachineTracker} object is provided.
-     * 
+     * <p>
      * This test case focuses on the scenario where:
      * <ul>
      *   <li>An empty {@link MachineTracker} object is provided as input.</li>
      * </ul>
-     * 
+     *
      * <p>
      * To conduct this test, we perform the following steps:
      * </p>
@@ -159,15 +159,15 @@ public class ToJsonTest {
         assertEquals("{\"machines\":[]}", result);
     }
 
-        /**
+    /**
      * Tests the {@link toJson#writeToFile(MachineTracker)} method to ensure that it correctly
      * writes a valid {@link MachineTracker} object to a file in JSON format.
-     * 
+     * <p>
      * This test case focuses on the scenario where:
      * <ul>
      *   <li>A valid {@link MachineTracker} object is provided.</li>
      * </ul>
-     * 
+     *
      * <p>
      * To conduct this test, we perform the following steps:
      * </p>
@@ -177,12 +177,12 @@ public class ToJsonTest {
      *   <li>Act: Call the {@link toJson#writeToFile(MachineTracker)} method to write the MachineTracker object to a file.</li>
      *   <li>Assert: Read the file content and compare it with the expected JSON representation.</li>
      * </ol>
-     * 
+     *
      * @throws IOException if any I/O error occurs during the test
      */
     @Test
-    public void ToJson_writeToFile_ValidMachineTracker() throws IOException{
-         
+    public void ToJson_writeToFile_ValidMachineTracker() throws IOException {
+
         // Arrange
         HashMap<String, Integer> inventory = new HashMap<>();
         inventory.put("Øl", 10);
@@ -202,12 +202,12 @@ public class ToJsonTest {
 
     /**
      * Tests the {@link toJson#writeToFile(MachineTracker)} method when a null {@link MachineTracker} object is provided.
-     * 
+     * <p>
      * This test case focuses on the scenario where:
      * <ul>
      *   <li>A null {@link MachineTracker} object is provided as input.</li>
      * </ul>
-     * 
+     *
      * <p>
      * To conduct this test, we perform the following steps:
      * </p>
@@ -216,12 +216,12 @@ public class ToJsonTest {
      *   <li>Act: Call the {@link toJson#writeToFile(MachineTracker)} method with a null input.</li>
      *   <li>Assert: Read the file content and compare it with the expected "null" value.</li>
      * </ol>
-     * 
+     *
      * @throws IOException if any I/O error occurs during the test
      */
     @Test
-    public void ToJson_writeToFile_NullMachineTracker() throws IOException{
-         
+    public void ToJson_writeToFile_NullMachineTracker() throws IOException {
+
         // Arrange
         String expectedJson = "null";
 
@@ -235,12 +235,12 @@ public class ToJsonTest {
 
     /**
      * Tests the {@link toJson#writeToFile(MachineTracker)} method when an empty {@link MachineTracker} object is provided.
-     * 
+     * <p>
      * This test case focuses on the scenario where:
      * <ul>
      *   <li>An empty {@link MachineTracker} object is provided as input.</li>
      * </ul>
-     * 
+     *
      * <p>
      * To conduct this test, we perform the following steps:
      * </p>
@@ -249,12 +249,12 @@ public class ToJsonTest {
      *   <li>Act: Call the {@link toJson#writeToFile(MachineTracker)} method to write the empty MachineTracker to a file.</li>
      *   <li>Assert: Read the file content and compare it with the expected JSON representation containing an empty list of machines.</li>
      * </ol>
-     * 
+     *
      * @throws IOException if any I/O error occurs during the test
      */
     @Test
-    public void ToJson_writeToFile_emptyMachineTracker() throws IOException{
-         
+    public void ToJson_writeToFile_emptyMachineTracker() throws IOException {
+
         // Arrange
         MachineTracker emptyMachineTracker = new MachineTracker();
         String expectedJson = "{\"machines\":[]}";
@@ -265,6 +265,6 @@ public class ToJsonTest {
         // Assert
         String fileContent = new String(Files.readAllBytes(dir), StandardCharsets.UTF_8);
         assertEquals(expectedJson, fileContent);
-    }   
+    }
 
 }

@@ -3,7 +3,7 @@ package vendmachtrack.jsonio.internal;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import vendmachtrack.core.MachineTracker;
+import vendmachtrack.core.model.MachineTracker;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * This class contains JUnit tests for the {@link FromJson} class, specifically focusing on deserializing
  * JSON data into {@link MachineTracker} objects.
- * 
+ *
  * @see FromJson
  * @see MachineTracker
  */
@@ -30,13 +30,13 @@ public class FromJsonTest {
     private Path dir;
 
 
-   /**
+    /**
      * This method is annotated with {@code @BeforeEach} and runs before each individual test method.
      * It is responsible for setting up the test environment and resources needed by the tests.
-     * 
+     * <p>
      * In this case, it initializes the 'dir' variable with the path to a file in the user's home directory,
      * writes a JSON string to that file, and creates an instance of {@link FromJson} for testing.
-     * 
+     *
      * @throws IOException if any error occurs during the setup
      */
     @BeforeEach
@@ -49,9 +49,9 @@ public class FromJsonTest {
     /**
      * This method is annotated with {@code @AfterEach} and runs after each individual test method.
      * It is responsible for cleaning up the test environment and resources used by the tests.
-     * 
+     * <p>
      * In this case, it attempts to delete the test file located at the 'dir' path in the user's home directory.
-     * 
+     *
      * @throws Exception if any error occurs during the cleanup
      */
     @AfterEach
@@ -63,13 +63,13 @@ public class FromJsonTest {
     /**
      * Tests the {@link FromJson#fromInputStream(InputStream)} method when provided with an input stream containing
      * valid JSON data.
-     * 
+     * <p>
      * This test case focuses on the scenario where:
      * <ul>
      *   <li>An input stream containing valid JSON data is provided to the {@link FromJson#fromInputStream(InputStream)}
      *       method.</li>
      * </ul>
-     * 
+     *
      * <p>
      * To conduct this test, we perform the following steps:
      * </p>
@@ -83,13 +83,13 @@ public class FromJsonTest {
      */
     @Test
     public void FromJson_fromInputStream_ValidJson() {
-        // Arrange 
+        // Arrange
         InputStream inputStream = new ByteArrayInputStream(jsonString.getBytes(StandardCharsets.UTF_8));
 
         // Act
         MachineTracker machineTracker = fromJson.fromInputStream(inputStream);
 
-        // Assert 
+        // Assert
         assertNotNull(machineTracker);
         assertEquals(3, machineTracker.getMachines().size());
         assertEquals(1, machineTracker.getMachines().get(0).getId());
@@ -99,13 +99,13 @@ public class FromJsonTest {
     /**
      * Tests the {@link FromJson#fromInputStream(InputStream)} method when provided with an input stream containing
      * invalid JSON data.
-     * 
+     * <p>
      * This test case focuses on the scenario where:
      * <ul>
      *   <li>An input stream containing invalid JSON data is provided to the {@link FromJson#fromInputStream(InputStream)}
      *       method.</li>
      * </ul>
-     * 
+     *
      * <p>
      * To conduct this test, we perform the following steps:
      * </p>
@@ -125,18 +125,18 @@ public class FromJsonTest {
         // Act
         MachineTracker machineTracker = fromJson.fromInputStream(inputStream);
 
-        // Assert 
+        // Assert
         assertNull(machineTracker);
     }
 
     /**
      * Tests the {@link FromJson#fromInputStream(InputStream)} method when provided with a null input stream.
-     * 
+     * <p>
      * This test case focuses on the scenario where:
      * <ul>
      *   <li>A null input stream is provided to the {@link FromJson#fromInputStream(InputStream)} method.</li>
      * </ul>
-     * 
+     *
      * <p>
      * To conduct this test, we perform the following steps:
      * </p>
@@ -147,22 +147,22 @@ public class FromJsonTest {
      */
     @Test
     public void FromJson_fromInputStream_NullInputStream() {
-       
+
         // Act
         MachineTracker machineTracker = fromJson.fromInputStream(null);
 
-        // Assert 
+        // Assert
         assertNull(machineTracker);
     }
 
     /**
      * Tests the {@link FromJson#fromInputStream(InputStream)} method when provided with an empty inputstream.
-     * 
+     * <p>
      * This test case focuses on the scenario where:
      * <ul>
      *   <li>An empty input stream is provided to the {@link FromJson#fromInputStream(InputStream)} method.</li>
      * </ul>
-     * 
+     *
      * <p>
      * To conduct this test, we perform the following steps:
      * </p>
@@ -175,25 +175,25 @@ public class FromJsonTest {
      */
     @Test
     public void FromJson_fromInputStream_EmptyInputStream() {
-        
+
         // Arrange
         InputStream inputStream = new ByteArrayInputStream("".getBytes(StandardCharsets.UTF_8));
 
         // Act
         MachineTracker machineTracker = fromJson.fromInputStream(inputStream);
 
-        // Assert 
+        // Assert
         assertNull(machineTracker);
     }
 
-       /**
+    /**
      * Tests the {@link FromJson#readFromFile()} method when reading from a valid file
-     *   
+     * <p>
      * This test case focuses on the scenario where:
      * <ul>
      *     <li>A valid file path is provided to the constructor of {@link FromJson}.</li>
      * </ul>
-     * 
+     *
      * <p>
      * To conduct this test, we perform the following steps:
      * </p>
@@ -219,14 +219,14 @@ public class FromJsonTest {
     }
 
 
-        /**
+    /**
      * Tests the {@link FromJson#readFromFile()} method when provided with a null file path.
-     * 
+     * <p>
      * This test case focuses on the scenario where:
      * <ul>
      *   <li>A null file path is provided to the constructor of {@link FromJson}.</li>
      * </ul>
-     * 
+     *
      * <p>
      * To conduct this test, we perform the following steps:
      * </p>
@@ -250,12 +250,12 @@ public class FromJsonTest {
 
     /**
      * Tests the {@link FromJson#readFromFile()} method when provided with an invalid file path.
-     * 
+     * <p>
      * This test case focuses on the scenario where:
      * <ul>
      *   <li>An invalid file path is provided to the constructor of {@link FromJson}.</li>
      * </ul>
-     * 
+     *
      * <p>
      * To conduct this test, we perform the following steps:
      * </p>
@@ -274,12 +274,11 @@ public class FromJsonTest {
         // Act
         MachineTracker result = fromJson.readFromFile();
 
-        // Assert 
+        // Assert
         assertNull(result);
     }
 
 }
 
-     
 
-    
+

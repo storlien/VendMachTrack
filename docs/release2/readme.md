@@ -31,4 +31,6 @@ Se [arbeidsflyt](/docs/release2/Arbeidsflyt_2.md) for å lese om hvordan arbeids
 ![Alt text](/docs/release1/skjermbildeApp.png)
 
 
-- [Diagram i PlantUML](../docs/diagrams/ClassDiagram.wsd)
+[Diagram i PlantUML](/docs/diagrams/ClassDiagram.wsd)
+[](/docs/images/ClassDiagram.png)
+![Alt text](/docs/images/diagrams/ClassDiagram.png)

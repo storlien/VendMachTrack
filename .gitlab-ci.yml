@@ -1,5 +1,7 @@
 before_script:
+  - cp tracker.json /root/
   - cd vendmachtrack/
+  - mvn clean install -DskipTests
 
 stages:
   - build
@@ -12,7 +14,6 @@ build:
   stage: build
   image: maven:3.9.4-amazoncorretto-20
   script:
-    - mvn clean install -DskipTests
     - mvn compile
   only:
     - merge_requests
@@ -21,7 +22,6 @@ checkstyle:
   stage: lint
   image: maven:3.9.4-amazoncorretto-20
   script:
-    - mvn clean install -DskipTests
     - mvn checkstyle:checkstyle -Dcheckstyle.failOnViolation=true
   only:
     - merge_requests
@@ -29,6 +29,7 @@ checkstyle:
     when: always
     paths:
       - $CI_PROJECT_DIR/vendmachtrack/test-results/checkstyle/*.xml
+    expire_in: 1 week
   needs:
     - build
 
@@ -36,7 +37,6 @@ spotbugs:
   stage: lint
   image: maven:3.9.4-amazoncorretto-20
   script:
-    - mvn clean install -DskipTests
     - mvn com.github.spotbugs:spotbugs-maven-plugin:check
   only:
     - merge_requests
@@ -44,21 +44,22 @@ spotbugs:
     when: always
     paths:
       - $CI_PROJECT_DIR/vendmachtrack/test-results/spotbugs/**/spotbugs.xml
+    expire_in: 1 week
   needs:
     - build
 
-test: 
+test:
   stage: test
   image: maven:3.9.4-amazoncorretto-20
   script:
-    - mvn clean install -DskipTests
-    - mvn test -pl '!ui'
+    - mvn test -Pskip-graphical-ui-tests
   only:
     - merge_requests
   artifacts:
     when: always
     reports:
       junit: $CI_PROJECT_DIR/vendmachtrack/test-results/junit/**/*xml
+    expire_in: 1 week
   needs:
     - build
 
@@ -66,8 +67,7 @@ verify:
   stage: coverage-report
   image: maven:3.9.4-amazoncorretto-20
   script:
-    - mvn clean install -DskipTests
-    - mvn verify -pl '!ui'
+    - mvn verify -Pskip-graphical-ui-tests
     - cat $CI_PROJECT_DIR/vendmachtrack/test-results/jacoco/index.html | grep -o 'Total[^%]*%'
   coverage: '/<td class="ctr2">(\d+%)/'
   only:
@@ -76,7 +76,7 @@ verify:
     when: always
     paths:
       - $CI_PROJECT_DIR/vendmachtrack/test-results/jacoco/
-    expire_in: 1 hour
+    expire_in: 1 week
   needs:
     - build
     - checkstyle
