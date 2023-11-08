@@ -1,5 +1,11 @@
 # Alle brukerhistorier
-- [Brukerhistorie US-1](#brukerhistorie-us-1)
+
+
+- [Brukerhistorie US-1](#brusautomat-oversikt-us-1)
+- [Brukerhistorie US-2](#påfylling-av-varer-us-2)
+- [Brukerhistorie US-3](#en-kundes-perspektiv-us-3)
+- [Brukerhistorie US-4](#legge-til-og-fjerne-brusautomater-us-4)
+- [Brukerhistorie US-5](#tilgangskontroll-us-5)
 
 
 ## Brusautomat-oversikt (US-1)
@@ -21,7 +27,7 @@ Viktige ting å kunne gjøre:
 
 ## Påfylling av varer (US-2)
 
-Som eier av flere brusautomater ønsker jeg å kunne etterfylle beholdningen i en maskin ved behov. I utgangspunktet har jeg en avtale med et vareleveransesslskap som jevnlig kommer og fyller opp varelageret i hver maskin. Men dersom maskinen går tom for enkelte varer fortere enn forventet eller leveransen blir forsinket vil jeg ha muligheten til å fylle på med varer manuelt.
+Som eier av flere brusautomater ønsker jeg å kunne etterfylle beholdningen i en automat ved behov. I utgangspunktet har jeg en avtale med et vareleveransesslskap som jevnlig kommer og fyller opp varelageret i hver automat. Men dersom automaten går tom for enkelte varer fortere enn forventet eller leveransen blir forsinket vil jeg ha muligheten til å fylle på med varer manuelt.
 
 Viktige ting å kunne se: 
 
@@ -34,7 +40,7 @@ Viktige ting å kunne gjøre:
 
 - Kunne velge en spesifikk brusautomat man vil etterfylle
 - Legge til en ny vare i brusautomaten og det antallet man ønsker
-- Oppdatere antallet av en artikkel som allerede finnes i maskinen
+- Oppdatere antallet av en artikkel som allerede finnes i automaten
 - Gå tilbake til oversikten over alle brusautomater med oppdatert lager
 
 
@@ -65,7 +71,7 @@ Viktige ting å kunne gjøre:
 
 ## Legge til og fjerne brusautomater (US-4)
 
-Som eier av et selskap som eier brusautomater ønsker jeg også å kunne kjøpe og plassere ut flere brusautomater og å fjerne allerede eksisterende brusautomater ved behov. Jeg ønsker derfor å kunne oppdatere oversikten over maskinene og hvor de er plassert når maskiner fjernes og legges til.
+Som eier av et selskap som eier brusautomater ønsker jeg også å kunne kjøpe og plassere ut flere brusautomater og å fjerne allerede eksisterende brusautomater ved behov. Jeg ønsker derfor å kunne oppdatere oversikten over automatene og hvor de er plassert når automater fjernes og legges til.
 
 
 Viktige ting å kunne se:
@@ -79,7 +85,7 @@ Viktige ting å kunne gjøre:
 
 - Legge inn id og lokasjon til en automat man skal legge til
 - Legge inn id-en til automaten man vil fjerne
-- Kunne oppdatere inventaret i en automat som nylig er lagt til
+- Kunne oppdatere varebeholdningen i en automat som nylig er lagt til
 - Kunne se hvordan automaten ser ut for en kunde
 
 
@@ -96,5 +102,5 @@ Viktige ting å kunne se:
 Viktige ting å kunne gjøre:
 
 - Sikre at man er sertifisert personell ved å skrive inn riktig passord.
-- få tilgang til automatbeholdningen og dermed mulighet for å legge til og fjerne maskiner, samt varer i maskinene hvis man er sertifisert personell.
-- Kunne navigere mellom hovedsiden for oversikt over maskinene og siden som viser brukergrensesnittet for en kunde. 
+- Få tilgang til automatoversikten og dermed mulighet for å legge til og fjerne automater, samt varer i automatene hvis man er sertifisert personell.
+- Kunne navigere mellom hovedsiden for oversikt over automatene og siden som viser brukergrensesnittet for en kunde. 

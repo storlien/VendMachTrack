@@ -7,14 +7,19 @@ Velkommen til prosjektet VendMachTrack!
 
 ## Innhold
 
-- [Lenker til andre dokumenter](#lenker-til-andre-dokumenter) 
-- [Dokumentajson fra ulike releases](#dokumentasjon-fra-ulike-releases)
+
+- [Lenker til andre dokumenter](#lenker-til-andre-dokumenter)
+- [Dokumentasjon fra ulike releases](#dokumentasjon-fra-ulike-releases)
 - [Hvordan kjøre applikasjonen i Eclipse Che](#hvordan-kjøre-applikasjonen-i-eclipse-che)
 - [Hvordan kjøre applikasjonen lokalt uten installasjon](#hvordan-kjøre-applikasjonen-lokalt-uten-installasjon)
 - [Hvordan kjøre applikasjonen lokalt med installasjon](#hvordan-kjøre-applikasjonen-lokalt-med-installasjon)
-- [Hvordan bruke applikasjonen](#hvordan-bruke-applikasjonen) 
+  - [Hvordan lage egen installasjonsfil](#hvordan-lage-egen-installasjonsfil)
+- [Hvordan bruke applikasjonen](#hvordan-bruke-applikasjonen)
 - [Hvordan kjøre tester](#hvordan-kjøre-tester)
 - [Hvordan se testresultater](#hvordan-se-testresultater)
+  - [JUnit](#junit)
+  - [Checkstyle og SpotBugs](#checkstyle-og-spotbugs)
+  - [JaCoCo](#jacoco)
 - [Prosjektstruktur](#prosjektstruktur)
 
 
@@ -359,3 +364,9 @@ Repoet er organisert i flere mapper. Selve kodeprosjektet ligger i mappen vendma
     - src/test/java/vendmachtrack/ui/ - Tester for ui-modulen
       - access/
       - controller/
+  - integrationtests/ - Kildekode til integrasjonstest
+    - pom.xml - Konfigurasjonsfil for Maven
+    - src/
+      - main/java/
+        - module-info.java
+      - test/java/vendmachtrack/integrationtests
