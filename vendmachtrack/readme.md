@@ -136,13 +136,13 @@ For aksessering av filen direkte blir et Local Access-objekt (MachineTrackerAcce
 
 ## Testing av applikasjonen og serveren
 
-For å sikre høy kodekvalitet er det viktig å ha gode tester. Dette bidrar til enklere feilsøking og garanterer (i stor grad) at koden fungerer som forventet. I vårt prosjekt har vi fokusert på to test typer; Unit Testing og Integrasjonstesting.
+For å sikre høy kodekvalitet er det viktig å ha gode tester. Dette bidrar til enklere feilsøking og garanterer (i stor grad) at koden fungerer som forventet. I vårt prosjekt har vi fokusert på to test-typer; Unit Testing og Integrasjonstesting.
 
 ### Unit Tester
 
-Unit tester er en effektiv test metode fordi det gjør det mulig å isolert teste funksjonaliteten til hver metode i hver enkelt klasse.  Unit tester tjener flere viktige formål for ethvert prosjekt:
+Unit tester er en effektiv test metode fordi det gjør det mulig å isolert teste funksjonaliteten til hver metode i hver enkelt klasse. Unit tester tjener flere viktige formål for ethvert prosjekt:
 
-- Feil isolering: En Feil i en test forteller nøyaktig hvor feilen i koden ligger, dette gjør feilsøking mye raskere
+- Feilisolering: En Feil i en test forteller nøyaktig hvor feilen i koden ligger, dette gjør feilsøking mye raskere
 - Forbedring av kodekvalitet: Hvis en metode/klasse er vanskelig å teste kan det tyde på at kodekvaliteten ikke er god nok, og dermed må forbedres
 - Refaktoreringsmuligheter: Med mange Unit tester kan man endre/refaktorere kode og forstsatt vite at testene fanger opp potensielle feil som endringene har forårsaket.
 
@@ -153,10 +153,10 @@ Verktøy som er Hyppig brukt i våre Unit Tester:
 
 #### Teknikk Unit tester
 
-Når vi tester enkeltkomponenter gjør vi det for å verifisere at komponenten behandler data på forventet måte. For visse metoder kan dette være utfordrene da dataen den får inn kan variere (feks kan en fil endre innhold). Derfor ønsker vi å gjøre komponenten vi tester uavhengig av eksterne faktorer som kan påvirke testmetoden. Dette har vi gjort ved hjelp av Mocking av objekter og metodekall. Dette er en god praksis når man utvikler tester for å gjøre metoder/testklasser så uavhengig av andre kompnenter som mulig. Det finnes flere fordeler ved mocking:
+Når vi tester enkeltkomponenter gjør vi det for å verifisere at komponenten behandler data på forventet måte. For visse metoder kan dette være utfordrene da dataen den får inn kan variere (feks kan en fil en testmetode leser fra endre innhold). Derfor ønsker vi å gjøre komponenten vi tester uavhengig av eksterne faktorer som kan påvirke testmetoden. Dette har vi gjort ved hjelp av Mocking av objekter og metodekall. Dette er en god praksis når man utvikler tester for å gjøre metoder/testklasser så uavhengig av andre kompnenter som mulig. Det finnes flere fordeler ved mocking:
 
 - Kontrolere Input: Vi kan bestemme inputdatena til komponenten for å teste at metoden vi tester håndterer dem korrekt
-- Simulere oppførsel: Ved å etterligne oppførselen til en ekstern komponent, kan vi foroutse hvordan var test metode/klasse vil reagere basert på ekstern oppførsel
+- Simulere oppførsel: Ved å etterligne oppførselen til en ekstern komponent, kan vi forutse hvordan vår test metode/klasse vil reagere basert på ekstern oppførsel
 - Unngår sideeffekter: Vi silpper å hensynta uønskede hendelser som kan skje ved å bruke ekte objekter (feks skrive til en reel database)
 
 ### IntegrasjonsTester
@@ -165,7 +165,7 @@ Integrasjonstester tar for seg hvordan ulike komponenter i prosjektet interagere
 
 - Flyt: Sikrer at Dataflyten mellom ulike komponenter utføres riktig
 - Tjeneste Integrasjon: Tester at komminikasjonen mellom eksterne tjenester/ API er er riktige
-- Simulering av brukerscenerioer: Integasjonstester kan simulere ekte brukscenarioer og gir en verifiserer at systemet funksjonalitet fungerer som forventet.
+- Simulering av brukerscenarioer: Integasjonstester kan simulere ekte brukscenarioer og verifiserer at systemet funksjonalitet fungerer som forventet.
 
 ### Teknikk IntegrasjonTest
 
@@ -199,26 +199,26 @@ For unit tester av de forskjellige  lagene bruker vi hovedsakelig JUnit og Mocki
 
 For Testing Unit testing av UI modulen har vi benyttet oss av flere verktøy (i tillegg til JUnit og Mockito)
 
-- WireMockServer: Brukes i Access mappen. til å lage en mock HTTP server (en stub). Dette er nyttig i Access laget til applikasjonen fordi den sjekker om serveren er "sunn"/kjører. dermed kan vi stubbe en HTTP server og se hvordan Access laget håndterer ulike servertilstander (feks 200 ok og 500 unhealty server)
+- WireMockServer: Brukes i Access mappen. til å lage en mock HTTP server (en stub). Dette er nyttig i Access laget til applikasjonen fordi Access laget sjekker om serveren er "sunn"/kjører. Dermed kan vi stubbe en HTTP server og se hvordan Access laget håndterer ulike servertilstander (feks 200 ok og 500 unhealty server)
 - TestFX: TestFX brukes for å simulere en brukerinteraksjon med brukergrensesnittet. ved hjelp av TestFX kan man automatisk trykke på knapper, skrive i felter osv.
 
-Merk:
+Merk 1:
 [MachineTrackerAccessRemote](/gr2338/vendmachtrack/ui/src/test/java/gr2338/vendmachtrack/ui/access/MachineTrackerAccessRemoteTest.java) kan bli sett på som både en Unit og en Integrasjonstest.
 
 - Fra et Unit perpektiv tester vi funksjonaliteten i til klassen i isolasjon, selv om vi bruker en stub for å etterligne de eksterne avhengighetene.
 - Fra et Integrasjonstest perpektiv tester vi samspillet mellom klassen og en HTTP/springboot server. Altså mellom flere moduler.
 
-Merk: Scenerioet der en bruker skriver riktig passord i passwordhandlerController er ikke testet av sikkerhetshensyn.  
+Merk 2: Scenarioet der en bruker skriver riktig passord i passwordhandlerController er ikke testet av sikkerhetshensyn. (vi ønsker ikke skrive passordet i plain tekst i testklassene)
 
 ### Testing av JsonIo modul
 
-For testing av JsonIO modulen har vi kun benyttet os av JUnit rammeverket. Vi tester å skrive til og lese fra en test fil som blir laget før hver test og slettet etterpå. her verifiserer vi at filhåndteringen foregår korrekt uten å skrive til/lese fra en fil som kanskje endrer seg fra gang til gang.
+For testing av JsonIO modulen har vi kun benyttet oss av JUnit rammeverket. Vi tester å skrive til og lese fra en test fil som blir laget før hver test og slettet etterpå. Her verifiserer vi at filhåndteringen foregår korrekt uten å skrive til/lese fra en fil som kanskje endrer seg fra gang til gang. Dermed tester vi funksjonaliteten samtidig som klassene er uavhengig av eksterne faktorer.
 
 ### Testing av Core modul
 
-Testing av Core modulen gjøres ved hjelp av JUnit. Her tester vi ulike scenerioer besert på klassene.
+Testing av Core modulen gjøres ved hjelp av JUnit. Her tester vi ulike scenerioer basert på klassene og metodene i dem.
 
-Merk: Passwordhandler sin metode er ikke testet hvor riktig passord blir skrevet av sikkerhetshensyn.
+Merk: Scenarioet der riktig passord blir skrevet i PasswordHandlerKlassen er ikke testet av sikkerhetshensyn. (vi ønsker ikke skrive passordet i plain tekst i testklassene)
 
 ### TestDekningsgrad
 
