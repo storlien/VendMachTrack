@@ -5,7 +5,7 @@ Applikasjonen Vending Machine Tracker er laget for å tilby en effektiv måte å
 En brusautomat har en skjerm med Vending Machine Tracker-applikasjonen med "User View"-vinduet som vises til vanlig. En "kunde" har muligheten til å kjøpe varer fra automaten gjennom dette vinduet. Applikasjonen har som forutsetning at bekreftelse på betaling håndteres av en ekstern tjeneste, for eksempel:
 
 - Kortterminal som håndterer salg
-- Mulighet for å "vippse" til automaten som alternativ mbetalingsmåte
+- Mulighet for å "vippse" til automaten som alternativ betalingsmåte
 
 Applikasjonen inneholder derfor ingen logikk for betalingsbekreftelse.
 
@@ -25,6 +25,17 @@ Se [brukerhistorier](/docs/Brukerhistorier.md) for konkrete scenarier.
     - [Fjerntilgang](#fjerntilgang)
     - [Lokaltilgang](#lokaltilgang)
 - [Testing av applikasjonen og serveren](#testing-av-applikasjonen-og-serveren)
+  - [Unit-tester](#unit-tester)
+  - [Teknikk for Unit-tester](#teknikk-for-unit-tester)
+  - [Integrasjonstester](#integrasjonstester)
+  - [Teknikk for integrasjonstest](#teknikk-for-integrasjontest)
+  - [Testing av server](#testing-av-server)
+  - [Integrasjonstest av server](#integrasjonstest-av-server)
+  - [Unit-tester av server](#unit-tester-av-server)
+  - [Testing av UI-modul](#testing-av-ui-modul)
+  - [Testing av JsonIo-modul](#testing-av-jsonio-modul)
+  - [Testing av Core-modul](#testing-av-core-modul)
+  - [Testdekningsgrad](#testdekningsgrad)
 - [Bilder og diagrammer](#bilder-og-diagrammer)
   - [Klassediagram](#klassediagram)
   - [Pakkediagram](#pakkediagram)
@@ -136,22 +147,22 @@ For aksessering av filen direkte blir et Local Access-objekt (MachineTrackerAcce
 
 ## Testing av applikasjonen og serveren
 
-For å sikre høy kodekvalitet er det viktig å ha gode tester. Dette bidrar til enklere feilsøking og garanterer (i stor grad) at koden fungerer som forventet. I vårt prosjekt har vi fokusert på to test-typer; Unit Testing og Integrasjonstesting.
+For å sikre høy kodekvalitet er det viktig å ha gode tester. Dette bidrar til enklere feilsøking og garanterer (i stor grad) at koden fungerer som forventet. I vårt prosjekt har vi fokusert på to test-typer; Unit-testing og Integrasjonstesting.
 
-### Unit Tester
+### Unit-tester
 
-Unit tester er en effektiv test metode fordi det gjør det mulig å isolert teste funksjonaliteten til hver metode i hver enkelt klasse. Unit tester tjener flere viktige formål for ethvert prosjekt:
+Unit-tester er en effektiv test metode fordi det gjør det mulig å isolert teste funksjonaliteten til hver metode i hver enkelt klasse. Unit-tester tjener flere viktige formål for ethvert prosjekt:
 
 - Feilisolering: En Feil i en test forteller nøyaktig hvor feilen i koden ligger, dette gjør feilsøking mye raskere
 - Forbedring av kodekvalitet: Hvis en metode/klasse er vanskelig å teste kan det tyde på at kodekvaliteten ikke er god nok, og dermed må forbedres
-- Refaktoreringsmuligheter: Med mange Unit tester kan man endre/refaktorere kode og forstsatt vite at testene fanger opp potensielle feil som endringene har forårsaket.
+- Refaktoreringsmuligheter: Med mange Unit-tester kan man endre/refaktorere kode og forstsatt vite at testene fanger opp potensielle feil som endringene har forårsaket.
 
-Verktøy som er Hyppig brukt i våre Unit Tester:
+Verktøy som er Hyppig brukt i våre Unit-tester:
 
 - JUnit : Open-source rammeverk som brukes til å skrive og kjøre automatiserte tester i Java.
 - Mockito : mock-rammeverk som ofte brukes sammen med JUnit. Kan brukes til å lage mock-objekter for å simulere oppførselen til feks metodekall.  
 
-#### Teknikk Unit tester
+### Teknikk for Unit-tester
 
 Når vi tester enkeltkomponenter gjør vi det for å verifisere at komponenten behandler data på forventet måte. For visse metoder kan dette være utfordrene da dataen den får inn kan variere (feks kan en fil en testmetode leser fra endre innhold). Derfor ønsker vi å gjøre komponenten vi tester uavhengig av eksterne faktorer som kan påvirke testmetoden. Dette har vi gjort ved hjelp av Mocking av objekter og metodekall. Dette er en god praksis når man utvikler tester for å gjøre metoder/testklasser så uavhengig av andre kompnenter som mulig. Det finnes flere fordeler ved mocking:
 
@@ -159,7 +170,7 @@ Når vi tester enkeltkomponenter gjør vi det for å verifisere at komponenten b
 - Simulere oppførsel: Ved å etterligne oppførselen til en ekstern komponent, kan vi forutse hvordan vår test metode/klasse vil reagere basert på ekstern oppførsel
 - Unngår sideeffekter: Vi silpper å hensynta uønskede hendelser som kan skje ved å bruke ekte objekter (feks skrive til en reel database)
 
-### IntegrasjonsTester
+### Integrasjonstester
 
 Integrasjonstester tar for seg hvordan ulike komponenter i prosjektet interagerer med hverandre. Hovedsakelig sjekker man at ulike moduler er integrert riktig, men feks i en springboot modul vil man også verifisere at de ulike lagene internt i modulen er integrert riktig. Integrasjonstester tjener flere viktige formål:
 
@@ -167,21 +178,21 @@ Integrasjonstester tar for seg hvordan ulike komponenter i prosjektet interagere
 - Tjeneste Integrasjon: Tester at komminikasjonen mellom eksterne tjenester/ API er er riktige
 - Simulering av brukerscenarioer: Integasjonstester kan simulere ekte brukscenarioer og verifiserer at systemet funksjonalitet fungerer som forventet.
 
-### Teknikk IntegrasjonTest
+### Teknikk for integrasjontest
 
-Formålet med en intagrasjonsTest er å validere sammhandling mellom ulike komponenter. Dermed kan vi benytte oss av de reele komponentene under integrasjonstestene eller bruke såkalte Stubs/Mocking alt etter behov. Feks under [IntegrationUITestIT.java](/gr2338/vendmachtrack/integrationtests/src/test/java/vendmachtrack/integrationtests/IntegrationUITestIT.java) vil serveren starte i forkant av testene og videre verifisere at sammhandlingen mellom UI modulen og springboot modulen fungerer som forventet uten bruk av feks mocking/stubs. Springboot bibloteket har også egene verktøy for å lage integrasjonstester for en springboot modul.
+Formålet med en integrasjonstest er å validere sammhandling mellom ulike komponenter. Dermed kan vi benytte oss av de reele komponentene under integrasjonstestene eller bruke såkalte Stubs/Mocking alt etter behov. Feks under [IntegrationUITestIT.java](integrationtests/src/test/java/gr2338/vendmachtrack/integrationtests/IntegrationUITestIT.java) vil serveren starte i forkant av testene og videre verifisere at sammhandlingen mellom UI modulen og springboot modulen fungerer som forventet uten bruk av feks mocking/stubs. Springboot bibloteket har også egene verktøy for å lage integrasjonstester for en springboot modul.
 
-MERK:
+**MERK:**
 
-Man kan argumentere for at [IntegrationUITestIT.java](/gr2338/vendmachtrack/integrationtests/src/test/java/vendmachtrack/integrationtests/IntegrationUITestIT.java) er en E2E test ved at vi simulerer en brukers interaksjon gjennom hele appen. Men hovedformålet med testen er å se at springboot modulen og UI modulen er riktig integrert
+Man kan argumentere for at [IntegrationUITestIT.java](integrationtests/src/test/java/gr2338/vendmachtrack/integrationtests/IntegrationUITestIT.java) er en E2E test ved at vi simulerer en brukers interaksjon gjennom hele appen. Men hovedformålet med testen er å se at springboot modulen og UI modulen er riktig integrert
 
-### Testing av Server
+### Testing av server
 
-For testing av Serveren har vi både gjort en integrasjonstest og laget unit tester for hvert lag. Dette forsikrer oss om at funkjsonaliteten i lagene fungerer isolert og integrert.
+For testing av Serveren har vi både gjort en integrasjonstest og laget Unit-tester for hvert lag. Dette forsikrer oss om at funkjsonaliteten i lagene fungerer isolert og integrert.
 
-### Integrasjonstest server
+### Integrasjonstest av server
 
-[SpringBootIntegrationTest](/gr2338/vendmachtrack/springboot/src/test/java/vendmachtrack/springboot/SpringBootIntegrationTest.java) er utviklet for å for å verifisere interaksjonen mellom de ulike lagene i vår springboot - applikasjon. Formålet med denne testen er å forsikre oss om at lagene er integrert sammen på en riktig måte.
+[SpringBootIntegrationTest](springboot/src/test/java/gr2338/vendmachtrack/springboot/SpringBootIntegrationTest.java) er utviklet for å for å verifisere interaksjonen mellom de ulike lagene i vår springboot - applikasjon. Formålet med denne testen er å forsikre oss om at lagene er integrert sammen på en riktig måte.
 
 Vi har benyttet oss av ulike verktøy for dette:
 
@@ -189,38 +200,38 @@ Vi har benyttet oss av ulike verktøy for dette:
 - @ExtendWith(SpringExtension.class) : Denne anotasjonen integrerer spring TestContext rammeverket med JUnit5
 - TestRestTemplate : Dette er en hjelpeklasse som gjør det enkelt å sende HTTP foresøprsler og motta HTTP svar. Samt de- og serialisering av objekter til og fra JSON.
 
-### Unit Tester server
+### Unit-tester av server
 
-For unit tester av de forskjellige  lagene bruker vi hovedsakelig JUnit og Mockito for testing av ulike scenarioer. andre verktøy som er brukt:
+For Unit-tester av de forskjellige  lagene bruker vi hovedsakelig JUnit og Mockito for testing av ulike scenarioer. andre verktøy som er brukt:
 
 - MockMVC: Del av Spring Test rammeverket. Denne muliggjør å teste MVC-kontrolleren uten å måtte starte en HTTP server. Den simulerer HTTP-forespørsler og muligjør sjekking av respons, statuskoder, innhold etc.
 
-### Testing av UI modul
+### Testing av UI-modul
 
-For Testing Unit testing av UI modulen har vi benyttet oss av flere verktøy (i tillegg til JUnit og Mockito)
+For Testing Unit-testing av UI modulen har vi benyttet oss av flere verktøy (i tillegg til JUnit og Mockito)
 
 - WireMockServer: Brukes i Access mappen. til å lage en mock HTTP server (en stub). Dette er nyttig i Access laget til applikasjonen fordi Access laget sjekker om serveren er "sunn"/kjører. Dermed kan vi stubbe en HTTP server og se hvordan Access laget håndterer ulike servertilstander (feks 200 ok og 500 unhealty server)
 - TestFX: TestFX brukes for å simulere en brukerinteraksjon med brukergrensesnittet. ved hjelp av TestFX kan man automatisk trykke på knapper, skrive i felter osv.
 
-Merk 1:
-[MachineTrackerAccessRemote](/gr2338/vendmachtrack/ui/src/test/java/gr2338/vendmachtrack/ui/access/MachineTrackerAccessRemoteTest.java) kan bli sett på som både en Unit og en Integrasjonstest.
+**Merk 1:**
+[MachineTrackerAccessRemote](ui/src/test/java/gr2338/vendmachtrack/ui/access/MachineTrackerAccessRemoteTest.java) kan bli sett på som både en Unit og en Integrasjonstest.
 
 - Fra et Unit perpektiv tester vi funksjonaliteten i til klassen i isolasjon, selv om vi bruker en stub for å etterligne de eksterne avhengighetene.
 - Fra et Integrasjonstest perpektiv tester vi samspillet mellom klassen og en HTTP/springboot server. Altså mellom flere moduler.
 
-Merk 2: Scenarioet der en bruker skriver riktig passord i passwordhandlerController er ikke testet av sikkerhetshensyn. (vi ønsker ikke skrive passordet i plain tekst i testklassene)
+**Merk 2:** Scenarioet der en bruker skriver riktig passord i passwordhandlerController er ikke testet av sikkerhetshensyn. (vi ønsker ikke skrive passordet i plain tekst i testklassene)
 
-### Testing av JsonIo modul
+### Testing av JsonIo-modul
 
 For testing av JsonIO modulen har vi kun benyttet oss av JUnit rammeverket. Vi tester å skrive til og lese fra en test fil som blir laget før hver test og slettet etterpå. Her verifiserer vi at filhåndteringen foregår korrekt uten å skrive til/lese fra en fil som kanskje endrer seg fra gang til gang. Dermed tester vi funksjonaliteten samtidig som klassene er uavhengig av eksterne faktorer.
 
-### Testing av Core modul
+### Testing av Core-modul
 
 Testing av Core modulen gjøres ved hjelp av JUnit. Her tester vi ulike scenerioer basert på klassene og metodene i dem.
 
 Merk: Scenarioet der riktig passord blir skrevet i PasswordHandlerKlassen er ikke testet av sikkerhetshensyn. (vi ønsker ikke skrive passordet i plain tekst i testklassene)
 
-### TestDekningsgrad
+### Testdekningsgrad
 
 vi benytter oss av JaCoCo for å få en forståelse av hvilke metoder som er testet/ikke testet i vårt prosjekt. en høy testdekningsgrad indikerer ofte at testkvaliteten på koden er høy og at mye er dekket. Samtidig kan det gi en falsk trygghet mtp at eventuelle edge caser ikke har blitt testet ordentlig.
 
