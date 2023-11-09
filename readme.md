@@ -13,6 +13,7 @@ Velkommen til prosjektet VendMachTrack!
 - [Hvordan kjøre applikasjonen lokalt med installasjon](#hvordan-kjøre-applikasjonen-lokalt-med-installasjon)
   - [Hvordan lage egen installasjonsfil](#hvordan-lage-egen-installasjonsfil)
 - [Hvordan bruke applikasjonen](#hvordan-bruke-applikasjonen)
+  - [Stopp applikasjon og server](#stopp-applikasjon-og-server)
 - [Hvordan kjøre tester](#hvordan-kjøre-tester)
 - [Hvordan se testresultater](#hvordan-se-testresultater)
   - [JUnit](#junit)
@@ -97,10 +98,6 @@ Applikasjonen kommer da til å starte i workspacet sitt desktop (nettsiden fra e
 
 Se videre [hvordan man bruker applikasjonen](#hvordan-bruke-applikasjonen) for å komme i gang.
 
-**Stopp applikasjon og server:**
-
-- Stopp applikasjonen ved å trykke Exit i øvre hjørne.
-- Stopp serveren ved å trykke Ctrl+C eller Cmd+C i terminalen som startet Spring Boot.
 
 ## Hvordan kjøre applikasjonen lokalt uten installasjon
 
@@ -139,10 +136,6 @@ Applikasjonen skal da dukke opp på skjermen.
 
 Se videre [hvordan man bruker applikasjonen](#hvordan-bruke-applikasjonen) for å komme i gang.
 
-**Stopp applikasjon og server:**
-
-- Stopp applikasjonen ved å trykke Exit i øvre hjørne.
-- Stopp serveren ved å trykke Ctrl+C eller Cmd+C i terminalen som startet Spring Boot.
 
 ## Hvordan kjøre applikasjonen lokalt med installasjon
 
@@ -272,11 +265,16 @@ tracker.json
 Brus123
 ```
 
+### Stopp applikasjon og server
+
+- Stopp applikasjonen ved å trykke Exit i øvre hjørne.
+- Stopp serveren ved å trykke Ctrl+C eller Cmd+C i terminalen som startet Spring Boot.
+
 ## Hvordan kjøre tester
 
 - Tester skal kjøres ved hjelp av Maven.
 - Sørg for at du befinner deg i prosjektmappen (gr2338/vendmachtrack)
-- Sørg for at Serveren ikke er startet/kjører i bakgrunnen.
+- Sørg for at serveren ikke allerede er startet og kjører. Hvis den er det må den stoppes, se [stopp applikasjon og server.](#stopp-applikasjon-og-server)
 - Skriv følgende kommando i terminalen:
 
 ```bash
