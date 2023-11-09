@@ -26,7 +26,7 @@ import java.util.Objects;
  */
 public final class PasswordHandler {
 
-    private static final String PASSWORD_FILE = "/vendmachtrack/core/util/password.txt";
+    private static final String PASSWORD_FILE = "password.txt";
     private static final int ARGON2_ITERATIONS = 10;
     private static final int ARGON2_MEMORY = 65536;
     private static final int ARGON2_PARALLELISM = 1;
