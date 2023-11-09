@@ -276,6 +276,7 @@ Brus123
 
 - Tester skal kjøres ved hjelp av Maven.
 - Sørg for at du befinner deg i prosjektmappen (gr2338/vendmachtrack)
+- Sørg for at Serveren ikke er startet/kjører i bakgrunnen.
 - Skriv følgende kommando i terminalen:
 
 ```bash
