@@ -4,9 +4,7 @@ Velkommen til prosjektet VendMachTrack!
 
 [Klikk her](#hvordan-kjøre-applikasjonen-lokalt-med-installasjon) for å komme raskt i gang med den desidert enkleste måten på kjøre applikasjonen på.
 
-
 ## Innhold
-
 
 - [Lenker til andre dokumenter](#lenker-til-andre-dokumenter)
 - [Dokumentasjon fra ulike releases](#dokumentasjon-fra-ulike-releases)
@@ -15,6 +13,7 @@ Velkommen til prosjektet VendMachTrack!
 - [Hvordan kjøre applikasjonen lokalt med installasjon](#hvordan-kjøre-applikasjonen-lokalt-med-installasjon)
   - [Hvordan lage egen installasjonsfil](#hvordan-lage-egen-installasjonsfil)
 - [Hvordan bruke applikasjonen](#hvordan-bruke-applikasjonen)
+  - [Stopp applikasjon og server](#stopp-applikasjon-og-server)
 - [Hvordan kjøre tester](#hvordan-kjøre-tester)
 - [Hvordan se testresultater](#hvordan-se-testresultater)
   - [JUnit](#junit)
@@ -22,13 +21,11 @@ Velkommen til prosjektet VendMachTrack!
   - [JaCoCo](#jacoco)
 - [Prosjektstruktur](#prosjektstruktur)
 
-
 ## Lenker til andre dokumenter
 
 - [readme.md for kodeprosjektet](/vendmachtrack/readme.md)
 - [HTTP-forespørsler til REST API-et](/docs/rest_api.md)
 - [Brukerhistorier](/docs/Brukerhistorier.md)
-
 
 ## Dokumentasjon fra ulike releases
 
@@ -36,7 +33,6 @@ Velkommen til prosjektet VendMachTrack!
   - [readme.md](/docs/release1/readme.md)
   - [Arbeidsflyt](/docs/release1/Arbeidsflyt_1.md)
   - [Krav](/docs/release1/Krav_1.md)
-
 
 - release 2:
   - [readme.md](/docs/release2/readme.md)
@@ -48,40 +44,52 @@ Velkommen til prosjektet VendMachTrack!
   - [Arbeidsflyt](/docs/release3/Arbeidsflyt_3.md)
   - [Krav](/docs/release3/Krav_3.md)
 
-
 ## Hvordan kjøre applikasjonen i Eclipse Che
 
 1. Sørg først for at Eclipse Che er koblet opp mot Gitlab med Personal Access Token.
 2. [Åpne prosjektet i Eclipse Che.](https://che.stud.ntnu.no/#https://gitlab.stud.idi.ntnu.no/it1901/groups-2023/gr2338/gr2338?new)
 3. Sørg for at prosjektet er oppdatert ved å kjøre følgende kommando i terminalen:
+
 ```bash
 git pull
 ```
+
 4. Når IDE-en har startet opp, kopierer du "endpoint URL" for "6080-tcp-desktop-ui (6080/http)" under "Endpoints" nederst til venstre i IDE-en. Se skjermbildet:
 ![Alt text](/docs/images/endpoint_eclipse-che.png)
 5. Åpne nettsiden i en ny fane med den kopierte URL-en. Dersom det dukker opp et påloggingvindu for brukeren "dev", så skriver du inn passordet "dev".
 6. Gå tilbake til IDE-en. Åpne en terminal.
 7. Kjør kommando for å kopiere tracker.json-filen til home directory:
+
 ```bash
 cp tracker.json /home/dev/
 ```
+
 8. Kjør kommando for å navigere til vendmachtrack/:
+
 ```bash
 cd vendmachtrack/
 ```
+
 9. Kjør kommando:
+
 ```bash
 mvn clean install
 ```
+
 10. Kjør kommando:
+
 ```bash
 mvn spring-boot:run -f springboot/pom.xml
 ```
+
 11. Åpne en ny terminal og naviger til vendmachtrack/:
+
 ```bash
 cd vendmachtrack/
 ```
+
 12. Kjør kommando:
+
 ```bash
 mvn javafx:run -f ui/pom.xml
 ```
@@ -89,10 +97,6 @@ mvn javafx:run -f ui/pom.xml
 Applikasjonen kommer da til å starte i workspacet sitt desktop (nettsiden fra endpoint URL-en).
 
 Se videre [hvordan man bruker applikasjonen](#hvordan-bruke-applikasjonen) for å komme i gang.
-
-**Stopp applikasjon og server:**
-- Stopp applikasjonen ved å trykke Exit i øvre hjørne.
-- Stopp serveren ved å trykke Ctrl+C eller Cmd+C i terminalen som startet Spring Boot.
 
 
 ## Hvordan kjøre applikasjonen lokalt uten installasjon
@@ -108,7 +112,6 @@ Se videre [hvordan man bruker applikasjonen](#hvordan-bruke-applikasjonen) for �
     - På Windows er dette under C:\Users\ditt-brukernavn
     - På Mac er dette under /Users/ditt-brukernavn
 
-
 4. Åpne en ønsket terminal.
 5. Sørg for at filstien er: vendmachtrack/
 6. Kjør kommando:
@@ -116,10 +119,13 @@ Se videre [hvordan man bruker applikasjonen](#hvordan-bruke-applikasjonen) for �
 ```bash
  mvn clean install 
 ```
+
 7. Kjør kommando:
+
 ```bash
 mvn spring-boot:run -f springboot/pom.xml
 ```
+
 8. Kjør kommando:
 
 ```bash
@@ -130,16 +136,12 @@ Applikasjonen skal da dukke opp på skjermen.
 
 Se videre [hvordan man bruker applikasjonen](#hvordan-bruke-applikasjonen) for å komme i gang.
 
-**Stopp applikasjon og server:**
-- Stopp applikasjonen ved å trykke Exit i øvre hjørne.
-- Stopp serveren ved å trykke Ctrl+C eller Cmd+C i terminalen som startet Spring Boot.
-
 
 ## Hvordan kjøre applikasjonen lokalt med installasjon
 
 1. Last ned nyeste installasjonsfil for både applikasjonen (VendMachTrackApp) og serveren (VendMachTrackServer) for ditt operativsystem [her.](https://gitlab.stud.idi.ntnu.no/it1901/groups-2023/gr2338/gr2338/-/packages) Dersom det ikke finnes installasjonsfil for ditt operativsystem på GitLab, les [her](#hvordan-lage-egen-installasjonsfil)  om hvordan du lager egen.
 2. Last ned filen "tracker.json" fra repoet på GitLab. Filen ligger i rotnivå.
-3.  Kopier filen "tracker.json" til ditt "home directory".
+3. Kopier filen "tracker.json" til ditt "home directory".
     - På Linux er dette under /home/ditt-brukernavn
     - På Windows er dette under C:\Users\ditt-brukernavn
     - På Mac er dette under /Users/ditt-brukernavn
@@ -147,14 +149,18 @@ Se videre [hvordan man bruker applikasjonen](#hvordan-bruke-applikasjonen) for �
     - For Linux:
       1. Naviger til mappen med installasjonsfilen til serveren.
       2. Kjør kommando for å installere:
+
           ```bash
           sudo dpkg -i vendmachtrackserver_*.deb
           ```
+
       3. Naviger til mappen med installasjonsfilen til applikasjonen.
       4. Kjør kommando for å installere:
+
           ```bash
           sudo dpkg -i vendmachtrackapp_*.deb
           ```
+
     - For Windows:
       1. Naviger til mappen med installasjonsfilen til serveren.
       2. Installer serveren på vanlig vis med .exe-filen ved å trykke deg igjennom Installation Wizard.
@@ -168,14 +174,18 @@ Se videre [hvordan man bruker applikasjonen](#hvordan-bruke-applikasjonen) for �
 5. Kjør applikasjonen. Her er noen eksempler på hvordan:
     - For Linux i terminal:
       1. For å kjøre serveren fra terminalen, kjør kommando:
+
           ```bash
           /opt/vendmachtrackserver/bin/VendMachTrackServer
           ```
+
           Serveren vil da starte og skriver til terminalen.
       2. For å kjøre applikasjonen fra terminalen, kjør kommando:
+
           ```bash
           /opt/vendmachtrackapp/bin/VendMachTrackApp
           ```
+
           Applikasjonen vil da starte. Noen meldinger kan leses i terminalen.
     - For Linux utenom terminal:
       1. Kjør serveren ved å søke opp VendMachTrackServer blant programmer.
@@ -192,13 +202,17 @@ Se videre [hvordan man bruker applikasjonen](#hvordan-bruke-applikasjonen) for �
 
 - For Linux:
   1. Finn prosess-ID til serveren:
+
       ```bash
       ps -e | grep VendMachTrack
       ```
-  2.  Stopp prosessen:
+
+  2. Stopp prosessen:
+
       ```bash
       kill <prossess-ID>
       ```
+
 - For Windows:
   1. Åpne Oppgavebehandling
   2. Søk opp VendMachTrackServer
@@ -212,15 +226,18 @@ Gjør følgende for å lage installasjonsfil tilpasset ditt operativsystem:
 
 1. Gjør punkt 1 til og med 6 under [hvordan kjøre applikasjonen lokalt uten installasjon](#hvordan-kjøre-applikasjonen-lokalt-uten-installasjon)
 2. Kjør følgende kommando for å lage installasjonsfil til serveren:
+
 ```bash
  mvn jpackage:jpackage -f springboot/pom.xml
 ```
+
 2. Kjør følgende kommando for å lage installasjonsfil til applikasjonen:
+
 ```bash
  mvn jpackage:jpackage -f ui/pom.xml
 ```
-3. Installasjonsfilen til serveren og applikasjonen ligger i sin respektive mappe, "springboot/target/jpackage/" og "ui/target/jpackage/".
 
+3. Installasjonsfilen til serveren og applikasjonen ligger i sin respektive mappe, "springboot/target/jpackage/" og "ui/target/jpackage/".
 
 ## Hvordan bruke applikasjonen
 
@@ -235,27 +252,34 @@ Hvis man sløyfer kommandoen for å starte Spring Boot (punkt 10 for kjøring i 
 ```
 http://localhost:8080
 ```
+
 **Tracker File Name**
+
 ```
 tracker.json
 ```
 
 2. Passordet for å komme seg ut av "User View" for dette prosjektet er:
+
 ```
 Brus123
 ```
 
+### Stopp applikasjon og server
+
+- Stopp applikasjonen ved å trykke Exit i øvre hjørne.
+- Stopp serveren ved å trykke Ctrl+C eller Cmd+C i terminalen som startet Spring Boot.
 
 ## Hvordan kjøre tester
 
 - Tester skal kjøres ved hjelp av Maven.
 - Sørg for at du befinner deg i prosjektmappen (gr2338/vendmachtrack)
+- Sørg for at serveren ikke allerede er startet og kjører. Hvis den er det må den stoppes, se [stopp applikasjon og server.](#stopp-applikasjon-og-server)
 - Skriv følgende kommando i terminalen:
 
 ```bash
 mvn clean verify
 ```
-
 
 ## Hvordan se testresultater
 
@@ -264,11 +288,12 @@ Disse stegene forutsetter at man har kjørt en av følgende kommandoer i forkant
 ```bash
 mvn clean install
 ```
+
 eller
+
 ```bash
 mvn verify
 ```
-
 
 ### JUnit
 
@@ -278,7 +303,6 @@ For å se en komplett oversikt over alle JUnit-tester kjørt:
 2. Her ligger det én mappe for hver modul. I hver modulmappe ligger det én .txt-fil med testresultatet for hver klasse som har blitt testet.
 
 Man kan eventuelt lese det som blir skrevet til terminalen når tester blir kjørt, men det er det samme som ligger i .txt-filene.
-
 
 ### Checkstyle og SpotBugs
 
@@ -290,14 +314,12 @@ For å se en komplett oversikt over alle anmerkninger gitt av Checkstyle og Spot
 
 Det kan være tungvint å lese .xml-filene, men de gir en komplett oversikt over alt som er rapportert. Eventuelt kan man lese det som blir skrevet til terminalen når tester blir kjørt, men det er det samme som ligger i .xml-filene.
 
-
 ### JaCoCo
 
 For å se testdekningsgrad gitt av JaCoCo:
 
 1. Naviger til mappen 'vendmachtrack/test-results/jacoco'
 3. Åpne filen 'index.html' i en nettleser. Rapporten vil da dukke opp i nettleseren. Her vises testdekningsgraden for prosjektet.
-
 
 ## Prosjektstruktur
 
@@ -317,13 +339,13 @@ Repoet er organisert i flere mapper. Selve kodeprosjektet ligger i mappen vendma
   - core/ - Kildekode for core-modulen
     - pom.xml - Konfigurasjonsfil for Maven
     - src/main/java/
-        - vendmachtrack/core/
-          - model/ - Modellklasser
-          - util/ - Verktøyklasser
-        - module-info.java
-    - src/main/resources/core/util/
+      - gr2338/vendmachtrack/core/
+        - model/ - Modellklasser
+        - util/ - Verktøyklasser
+      - module-info.java
+    - src/main/resources/gr2338/vendmachtrack/util/
       - password.txt
-    - src/test/java/vendmachtrack/core/ - Tester for core-modulen
+    - src/test/java/gr2338/vendmachtrack/core/ - Tester for core-modulen
       - model/
       - util/
   - jacoco-aggregator/ - Modul for samling av JaCoCo-rapporter til én samlet
@@ -331,20 +353,20 @@ Repoet er organisert i flere mapper. Selve kodeprosjektet ligger i mappen vendma
   - jsonio/ - Kildekode for jsonio-modulen
     - pom.xml - Konfigurasjonsfil for Maven
     - src/main/java/
-      - vendmachtrack/jsonio/ - Kildekode for filhåndtering
+      - gr2338/vendmachtrack/jsonio/ - Kildekode for filhåndtering
         - internal/
       - module-info.java
-    - src/test/java/vendmachtrack/jsonio/internal - Tester for jsonio-modulen
+    - src/test/java/gr2338/vendmachtrack/jsonio/internal - Tester for jsonio-modulen
   - springboot/ - Kildekode for springboot-modulen
     - pom.xml - Konfigurasjonsfil for Maven
     - src/main/java/
-      - vendmachtrack/springboot/
+      - gr2338/vendmachtrack/springboot/
         - controller/ - Spring Boot Controller-klasser
         - exception/ - Exception-klasser
         - repository/ - Spring Boot Repository-klasser
         - service/ - Spring Boot Service-klasser
       - module-info.java
-    - src/test/java/vendmachtrack/springboot/ - Tester for springboot-modulen
+    - src/test/java/gr2338/vendmachtrack/springboot/ - Tester for springboot-modulen
       - controller/
       - repository/
       - service/
@@ -356,12 +378,12 @@ Repoet er organisert i flere mapper. Selve kodeprosjektet ligger i mappen vendma
   - ui/ - Kildekode til grafisk brukergrensesnitt
     - pom.xml - Konfigurasjonsfil for Maven
     - src/main/java/
-      - vendmachtrack/ui/
+      - gr2338/vendmachtrack/ui/
         - access/ - Aksessklasser
         - controller/ - JavaFX Controller-klasser
       - module-info.java
-    - src/main/resources/vendmachtrack/ui/controller/ - CSS- og FXML-filer
-    - src/test/java/vendmachtrack/ui/ - Tester for ui-modulen
+    - src/main/resources/gr2338/vendmachtrack/ui/controller/ - CSS- og FXML-filer
+    - src/test/java/gr2338/vendmachtrack/ui/ - Tester for ui-modulen
       - access/
       - controller/
   - integrationtests/ - Kildekode til integrasjonstest
@@ -369,4 +391,4 @@ Repoet er organisert i flere mapper. Selve kodeprosjektet ligger i mappen vendma
     - src/
       - main/java/
         - module-info.java
-      - test/java/vendmachtrack/integrationtests
+      - test/java/gr2338/vendmachtrack/integrationtests

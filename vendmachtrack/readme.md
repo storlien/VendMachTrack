@@ -5,7 +5,7 @@ Applikasjonen Vending Machine Tracker er laget for å tilby en effektiv måte å
 En brusautomat har en skjerm med Vending Machine Tracker-applikasjonen med "User View"-vinduet som vises til vanlig. En "kunde" har muligheten til å kjøpe varer fra automaten gjennom dette vinduet. Applikasjonen har som forutsetning at bekreftelse på betaling håndteres av en ekstern tjeneste, for eksempel:
 
 - Kortterminal som håndterer salg
-- Mulighet for å "vippse" til automaten som alternativ mbetalingsmåte
+- Mulighet for å "vippse" til automaten som alternativ betalingsmåte
 
 Applikasjonen inneholder derfor ingen logikk for betalingsbekreftelse.
 
@@ -16,6 +16,7 @@ Applikasjonen kan også kjøres på en dedikert PC i stedet for på en brusautom
 Se [brukerhistorier](/docs/Brukerhistorier.md) for konkrete scenarier.
 
 ## Innhold
+
 - [Funksjonalitet](#funksjonalitet)
 - [Lagring av data](#lagring-av-data)
 - [Dokumentasjon av REST API](#dokumentasjon-av-rest-api)
@@ -24,15 +25,24 @@ Se [brukerhistorier](/docs/Brukerhistorier.md) for konkrete scenarier.
     - [Fjerntilgang](#fjerntilgang)
     - [Lokaltilgang](#lokaltilgang)
 - [Testing av applikasjonen og serveren](#testing-av-applikasjonen-og-serveren)
+  - [Unit-tester](#unit-tester)
+  - [Teknikk for Unit-tester](#teknikk-for-unit-tester)
+  - [Integrasjonstester](#integrasjonstester)
+  - [Teknikk for integrasjonstest](#teknikk-for-integrasjontest)
+  - [Testing av server](#testing-av-server)
+  - [Integrasjonstest av server](#integrasjonstest-av-server)
+  - [Unit-tester av server](#unit-tester-av-server)
+  - [Testing av UI-modul](#testing-av-ui-modul)
+  - [Testing av JsonIo-modul](#testing-av-jsonio-modul)
+  - [Testing av Core-modul](#testing-av-core-modul)
+  - [Testdekningsgrad](#testdekningsgrad)
 - [Bilder og diagrammer](#bilder-og-diagrammer)
   - [Klassediagram](#klassediagram)
   - [Pakkediagram](#pakkediagram)
   - [Sekvensdiagram](#sekvensdiagram)
   - [Diverse skjermbilder](#diverse-skjermbilder)
 
-
 ## Funksjonalitet
-
 
 Funksjonalitet for bedriften/eieren:
 
@@ -53,7 +63,6 @@ Funksjonalitet for bedriften/eieren:
 - En kunde har ikke tilgang på funksjonaliteten som er tiltenkt bedriften/eieren
   - Tilgang på slik funksjonalitet er passordbeskyttet
 
-
 Funksjonalitet for kunden:
 
 - Se varebeholdning på den bestemte automaten
@@ -61,14 +70,13 @@ Funksjonalitet for kunden:
 - Varebeholdningen vil oppdateres når varer kjøpes
   - En vare forsvinner fra varebeholdning hvis automaten selges tom for den varen
 
-
 Teknisk funksjonalitet:
+
 - Bedriften skal kunne bruke skytjenesteløsning
   - Applikasjonen jobber mot en REST API-server
   - Serveren skal kunne kjøre på en dedikert maskin
 - Bedriften skal kunne bruke applikasjonen uten skytjenesteløsning
   - Applikasjonen aksesserer lokal fil direkte
-
 
 ## Lagring av data
 
@@ -91,6 +99,7 @@ Applikasjonen tar i bruk Google sitt Java-bibliotek, Gson, for oversette ("parse
 
 ]}
 ```
+
 Dette eksemplet viser en liste over brusautomater, deres ID, beliggenhet og status som viser antall av hver drikke tilgjengelig i automaten.
 
 Under oppstarten av applikasjonen blir man bedt om å angi URL til server og filnavn. Applikasjonen er tenkt å fungere mot flere filer. Bedriften kan dermed ha flere samlinger av brusautomater separert i ulike filer. Det kan for eksempel være ønskelig for en bedrift å skille brusautomater som befinner seg i forskjellige byer. Dette er ikke implementert i REST API-serveren ennå, men det fungerer for filer lokalt. Se [readme.md](/docs/release3/readme.md) for release 3 for mer informasjon om dette.
@@ -122,7 +131,7 @@ Serveren er designet for å være "tilstandsløs" ("stateless"). Dette innebære
 
 I applikasjonen/"ui"-modulen:
 
-Applikasjonen benytter Data Access Objects (DAO) for å interagere med filen, uavhengig av om det skjer via serveren eller ikke. Det finnes to distinkte aksessklasser samt et grensesnitt. Dette sikrer at alle aksessklassene implementerer de samme, nødvendige funksjonene for applikasjonen. Dermed er det ingen forskjell på interaksjonen med applikasjonen om den aksesserer filen direkte eller via serveren. 
+Applikasjonen benytter Data Access Objects (DAO) for å interagere med filen, uavhengig av om det skjer via serveren eller ikke. Det finnes to distinkte aksessklasser samt et grensesnitt. Dette sikrer at alle aksessklassene implementerer de samme, nødvendige funksjonene for applikasjonen. Dermed er det ingen forskjell på interaksjonen med applikasjonen om den aksesserer filen direkte eller via serveren.
 
 Aksessklassene hverken krever som parameter eller returnerer objekter som krever at man kjenner til prosjektets modeller (dvs. klasser som MachineTracker og VendingMachine), ref. det som står skrevet under [server](#server) om å ikke bruke DTO-er.
 
@@ -138,11 +147,97 @@ For aksessering av filen direkte blir et Local Access-objekt (MachineTrackerAcce
 
 ## Testing av applikasjonen og serveren
 
-// TODO
+For å sikre høy kodekvalitet er det viktig å ha gode tester. Dette bidrar til enklere feilsøking og garanterer (i stor grad) at koden fungerer som forventet. I vårt prosjekt har vi fokusert på to test-typer; Unit-testing og Integrasjonstesting.
 
+### Unit-tester
+
+Unit-tester er en effektiv test metode fordi det gjør det mulig å isolert teste funksjonaliteten til hver metode i hver enkelt klasse. Unit-tester tjener flere viktige formål for ethvert prosjekt:
+
+- Feilisolering: En Feil i en test forteller nøyaktig hvor feilen i koden ligger, dette gjør feilsøking mye raskere
+- Forbedring av kodekvalitet: Hvis en metode/klasse er vanskelig å teste kan det tyde på at kodekvaliteten ikke er god nok, og dermed må forbedres
+- Refaktoreringsmuligheter: Med mange Unit-tester kan man endre/refaktorere kode og forstsatt vite at testene fanger opp potensielle feil som endringene har forårsaket.
+
+Verktøy som er Hyppig brukt i våre Unit-tester:
+
+- JUnit : Open-source rammeverk som brukes til å skrive og kjøre automatiserte tester i Java.
+- Mockito : mock-rammeverk som ofte brukes sammen med JUnit. Kan brukes til å lage mock-objekter for å simulere oppførselen til feks metodekall.  
+
+### Teknikk for Unit-tester
+
+Når vi tester enkeltkomponenter gjør vi det for å verifisere at komponenten behandler data på forventet måte. For visse metoder kan dette være utfordrene da dataen den får inn kan variere (feks kan en fil en testmetode leser fra endre innhold). Derfor ønsker vi å gjøre komponenten vi tester uavhengig av eksterne faktorer som kan påvirke testmetoden. Dette har vi gjort ved hjelp av Mocking av objekter og metodekall. Dette er en god praksis når man utvikler tester for å gjøre metoder/testklasser så uavhengig av andre kompnenter som mulig. Det finnes flere fordeler ved mocking:
+
+- Kontrolere Input: Vi kan bestemme inputdatena til komponenten for å teste at metoden vi tester håndterer dem korrekt
+- Simulere oppførsel: Ved å etterligne oppførselen til en ekstern komponent, kan vi forutse hvordan vår test metode/klasse vil reagere basert på ekstern oppførsel
+- Unngår sideeffekter: Vi silpper å hensynta uønskede hendelser som kan skje ved å bruke ekte objekter (feks skrive til en reel database)
+
+### Integrasjonstester
+
+Integrasjonstester tar for seg hvordan ulike komponenter i prosjektet interagerer med hverandre. Hovedsakelig sjekker man at ulike moduler er integrert riktig, men feks i en springboot modul vil man også verifisere at de ulike lagene internt i modulen er integrert riktig. Integrasjonstester tjener flere viktige formål:
+
+- Flyt: Sikrer at Dataflyten mellom ulike komponenter utføres riktig
+- Tjeneste Integrasjon: Tester at komminikasjonen mellom eksterne tjenester/ API er er riktige
+- Simulering av brukerscenarioer: Integasjonstester kan simulere ekte brukscenarioer og verifiserer at systemet funksjonalitet fungerer som forventet.
+
+### Teknikk for integrasjontest
+
+Formålet med en integrasjonstest er å validere sammhandling mellom ulike komponenter. Dermed kan vi benytte oss av de reele komponentene under integrasjonstestene eller bruke såkalte Stubs/Mocking alt etter behov. Feks under [IntegrationUITestIT.java](integrationtests/src/test/java/gr2338/vendmachtrack/integrationtests/IntegrationUITestIT.java) vil serveren starte i forkant av testene og videre verifisere at sammhandlingen mellom UI modulen og springboot modulen fungerer som forventet uten bruk av feks mocking/stubs. Springboot bibloteket har også egene verktøy for å lage integrasjonstester for en springboot modul.
+
+**MERK:**
+
+Man kan argumentere for at [IntegrationUITestIT.java](integrationtests/src/test/java/gr2338/vendmachtrack/integrationtests/IntegrationUITestIT.java) er en E2E test ved at vi simulerer en brukers interaksjon gjennom hele appen. Men hovedformålet med testen er å se at springboot modulen og UI modulen er riktig integrert
+
+### Testing av server
+
+For testing av Serveren har vi både gjort en integrasjonstest og laget Unit-tester for hvert lag. Dette forsikrer oss om at funkjsonaliteten i lagene fungerer isolert og integrert.
+
+### Integrasjonstest av server
+
+[SpringBootIntegrationTest](springboot/src/test/java/gr2338/vendmachtrack/springboot/SpringBootIntegrationTest.java) er utviklet for å for å verifisere interaksjonen mellom de ulike lagene i vår springboot - applikasjon. Formålet med denne testen er å forsikre oss om at lagene er integrert sammen på en riktig måte.
+
+Vi har benyttet oss av ulike verktøy for dette:
+
+- @springbootTest : Denne Annotasjonen forteller spring boot at den skal sette opp testkonteksten. Dette er nyttig for å sikre at applikasjonen er integrert riktig og at alle lag samhandler som de skal.
+- @ExtendWith(SpringExtension.class) : Denne anotasjonen integrerer spring TestContext rammeverket med JUnit5
+- TestRestTemplate : Dette er en hjelpeklasse som gjør det enkelt å sende HTTP foresøprsler og motta HTTP svar. Samt de- og serialisering av objekter til og fra JSON.
+
+### Unit-tester av server
+
+For Unit-tester av de forskjellige  lagene bruker vi hovedsakelig JUnit og Mockito for testing av ulike scenarioer. andre verktøy som er brukt:
+
+- MockMVC: Del av Spring Test rammeverket. Denne muliggjør å teste MVC-kontrolleren uten å måtte starte en HTTP server. Den simulerer HTTP-forespørsler og muligjør sjekking av respons, statuskoder, innhold etc.
+
+### Testing av UI-modul
+
+For Testing Unit-testing av UI modulen har vi benyttet oss av flere verktøy (i tillegg til JUnit og Mockito)
+
+- WireMockServer: Brukes i Access mappen. til å lage en mock HTTP server (en stub). Dette er nyttig i Access laget til applikasjonen fordi Access laget sjekker om serveren er "sunn"/kjører. Dermed kan vi stubbe en HTTP server og se hvordan Access laget håndterer ulike servertilstander (feks 200 ok og 500 unhealty server)
+- TestFX: TestFX brukes for å simulere en brukerinteraksjon med brukergrensesnittet. ved hjelp av TestFX kan man automatisk trykke på knapper, skrive i felter osv.
+
+**Merk 1:**
+[MachineTrackerAccessRemote](ui/src/test/java/gr2338/vendmachtrack/ui/access/MachineTrackerAccessRemoteTest.java) kan bli sett på som både en Unit og en Integrasjonstest.
+
+- Fra et Unit perpektiv tester vi funksjonaliteten i til klassen i isolasjon, selv om vi bruker en stub for å etterligne de eksterne avhengighetene.
+- Fra et Integrasjonstest perpektiv tester vi samspillet mellom klassen og en HTTP/springboot server. Altså mellom flere moduler.
+
+**Merk 2:** Scenarioet der en bruker skriver riktig passord i passwordhandlerController er ikke testet av sikkerhetshensyn. (vi ønsker ikke skrive passordet i plain tekst i testklassene)
+
+### Testing av JsonIo-modul
+
+For testing av JsonIO modulen har vi kun benyttet oss av JUnit rammeverket. Vi tester å skrive til og lese fra en test fil som blir laget før hver test og slettet etterpå. Her verifiserer vi at filhåndteringen foregår korrekt uten å skrive til/lese fra en fil som kanskje endrer seg fra gang til gang. Dermed tester vi funksjonaliteten samtidig som klassene er uavhengig av eksterne faktorer.
+
+### Testing av Core-modul
+
+Testing av Core modulen gjøres ved hjelp av JUnit. Her tester vi ulike scenerioer basert på klassene og metodene i dem.
+
+Merk: Scenarioet der riktig passord blir skrevet i PasswordHandlerKlassen er ikke testet av sikkerhetshensyn. (vi ønsker ikke skrive passordet i plain tekst i testklassene)
+
+### Testdekningsgrad
+
+vi benytter oss av JaCoCo for å få en forståelse av hvilke metoder som er testet/ikke testet i vårt prosjekt. en høy testdekningsgrad indikerer ofte at testkvaliteten på koden er høy og at mye er dekket. Samtidig kan det gi en falsk trygghet mtp at eventuelle edge caser ikke har blitt testet ordentlig.
+
+Det er verdt å merke at vi ikke har 100% testdekningsgrad, men vi mener at det er unødvenig å bruke tid på å få 100 % testdekning når vi allerede mener at all viktig funksjonalitet er testet og testdekingsgraden er godt over 90%
 
 ## Bilder og diagrammer
-
 
 ### Klassediagram
 
@@ -150,10 +245,8 @@ Klassediagrammet viser en oversikt over alle klassene i modulen "springboot" og 
 
 [Diagrammet i PlantUML](/docs/diagrams/ClassDiagram2.puml)
 
-
 [Åpne bildet av diagrammet](/docs/images/diagrams/ClassDiagram2.png)
 ![Diagram](/docs/images/diagrams/ClassDiagram2.png)
-
 
 ### Pakkediagram
 
@@ -161,10 +254,8 @@ Pakkediagrammet viser alle pakkene i modulen "springboot" og hvilke pakker utenf
 
 [Diagrammet i PlantUML](/docs/diagrams/PackageDiagram.puml)
 
-
 [Åpne bildet av diagrammet](/docs/images/diagrams/PackageDiagram.png)
 ![Diagram](/docs/images/diagrams/PackageDiagram.png)
-
 
 ### Sekvensdiagram
 
@@ -172,26 +263,19 @@ Sekvensdiagrammet viser sekvenser for når en bruker åpner applikasjonen, skriv
 
 [Diagrammet i PlantUML](/docs/diagrams/SequenceDiagram.puml)
 
-
 [Åpne bildet av diagrammet](/docs/images/diagrams/SequenceDiagram.png)
 ![Diagram](/docs/images/diagrams/SequenceDiagram.png)
-
 
 ### Diverse skjermbilder
 
 Her er diverse skjermbilder fra applikasjonen:
 
-
 ![Skjermbilde](/docs/images/screenshots/Screenshot1.png)
-
 
 ![Skjermbilde](/docs/images/screenshots/Screenshot2.png)
 
-
 ![Skjermbilde](/docs/images/screenshots/Screenshot3.png)
 
-
 ![Skjermbilde](/docs/images/screenshots/Screenshot4.png)
-
 
 ![Skjermbilde](/docs/images/screenshots/Screenshot5.png)
